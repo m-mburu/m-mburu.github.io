@@ -16,6 +16,6 @@ knitr::opts_chunk$set(echo = TRUE)
 | Description | Notebook | Source Code
 | ------------- | ------------- | ------------- |
 | Breast cancer prediction | [Notebook (HTML)](https://m-mburu.github.io/breast_cancer_prediction/cancer_data.nb.html) | [R Markdown (Rmd)](breast_cancer_prediction/cancer_data.Rmd)  |
-| Busara task | [Notebook (HTML)](https://m-mburu.github.io/busara_task/busara-data-analysis.html) | [R Markdown (Rmd)](busara data analysis.Rmd)  |
-| Zindi loan prediction | [Notebook (HTML)](https://m-mburu.github.io/loan_prediction/loan_prediction.html) | [R Markdown (Rmd)](loan_prediction.Rmd)  |
+| Busara task | [Notebook (HTML)](https://m-mburu.github.io/busara_task/busara-data-analysis.html) | [R Markdown (Rmd)](busara_task/busara data analysis.Rmd)  |
+| Zindi loan prediction | [Notebook (HTML)](https://m-mburu.github.io/loan_prediction/loan_prediction.html) | [R Markdown (Rmd)](loan_prediction/loan_prediction.Rmd)  |
 
