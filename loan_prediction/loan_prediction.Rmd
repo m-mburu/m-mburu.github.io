@@ -1,0 +1,100 @@
+---
+title: "Loan Prediction Zindi"
+author: "mburu"
+date: "February 16, 2019"
+output:
+  html_document:
+    highlight: pygments
+    theme: united
+    toc: yes
+  html_notebook:
+    highlight: pygments
+    theme: united
+    toc: yes
+  slidy_presentation:
+    highlight: pygments
+    theme: united
+  ioslides_presentation: null
+  pdf_document:
+    toc: yes
+  beamer_presentation:
+    highlight: pygments
+header-includes:
+- \usetheme{CambridgeUS}
+- \useinnertheme{rounded}
+- \usecolortheme{seahorse}
+- \usefonttheme{professionalfonts}
+- \usepackage{xcolor,soul,hyperref,cite,graphicx,amsmath}
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+```{r, echo=FALSE}
+#setwd("E:/R/Busara Data Analyst task")
+options("kableExtra.html.bsTable" = T)
+```
+
+
+```{r}
+library(tidyverse)
+library(data.table)
+library(caret)
+
+```
+
+
+
+```{r}
+
+trainperf <- fread("trainperf.csv")
+traindemographics <-fread("traindemographics.csv")
+testperf <-fread("testperf.csv")
+testdemographics <-fread("testdemographics.csv")
+SampleSubmission <- fread("SampleSubmission.csv")
+```
+
+
+
+```{r}
+train_data <- merge(traindemographics, trainperf, all.y = T, by = "customerid")
+test_data <- merge(testdemographics, testperf, all.y = T, by = "customerid")
+```
+
+
+
+```{r}
+
+train2 <- train_data[, .(good_bad_flag, termdays, loannumber, loanamount, totaldue)]
+
+cv_fold <- createFolds(train2$good_bad_flag, k = 10)
+
+myControl <- trainControl(
+  method = "cv", 
+  number = 10,
+  summaryFunction = twoClassSummary,
+  savePredictions = "all",
+  classProbs = TRUE,
+  verboseIter = FALSE,
+  index = cv_fold,
+  allowParallel = TRUE
+  
+)
+svm_tune <-  expand.grid(
+    C =c(1 ,5 ,  10, 100, 150),
+    sigma = seq(0, .01, length.out = 5))
+    
+svm_model <- train(
+  good_bad_flag ~.,
+  data = train2,
+   metric="ROC",
+  method = "svmRadial",
+  trControl = myControl,
+  tuneGrid = svm_tune,
+  verbose = FALSE
+)
+
+```
+
