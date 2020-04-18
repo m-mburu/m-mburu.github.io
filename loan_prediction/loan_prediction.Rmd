@@ -1,13 +1,13 @@
 ---
 title: "Loan Prediction Zindi"
 author: "mburu"
-date: "February 16, 2019"
+date: "April 18, 2020"
 output:
-  html_document:
+  html_notebook:
     highlight: pygments
     theme: united
     toc: yes
-  html_notebook:
+  html_document:
     highlight: pygments
     theme: united
     toc: yes
@@ -42,7 +42,7 @@ options("kableExtra.html.bsTable" = T)
 library(tidyverse)
 library(data.table)
 library(caret)
-
+library(ggthemes)
 ```
 
 
@@ -63,6 +63,32 @@ train_data <- merge(traindemographics, trainperf, all.y = T, by = "customerid")
 test_data <- merge(testdemographics, testperf, all.y = T, by = "customerid")
 ```
 
+
+
+```{r}
+
+
+train_data[, .N, by = .(good_bad_flag)] %>%
+    .[, perc := round(N/sum(N) * 100, 2)] %>%
+    
+     ggplot(aes(good_bad_flag, perc, fill =good_bad_flag)) +
+     geom_bar(stat = "identity") +
+     geom_text(aes(good_bad_flag, perc, label = paste(perc, "%"),
+                   vjust = .05, hjust = .5),
+               size = 4)+
+     theme_hc()+
+    labs(title = "Percentage of bad loans")+
+     scale_fill_colorblind(name = "")+
+    theme(legend.position = "none")
+
+
+
+```
+
+
+```{r}
+
+```
 
 
 ```{r}
