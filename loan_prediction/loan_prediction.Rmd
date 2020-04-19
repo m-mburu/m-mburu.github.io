@@ -11,10 +11,6 @@ output:
     highlight: pygments
     theme: united
     toc: yes
-  slidy_presentation:
-    highlight: pygments
-    theme: united
-  ioslides_presentation: null
   pdf_document:
     toc: yes
   beamer_presentation:
@@ -87,19 +83,52 @@ train_data[, .N, by = .(good_bad_flag)] %>%
 
 
 ```{r}
+chars <- c("bank_account_type", "bank_name_clients", 
+           "bank_branch_clients", "employment_status_clients",
+           "level_of_education_clients")
 
+train_data[, (chars) := lapply(.SD, function(x) ifelse(x == "" | x == " ", NA, x)), .SDcols = chars]
 ```
 
 
 ```{r}
 
-train2 <- train_data[, .(good_bad_flag, termdays, loannumber, loanamount, totaldue)]
+naVals <- colSums(is.na(train_data))/nrow(train_data) * 100 
 
-cv_fold <- createFolds(train2$good_bad_flag, k = 10)
+withNa <- naVals[naVals>0]
+nms_na <- names(withNa)
+missing_perc <- data.table(variables = nms_na, perc = withNa) 
+
+
+```
+
+
+##
+
+```{r}
+ggplot(missing_perc, aes( reorder(variables, perc), perc))+
+    geom_bar(stat = "identity") +
+    theme_fivethirtyeight()+
+    coord_flip()
+```
+
+
+
+
+```{r}
+# try out to add a missing coonvert 
+train_data[, (chars) := lapply(.SD, fct_explicit_na, na_level = "missing"), .SDcols = chars]
+train2 <- train_data[, .(good_bad_flag, termdays, 
+                         loannumber, loanamount, 
+                         totaldue, bank_account_type, bank_name_clients, employment_status_clients, level_of_education_clients)]
+
+
+
+cv_fold <- createFolds(train2$good_bad_flag, k = 5)
 
 myControl <- trainControl(
   method = "cv", 
-  number = 10,
+  number = 5,
   summaryFunction = twoClassSummary,
   savePredictions = "all",
   classProbs = TRUE,
@@ -109,8 +138,8 @@ myControl <- trainControl(
   
 )
 svm_tune <-  expand.grid(
-    C =c(1 ,5 ,  10, 100, 150),
-    sigma = seq(0, .01, length.out = 5))
+    C =c(1000,1500, 2000),
+    sigma = seq(0, 1, length.out = 5))
     
 svm_model <- train(
   good_bad_flag ~.,
