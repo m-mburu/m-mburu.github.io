@@ -1,13 +1,14 @@
 ---
-title: "Water Pump TZ"
+title: "Tanzanian Water Pumps"
 author: "Mburu"
 date: "4/21/2020"
 output:
   prettydoc::html_pretty:
     highlight: github
-    theme: cayman
+    theme: leonids
     toc: yes
   html_document:
+    theme:
     df_print: paged
     toc: yes
 ---
@@ -58,6 +59,7 @@ pump_data <- rbindlist(list(train_data, test), fill = T)
 ```{r}
 
 train_data[, .N, by = status_group] %>%
+    .[, Perc :=  round(N/sum(N) * 100, 2)] %>%
     kable()
 
 ```
