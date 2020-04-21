@@ -3,13 +3,14 @@ title: "Tanzanian Water Pumps"
 author: "Mburu"
 date: "4/21/2020"
 output:
+  html_document:
+    theme: united
+    highlight: pygments
+    df_print: paged
+    toc: yes
   prettydoc::html_pretty:
     highlight: github
     theme: leonids
-    toc: yes
-  html_document:
-    theme:
-    df_print: paged
     toc: yes
 ---
 
@@ -28,7 +29,7 @@ library(broom)
 library(caret)
 library(kableExtra)
 library(ggthemes)
-library(prettydoc)
+library(DT)
 ```
 
 ## 
@@ -60,7 +61,7 @@ pump_data <- rbindlist(list(train_data, test), fill = T)
 
 train_data[, .N, by = status_group] %>%
     .[, Perc :=  round(N/sum(N) * 100, 2)] %>%
-    kable()
+    datatable()
 
 ```
 
