@@ -86,7 +86,7 @@ char_cols <- char_cols[char_cols != "date_recorded"]
 char_cols
 ```
 
-## A lazy way of collapsing columns, Please do it,
+## A lazy way of collapsing columns, Please DO NOT do it,
 * It's best to go through all columns one by one to see how well lumping together will be beneficial
 
 ```{r}
@@ -94,19 +94,19 @@ char_cols
 
 factor_cols <- pump_data[, ..char_cols]
 factor_cols[, (char_cols) := lapply(.SD, str_to_lower), .SDcols = char_cols]
-factor_cols[, (char_cols) := lapply(.SD,  fct_lump_n, n = 10), .SDcols = char_cols]
+factor_cols[, (char_cols) := lapply(.SD,  fct_lump_n, n = 15), .SDcols = char_cols]
 #factor_cols[, (char_cols) := lapply(.SD,  fct_lump_n, n = 5), .SDcols = char_cols]
 factor_cols[factor_cols == ""] = NA
-factor_cols[, (char_cols) :=lapply(.SD, fct_explicit_na, na_level = "Other"), .SDcols = char_cols]
+factor_cols[factor_cols == "0"] = NA
+factor_cols[, (char_cols) :=lapply(.SD, fct_explicit_na, na_level = "missing"), .SDcols = char_cols]
 ```
 
 
 ```{r}
-chars_dat <- melt(pump_data[, ..char_cols], 
-                  id.vars = c("set", "status_group"))
+chars_dat <- melt(factor_cols, id.vars = "status_group")
 
 chars_dat[, .(freq = .N), by = .(variable, value)] %>%
-  .[variable != "funder"] %>%
+  .[, perc := round(freq/sum(freq) * 100), by = .(variable)] %>%
     datatable()
 ```
 
