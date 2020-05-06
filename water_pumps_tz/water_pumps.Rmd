@@ -94,7 +94,7 @@ char_cols
 
 factor_cols <- pump_data[, ..char_cols]
 factor_cols[, (char_cols) := lapply(.SD, str_to_lower), .SDcols = char_cols]
-factor_cols[, (char_cols) := lapply(.SD,  fct_lump_n, n = 15), .SDcols = char_cols]
+factor_cols[, (char_cols) := lapply(.SD,  fct_lump_n, n = 20), .SDcols = char_cols]
 #factor_cols[, (char_cols) := lapply(.SD,  fct_lump_n, n = 5), .SDcols = char_cols]
 factor_cols[factor_cols == ""] = NA
 factor_cols[factor_cols == "0"] = NA
@@ -112,59 +112,52 @@ chars_dat[, .(freq = .N), by = .(variable, value)] %>%
 
 
 ```{r}
-pump_data[, go_funded := 
-              ifelse(grepl("government of tanzania|ministry|district council",
-                           tolower(funder)), "gov", "ngo")]
 
-pump_data[set == "train", .N, by = .(go_funded,status_group)] %>%
-    .[, perc := round(N/sum(N) * 100, 2), by = .(go_funded)] %>%
+factor_cols[set == "train", .N, by = .(funder,status_group)] %>%
+    .[, perc := round(N/sum(N) * 100, 2), by = .(funder)] %>%
     
-     ggplot(aes(go_funded, perc, fill = status_group)) +
+     ggplot(aes(funder, perc, fill = status_group)) +
      geom_bar(stat = "identity") +
-     geom_text(aes(go_funded, perc, label = paste(perc, "%"),
-                   vjust = .05, hjust = .5),
-               size = 4, position = position_stack(vjust = 0.5))+
+     # geom_text(aes(funder, perc, label = paste0(perc, "%"),
+     #               vjust = .05, hjust = .5),
+     #           size = 3, position = position_stack(vjust = 0.5))+
      theme_hc()+
     labs(title = "Percentage loans_")+
      scale_fill_economist(name = "")+
-    theme(legend.position = "bottom")
+    theme(legend.position = "bottom",
+          axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
 
 ```
 
 
 ```{r}
-pump_data[set == "train", .N, by = .(water_quality,status_group)] %>%
+factor_cols[set == "train", .N, by = .(water_quality,status_group)] %>%
     .[, perc := round(N/sum(N) * 100, 2), by = .(water_quality)] %>%
     
      ggplot(aes(water_quality, perc, fill = status_group)) +
      geom_bar(stat = "identity") +
      geom_text(aes(water_quality, perc, label = paste(perc, "%"),
                    vjust = .05, hjust = .5),
-               size = 4, position = position_stack(vjust = 0.5))+
+               size = 3, position = position_stack(vjust = 0.5))+
      theme_hc()+
-    labs(title = "Percentage loans_")+
+    labs(title = "")+
      scale_fill_economist(name = "")+
     theme(legend.position = "bottom")
 ```
 
 
 ```{r}
-pump_data[, go_installer := 
-              ifelse(grepl("gover|ministry|district",
-                           tolower(installer)), "gov", "ngo")]
 
-pump_data[set == "train", .N, by = .(go_installer,status_group)] %>%
-    .[, perc := round(N/sum(N) * 100, 2), by = .(go_installer)] %>%
+factor_cols[set == "train", .N, by = .(installer,status_group)] %>%
+    .[, perc := round(N/sum(N) * 100, 2), by = .(installer)] %>%
     
-     ggplot(aes(go_installer, perc, fill = status_group)) +
+     ggplot(aes(installer, perc, fill = status_group)) +
      geom_bar(stat = "identity") +
-     geom_text(aes(go_installer, perc, label = paste(perc, "%"),
-                   vjust = .05, hjust = .5),
-               size = 4, position = position_stack(vjust = 0.5))+
      theme_hc()+
     labs(title = "")+
      scale_fill_economist(name = "")+
-    theme(legend.position = "bottom")
+    theme(legend.position = "bottom",
+          axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
 ```
 
 ```{r}
@@ -173,34 +166,11 @@ summary(pump_data$construction_year)
 
 pump_data[, construction_year2  := cut(construction_year, breaks = c(1959, 1988, 2000, 2008, 2013))]
 pump_data[, construction_year2 := fct_explicit_na(construction_year2, na_level = "unknown")]
-```
-
-```{r}
-pump_data[, waterpoint_type_group1 := fct_lump_n(waterpoint_type_group, n = 5)]
-
-
-pump_data[set == "train", .N, by = .(waterpoint_type_group1,status_group)] %>%
-    .[, perc := round(N/sum(N) * 100, 2), by = .(waterpoint_type_group1)] %>%
-    
-     ggplot(aes(waterpoint_type_group1, perc, fill = status_group)) +
-     geom_bar(stat = "identity") +
-     geom_text(aes(waterpoint_type_group1, perc, label = paste(perc, "%"),
-                   vjust = .05, hjust = .5),
-               size = 4, position = position_stack(vjust = 0.5))+
-     theme_hc()+
-    labs(title = "")+
-     scale_fill_economist(name = "")+
-    theme(legend.position = "bottom")
-
-
+summary(pump_data$construction_year2)
 ```
 
 
-```{r}
-pump_data[, management_group1:= fct_lump_n(management_group, n = 3)]
 
-pump_data[,.N, by = management_group1] %>% kable()
-```
 
 
 ```{r}
@@ -233,77 +203,116 @@ train_ind <- sample(1:nrow(train_set_dmmy), round(0.7 * nrow(train_set)))
 train_set_dmmy[, status_group := factor(status_group)]
 
 train_set1 <- train_set_dmmy[train_ind,]
+set.seed(100)
+cv_fold <- createFolds(train_set1$status_group, k = 3)
 
-xgb_ctrl <- trainControl(method = "cv",
-                        number = 5,
+```
+
+
+
+```{r}
+library(caretEnsemble)
+
+train_ctrl <- trainControl(method = "cv",
+                        number = 3,
                         summaryFunction = multiClassSummary,
                         classProbs = TRUE,
                         allowParallel=T,
-                        #index = cv_fold,
+                        index = cv_fold,
                         verboseIter = TRUE,
-                        savePredictions = TRUE,
+                        returnResamp = "all", 
+                        savePredictions = "final", 
                         search = "grid")
-# 
-# xgb_grid <- expand.grid(nrounds = c(10, 50, 100),
-#                         eta = seq(0.06, .2, length.out = 3),
-#                         max_depth = c(80, 150, 200),
-#                         gamma = c(0,.01, 0.1),
-#                         colsample_bytree = c(0.6, 0.7,0.8),
-#                         min_child_weight = c(0.6, 0.7,0.8),
-#                         subsample =  c(0.6, 0.7,0.8)
-# 
-#     )
-
-
 
 
 xgb_grid <-  expand.grid(nrounds = c(50,100),
                         eta = 0.06,
-                        max_depth = 50,
-                        gamma = c(0.001, 8),
+                        max_depth =c(10, 50),
+                        gamma = 6,
                         colsample_bytree = 0.8,
-                        min_child_weight =0.6,
+                        min_child_weight =0.8,
                         subsample =  .8)
 
 
-xgb_model <-train(status_group~.,
-                 data=train_set1,
-                 method="xgbTree",
-                 trControl= xgb_ctrl,
-                 tuneGrid=xgb_grid,
-                 verbose=T,
-                 metric="ROC",
-                 nthread =3
-                     
-    )
 
-xgb_model 
+ranger_grid <- expand.grid(splitrule = "extratrees",
+                        mtry = c(20, 50, 100),
+                        min.node.size = 1)
+
+
+glmnet_grid <- expand.grid(alpha = c(0, 1),
+                           lambda = seq(0.0001, 1, length = 3))
+
 ```
 
 
 
+```{r}
+
+set.seed(100)
+
+library(tictoc)
+
+tic()
+
+model_list <- caretList(
+   status_group~.,
+    data=train_set1,
+    trControl=train_ctrl,
+    tuneList = list(caretModelSpec(method="xgbTree", tuneGrid= xgb_grid),
+                    caretModelSpec(method="ranger", tuneGrid= ranger_grid),
+                    caretModelSpec(method="glmnet", tuneGrid= glmnet_grid)
+                    
+                    )
+)
+
+toc()
+
+```
+
+
+```{r}
+model_list
+```
 
 
 
 ```{r}
+
 test_own <- train_set_dmmy[-train_ind]
-pred <- predict(xgb_model, type="raw", newdata = test_own)
+
+
+accuracy <- c()
+for (i in 1:length(model_list)) {
+    
+    rf <- model_list[[i]]
+    
+    pred <- predict(rf,  newdata = test_own)
+    
+    
+   #auc[i] <-  caret::(pred, test_own$status_group)
+   accuracy[i] <-  round(Metrics::accuracy(pred, test_own$status_group) * 100, 2)
+   
+   
+    
+}
+
+
+pred_df <- data.frame(models = names(model_list), accuracy)
+
+DT::datatable(pred_df)
 ```
-
-
-
 
 
 ```{r}
-confusionMatrix(pred,
-                test_own$status_group)
+resamples_models <- resamples(model_list)
+
+dotplot(resamples_models, metric = "AUC")
+
+
+
 ```
 
-
-
-```{r}
-SubmissionFormat <- fread("SubmissionFormat.csv")
-```
 
 
 
