@@ -40,3 +40,5 @@ vignettes/*.pdf
 
 # large files
 *.tif
+
+*.zip
