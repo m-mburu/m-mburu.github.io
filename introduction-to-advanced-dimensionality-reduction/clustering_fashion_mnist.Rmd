@@ -1,0 +1,92 @@
+---
+title: "Clustering Fashion mnist"
+author: "Mburu"
+date: "4/8/2020"
+output:
+  html_document:
+    theme: united
+    highlight: pygments
+    df_print: paged
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+
+
+```{r}
+library(tidyverse)
+library(knitr)
+library(data.table)
+
+fashion_mnist <- fread(unzip("fashionmnist.zip", "fashion-mnist_train.csv"))
+```
+
+## Process
+
+```{r}
+##
+xy_axis <- data.frame(x = expand.grid(1:28, 28:1)[,1],
+                      y = expand.grid(1:28, 28:1)[,2])
+
+
+# Get the data from the last image
+sample_10 <- fashion_mnist[sample(1:.N, 10), -1] %>% as.matrix()
+sample_10 <- t(sample_10)
+
+plot_data <- cbind(xy_axis, sample_10 )
+
+setDT(plot_data, keep.rownames = "pixel")
+# Observe the first records
+head(plot_data) %>% kable()
+
+```
+
+
+## plot Data
+
+````{r}
+plot_data_m <- melt(plot_data, id.vars = c("pixel", "x", "y"))
+
+# Plot the image using ggplot()
+ggplot(plot_data_m, aes(x, y, fill = value)) +
+    geom_raster()+
+     facet_wrap(~variable)+
+    scale_fill_gradient(low = "white",
+                        high = "black", guide = FALSE)+
+    theme(axis.line = element_blank(),
+                  axis.text = element_blank(),
+                  axis.ticks = element_blank(),
+                  axis.title = element_blank(),
+                  panel.background = element_blank(),
+                  panel.border = element_blank(),
+                  panel.grid.major = element_blank(),
+                  panel.grid.minor = element_blank(),
+                  plot.background = element_blank())
+   
+```
+
+
+## Choosing K
+
+
+```{r}
+set.seed(100)
+
+fashion_small <- fashion_mnist[sample(1:.N, 10000)]
+
+kmeans_list <- list()
+tot_withinss <- c()
+for (k in 1:20) {
+  
+  kmeans_mnist <- kmeans(fashion_small[, -1], centers =  k)
+  tot_withinss[k] <- kmeans_mnist$tot.withinss
+}
+
+
+plot(tot_withinss)
+
+```
+

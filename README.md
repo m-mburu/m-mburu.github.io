@@ -10,5 +10,4 @@ Mburu
 | Zindi loan prediction        | [Notebook (HTML)](https://m-mburu.github.io/loan_prediction/loan_prediction.html)                                                         | [R Markdown (Rmd)](loan_prediction/loan_prediction.Rmd)                                                        |
 | TZ Water Pumps               | [Notebook (HTML)](https://m-mburu.github.io/water_pumps_tz/water_pumps.html)                                                              | [R Markdown (Rmd)](water_pumps_tz/water_pumps.Rmd)                                                             |
 | Intro to dimension reduction | [Notebook (HTML)](https://m-mburu.github.io/introduction-to-advanced-dimensionality-reduction/introduction_dimensionality_reduction.html) | [R Markdown (Rmd)](ntroduction-to-advanced-dimensionality-reduction/introduction_dimensionality_reduction.Rmd) |
-
-C:.io-to-advanced-dimensionality-reduction
+| Clustering                   | [Notebook (HTML)](https://m-mburu.github.io/introduction-to-advanced-dimensionality-reduction/clustering_fashion_mnist.html)              | [R Markdown (Rmd)](ntroduction-to-advanced-dimensionality-reduction/clustering_fashion_mnist.Rmd)              |

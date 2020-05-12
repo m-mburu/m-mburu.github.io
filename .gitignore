@@ -42,3 +42,5 @@ vignettes/*.pdf
 *.tif
 
 *.zip
+# large file 2
+fashion-mnist_train.csv
