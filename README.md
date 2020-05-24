@@ -1,4 +1,4 @@
-My ML Journey/ Just having Fun
+My ML/Viz/Spatial Journey/ Just having Fun
 ================
 Mburu
 4/18/2020
@@ -11,3 +11,4 @@ Mburu
 | TZ Water Pumps               | [Notebook (HTML)](https://m-mburu.github.io/water_pumps_tz/water_pumps.html)                                                              | [R Markdown (Rmd)](water_pumps_tz/water_pumps.Rmd)                                                             |
 | Intro to dimension reduction | [Notebook (HTML)](https://m-mburu.github.io/introduction-to-advanced-dimensionality-reduction/introduction_dimensionality_reduction.html) | [R Markdown (Rmd)](ntroduction-to-advanced-dimensionality-reduction/introduction_dimensionality_reduction.Rmd) |
 | Clustering                   | [Notebook (HTML)](https://m-mburu.github.io/introduction-to-advanced-dimensionality-reduction/clustering_fashion_mnist.html)              | [R Markdown (Rmd)](ntroduction-to-advanced-dimensionality-reduction/clustering_fashion_mnist.Rmd)              |
+| Kenya maps                   | [Notebook (HTML)](https://m-mburu.github.io/kenya_population/kenya_maps.html)                                                             | [R Markdown (Rmd)](/kenya_population/kenya_maps.Rmd)                                                           |

@@ -44,3 +44,5 @@ vignettes/*.pdf
 *.zip
 # large file 2
 fashion-mnist_train.csv
+micro_train.csv
+micro_test.csv

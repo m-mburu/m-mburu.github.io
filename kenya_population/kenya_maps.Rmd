@@ -1,0 +1,87 @@
+---
+title: "Kenya Maps"
+author: "Mburu"
+date: "5/24/2020"
+output:
+  html_document:
+    theme: lumen
+    highlight: pygments
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+## 
+
+```{r}
+library(tidyverse)
+library(data.table)
+library(tmap)
+library(sf)
+```
+
+
+```{r}
+kenya_5yr_births <- readGoogleSheet("https://docs.google.com/spreadsheets/d/e/2PACX-1vSf-yNXNk68cIOH0Rb6alaDk9SxKEMm3h6kb2p8jxT8oMdfj4OqUDbs2Ln9OOGGCI9V7SNiZJCDWm4H/pubhtml")
+
+kenya_5yr_births <- cleanGoogleTable(kenya_5yr_births , table = 1, skip = 1 ) %>%
+  setDT()
+```
+
+
+
+```{r}
+old_nms_births <- names(kenya_5yr_births)
+new_nms_births <- gsub("\\s", "_", old_nms_births) %>%
+    tolower()
+
+setnames(kenya_5yr_births, old_nms_births, new_nms_births)
+```
+
+
+```{r}
+numerics_nms <- new_nms_births[new_nms_births != "county"]
+
+kenya_5yr_births[, (numerics_nms) := lapply(.SD, function(x) gsub(",", "", x)), .SDcols = numerics_nms]
+kenya_5yr_births[, (numerics_nms) := lapply(.SD, as.numeric), .SDcols = numerics_nms]
+```
+
+
+```{r}
+kenya_counties <- st_read("County")
+
+ggplot(kenya_counties)+
+  geom_sf() +
+  theme_void()
+```
+
+
+```{r}
+setnames(kenya_counties, "COUNTY", "county")
+
+```
+
+```{r}
+kenya_5yr_births[, county := tolower(gsub("\\s", "-", county))]
+kenya_5yr_births[county == "elgeyo-marakwet", county := "keiyo-marakwet" ]
+kenya_5yr_births[county == "nairobi-city" , county := "nairobi"]
+kenya_5yr_births[county == "tharaka-nithi"  , county := "tharaka" ]
+kenya_5yr_births[county == "homabay"  , county := "homa-bay" ]
+setDT(kenya_counties)
+kenya_counties[, county := tolower(gsub("\\s", "-", county))]
+
+kenya_births_counties <- merge(kenya_counties, kenya_5yr_births, by = "county" )
+
+kenya_births_counties <- st_set_geometry(kenya_births_counties, "geometry")
+```
+
+
+```{r, fig.width = 7, fig.height = 6 }
+ttm()
+tm_shape(kenya_births_counties)+
+  tm_borders(col = "gold")+
+  tm_fill(col = "per_cent_in_health_facility")
+```
+
