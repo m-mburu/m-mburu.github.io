@@ -16,6 +16,7 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ## 
 
 ```{r}
+library(plotly)
 library(tidyverse)
 library(data.table)
 library(tmap)
@@ -84,7 +85,8 @@ ttm()
 tm_shape(kenya_births_counties)+
   tm_borders(col = "gold")+
   tm_fill(col = "per_cent_in_health_facility")+
-  tm_layout(title = "Percentage of health facility births in Kenya")
+  tm_layout(title = "", main.title = "Percentage of health facility births in Kenya")
+ttm()
 ```
 
 ```{r}
@@ -118,7 +120,6 @@ age_cat_m[, Perc := round(value/Total*100, 2)]
 
 ```{r}
 library(ggthemes)
-library(plotly)
 age_cat_m <- age_cat_m[Age != "Total"]
 age_cat_m[, Age := as.numeric(Age)]
 pop_plot <- ggplot(age_cat_m, aes(Age, Perc, group = Sex))+
@@ -130,4 +131,144 @@ pop_plot <- ggplot(age_cat_m, aes(Age, Perc, group = Sex))+
 
 ggplotly(pop_plot)
 ```
+
+
+
+```{r}
+library(knitr)
+library(DT)
+crops <-fread("distribution-of-households-growing-other-crops-by-type-county-and-sub-county-2019-census-volume-.csv")
+setnames(crops, "County/Sub County", "county")
+
+crops_m <- melt(crops, id.vars = c("county", "Farming"), 
+                variable.factor = F, variable.name = "crops",
+                value.name = "households")
+
+nms <- c("Farming", "households")
+crops_m[, (nms) := lapply(.SD, function(x) gsub(",", "", x)), .SDcols = nms]
+crops_m[, (nms) := lapply(.SD, as.numeric), .SDcols = nms]
+crops_m[, (nms) := lapply(.SD, function(x) ifelse(is.na(x), 0, x)), .SDcols = nms]
+crops_m[, Perc := round(households/Farming * 100, 2)]
+
+set.seed(100)
+crops_m[sample(1:nrow(crops_m),20)] %>% datatable()
+```
+
+
+```{r}
+kenya_crops <-crops_m[county == "KENYA"]
+
+setorder(kenya_crops, -Perc)
+datatable(kenya_crops)
+```
+
+
+
+```{r}
+crops_bar <- ggplot(kenya_crops, aes(reorder(crops, Perc), Perc))+
+  geom_bar(stat = "identity")+
+  labs(y = "Percentage of households", x = "Crops",
+       title = "Percentage of Kenyan households growing crops")+
+  theme_hc()+
+  coord_flip() 
+  
+
+ggplotly(crops_bar)
+```
+
+
+
+```{r}
+#crops_m[, county := tolower(county)]
+
+crops_m[, county := tolower(gsub("\\s", "-", county))]
+
+crops_m[county == "elgeyo/marakwet", county := "keiyo-marakwet"]
+crops_m[county == "tharaka---nithi", county := "tharaka"]
+crops_m[county ==  "taita/taveta", county := "taita-taveta"]
+
+crops_counties_dat <- merge(crops_m, kenya_counties, by = "county")
+
+farm <- unique(crops_counties_dat, by = c("county","Farming"))
+
+farm <- farm %>% group_by(county) %>%
+  filter(Farming == max(Farming)) %>%
+  setDT()
+
+crops_counties_dat <- merge(crops_counties_dat, 
+                            farm[, .(county, Farming)], 
+                            by = c("county", "Farming"))
+
+
+pop_crops_counties <- crops_counties_dat %>%
+  group_by(county) %>%
+  filter(Perc == max(Perc)) %>%
+  ungroup()%>%
+  mutate(county = paste0(county," ", crops," ", Perc, "%"))
+
+pop_crops_counties <- st_set_geometry(pop_crops_counties, "geometry")
+```
+
+
+
+```{r}
+ttm()
+tm_shape(pop_crops_counties)+
+  tm_borders(col = "gold")+
+  tm_fill(col = "crops")+
+  tm_bubbles(size = "Perc", col = "gold")+
+  tm_layout(main.title = "Popular crop grown per county Kenya")
+ttm()
+```
+
+
+```{r}
+pop_crops_counties_not_maize <- crops_counties_dat %>%
+  group_by(county) %>%
+  filter(crops != "Maize") %>%
+  filter(Perc == max(Perc)) %>%
+  ungroup()%>%
+  mutate(county = paste0(county," ", crops," ", Perc, "%"))
+
+pop_crops_counties_not_maize <- st_set_geometry(pop_crops_counties_not_maize, "geometry")
+```
+
+
+```{r}
+ttm()
+tm_shape(pop_crops_counties_not_maize)+
+  tm_borders(col = "gold")+
+  tm_fill(col = "crops")+
+  #tm_bubbles(size = "Perc", col = "gold")+
+  tm_layout(main.title = "Popular crop grown per county Kenya apart from maize")
+ttm()
+```
+
+
+
+```{r}
+
+pop_crops_counties_not_mbp <- crops_counties_dat %>%
+  group_by(county) %>%
+  filter(!crops %in% c("Maize", "Beans", "Potatoes")) %>%
+  filter(Perc == max(Perc)) %>%
+  ungroup()%>%
+  mutate(county = paste0(county," ", crops," ", Perc, "%"))
+
+pop_crops_counties_not_mbp <- st_set_geometry(pop_crops_counties_not_mbp, "geometry")
+```
+
+
+
+```{r}
+ttm()
+tm_shape(pop_crops_counties_not_mbp)+
+  tm_borders(col = "gold")+
+  tm_fill(col = "crops")+
+  #tm_bubbles(size = "Perc", col = "gold")+
+  tm_layout(main.title = "Popular crop grown per county Kenya apart from maize, beans or potatoes")
+#ttm()
+```
+
+
 
