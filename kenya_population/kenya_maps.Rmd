@@ -21,6 +21,7 @@ library(tidyverse)
 library(data.table)
 library(tmap)
 library(sf)
+library(DT)
 ```
 
 
@@ -101,6 +102,7 @@ kenyan_pop[, (numerics_nms) := lapply(.SD, as.numeric), .SDcols = numerics_nms]
 kenyan_pop[, (numerics_nms) := lapply(.SD, function(x) ifelse(is.na(x), 0, x)), .SDcols = numerics_nms]
 kenyan_pop[, Age := gsub("Sep", "09", Age)]
 kenyan_pop[, Age := gsub("Oct", "10", Age)]
+kenyan_pop[,Total:= Reduce(`+`, .SD),.SDcols= numerics_nms]
 ```
 
 
@@ -108,13 +110,18 @@ kenyan_pop[, Age := gsub("Oct", "10", Age)]
 age_cat <- kenyan_pop[!grepl("-", Age)]
 
 age_cat[is.na(age_cat)] <- NA
-age_cat[,Total:= Reduce(`+`, .SD),.SDcols= numerics_nms]
+#age_cat[,Total:= Reduce(`+`, .SD),.SDcols= numerics_nms]
 ```
 
 
 ```{r}
 age_cat_m <- melt(age_cat, id.vars = c("Age", "Total"), variable.name = "Sex")
 age_cat_m[, Perc := round(value/Total*100, 2)]
+```
+
+
+```{r}
+
 ```
 
 
@@ -135,8 +142,67 @@ ggplotly(pop_plot)
 
 
 ```{r}
+
+age_cat[is.na(Age), Age := 100]
+
+age_cat[, Age := as.numeric(Age)]
+age_cat[, age_factor :=  cut(Age,
+                             breaks = c(0, 5, 15, 20, 30, 40, 50, 65, 100 ), 
+                             include.lowest = T,
+                             labels = c("0-5", "6-15", "16-20", 
+                                        "20-30", "31-40", "41,50]", 
+                                        "51-65", "> 65"))]
+
+
+
+age_cat_sum <- age_cat[, .(sum_total = sum(Total)), by = age_factor] %>%
+  .[, Perc := round(sum_total/sum(sum_total)*100,2)]
+```
+
+
+
+# Age Summary Stats
+
+```{r}
+age_cat <- age_cat[!is.na(Age)]
+list_df <- list()
+for (i in 1:nrow(age_cat)) {
+  list_df[[i]]<- data.table (Age = rep(age_cat[i,Age], age_cat[i, Total]))
+}
+
+dt_age <- rbindlist(list_df)
+
+
+dt_age[, .(Mean = round(mean(Age),1), 
+           Median = median(Age), 
+           First_quartile = quantile(Age, 0.25),
+           Third_quartile = quantile(Age, 0.75))] %>%
+  datatable()
+
+```
+
+
+
+```{r}
+library(scales)
+ggplot(dt_age, aes(Age)) +
+    geom_histogram(binwidth = 5) +
+    labs(y = "Population")+
+    theme_economist()+
+    scale_y_continuous(label=comma, breaks =  seq(from = 0, to = 6500000, by = 500000))+
+    labs(title = "Kenyan population 2019 census")+
+    theme(
+      axis.text = element_text(size =12, face = "bold"),
+      axis.title = element_text(size =12, face = "bold"))
+
+#ggplotly(pop_plot2)
+```
+
+
+
+```{r}
 library(knitr)
-library(DT)
+
 crops <-fread("distribution-of-households-growing-other-crops-by-type-county-and-sub-county-2019-census-volume-.csv")
 setnames(crops, "County/Sub County", "county")
 
