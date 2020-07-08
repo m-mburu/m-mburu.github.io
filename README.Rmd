@@ -21,7 +21,8 @@ knitr::opts_chunk$set(echo = TRUE)
 | Intro to dimension reduction | [Notebook (HTML)](https://m-mburu.github.io/introduction-to-advanced-dimensionality-reduction/introduction_dimensionality_reduction.html) | [R Markdown (Rmd)](ntroduction-to-advanced-dimensionality-reduction/introduction_dimensionality_reduction.Rmd)  |
 | Clustering | [Notebook (HTML)](https://m-mburu.github.io/introduction-to-advanced-dimensionality-reduction/clustering_fashion_mnist.html) | [R Markdown (Rmd)](ntroduction-to-advanced-dimensionality-reduction/clustering_fashion_mnist.Rmd)  |
 | Kenya maps | [Notebook (HTML)](https://m-mburu.github.io/kenya_population/kenya_maps.html) | [R Markdown (Rmd)](/kenya_population/kenya_maps.Rmd)  |
-| Kenya 2019 household assets | [Notebook (HTML)](https://m-mburu.github.io/kenya_population/household_assets_2019census.html) | [R Markdown (Rmd)](/kenya_population/household_assets_2019census.Rmd)  |
+| Kenya 2019 household assets | [Notebook (HTML)](https://m-mburu.github.io/kenya_population/household_assets_2019census.html) | [R Markdown (Rmd)](/kenya_population/household_assets_2019census.Rmd)  | 
+| Introduction to association analysis |[Notebook (HTML)](https://m-mburu.github.io/association_analysis/association_analysis.html) | [R Markdown (Rmd)](/association_analysis/association_analysis.Rmd)  |
 
 
 
