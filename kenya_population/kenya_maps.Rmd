@@ -1,5 +1,5 @@
 ---
-title: "Kenya Maps"
+title: "Kenya Census Data"
 author: "Mburu"
 date: "5/24/2020"
 output:
@@ -19,9 +19,9 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 library(plotly)
 library(tidyverse)
 library(data.table)
-library(tmap)
 library(sf)
 library(DT)
+library(tmap)
 ```
 
 
@@ -82,12 +82,16 @@ kenya_births_counties <- st_set_geometry(kenya_births_counties, "geometry")
 
 
 ```{r, fig.width = 7, fig.height = 6 }
-ttm()
-tm_shape(kenya_births_counties)+
+
+map1 <- tm_shape(kenya_births_counties)+
   tm_borders(col = "gold")+
-  tm_fill(col = "per_cent_in_health_facility")+
-  tm_layout(title = "", main.title = "Percentage of health facility births in Kenya")
-ttm()
+  tm_polygons(col = "per_cent_in_health_facility")+
+  tm_layout(title = "Percentage of health facility births in Kenya")
+
+
+tmap_leaflet(map1)
+
+
 ```
 
 ```{r}
@@ -233,6 +237,7 @@ datatable(kenya_crops)
 ```{r}
 crops_bar <- ggplot(kenya_crops, aes(reorder(crops, Perc), Perc))+
   geom_bar(stat = "identity")+
+  theme_economist()+
   labs(y = "Percentage of households", x = "Crops",
        title = "Percentage of Kenyan households growing crops")+
   theme_hc()+
@@ -276,15 +281,21 @@ pop_crops_counties <- st_set_geometry(pop_crops_counties, "geometry")
 ```
 
 
+# Popular crop grown per county Kenya
 
-```{r}
-ttm()
-tm_shape(pop_crops_counties)+
+```{r, first_map, fig.width = 6.3, fig.height = 5}
+
+map2 <- tm_shape(pop_crops_counties)+
   tm_borders(col = "gold")+
   tm_fill(col = "crops")+
   tm_bubbles(size = "Perc", col = "gold")+
-  tm_layout(main.title = "Popular crop grown per county Kenya")
-ttm()
+  tm_layout(main.title = "Popular crop grown per county Kenya",
+            title.position = c(0.2, "top"))
+
+
+map2 <- tmap_leaflet(map2)
+ 
+map2
 ```
 
 
@@ -299,15 +310,19 @@ pop_crops_counties_not_maize <- crops_counties_dat %>%
 pop_crops_counties_not_maize <- st_set_geometry(pop_crops_counties_not_maize, "geometry")
 ```
 
+# Popular crop grown per county Kenya apart from maize
 
 ```{r}
-ttm()
-tm_shape(pop_crops_counties_not_maize)+
+
+map3 <- tm_shape(pop_crops_counties_not_maize)+
   tm_borders(col = "gold")+
-  tm_fill(col = "crops")+
+  tm_fill(col = "crops")
   #tm_bubbles(size = "Perc", col = "gold")+
-  tm_layout(main.title = "Popular crop grown per county Kenya apart from maize")
-ttm()
+  # tm_layout(title = "Popular crop grown per county Kenya apart from maize",
+  #           title.position = c(0.2, "top"))
+
+
+tmap_leaflet(map3)
 ```
 
 
@@ -325,16 +340,93 @@ pop_crops_counties_not_mbp <- st_set_geometry(pop_crops_counties_not_mbp, "geome
 ```
 
 
+# Popular crop grown per county Kenya apart from maize, beans or potatoes
 
 ```{r}
-ttm()
-tm_shape(pop_crops_counties_not_mbp)+
+
+map4 <- tm_shape(pop_crops_counties_not_mbp)+
   tm_borders(col = "gold")+
   tm_fill(col = "crops")+
   #tm_bubbles(size = "Perc", col = "gold")+
-  tm_layout(main.title = "Popular crop grown per county Kenya apart from maize, beans or potatoes")
-#ttm()
+  tm_layout(title = "Popular crop grown per county Kenya apart from maize, beans or potatoes",
+            title.position = c(0.2, "top"))
+
+
+tmap_leaflet(map4)
 ```
 
 
+
+
+```{r}
+kenya_subcounties_agri <- fread("distribution-of-households-practicing-agriculture-fishing-and-irrigation-by-county-and-sub-count.csv")
+```
+
+
+
+
+```{r}
+library(raster)
+#get projection for map
+#proj4string = CRS(as.character(projection(world)))
+# gps_data <- fread("gps_data.csv")
+# gps_data <- gps_data[!is.na(Latitude)]
+# setorder(gps_data, record_id)
+# chain_shape <- SpatialPointsDataFrame(gps_data[,.(Longitude,Latitude)], 
+#                                                 gps_data ,    #the R object to convert
+#                                                 proj4string = proj4string)   # assign a CRS 
+# 
+# 
+# 
+# 
+# 
+# gps_data[, pop_density := raster::extract(world, chain_shape, weights=FALSE, fun=mean)]
+# 
+
+#read wasting prevalance and stunting
+kenya_sp <- as(kenya_counties, "Spatial" )
+setDT(kenya_counties)
+world_wasting <- raster("wasting_post_means.TIF")
+
+world_underwight <- raster("underweight_post_means.TIF")
+
+world_stunting <- raster("stunt_post_means.TIF")
+
+```
+
+
+```{r}
+#extracting values
+kenya_counties[, wasting_prev := raster::extract(world_wasting,
+                                                 kenya_sp, weights=FALSE, fun=median,
+                                                 na.rm = T)]
+
+kenya_counties[, underweight_prev := raster::extract(world_underwight,
+                                                     kenya_sp, weights=FALSE, fun=median,
+                                                     na.rm = T)]
+
+kenya_counties[, stunt_prev := raster::extract(world_stunting,
+                                               kenya_sp, weights=FALSE, fun=median,
+                                               na.rm = T)]
+
+```
+
+```{r}
+kenya_counties[, OBJECTID := county]
+kenya_counties_st <- st_set_geometry(kenya_counties, "geometry")
+```
+
+
+```{r}
+map4 <- tm_shape(kenya_counties_st)+
+  tm_borders(col = "gold")+
+  tm_fill(col = "stunt_prev", id = "county", 
+          title = "DF")
+
+tmap_leaflet(map4)
+```
+```{r} 
+household_assets <- fread("percentage-distribution-of-conventional-households-by-ownership-of-selected-household-assets-201.csv")
+
+```
 

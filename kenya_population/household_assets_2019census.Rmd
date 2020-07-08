@@ -1,0 +1,134 @@
+---
+title: "Kenya Household Assets"
+author: "Mburu"
+date: "7/7/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+# Kenya Household Assets
+
+I figured that it will be important for me to do this to show why it is impossible for online learning to be adopted in Kenya.
+
+```{r cars}
+#Packages used
+
+library(plotly)
+library(tidyverse)
+library(data.table)
+library(sf)
+library(DT)
+library(tmap)
+library(ggthemes)
+```
+
+#
+
+```{r} 
+household_assets <- fread("percentage-distribution-of-conventional-households-by-ownership-of-selected-household-assets-201.csv")
+
+kenya_shapefile <- st_read("County") %>% setDT()
+
+kenya_shapefile[, county := tolower(COUNTY)]
+
+setnames(household_assets, 
+         c("County / Sub-County", "Conventional Households"  ), 
+         c("county", "households"))
+```
+
+
+
+```{r}
+
+household_assets[, households := as.numeric(gsub(",|AR K    ", "", households))]
+
+household_assets[,  county := tolower(county)]
+
+sub_county <- household_assets %>% 
+    group_by(county) %>%
+    filter(households == max(households)) %>% setDT()
+```
+
+
+
+```{r}
+
+sub_county_melt <- melt(sub_county, 
+                        id.vars = c("county", "households"))
+
+
+```
+
+
+```{r, fig.width=10, fig.height=4.5}
+kenya_dat <- sub_county_melt[county == "kenya"]
+
+p <- ggplot(kenya_dat, aes(variable, value)) +
+    geom_bar(stat = "identity", width = 0.5, fill ="slategray2"  ) +
+    geom_text(aes(variable, value, label = paste0(value, "%")),
+              position = position_dodge(width = 0.5),
+              vjust = 0.001, size = 4)+
+    labs(x = "Household assets", y = "Percentage",
+         title = "Percentage of households with various assets 2019 census",
+         caption = "twitter\n@mmburu_w")+
+    theme_fivethirtyeight()
+p
+```
+
+# Merge shapefile with asset data sets
+
+```{r}
+ 
+sub_county_melt[county == "elgeyo/marakwet", county := "keiyo-marakwet"]
+sub_county_melt[county == "tharaka-nithi", county := "tharaka"]
+sub_county_melt[county ==  "taita/taveta", county := "taita taveta"]
+sub_county_melt[county ==  "nairobi city", county := "nairobi"]
+
+county_shapes <- merge(kenya_shapefile, sub_county_melt, by = "county") 
+
+setnames(county_shapes, "value", "Percentage")
+```
+
+# Computer devices data
+
+```{r}
+
+computer <- county_shapes[variable  %in% c("Desk Top\nComputer/\nLaptop/ Tablet")]
+
+computer <- st_set_geometry(computer, "geometry")
+```
+
+
+# Percentage of households with computer
+
+- That is a tablet/laptop/desktop
+
+
+```{r, fig.width=7, fig.height=6}
+#ttm()
+tm_shape(computer)+
+    tm_borders(col = "grey")+
+    tm_fill(col = "Percentage")+
+    tm_layout(title = "% of households with laptop/tablet/desk top \n 2019 census",
+              title.size = 1, title.position = c(0.3, 0.95))
+```
+
+
+# Percentage of household that can acess internet
+
+- This looks like is internet access through mobile phones
+
+```{r, fig.width=7, fig.height=6}
+internet <- county_shapes[variable == "Internet"]
+
+internet <- st_set_geometry(internet, "geometry")
+
+tm_shape(internet)+
+    tm_borders(col = "grey")+
+    tm_fill(col = "Percentage")+
+    tm_layout(title = "% of households with internet acess",
+              title.size = 1, title.position = c(0.3, 0.95))
+```
