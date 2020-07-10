@@ -46,3 +46,10 @@ vignettes/*.pdf
 fashion-mnist_train.csv
 micro_train.csv
 micro_test.csv
+
+
+kaggle/big5test/data
+kaggle/mnist_digits/data
+
+data-final.csv
+
