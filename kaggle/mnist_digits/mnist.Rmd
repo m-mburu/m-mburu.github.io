@@ -5,6 +5,7 @@ date: "7/10/2020"
 output:
   html_document:
     toc: true
+    toc_depth: 2
     toc_float:
       collapsed: false
       smooth_scroll: false
@@ -17,8 +18,9 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
 
+# MNIST Digits
 
-### Read data and Load libraries
+## Read data and Load libraries
 
 ```{r }
 
@@ -27,22 +29,27 @@ library(data.table)
 library(keras)
 library(caret)
 library(DT)
+library(caretEnsemble)
+library(tictoc)
 
 train_data <- fread("data/train.csv")
-
+set.seed(100)
+N = nrow(train_data)
+sample_one <- sample(N, 5000)
+train_data <- train_data[sample_one]
 test_data <- fread("data/test.csv")
 
 ```
 
-### Frequency of digits
+## Frequency of digits
 
-```{r}
+```{r, fig.height=4.5}
 ggplot(train_data, aes(x = factor(label))) +
     geom_bar()
 ```
 
 
-### Randomly sample 10 digits
+## Randomly sample 12 digits
 
 ```{r}
 #  image coordinates
@@ -50,7 +57,8 @@ xy_axis <- data.frame(x = expand.grid(1:28, 28:1)[,1],
                       y = expand.grid(1:28, 28:1)[,2])
 
 
-# get 10 images
+# get 12 images
+set.seed(100)
 sample_10 <- train_data[sample(1:.N, 12), -1] %>% as.matrix()
 
 datatable(sample_10, 
@@ -66,7 +74,7 @@ setDT(plot_data, keep.rownames = "pixel")
 head(plot_data) %>% datatable()
 ```
 
-### Plot the 12 digits
+## Plot the 12 digits
 
 ````{r}
 plot_data_m <- melt(plot_data, id.vars = c("pixel", "x", "y"))
@@ -89,14 +97,18 @@ ggplot(plot_data_m, aes(x, y, fill = value)) +
    
 ```
 
-### Prepare data for model fitting
+## Prepare data for model fitting
+
+- Decided to have a self test set
 
 ```{r }
 N = nrow(train_data)
-sample_train <- sample(N, size = round(0.8 *N ))
-train_y <-to_categorical(train_data$label, 10)
+sample_train <- sample(N, size = round(0.75 *N ))
+test_own <- train_data[-sample_train]
+train_data2 <- train_data[sample_train, ]
+train_y <-to_categorical(train_data2$label, 10)
 
-train_x <- train_data[, -1]
+train_x <- train_data2[, -1]
 #convert to matrix
 train_x <- train_x %>%
     as.matrix()
@@ -106,7 +118,7 @@ train_x <- train_x/255
 ```
 
 
-### Construct model layers
+## Construct model layers
 
 ```{r }
 model <- keras_model_sequential() 
@@ -123,24 +135,35 @@ model %>%
 ```
 
 
-### Compile model
+## Compile model
 
-```{r, message=TRUE }
+```{r}
 model %>% compile(
     loss = 'categorical_crossentropy',
     optimizer = 'adam',
     metrics = c('accuracy'))
 ```
 
-### Fit model
+## Fit model
 
-```{r, message=TRUE}
+```{r}
 hist <- model %>% fit(train_x, train_y, 
                       epochs = 9, batch_size = 1000,
                       validation_split = .2)
 
 
 plot(hist,type = "b")
+```
+
+## Own test
+
+```{r}
+test_own_x <- test_own[, -1] %>% as.matrix()/255
+
+test_own_pred <- model %>% predict_classes(test_own_x) %>% factor()
+
+confusionMatrix(data = test_own_pred, reference = factor(test_own$label))
+
 ```
 
 ### Save predictions
@@ -159,4 +182,220 @@ write.csv(df_pred1, file = "sample_submission.csv", row.names = F)
 ```
 
 
-##
+# Compare between tsne amd glmr
+
+## TSNE
+
+```{r, fig.width = 6, fig.height = 4}
+library(Rtsne)
+
+tsne_output <- Rtsne(train_x, check_duplicates = FALSE, PCA = FALSE)
+
+# Generate a data frame to plot the result
+tsne_train <- data.table(tsne_x = tsne_output$Y[,1],
+                        tsne_y = tsne_output$Y[,2],
+                        label =  train_data2$label)
+
+# Plot the embedding usign ggplot and the label
+ggplot(tsne_train,
+       aes(x = tsne_x, y = tsne_y, color = factor(label))) + 
+  ggtitle("t-SNE of MNIST data set") + 
+  geom_text(aes(label = label)) +
+    theme(legend.position = "none")
+
+
+```
+
+## Plot tsne group means
+
+```{r}
+tsne_mean <- tsne_train[, 
+                        .(mean_x = mean(tsne_x), mean_y = mean(tsne_y)),
+                        by = label]
+
+
+ggplot(tsne_mean,
+       aes(x = mean_x, y = mean_y, color = factor(label))) + 
+  ggtitle("t-SNE of MNIST data set group means") + 
+  geom_text(aes(label = label)) +
+    theme(legend.position = "none")
+
+
+```
+
+## Model hyper parameters
+
+
+```{r}
+tsne_train[, label:=  factor(label)]
+
+set.seed(100)
+
+cv_fold <- createFolds(tsne_train$label, k = 5)
+
+
+library(caretEnsemble)
+
+train_ctrl <- trainControl(method = "cv",
+                        number = 3,
+                        summaryFunction = multiClassSummary,
+                        classProbs = TRUE,
+                        allowParallel=T,
+                        index = cv_fold,
+                        verboseIter = TRUE,
+                        returnResamp = "all", 
+                        savePredictions = "final", 
+                        search = "grid")
+
+
+xgb_grid <-  expand.grid(nrounds = c(150, 200, 300),
+                        eta = 0.06,
+                        max_depth =c(20, 50),
+                        gamma = 6,
+                        colsample_bytree = 0.8,
+                        min_child_weight =0.8,
+                        subsample =  .8)
+
+
+
+ranger_grid <- expand.grid(splitrule = "extratrees",
+                        mtry =2,
+                        min.node.size = 1)
+
+
+svm_grid <- expand.grid(C = c(.5, 1, 5, 20),
+                           sigma= seq(0.001, 1, length.out = 4))
+```
+
+## Train TSNE model
+
+- Caret complains when factor levels are numeric
+
+```{r}
+lbls <- c("zero", "one", "two", "three", 
+          "four", "five", "six", "seven",
+          "eight", "nine")
+
+lvl <- 0:9
+
+tsne_train[, label := factor(label, 
+                             levels = lvl, 
+                             labels = lbls)]
+```
+
+## Train models
+
+```{r}
+set.seed(100)
+
+
+tic()
+
+model_list <- caretList(
+   label~.,
+    data= tsne_train,
+    trControl=train_ctrl,
+    tuneList = list(caretModelSpec(method="xgbTree", tuneGrid= xgb_grid),
+                    caretModelSpec(method="ranger", tuneGrid= ranger_grid)
+                    
+                    )
+)
+
+toc()
+```
+
+### Model output
+
+```{r}
+model_list
+```
+
+
+### Resamples
+
+
+```{r}
+resamples_models <- resamples(model_list)
+
+dotplot(resamples_models, metric = "AUC")
+```
+
+# GLRM
+
+## H2o init
+
+```{r}
+library(h2o)
+h2o.init()
+
+
+# Store the data into h2o cluster
+train_x_h20 <- as.h2o(train_data2[, -1]/255)
+```
+
+## Fit glrm
+
+```{r}
+glrm_mnist <- h2o.glrm(training_frame = train_x_h20,
+                       k = 2,
+                       loss ="Quadratic",
+                       seed = 100,
+                       max_iterations = 3000)
+```
+
+## Fit glrm
+
+```{r}
+
+glrm_x <- as.data.table(h2o.getFrame(glrm_mnist@model$representation_name))
+
+train_glrm <- data.table(label = train_data2$label, glrm_x)
+```
+
+## Plot Objective Function
+```{r}
+plot(glrm_mnist)
+```
+
+
+```{r}
+ggplot(train_glrm, aes(x= Arch1, y = Arch2, color =factor(label))) + 
+    ggtitle("Digit Mnist GLRM Archetypes") + 
+    geom_text(aes(label = label)) + 
+    theme(legend.position="none")
+```
+
+
+```{r}
+train_glrm[, label := factor(label, 
+                             levels = lvl, 
+                             labels = lbls)]
+```
+
+
+## Train models
+
+```{r}
+set.seed(100)
+
+
+tic()
+
+model_list_glrm <- caretList(
+   label~.,
+    data= train_glrm,
+    trControl=train_ctrl,
+    tuneList = list(caretModelSpec(method="xgbTree", tuneGrid= xgb_grid),
+                    caretModelSpec(method="ranger", tuneGrid= ranger_grid)
+                    
+                    )
+)
+
+toc()
+```
+
+
+```{r}
+model_list_glrm
+```
+
