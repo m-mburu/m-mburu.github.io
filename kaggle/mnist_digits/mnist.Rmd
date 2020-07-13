@@ -222,6 +222,21 @@ ggplot(tsne_mean,
 
 
 ```
+## Kmeans to see if tsne and kmeans agree
+
+```{r}
+set.seed(123)
+k_means_mnist <- kmeans(train_x, 10)
+
+tsne_train[, cluster := k_means_mnist$cluster]
+ggplot(tsne_train,
+       aes(x = tsne_x, y = tsne_y, color = factor(cluster))) + 
+  geom_point()+
+  ggtitle("t-SNE of MNIST data set") + 
+    theme(legend.position = "none")
+
+tsne_train[, cluster := NULL]
+```
 
 ## Model hyper parameters
 
@@ -248,10 +263,11 @@ train_ctrl <- trainControl(method = "cv",
                         search = "grid")
 
 
-xgb_grid <-  expand.grid(nrounds = c(150, 200, 300),
+
+xgb_grid <-  expand.grid(nrounds = c(100, 150),
                         eta = 0.06,
-                        max_depth =c(20, 50),
-                        gamma = 6,
+                        max_depth =c(2, 5, 20),
+                        gamma = c(6,0),
                         colsample_bytree = 0.8,
                         min_child_weight =0.8,
                         subsample =  .8)
@@ -260,7 +276,7 @@ xgb_grid <-  expand.grid(nrounds = c(150, 200, 300),
 
 ranger_grid <- expand.grid(splitrule = "extratrees",
                         mtry =2,
-                        min.node.size = 1)
+                        min.node.size = c(1, 5))
 
 
 svm_grid <- expand.grid(C = c(.5, 1, 5, 20),
@@ -285,9 +301,10 @@ tsne_train[, label := factor(label,
 
 ## Train models
 
-```{r}
+```{r, message=TRUE}
 set.seed(100)
 
+# 
 
 tic()
 
@@ -296,7 +313,7 @@ model_list <- caretList(
     data= tsne_train,
     trControl=train_ctrl,
     tuneList = list(caretModelSpec(method="xgbTree", tuneGrid= xgb_grid),
-                    caretModelSpec(method="ranger", tuneGrid= ranger_grid)
+                    caretModelSpec(method="ranger", tuneGrid= ranger_grid )
                     
                     )
 )
@@ -317,85 +334,5 @@ model_list
 ```{r}
 resamples_models <- resamples(model_list)
 
-dotplot(resamples_models, metric = "AUC")
+dotplot(resamples_models, metric = "Accuracy")
 ```
-
-# GLRM
-
-## H2o init
-
-```{r}
-library(h2o)
-h2o.init()
-
-
-# Store the data into h2o cluster
-train_x_h20 <- as.h2o(train_data2[, -1]/255)
-```
-
-## Fit glrm
-
-```{r}
-glrm_mnist <- h2o.glrm(training_frame = train_x_h20,
-                       k = 2,
-                       loss ="Quadratic",
-                       seed = 100,
-                       max_iterations = 3000)
-```
-
-## Fit glrm
-
-```{r}
-
-glrm_x <- as.data.table(h2o.getFrame(glrm_mnist@model$representation_name))
-
-train_glrm <- data.table(label = train_data2$label, glrm_x)
-```
-
-## Plot Objective Function
-```{r}
-plot(glrm_mnist)
-```
-
-
-```{r}
-ggplot(train_glrm, aes(x= Arch1, y = Arch2, color =factor(label))) + 
-    ggtitle("Digit Mnist GLRM Archetypes") + 
-    geom_text(aes(label = label)) + 
-    theme(legend.position="none")
-```
-
-
-```{r}
-train_glrm[, label := factor(label, 
-                             levels = lvl, 
-                             labels = lbls)]
-```
-
-
-## Train models
-
-```{r}
-set.seed(100)
-
-
-tic()
-
-model_list_glrm <- caretList(
-   label~.,
-    data= train_glrm,
-    trControl=train_ctrl,
-    tuneList = list(caretModelSpec(method="xgbTree", tuneGrid= xgb_grid),
-                    caretModelSpec(method="ranger", tuneGrid= ranger_grid)
-                    
-                    )
-)
-
-toc()
-```
-
-
-```{r}
-model_list_glrm
-```
-
