@@ -887,7 +887,7 @@ move the network around with your mouse. You should be able to scroll
 in and out of the network as well as rotate the network.
 
 
-```{r}
+```{r, fig.width= 10, fig.height= 10}
 library(igraph)
 library(threejs)
 
@@ -909,16 +909,16 @@ an interactive threejs plot of the karate club network and size
 vertices based on their relative eigenvector centrality.
 
 
-```{r}
-# Create numerical vector of vertex eigenvector centralities 
-# Create numerical vector of vertex eigenvector centralities 
-# ec <- as.numeric(eigen_centrality(g)$vector )
-# 
-# # Create new vector 'v' that is equal to the square-root of 'ec' multiplied by 5
-# v <- 5*sqrt(ec)
-# 
-# # Plot threejs plot of graph setting vertex size to v
-# graphjs(g, vertex.size = v)
+```{r, fig.width= 10, fig.height= 10}
+#Create numerical vector of vertex eigenvector centralities
+#Create numerical vector of vertex eigenvector centralities
+ec <- as.numeric(eigen_centrality(g)$vector )
+
+# Create new vector 'v' that is equal to the square-root of 'ec' multiplied by 5
+v <- 5*sqrt(ec)
+
+# Plot threejs plot of graph setting vertex size to v
+graphjs(g, vertex.size = v)
 
 ```
 
@@ -929,18 +929,18 @@ threejs plot with the vertices based on their community
 membership as produced by the fast-greedy community detection method.
 
 
-```{r}
-# Create an object 'i' containin the memberships of the fast-greedy community detection
-# i <-  membership(kc)
-# 
-# # Check the number of different communities
-# sizes(kc)
-# 
-# # Add a color attribute to each vertex, setting the vertex color based on community membership
-# g <- set_vertex_attr(g, "color", value = c("yellow", "blue", "red")[i])
-# 
-# # Plot the graph using threejs
-# graphjs(g)
+```{r, fig.width= 10, fig.height= 10}
+#Create an object 'i' containin the memberships of the fast-greedy community detection
+i <-  membership(kc)
+
+# Check the number of different communities
+sizes(kc)
+
+# Add a color attribute to each vertex, setting the vertex color based on community membership
+g <- set_vertex_attr(g, "color", value = c("yellow", "blue", "red")[i])
+
+# Plot the graph using threejs
+graphjs(g)
 
 ```
 
