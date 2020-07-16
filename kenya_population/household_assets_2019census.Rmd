@@ -4,10 +4,13 @@ author: "Mburu"
 date: "7/7/2020"
 output:
   html_document:
-    theme: lumen
+    toc: true
+    toc_depth: 2
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+    theme: united
     highlight: pygments
-    toc: yes
-
 ---
 
 ```{r setup, include=FALSE}
