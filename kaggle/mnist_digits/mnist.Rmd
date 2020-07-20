@@ -71,7 +71,7 @@ plot_data <- cbind(xy_axis, sample_10 )
 setDT(plot_data, keep.rownames = "pixel")
 
 # Observe the first records
-head(plot_data) %>% datatable()
+head(plot_data) %>% datatable(options = list(scrollX = TRUE))
 ```
 
 ## Plot the 12 digits

@@ -26,6 +26,6 @@ knitr::opts_chunk$set(echo = TRUE)
 | Digit recognition MNIST |[Notebook (HTML)](https://m-mburu.github.io/kaggle/mnist_digits/mnist.html) | [R Markdown (Rmd)](/kaggle/mnist_digits/mnist.Rmd)|
 | ML with tree models|[Notebook (HTML)](https://m-mburu.github.io/datacamp/ml_tree_methods_r/ml_tree_methods.html) | [R Markdown (Rmd)](/datacamp/ml_tree_methods_r/ml_tree_methods.Rmd))|
 | Network Analysis |[Notebook (HTML)](https://m-mburu.github.io/datacamp/network-analysis-in-r/network_analysis_r.html) | [R Markdown (Rmd)](/datacamp/network-analysis-in-r/network_analysis_r.Rmd))|
-
+| Airbnb NYC |[Notebook (HTML)](https://m-mburu.github.io/newyork_airbnb/newyork_airbnb.html) | [R Markdown (Rmd)](/kaggle/newyork_airbnb/newyork_airbnb.Rmd)|
 
 
