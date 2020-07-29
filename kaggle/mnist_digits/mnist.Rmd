@@ -33,10 +33,10 @@ library(caretEnsemble)
 library(tictoc)
 
 train_data <- fread("data/train.csv")
-set.seed(100)
-N = nrow(train_data)
-sample_one <- sample(N, 5000)
-train_data <- train_data[sample_one]
+# set.seed(100)
+# N = nrow(train_data)
+# sample_one <- sample(N, 5000)
+# train_data <- train_data[sample_one]
 test_data <- fread("data/test.csv")
 
 ```
@@ -76,7 +76,7 @@ head(plot_data) %>% datatable(options = list(scrollX = TRUE))
 
 ## Plot the 12 digits
 
-````{r}
+````{r, fig.width = 8, fig.height = 6}
 plot_data_m <- melt(plot_data, id.vars = c("pixel", "x", "y"))
 
 # Plot the image using ggplot()
@@ -238,101 +238,10 @@ ggplot(tsne_train,
 tsne_train[, cluster := NULL]
 ```
 
-## Model hyper parameters
-
-
-```{r}
-tsne_train[, label:=  factor(label)]
-
-set.seed(100)
-
-cv_fold <- createFolds(tsne_train$label, k = 5)
-
-
-library(caretEnsemble)
-
-train_ctrl <- trainControl(method = "cv",
-                        number = 3,
-                        summaryFunction = multiClassSummary,
-                        classProbs = TRUE,
-                        allowParallel=T,
-                        index = cv_fold,
-                        verboseIter = TRUE,
-                        returnResamp = "all", 
-                        savePredictions = "final", 
-                        search = "grid")
 
 
 
-xgb_grid <-  expand.grid(nrounds = c(100, 150),
-                        eta = 0.06,
-                        max_depth =c(2, 5, 20),
-                        gamma = c(6,0),
-                        colsample_bytree = 0.8,
-                        min_child_weight =0.8,
-                        subsample =  .8)
 
 
 
-ranger_grid <- expand.grid(splitrule = "extratrees",
-                        mtry =2,
-                        min.node.size = c(1, 5))
 
-
-svm_grid <- expand.grid(C = c(.5, 1, 5, 20),
-                           sigma= seq(0.001, 1, length.out = 4))
-```
-
-## Train TSNE model
-
-- Caret complains when factor levels are numeric
-
-```{r}
-lbls <- c("zero", "one", "two", "three", 
-          "four", "five", "six", "seven",
-          "eight", "nine")
-
-lvl <- 0:9
-
-tsne_train[, label := factor(label, 
-                             levels = lvl, 
-                             labels = lbls)]
-```
-
-## Train models
-
-```{r, message=TRUE}
-set.seed(100)
-
-# 
-
-tic()
-
-model_list <- caretList(
-   label~.,
-    data= tsne_train,
-    trControl=train_ctrl,
-    tuneList = list(caretModelSpec(method="xgbTree", tuneGrid= xgb_grid),
-                    caretModelSpec(method="ranger", tuneGrid= ranger_grid )
-                    
-                    )
-)
-
-toc()
-```
-
-### Model output
-
-```{r}
-model_list
-```
-
-
-### Resamples
-
-
-```{r}
-resamples_models <- resamples(model_list)
-
-dotplot(resamples_models, metric = "Accuracy")
-```

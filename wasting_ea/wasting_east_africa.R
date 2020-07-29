@@ -51,10 +51,15 @@ names(data_sets) <- file_nms
 list2env(data_sets, .GlobalEnv)
 
 names(kenya)
-kenya_sub <- kenya %>% select(ADM2_EN, geometry, stunt_prev)
+
+kenya_sub <- kenya %>% select(ADM2_EN, geometry, stunt_prev) %>%
+    mutate(ADM2_EN = paste0(ADM2_EN," ", round(stunt_prev, 2)))
+
 tz_shape_sub <- tz_shape %>% select(ADM2_EN, geometry, stunt_prev) %>%
-    mutate(ADM2_EN = paste0(ADM2_EN, stunt_prev))
+    mutate(ADM2_EN = paste0(ADM2_EN," ", round(stunt_prev, 2)))
+
+ea <- bind_rows(kenya_sub, tz_shape_sub)
 ttm()
-tm_shape(tz_shape_sub)+
+tm_shape(ea)+
     tm_borders(col = "gold")+
     tm_fill(col = "stunt_prev")
