@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE,
 ```
 
 ## Heart Disease data set
-
+correlation network plot ml
 In health research we are not only interested with prediction level but explanability of the fitted algorithm what people in health research call risk factors. We can use  [heart disease data set](https://www.kaggle.com/ronitf/heart-disease-uci) to figure out how we can utilize some of the mc.
 
 I have stolen your idea. For someone working in health research your notebook is a gold mine. In health especially cohort studies, clinical trials people are largely still using generalized linear models because at least from them you can get odds/risk/rate ratios, p values, AIC and so on. I have implemented the same with R(see here). I have also searched for other materials online see here. Thank you.
@@ -23,6 +23,7 @@ library(data.table)
 library(caret)
 library(DT)
 library(iml)
+library(gridExtra)
 heart <- fread("heart.csv")
 
 heart %>% head %>%
@@ -89,24 +90,27 @@ heart[, target := factor(target,
 
 ## Visualize categorical variables
 
-```{r, fig.width =8, fig.height = 4.5}
+```{r, fig.width =15, fig.height = 20}
 nms <- names(heart)
 categ_nms <- nms[sapply(heart, is.factor)]
 
-categ_nms <- categ_nms[categ_nms != "target"]
 
+categ_nms <- categ_nms[categ_nms != "target"]
+plots_categ <- list()
 for (i in categ_nms) {
     
-   p= heart[, .(freq = .N), by = c(i,"target")] %>%
+   plots_categ[[i]] = heart[, .(freq = .N), by = c(i,"target")] %>%
         .[, perc := round(freq/sum(freq) * 100, 2), by = i] %>%
         ggplot(aes_string(i, "perc", fill = "target")) +
-        geom_bar(stat = "identity")+
+        geom_bar(stat = "identity", width = 0.5)+
        geom_text(aes_string(i, "perc", label = "perc"),
                  size = 3 , position =  position_stack(vjust = 0.5))+
        theme(legend.position = "bottom")+
        scale_fill_brewer(palette  = "Dark2")
-   print(p)
+
 }
+
+grid.arrange(grobs = plots_categ, ncol = 2)
 ```
 
 
@@ -115,14 +119,14 @@ for (i in categ_nms) {
 ```{r, fig.width = 7, fig.height = 4}
 num_nms <- nms[sapply(heart, is.numeric)]
 
-zero_one <- function(x){
-  minx = min(x, na.rm = T)
-  maxx = max(x, na.rm = T)
-  
-  z = (x - minx)/(maxx - minx)
-}
-
-heart[, (num_nms) := lapply(.SD, zero_one), .SDcols = num_nms]
+# zero_one <- function(x){
+#   minx = min(x, na.rm = T)
+#   maxx = max(x, na.rm = T)
+#   
+#   z = (x - minx)/(maxx - minx)
+# }
+# 
+# heart[, (num_nms) := lapply(.SD, zero_one), .SDcols = num_nms]
 
 num_nms <- num_nms[num_nms != "target"]
 
@@ -191,7 +195,10 @@ heart_randomforest
 ```
 ## Var Importance
 ```{r}
-
+pred <- function(heart_randomforest, heart)  {
+  results <- predict(heart_randomforest, newdata = heart, type = "prob")
+  return(results[[2L]])
+}
 ```
 
 ## Partial Dependence
@@ -201,6 +208,7 @@ X_pred <- heart[, .SD, .SDcols = !"target"] %>%
   as.data.frame()
 model <- Predictor$new(model = heart_randomforest, 
                       data =X_pred,
+                      predict.function = pred,
                       y = heart$target)
 effect <- FeatureEffects$new(model)
 
@@ -220,7 +228,7 @@ effect$plot(features = c( "trestbps"))
 
 ```{r}
 imp <- FeatureImp$new(model, loss ="ce" )
-imp
+#imp
 plot(imp)
 ```
 
@@ -232,8 +240,10 @@ plot(interact)
 
 ```{r}
 
-shapley <- Shapley$new(model,x.interest = X_pred[1,] )
-shapley$plot()
+shapley <- Shapley$new(model,x.interest = X_pred)
+
+shapley$x.interest
+#shapley$plot()
 ```
 
 
