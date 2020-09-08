@@ -3,30 +3,15 @@ title: "Busara Data Analysis"
 author: "mburu"
 date: "February 16, 2019"
 output:
-  html_notebook:
-    highlight: pygments
-    theme: united
-    toc: yes
   html_document:
-    highlight: pygments
+    toc: true
+    toc_depth: 2
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
     theme: united
-    toc: yes
-  slidy_presentation:
     highlight: pygments
-    theme: united
-  ioslides_presentation: null
-  pdf_document:
-    toc: yes
-  beamer_presentation:
-    highlight: pygments
-header-includes:
-- \usetheme{CambridgeUS}
-- \useinnertheme{rounded}
-- \usecolortheme{seahorse}
-- \usefonttheme{professionalfonts}
-- \usepackage{xcolor,soul,hyperref,cite,graphicx,amsmath}
 ---
-
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)

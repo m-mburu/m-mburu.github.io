@@ -33,10 +33,7 @@ library(caretEnsemble)
 library(tictoc)
 
 train_data <- fread("data/train.csv")
-# set.seed(100)
-# N = nrow(train_data)
-# sample_one <- sample(N, 5000)
-# train_data <- train_data[sample_one]
+
 test_data <- fread("data/test.csv")
 
 ```
@@ -102,6 +99,23 @@ ggplot(plot_data_m, aes(x, y, fill = value)) +
 - Decided to have a self test set
 
 ```{r }
+nmst <- names(train_data)
+nmst <- nmst[nmst != "label"]
+minmax <- function(x) {
+  top =  (x - min(x))
+  bottom = (max(x) - min(x))
+  if(bottom == 0){ 
+    return(0)
+  }else{
+      return(top/bottom)
+    }
+}
+#train_data[, (nmst) := lapply(.SD,  function(x) x/255), .SDcols = nmst]
+train_data[, (nmst) := lapply(.SD,  minmax), .SDcols = nmst]
+set.seed(100)
+N1 = nrow(train_data)
+sample_one <- sample(N1, 5000)
+train_data <- train_data[sample_one]
 N = nrow(train_data)
 sample_train <- sample(N, size = round(0.75 *N ))
 test_own <- train_data[-sample_train]
@@ -113,7 +127,7 @@ train_x <- train_data2[, -1]
 train_x <- train_x %>%
     as.matrix()
 
-train_x <- train_x/255
+#train_x <- train_x/255
 
 ```
 
@@ -127,9 +141,9 @@ model %>%
     layer_dropout(rate = 0.3) %>%
     layer_dense(units = 784, activation = 'relu') %>%
     layer_dropout(rate = 0.3) %>%
-    layer_dense(units = 392, activation = 'sigmoid') %>%
+    layer_dense(units = 392, activation = 'relu') %>%
     layer_dropout(rate = 0.2) %>%
-    #layer_dense(units = 200, activation = 'relu') %>%
+    layer_dense(units = 200, activation = 'tanh') %>%
     #layer_dropout(rate = 0.) %>%
     layer_dense(units = 10, activation = 'softmax')
 ```
@@ -158,7 +172,7 @@ plot(hist,type = "b")
 ## Own test
 
 ```{r}
-test_own_x <- test_own[, -1] %>% as.matrix()/255
+test_own_x <- test_own[, -1] %>% as.matrix()
 
 test_own_pred <- model %>% predict_classes(test_own_x) %>% factor()
 
@@ -241,7 +255,62 @@ tsne_train[, cluster := NULL]
 
 
 
+```{r}
+# set model
+model_autoencoder <- keras_model_sequential()
+model_autoencoder %>%
+  layer_dense(units = 784, activation = "relu", input_shape = ncol(train_x)) %>%
+  layer_dense(units = 784, activation = "relu") %>%
+  layer_dense(units = 2, activation = "relu", name = "bottleneck") %>%
+  layer_dense(units = ncol(train_x))
+
+# view model layers
+
+summary(model_autoencoder)
+```
+
+
+```{r}
+
+# compile model
+model_autoencoder %>% compile(
+  loss = "mean_squared_error", 
+  optimizer = "adam"
+)
+
+# fit model
+model_autoencoder %>% fit(
+  x = train_x, 
+  y = train_x, 
+  epochs = 10,
+  verbose = 1
+)
+```
 
 
 
+```{r}
+
+evaluate(model_autoencoder, train_x, train_x)
+
+evaluate(model_autoencoder, test_own_x, test_own_x)
+
+```
+
+
+```{r}
+# extract the bottleneck layer
+intermediate_layer_model <- keras_model(inputs = model_autoencoder$input,
+                                        outputs = get_layer(model_autoencoder, "bottleneck")$output)
+
+intermediate_output <- predict(intermediate_layer_model, train_x)
+
+```
+
+
+```{r}
+intermediate_output <- data.frame(intermediate_output, y = train_data2$label)
+ggplot(intermediate_output, aes(X1, X2, color = factor(y))) +
+  geom_point()
+```
 

@@ -3,17 +3,14 @@ title: "Cancer Data"
 author: "Mburu"
 date: "January 26, 2019"
 output:
-  html_notebook: null
-  always_allow_html: yes
-  github_document:
-    df_print: paged
-    toc: yes
-    toc_depth: '3'
-  pdf_document:
-    toc: yes
-  word_document:
-    toc: yes
-    toc_depth: '3'
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+    theme: united
+    highlight: pygments
 ---
 
 
@@ -46,7 +43,7 @@ library(caret)
 library(e1071)
 library(kableExtra)
 library(ggthemes)
-
+library(DT)
 library(glmnet)
 
 cancer <- setDT(read_csv("data.csv"))
@@ -56,7 +53,7 @@ cancer[, X33 := NULL]
 
 ```{r}
 head(cancer)  %>%
-  kable() 
+  datatable(options = list(scrollX = TRUE)) 
 
 
 ```
@@ -124,7 +121,9 @@ cancer[, diagnosis := as.factor(diagnosis)]
 
 ```{r}
 
-cor(cancer[, -(1:2), with = F]) %>% kable(format = "html") 
+cor(cancer[, -(1:2), with = F]) %>%
+  datatable(options = list(scrollX = TRUE)) 
+
 ```
 
 ***Principle Component Analysis***

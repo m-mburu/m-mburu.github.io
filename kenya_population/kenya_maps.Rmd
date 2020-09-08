@@ -89,7 +89,8 @@ kenya_births_counties <- st_set_geometry(kenya_births_counties, "geometry")
 map1 <- tm_shape(kenya_births_counties)+
   tm_borders(col = "gold")+
   tm_polygons(col = "per_cent_in_health_facility")+
-  tm_layout(title = "Percentage of health facility births in Kenya")
+  tm_layout(title = "% Health facility births",
+            title.position = c(0.3, "top"))
 
 
 tmap_leaflet(map1)
@@ -365,6 +366,37 @@ tmap_leaflet(map4)
 kenya_subcounties_agri <- fread("distribution-of-households-practicing-agriculture-fishing-and-irrigation-by-county-and-sub-count.csv")
 ```
 
+```{r}
+stunt_world <- raster::raster("stunt_post_means.TIF")
+```
 
 
+```{r}
+library(raster)
+library(sp)
+
+proj4string = as.character(projection(stunt_world))
+kenya_shapefile <- st_set_geometry(kenya_shapefile, "geometry")
+kenya_shapefile <- st_set_crs(kenya_shapefile, value = proj4string)
+kenya_sp <- as(kenya_shapefile, "Spatial") 
+```
+
+
+```{r}
+setDT(kenya_shapefile)
+kenya_shapefile[, stunt_prev := raster::extract(stunt_world, kenya_sp,
+                                               weights=FALSE, fun=mean,
+                                               na.rm= T)]
+kenya_shapefile[, value_var := paste(county, stunt_prev)]
+kenya_shapefile <- st_set_geometry(kenya_shapefile, "geometry")
+
+```
+
+
+
+```{r}
+ttm()
+tm_shape(kenya_shapefile)+
+  tm_polygons(col = "stunt_prev", id = "value_var" )
+```
 
