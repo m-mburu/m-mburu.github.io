@@ -3,12 +3,15 @@ title: "Cancer Data"
 author: "Mburu"
 date: "January 26, 2019"
 output:
+  html_notebook:
+    toc: yes
+    toc_depth: '2'
   html_document:
-    toc: true
+    toc: yes
     toc_depth: 2
     toc_float:
-      collapsed: false
-      smooth_scroll: false
+      collapsed: no
+      smooth_scroll: no
     theme: united
     highlight: pygments
 ---
@@ -554,20 +557,12 @@ xgb_grid <- expand.grid(nrounds = c(10, 50, 100),
                         
     )
 
-
-    
-xgb_model <-train(label~.,
-                 data=train,
-                 method="xgbTree",
-                 trControl= xgb_ctrl,
-                 tuneGrid=xgb_grid,
-                 verbose=T,
-                 metric="ROC",
-                 nthread =3
-                     
-    )
-
 ```
+
+
+
+
+
 
 
 Increasing cut of increases the precision. A greater fraction of those who will be predicted that they have cancer will turn out that they have, but the algorithm is likely to have lower recall. If we want to avoid too many cases of people cancer being predicted that they do not have cancer. It will be very bad to tell someone that they do not have cancer but they have. If we lower the probability let say to 0.3 then we want to make sure that even if there is a 30% chance you have cancer then you should be flagged.
