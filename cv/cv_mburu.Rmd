@@ -16,12 +16,18 @@ output:
     toc_depth: '2'
 ---
 
+<center>
+
 Moses Mburu
 
-Location: Kilifi, Kenya │ mobile: +254724891832 │ email: mmburu20@gmail.com
+Location: Kilifi, Kenya 
 
-LinkedIn: www.linkedin.com/in/moses-mburu-956bb031/ 
+LinkedIn: https://www.linkedin.com/in/moses-mburu-956bb031/ 
+
 Blog: https://m-mburu.github.io/ 
+
+
+</center>
 
 ## Data Analyst
 
@@ -71,8 +77,10 @@ In my current role I work under the CHAIN Network where we are focused on optimi
 
 - Low-Income Financial Transformation (L-IFT) is a for-profit social business. The company specializes in a diaries research methodology that can be applied to a range of purposes, such as impact measurement, product development, customer satisfaction gauging, and programme design. L-IFT is primarily focused on financial inclusion, digital finance and strengthening the financial sector of the countries where it works. L-IFT also has expertise and is building data in the fields of energy, livelihoods, youth, entrepreneurship, SME development and the intersection of health and financial management.
 
-- At L-IFT I received a lot of experience in finances of low-income areas. How fluctuating the finances are, savings patterns and how calamities affect they lives.   
+- At L-IFT I received a lot of experience in finances of low-income areas. How fluctuating the finances are, savings patterns and how calamities affect they lives.
+
 ### Data Management:
+
 - This is important step in research as it ensured that the data used in analysis is of the highest quality. This is was achieved by creating data collection databases and reviewing each question with the data collection teams. Monitoring of surveys, flagging inconsistencies in the data entry and raising any queries with the researchers in the field. 
 
 
