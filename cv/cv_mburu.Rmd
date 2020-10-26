@@ -4,6 +4,7 @@ author: "Mburu"
 date: "9/8/2020"
 output:
   html_document:
+    css: style.css
     toc: yes
     toc_depth: 2
     toc_float:
