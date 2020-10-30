@@ -29,9 +29,11 @@ server <- function(input, output) {
         })
     
     
+
+    
     output$countries_line <- renderPlotly({
         
-        df <- africa_unicef[type == input$gender_select_maln & countryname %in% input$select_countries]
+        df <- africa_unicef[type == input$select_type & countryname %in% input$select_countries]
         
         ggplot(df, aes(cmrs_year, value, group = countryname, color = countryname))+
             geom_line() +
@@ -39,5 +41,16 @@ server <- function(input, output) {
         
     })
     
+    # 
+    output$compare_bar_tab2 <- renderPlotly({
+
+        df <- africa_unicef[type == input$select_type & countryname %in% input$select_countries ]
+
+        ggplot(df, aes(countryname, value, fill = countryname))+
+            geom_bar(stat = "identity") +
+            theme_fivethirtyeight()
+
+    })
+
     
 }

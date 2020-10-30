@@ -80,12 +80,16 @@ ui <- dashboardPage(skin = "blue",
                                                                 selectInput("select_countries", "Select Countries",
                                                                             choices = countries_names,
                                                                             selected = c("kenya", "nigeria"), multiple = TRUE),
-                                                                selectInput("Select Sex", "Select Sex:",
-                                                                            choices = c("National", "Male", "Female"),
-                                                                            selected = "National"))),
+                                                                selectInput("select_type", "Select type eg sex, area:",
+                                                                            choices = type_sex_area,
+                                                                            selected = "national"),
+                                                                selectInput("select_year_tab2", "Select year",
+                                                                            choices = year_unicef,
+                                                                            selected = 2019))),
+                                                     
                                                      column(width = 10,
-                                                            box(width = NULL, solidHeader = T, status = "primary", title = "Stored Samples per site",
-                                                                plotlyOutput("bar_output")))
+                                                            box(width = NULL, solidHeader = T, status = "primary", title = "Malnutrition",
+                                                                plotlyOutput("compare_bar_tab2")))
                                             )
                                         )
                                     ))
