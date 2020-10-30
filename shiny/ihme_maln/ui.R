@@ -11,7 +11,7 @@ library(ggthemes)
 library(data.table)
 library(gapminder)
 
-countries <- c("Kenya", "Uganda")
+
 ui <- dashboardPage(skin = "blue",
                     
                     ## ++ Shiny dashboard HEADER-------------------------------------------------------------------------------------
@@ -44,8 +44,8 @@ ui <- dashboardPage(skin = "blue",
                             menuItem(h5("Poverty levels"),
                                      tabName = 'note_to_file'
                                      
-
-                                     )
+                                     
+                            )
                             
                         )
                     ),
@@ -59,14 +59,17 @@ ui <- dashboardPage(skin = "blue",
                                         tabsetPanel(
                                             tabPanel("Africa Malnutrition Prevalence",
                                                      column(width = 10,
-                                                            box(width = NULL,height = "100%", solidHeader = T, status = "primary", title = "Malnutrition Prevalence",
-                                                                leafletOutput("afri_prev")), 
-                                                            column(width = 2,
-                                                                   box(width = NULL, solidHeader = T, status = "primary",
-                                                                       selectInput("gender_select_maln", "Select, National estimate or sex",
-                                                                                   choices = c("National", "Male", "Female"),
-                                                                                   selected = "National"))),
-                                                     )),
+                                                            box(width = NULL,  solidHeader = T, status = "primary", title = "Malnutrition Prevalence",
+                                                                tmapOutput("afri_prev", width = "100%", height = 800))), 
+                                                     column(width = 2,
+                                                            box(width = NULL, solidHeader = T, status = "primary",
+                                                                selectInput("gender_select_maln", "Select, National estimate or sex",
+                                                                            choices = type_sex_area,
+                                                                            selected = "national"),
+                                                                selectInput("year_select_maln", "Select, Year",
+                                                                            choices = year_unicef ,
+                                                                            selected = 2019)))
+                                                     ),
                                             tabPanel("Compare Countries, Line and bars",
                                                      column(width = 10,
                                                             box(width = NULL, solidHeader = T, status = "primary", 
@@ -74,9 +77,9 @@ ui <- dashboardPage(skin = "blue",
                                                                 plotlyOutput("countries_line"))),
                                                      column(width = 2,
                                                             box(width = NULL, solidHeader = T, status = "primary",
-                                                                selectInput("Select Countries", "",
-                                                                            choices = countries,
-                                                                            selected = c("Kenya", "Uganda"), multiple = TRUE),
+                                                                selectInput("select_countries", "Select Countries",
+                                                                            choices = countries_names,
+                                                                            selected = c("kenya", "nigeria"), multiple = TRUE),
                                                                 selectInput("Select Sex", "Select Sex:",
                                                                             choices = c("National", "Male", "Female"),
                                                                             selected = "National"))),
@@ -88,7 +91,3 @@ ui <- dashboardPage(skin = "blue",
                                     ))
                         )
                     ))
-
-
-
-

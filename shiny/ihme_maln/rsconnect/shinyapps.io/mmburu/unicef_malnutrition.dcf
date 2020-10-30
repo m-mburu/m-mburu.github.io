@@ -1,0 +1,12 @@
+name: unicef_malnutrition
+title: unicef_malnutrition
+username:
+account: mmburu
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3103939
+bundleId: 3787264
+url: https://mmburu.shinyapps.io/unicef_malnutrition/
+when: 1603796591.78296
+asMultiple: FALSE
+asStatic: FALSE
