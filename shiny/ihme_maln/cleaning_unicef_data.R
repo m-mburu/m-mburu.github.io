@@ -2,6 +2,7 @@
 library(sf)
 library(tidyverse)
 library(data.table)
+library(spData)
 
 unicef_stunting <- fread("data/unicef_stunting.csv")
 
@@ -61,52 +62,57 @@ unicef_stunting_m <- unicef_stunting_m[!grepl("q\\d|^bottom|^top", variable)]
 unicef_stunting_m <- unicef_stunting_m %>% 
     distinct(countryname, cmrs_year, variable, .keep_all = T)
 
-unicef_stunting_m[, countryname := ifelse(grepl( "congo",
-                                                 tolower(countryname) ), 
-                                          "Republic of Congo", countryname)]
+unicef_stunting_m[, country := as.character(countryname)]
 
-unicef_stunting_m[, countryname := ifelse(grepl( "cabo verde",
-                                                 tolower(countryname) ), 
-                                          "Cape Verde", countryname)]
+unicef_stunting_m[, countryname := ifelse(grepl( "^congo$",
+                                                 tolower(countryname) ),
+                                          "Republic of the Congo", countryname)]
 
+# unicef_stunting_m[, countryname := ifelse(grepl( "cabo verde",
+#                                                  tolower(countryname) ), 
+#                                           "Cape Verde", countryname)]
+# 
 unicef_stunting_m[, countryname := ifelse(grepl( "côte d'ivoire",
-                                                 tolower(countryname) ), 
+                                                 tolower(countryname), fixed = TRUE ),
                                           "Ivory Coast", countryname)]
+
+
+unicef_stunting_m[, countryname := ifelse(grepl( "tanzania",
+                                                 tolower(countryname) ),
+                                          "tanzania", countryname)]
+
 
 africa_unicef <- unicef_stunting_m[unregion == "Africa"]
 
-x  <- unique(africa_unicef$countryname) %>% tolower()
+
+x  <- unique(africa_unicef$countryname) %>% tolower
+
+countries <-  world %>% 
+    filter(continent == "Africa") %>% setDT()
+
+# 
 
 
-countries <- rnaturalearth::ne_countries(scale = 50,
-                                         type = 'sovereignty',
-                                         returnclass = "sf",
-                                         continent = "Africa") %>% 
-    setDT()
+countries[,  name_long := ifelse(grepl( "eSwatini", name_long), "eswatini" ,  name_long)]
+countries[,  name_long := ifelse(grepl( "tanzania", tolower( name_long) ), "tanzania" ,  name_long)]
+countries[,  name_long := ifelse(grepl( "guinea bissau", tolower( name_long) ), "guinea-bissau" ,  name_long)]
+countries[,  name_long := ifelse(grepl( "the gambia", tolower( name_long) ), "gambia" ,  name_long)]
 
-countries[,  sovereignt := ifelse(grepl( "swaziland", tolower( sovereignt) ), "eswatini" ,  sovereignt)]
-countries[,  sovereignt := ifelse(grepl( "guinea bissau", tolower( sovereignt) ), "guinea-bissau" ,  sovereignt)]
+countries[, name_long := ifelse(grepl( "côte d'ivoire",
+                                                 tolower(name_long), fixed = TRUE),
+                                          "Ivory Coast", name_long)]
 
-africa_count <- countries#[tolower(sovereignt) %in%
+africa_count <- countries#[tolower(name_long) %in%
                                       #tolower(africa_unicef$countryname)]
 
-y <- unique(africa_count$sovereignt) %>% tolower()
+y <- unique(africa_count$name_long) %>% tolower()
 
 x[!x %in% y ]
 
-setnames(africa_count, "sovereignt", "countryname")
+setnames(africa_count, "name_long", "countryname")
 
 # write_csv(africa_unicef, path = "data/africa_unicef.csv")
-#st_write(africa_count, "data/africa_count.shp")
-
-# africa_unicef_merge <- merge(africa_unicef,
-#                              africa_count[, .(countryname, geometry, formal_en, pop_est, gdp_md_est, income_grp)], 
-#                              by = "countryname",
-#                              all.x = T) 
-
-
-
-#write_csv(africa_unicef_merge, path = "data/africa_unicef.csv")
+st_write(world, "data/africa_shp/world.shp")
 
 
 
@@ -125,16 +131,18 @@ interest_var <- c("national_r", "male_r",
                   "female_r" ,  "urban_r", "rural_r" )
 
 africa_unicef <- africa_unicef[variable %in% interest_var]
-
+africa_unicef[, countryname := tolower(countryname)]
 africa_split <- split(africa_unicef,
                       by = c("countryname", "variable"), drop = TRUE)
 
 
 comb_list <- list()
+df_comp[, countryname := tolower(countryname) ]
 
 for (i in 1:length(africa_split)) {
     
     df = africa_split[[i]]
+    #df[, countryname := tolower(countryname) ]
     country = df[, unique(countryname)]
     df_comp1 <- df_comp[countryname ==  country]
     
@@ -147,6 +155,10 @@ for (i in 1:length(africa_split)) {
     df[, variable := var]
     var1  = df[!is.na(type), unique(type)] %>% as.character()
     df[, type := var1]
+    # var1  = df[!is.na(ci), unique(ci)] %>% as.character()
+    # df[, ci := var1]
+    var1  = df[!is.na(country), unique(country)] %>% as.character()
+    df[, country := var1]
     comb_list[[i]] = df
     cat(i, "...")
 }
@@ -154,16 +166,24 @@ for (i in 1:length(africa_split)) {
 
 
 africa_unicef <- rbindlist(comb_list)
+#africa_unicef[, ci := str_extract(variable, "[a-z]{1,2}$")]
+
+africa_unicef[, countryname := as.character(countryname)]
+africa_count[, countryname := as.character(countryname)]
+
+africa_unicef[, countryname := tolower(countryname)]
+africa_count[, countryname := tolower(countryname)]
+
 africa_unicef <- merge(africa_unicef, 
-                       africa_count[, .(countryname, formal_en)], by = "countryname",
+                       africa_count[, .(countryname, gdpPercap, lifeExp)], by = "countryname",
                        all.y = TRUE)
 
-
-africa_unicef[, formal_en := paste0(formal_en, " ", value, "%")]
+africa_unicef[, country := paste0(country," ", value, " %")]
+#africa_unicef[, formal_en := paste0(formal_en, " ", value, "%")]
 write_csv(africa_unicef, path = "data/africa_unicef.csv")
 
 
 ## test
-africa_count <- st_set_geometry(africa_count, "geometry")
+africa_count <- st_set_geometry(africa_count, "geom")
 ggplot(africa_count) +
     geom_sf()

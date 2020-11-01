@@ -22,7 +22,7 @@ server <- function(input, output) {
         df <- st_set_geometry(df, "geometry")
         
         my_map <- tm_shape(df) +
-            tm_fill(col = "value", id = "formal_en")+
+            tm_fill(col = "value", id = "country")+
             tm_borders(col = "gold")
         tmap_leaflet(my_map, in.shiny = TRUE)
    
@@ -44,7 +44,7 @@ server <- function(input, output) {
     # 
     output$compare_bar_tab2 <- renderPlotly({
 
-        df <- africa_unicef[type == input$select_type & countryname %in% input$select_countries ]
+        df <- africa_unicef[type == input$select_type & countryname %in% input$select_countries & cmrs_year == input$select_year_tab2]
 
         ggplot(df, aes(countryname, value, fill = countryname))+
             geom_bar(stat = "identity") +

@@ -12,7 +12,7 @@ library(data.table)
 library(gapminder)
 
 
-ui <- dashboardPage(skin = "blue",
+ui <- dashboardPage(skin = "black",
                     
                     ## ++ Shiny dashboard HEADER-------------------------------------------------------------------------------------
                     dashboardHeader(title = "Malnutrition",
@@ -27,11 +27,11 @@ ui <- dashboardPage(skin = "blue",
                     dashboardSidebar(
                         sidebarMenu(
                             
-                            menuItem(h5("Africa Malnutrion Maps"), 
+                            menuItem(h5("UNICEF Africa Stunting levels"), 
                                      tabName = 'afri_man'),
                             
                             
-                            menuItem(h5("Gapminder Data"), 
+                            menuItem(h5("Malnutrition prevalence"), 
                                      tabName = 'afri_gap'
                                      # menuSubItem("Samples Shipped to Kilifi",
                                      #             tabName = "shipped_to_kilifi"),
@@ -57,7 +57,7 @@ ui <- dashboardPage(skin = "blue",
                             tabItem(tabName = "afri_man",
                                     fluidRow(
                                         tabsetPanel(
-                                            tabPanel("Africa Malnutrition Prevalence",
+                                            tabPanel("Africa Stunting Prevalence",
                                                      column(width = 10,
                                                             box(width = NULL,  solidHeader = T, status = "primary", title = "Malnutrition Prevalence",
                                                                 tmapOutput("afri_prev", width = "100%", height = 800))), 
@@ -73,7 +73,7 @@ ui <- dashboardPage(skin = "blue",
                                             tabPanel("Compare Countries, Line and bars",
                                                      column(width = 10,
                                                             box(width = NULL, solidHeader = T, status = "primary", 
-                                                                title = "Compare countries",
+                                                                title = "Stunting prevalence over time",
                                                                 plotlyOutput("countries_line"))),
                                                      column(width = 2,
                                                             box(width = NULL, solidHeader = T, status = "primary",
