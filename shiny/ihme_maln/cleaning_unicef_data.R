@@ -3,6 +3,7 @@ library(sf)
 library(tidyverse)
 library(data.table)
 library(spData)
+library(raster)
 
 unicef_stunting <- fread("data/unicef_stunting.csv")
 
@@ -183,7 +184,43 @@ africa_unicef[, country := paste0(country," ", value, " %")]
 write_csv(africa_unicef, path = "data/africa_unicef.csv")
 
 
+
+##
+
+#read wasting prevalance and stunting
+world_wasting <- raster("data/wasting_post_means.TIF")
+
+world_underwight <- raster("data/underweight_post_means.TIF")
+
+world_stunting <- raster("data/stunt_post_means.TIF")
+
+plot(world_stunting)
+
+africa_count_sf <- st_set_geometry(africa_count, "geom")
+
+africa_count_sp <- as_Spatial(africa_count_sf)
+
+africa_count[, wasting_prev := raster::extract(world_wasting, africa_count_sp,
+                                           weights=FALSE, fun=mean,
+                                           na.rm = T)]
+
+africa_count[, underweight_prev := raster::extract(world_underwight, africa_count_sp,
+                                               weights=FALSE, fun=mean,
+                                               na.rm= T)]
+
+
+africa_count[, stunting_prev := raster::extract(world_stunting, africa_count_sp,
+                                            weights=FALSE, fun=mean,
+                                            na.rm = T)]
+
+
+write_csv(africa_count[, .(countryname, wasting_prev, underweight_prev, stunting_prev)],
+          path = "data/africa_malnutrition_prev.csv")
+
+
 ## test
 africa_count <- st_set_geometry(africa_count, "geom")
 ggplot(africa_count) +
     geom_sf()
+
+

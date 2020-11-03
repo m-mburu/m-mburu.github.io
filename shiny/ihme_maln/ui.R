@@ -15,7 +15,7 @@ library(gapminder)
 ui <- dashboardPage(skin = "black",
                     
                     ## ++ Shiny dashboard HEADER-------------------------------------------------------------------------------------
-                    dashboardHeader(title = "Malnutrition",
+                    dashboardHeader(title = "Malnutrition Prevalence in Africa 0 - 5 years",
                                     dropdownMenu(type = "messages",
                                                  messageItem(
                                                      from = "",
@@ -31,8 +31,8 @@ ui <- dashboardPage(skin = "black",
                                      tabName = 'afri_man'),
                             
                             
-                            menuItem(h5("Malnutrition prevalence"), 
-                                     tabName = 'afri_gap'
+                            menuItem(h5("Instititute of health metrics (UW ) Malnutrition prevalence"), 
+                                     tabName = 'afri_ihm'
                                      # menuSubItem("Samples Shipped to Kilifi",
                                      #             tabName = "shipped_to_kilifi"),
                                      # 
@@ -57,10 +57,10 @@ ui <- dashboardPage(skin = "black",
                             tabItem(tabName = "afri_man",
                                     fluidRow(
                                         tabsetPanel(
-                                            tabPanel("Africa Stunting Prevalence",
-                                                     column(width = 10,
-                                                            box(width = NULL,  solidHeader = T, status = "primary", title = "Malnutrition Prevalence",
-                                                                tmapOutput("afri_prev", width = "100%", height = 800))), 
+                                            tabPanel("Africa Stunting Prevalence Ages 0 - 5 Years",
+                                                     column(width = 8,
+                                                            box(width = NULL,  solidHeader = F, status = "primary", title = "Stunting Prevalence",
+                                                                tmapOutput("afri_prev", width = "100%", height = 700))), 
                                                      column(width = 2,
                                                             box(width = NULL, solidHeader = T, status = "primary",
                                                                 selectInput("gender_select_maln", "Select, National estimate or sex",
@@ -81,16 +81,42 @@ ui <- dashboardPage(skin = "black",
                                                                             choices = countries_names,
                                                                             selected = c("kenya", "nigeria"), multiple = TRUE),
                                                                 selectInput("select_type", "Select type eg sex, area:",
-                                                                            choices = type_sex_area,
-                                                                            selected = "national"),
+                                                                            choices = c("Rural/Urban", "Sex"),
+                                                                            selected = "Rural/Urban"),
                                                                 selectInput("select_year_tab2", "Select year",
                                                                             choices = year_unicef,
                                                                             selected = 2019))),
                                                      
                                                      column(width = 10,
-                                                            box(width = NULL, solidHeader = T, status = "primary", title = "Malnutrition",
+                                                            box(width = NULL, solidHeader = T, status = "primary", title = "Stunting national prevalence compared with rural/urban or sex",
                                                                 plotlyOutput("compare_bar_tab2")))
                                             )
+                                        )
+                                    )),
+                            
+                            tabItem(tabName = "afri_ihm",
+                                    fluidRow(
+                                        tabsetPanel(
+                                            tabPanel("Africa Stunting/Wasting/Underweight Prevalence Ages 0 - 5 Years",
+                                                     column(width = 10,
+                                                            box(width = NULL,  solidHeader = T, status = "primary", title = "Stunting Prevalence",
+                                                                tmapOutput("afri_prev_ihm", width = "100%", height = 800))), 
+                                                     column(width = 2,
+                                                            box(width = NULL, solidHeader = T, status = "primary",
+                                                                selectInput("select_maln_ihm", "Select underweight, Wasting or Stunting levels",
+                                                                            choices = maln_level,
+                                                                            selected = "stunting_prev"))
+                                            )),
+                                            tabPanel("Compare Malnutrition levels",
+                                                     column(width = 10,
+                                                            box(width = NULL,  solidHeader = T, status = "primary", title = "Average Stunting/Wasting/ Underweight Prevalence",
+                                                                plotlyOutput("afri_compare_ihm"))), 
+                                                     column(width = 2,
+                                                            box(width = NULL, solidHeader = T, status = "primary",
+                                                                selectInput("select_maln_ihm_co", "Select Countries",
+                                                                            choices = countries_names,
+                                                                            selected = c("kenya", "uganda"), multiple = TRUE))
+                                                     ))
                                         )
                                     ))
                         )
