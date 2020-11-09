@@ -17,7 +17,7 @@ ui <-  navbarPage(theme = shinytheme("flatly"),"Malnutrition Prevalence in Afric
                   
                   ###define user interface section of Participants to be replaced tabs
                   tabPanel("UNICEF Estimate Africa Stunting Prevalence Ages 0 - 5 Years",
-                           tabsetPanel(type = "tabs",
+                           tabsetPanel(type = "pills",
                                        #define table for Participant Replacement   
                                        tabPanel("Africa Stunting Prevalence Ages 0 - 5 Years",
                                                 sidebarLayout(

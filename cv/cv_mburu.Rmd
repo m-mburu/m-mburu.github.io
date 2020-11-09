@@ -1,5 +1,5 @@
 ---
-title: "Moses Mburu"
+title: ""
 author: ""
 date: "9/8/2020"
 output:
@@ -23,7 +23,7 @@ Moses Mburu
 
 Location: Kilifi, Kenya 
 
-LinkedIn: https://www.linkedin.com/in/moses-mburu-956bb031/ 
+LinkedIn: https://www.linkedin.com/in/mmburu/
 
 Blog: https://m-mburu.github.io/ 
 
