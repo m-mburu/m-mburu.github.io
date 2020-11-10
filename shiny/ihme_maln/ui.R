@@ -22,9 +22,26 @@ ui <-  navbarPage(theme = shinytheme("flatly"),"Malnutrition Prevalence in Afric
                                        tabPanel("Africa Stunting Prevalence Ages 0 - 5 Years",
                                                 sidebarLayout(
                                                     sidebarPanel(
-                                                        selectInput("gender_select_maln", "Select, National estimate or sex",
-                                                                    choices = type_sex_area,
-                                                                    selected = "national"),
+                                                        selectInput("segment",
+                                                                    label = "Select Sex, Rural/Urban etc",
+                                                                    choices = c("National", "Rural/Urban", "Sex")),
+                                                        conditionalPanel(
+                                                            
+                                                            condition = "input.segment == 'National'",
+                                                            selectInput("area_national", "National Stunting prevalence levels",
+                                                                        c("national"), selected = "national")),
+                                                        
+                                                        conditionalPanel(
+                                                            
+                                                            condition = "input.segment == 'Rural/Urban'",
+                                                            selectInput("area_rural", "Rural/Urban Stunting prevalence",
+                                                                        c("rural", "urban"), selected = "rural")),
+                                                        conditionalPanel(
+                                                            
+                                                            condition = "input.segment == 'Sex'",
+                                                            selectInput("sex", "Male female stunting levels",
+                                                                        c("female", "male"), selected = "female")),
+                                             
                                                         selectInput("year_select_maln", "Select, Year",
                                                                     choices = year_unicef ,
                                                                     selected = 2019)),

@@ -11,10 +11,20 @@ library(data.table)
 library(gapminder)
 library(ggthemes)
 server <- function(input, output) { 
+    test1 <- reactive({
+        if(input$segment == 'National') {
+            
+            x = input$area_national
+            
+        } else if(input$segment =='Rural/Urban'){
+            x = input$area_rural
+            
+        } else x = input$sex
+    })
     
     output$afri_prev <- renderLeaflet({
         
-        df <- africa_unicef[type == input$gender_select_maln & cmrs_year == input$year_select_maln]
+        df <- africa_unicef[type == test1() & cmrs_year == input$year_select_maln]
         
         df <- merge(df, africa_count,
                     by = "countryname", all.y = T) 
