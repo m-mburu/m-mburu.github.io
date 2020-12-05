@@ -19,7 +19,10 @@ server <- function(input, output) {
         } else if(input$segment =='Rural/Urban'){
             x = input$area_rural
             
-        } else x = input$sex
+        } else if(input$segment =='Sex'){
+            x = input$sex
+            
+        }else x = input$age
     })
     
     output$afri_prev <- renderLeaflet({
@@ -55,6 +58,10 @@ server <- function(input, output) {
     output$compare_bar_tab2 <- renderPlotly({
 
         df <- africa_unicef[type2 %in% c("National",input$select_type) & countryname %in% input$select_countries & cmrs_year == input$select_year_tab2]
+        if(input$select_type == "Age"){
+            lvl = c(child_age, "national")
+            df[, type := factor(type, levels = lvl)]
+        }
 
         ggplot(df, aes(countryname, value, fill = type))+
             geom_bar(stat = "identity", position = "dodge") +

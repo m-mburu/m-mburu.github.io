@@ -12,8 +12,13 @@ library(ggthemes)
 library(data.table)
 library(gapminder)
 library(shinythemes)
+# library(bslib)
+# my_theme <- bs_theme(
+#     bg = "#202123", fg = "#B8BCC2", primary = "#EA80FC", 
+#     base_font = font_google("Grandstander")
+# )
 
-ui <-  navbarPage(theme = shinytheme("flatly"),"Malnutrition Prevalence in Africa 0 - 5 years",
+ui <-  navbarPage(theme = "flatly" ,"Malnutrition Prevalence in Africa 0 - 5 years",
                   
                   ###define user interface section of Participants to be replaced tabs
                   tabPanel("UNICEF Estimate Africa Stunting Prevalence Ages 0 - 5 Years",
@@ -24,7 +29,7 @@ ui <-  navbarPage(theme = shinytheme("flatly"),"Malnutrition Prevalence in Afric
                                                     sidebarPanel(
                                                         selectInput("segment",
                                                                     label = "Select Sex, Rural/Urban etc",
-                                                                    choices = c("National", "Rural/Urban", "Sex")),
+                                                                    choices = c("National", "Rural/Urban", "Sex", "Age")),
                                                         conditionalPanel(
                                                             
                                                             condition = "input.segment == 'National'",
@@ -41,6 +46,11 @@ ui <-  navbarPage(theme = shinytheme("flatly"),"Malnutrition Prevalence in Afric
                                                             condition = "input.segment == 'Sex'",
                                                             selectInput("sex", "Male female stunting levels",
                                                                         c("female", "male"), selected = "female")),
+                                                        conditionalPanel(
+                                                            
+                                                            condition = "input.segment == 'Age'",
+                                                            selectInput("age", "Age in months stunting levels",
+                                                                        child_age, selected = "0_5")),
                                              
                                                         selectInput("year_select_maln", "Select, Year",
                                                                     choices = year_unicef ,
@@ -67,7 +77,7 @@ ui <-  navbarPage(theme = shinytheme("flatly"),"Malnutrition Prevalence in Afric
                                                                     choices = countries_names,
                                                                     selected = c("kenya", "nigeria"), multiple = TRUE),
                                                         selectInput("select_type", "Select type eg sex, area:",
-                                                                    choices = c("Rural/Urban", "Sex"),
+                                                                    choices = c("Rural/Urban", "Sex", "Age"),
                                                                     selected = "Rural/Urban"),
                                                         selectInput("select_year_tab2", "Select year",
                                                                     choices = year_unicef,

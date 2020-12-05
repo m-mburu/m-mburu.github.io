@@ -14,6 +14,7 @@ library(gapminder)
 africa_unicef <- fread("data/africa_unicef.csv")
 
 
+
 world <- st_read("data/africa_shp/world.shp")
 
 countries <-  world %>% 
@@ -54,9 +55,29 @@ africa_unicef[, countryname := tolower(as.character(countryname))]
 
 africa_unicef <- africa_unicef[!is.na(type)]
 
+africa_unicef[grepl("^month", variable), type := age]
+
+# child_age <- c("0_5", "6_11", "12_23", "0_23",
+#                "24_35", "36_47", 
+#                "48_59", "24_59")
+
+child_age <- c("0_5", "6_11", "12_23", "24_35", "36_47","48_59")
+
+#child_ageb <- c("0_23", "24_59")
+
 africa_unicef[, type2 := case_when(type %in% c("male", "female") ~ "Sex",
                                    type %in% c("rural", "urban") ~ "Rural/Urban",
-                                   TRUE ~ "National")]
+                                   type %in% child_age ~ "Age",
+                                   type %in%  "national" ~ "National",
+                                   TRUE ~ "NA")]
+
+africa_unicef[, type2 := ifelse(type2 == "NA", NA, type2)]
+africa_unicef <- africa_unicef[!is.na(type2)]
+
+#africa_unicef[, table(type, type2)]
+#africa_unicef[type2 == "Age", unique(type)]
+
+
 
 
 type_sex_area <- africa_unicef[, unique(type)] %>% as.character()

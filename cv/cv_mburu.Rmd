@@ -3,6 +3,9 @@ title: ""
 author: ""
 date: "9/8/2020"
 output:
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
   html_document:
     css: style.css
     toc: yes
@@ -12,9 +15,6 @@ output:
       smooth_scroll: yes
     theme: united
     highlight: pygments
-  pdf_document:
-    toc: yes
-    toc_depth: '2'
 ---
 
 <center>

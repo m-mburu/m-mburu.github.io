@@ -131,7 +131,9 @@ df_comp <- data.table(countryname =  x_long, cmrs_year = year_long)
 interest_var <- c("national_r", "male_r",
                   "female_r" ,  "urban_r", "rural_r" )
 
-africa_unicef <- africa_unicef[variable %in% interest_var]
+africa_unicef[, unique(variable)]
+africa_unicef <- africa_unicef[variable %in% interest_var | type %in% "month"]
+africa_unicef <- africa_unicef[ci == "r"]
 africa_unicef[, countryname := tolower(countryname)]
 africa_split <- split(africa_unicef,
                       by = c("countryname", "variable"), drop = TRUE)
@@ -167,6 +169,8 @@ for (i in 1:length(africa_split)) {
 
 
 africa_unicef <- rbindlist(comb_list)
+africa_unicef[type == "month", age := str_extract(variable, "_.*_")]
+africa_unicef[, age := str_trim(gsub("^_|_$", "", age))]
 #africa_unicef[, ci := str_extract(variable, "[a-z]{1,2}$")]
 
 africa_unicef[, countryname := as.character(countryname)]
