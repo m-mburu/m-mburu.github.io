@@ -1,8 +1,0 @@
-name: "my-website"
-navbar:
-  title: "Mburu ML"
-  left:
-    - text: "Home"
-      href: index.html
-    - text: "About"
-      href: about.html
