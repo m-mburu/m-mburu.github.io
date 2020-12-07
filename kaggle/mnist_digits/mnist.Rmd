@@ -1,0 +1,316 @@
+---
+title: "MNIST Digits"
+author: "Mburu"
+date: "7/10/2020"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+    theme: united
+    highlight: pygments
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+
+# MNIST Digits
+
+## Read data and Load libraries
+
+```{r }
+
+library(tidyverse)
+library(data.table)
+library(keras)
+library(caret)
+library(DT)
+library(caretEnsemble)
+library(tictoc)
+
+train_data <- fread("data/train.csv")
+
+test_data <- fread("data/test.csv")
+
+```
+
+## Frequency of digits
+
+```{r, fig.height=4.5}
+ggplot(train_data, aes(x = factor(label))) +
+    geom_bar()
+```
+
+
+## Randomly sample 12 digits
+
+```{r}
+#  image coordinates
+xy_axis <- data.frame(x = expand.grid(1:28, 28:1)[,1],
+                      y = expand.grid(1:28, 28:1)[,2])
+
+
+# get 12 images
+set.seed(100)
+sample_10 <- train_data[sample(1:.N, 12), -1] %>% as.matrix()
+
+datatable(sample_10, 
+          options = list(scrollX = TRUE))
+
+sample_10 <- t(sample_10)
+
+plot_data <- cbind(xy_axis, sample_10 )
+
+setDT(plot_data, keep.rownames = "pixel")
+
+# Observe the first records
+head(plot_data) %>% datatable(options = list(scrollX = TRUE))
+```
+
+## Plot the 12 digits
+
+````{r, fig.width = 8, fig.height = 6}
+plot_data_m <- melt(plot_data, id.vars = c("pixel", "x", "y"))
+
+# Plot the image using ggplot()
+ggplot(plot_data_m, aes(x, y, fill = value)) +
+    geom_raster()+
+     facet_wrap(~variable)+
+    scale_fill_gradient(low = "white",
+                        high = "black", guide = FALSE)+
+    theme(axis.line = element_blank(),
+                  axis.text = element_blank(),
+                  axis.ticks = element_blank(),
+                  axis.title = element_blank(),
+                  panel.background = element_blank(),
+                  panel.border = element_blank(),
+                  panel.grid.major = element_blank(),
+                  panel.grid.minor = element_blank(),
+                  plot.background = element_blank())
+   
+```
+
+## Prepare data for model fitting
+
+- Decided to have a self test set
+
+```{r }
+nmst <- names(train_data)
+nmst <- nmst[nmst != "label"]
+minmax <- function(x) {
+  top =  (x - min(x))
+  bottom = (max(x) - min(x))
+  if(bottom == 0){ 
+    return(0)
+  }else{
+      return(top/bottom)
+    }
+}
+#train_data[, (nmst) := lapply(.SD,  function(x) x/255), .SDcols = nmst]
+train_data[, (nmst) := lapply(.SD,  minmax), .SDcols = nmst]
+set.seed(100)
+N1 = nrow(train_data)
+sample_one <- sample(N1, 5000)
+train_data <- train_data[sample_one]
+N = nrow(train_data)
+sample_train <- sample(N, size = round(0.75 *N ))
+test_own <- train_data[-sample_train]
+train_data2 <- train_data[sample_train, ]
+train_y <-to_categorical(train_data2$label, 10)
+
+train_x <- train_data2[, -1]
+#convert to matrix
+train_x <- train_x %>%
+    as.matrix()
+
+#train_x <- train_x/255
+
+```
+
+
+## Construct model layers
+
+```{r }
+model <- keras_model_sequential() 
+model %>% 
+    layer_dense(units = 784, activation = 'relu', input_shape = 784) %>%
+    layer_dropout(rate = 0.3) %>%
+    layer_dense(units = 784, activation = 'relu') %>%
+    layer_dropout(rate = 0.3) %>%
+    layer_dense(units = 392, activation = 'relu') %>%
+    layer_dropout(rate = 0.2) %>%
+    layer_dense(units = 200, activation = 'tanh') %>%
+    #layer_dropout(rate = 0.) %>%
+    layer_dense(units = 10, activation = 'softmax')
+```
+
+
+## Compile model
+
+```{r}
+model %>% compile(
+    loss = 'categorical_crossentropy',
+    optimizer = 'adam',
+    metrics = c('accuracy'))
+```
+
+## Fit model
+
+```{r}
+hist <- model %>% fit(train_x, train_y, 
+                      epochs = 9, batch_size = 1000,
+                      validation_split = .2)
+
+
+plot(hist,type = "b")
+```
+
+## Own test
+
+```{r}
+test_own_x <- test_own[, -1] %>% as.matrix()
+
+test_own_pred <- model %>% predict_classes(test_own_x) %>% factor()
+
+confusionMatrix(data = test_own_pred, reference = factor(test_own$label))
+
+```
+
+### Save predictions
+
+```{r }
+test_x <- as.matrix(test_data)/255
+
+test_pred <- model %>% predict_classes(test_x)
+#head(test_pred)
+
+df_pred1 <- data.frame(ImageId = 1:length(test_pred),
+                       Label = test_pred)
+
+write.csv(df_pred1, file = "sample_submission.csv", row.names = F)
+
+```
+
+
+# Compare between tsne amd glmr
+
+## TSNE
+
+```{r, fig.width = 6, fig.height = 4}
+library(Rtsne)
+
+tsne_output <- Rtsne(train_x, check_duplicates = FALSE, PCA = FALSE)
+
+# Generate a data frame to plot the result
+tsne_train <- data.table(tsne_x = tsne_output$Y[,1],
+                        tsne_y = tsne_output$Y[,2],
+                        label =  train_data2$label)
+
+# Plot the embedding usign ggplot and the label
+ggplot(tsne_train,
+       aes(x = tsne_x, y = tsne_y, color = factor(label))) + 
+  ggtitle("t-SNE of MNIST data set") + 
+  geom_text(aes(label = label)) +
+    theme(legend.position = "none")
+
+
+```
+
+## Plot tsne group means
+
+```{r}
+tsne_mean <- tsne_train[, 
+                        .(mean_x = mean(tsne_x), mean_y = mean(tsne_y)),
+                        by = label]
+
+
+ggplot(tsne_mean,
+       aes(x = mean_x, y = mean_y, color = factor(label))) + 
+  ggtitle("t-SNE of MNIST data set group means") + 
+  geom_text(aes(label = label)) +
+    theme(legend.position = "none")
+
+
+```
+## Kmeans to see if tsne and kmeans agree
+
+```{r}
+set.seed(123)
+k_means_mnist <- kmeans(train_x, 10)
+
+tsne_train[, cluster := k_means_mnist$cluster]
+ggplot(tsne_train,
+       aes(x = tsne_x, y = tsne_y, color = factor(cluster))) + 
+  geom_point()+
+  ggtitle("t-SNE of MNIST data set") + 
+    theme(legend.position = "none")
+
+tsne_train[, cluster := NULL]
+```
+
+
+
+
+```{r}
+# set model
+model_autoencoder <- keras_model_sequential()
+model_autoencoder %>%
+  layer_dense(units = 784, activation = "relu", input_shape = ncol(train_x)) %>%
+  layer_dense(units = 784, activation = "relu") %>%
+  layer_dense(units = 2, activation = "relu", name = "bottleneck") %>%
+  layer_dense(units = ncol(train_x))
+
+# view model layers
+
+summary(model_autoencoder)
+```
+
+
+```{r}
+
+# compile model
+model_autoencoder %>% compile(
+  loss = "mean_squared_error", 
+  optimizer = "adam"
+)
+
+# fit model
+model_autoencoder %>% fit(
+  x = train_x, 
+  y = train_x, 
+  epochs = 10,
+  verbose = 1
+)
+```
+
+
+
+```{r}
+
+evaluate(model_autoencoder, train_x, train_x)
+
+evaluate(model_autoencoder, test_own_x, test_own_x)
+
+```
+
+
+```{r}
+# extract the bottleneck layer
+intermediate_layer_model <- keras_model(inputs = model_autoencoder$input,
+                                        outputs = get_layer(model_autoencoder, "bottleneck")$output)
+
+intermediate_output <- predict(intermediate_layer_model, train_x)
+
+```
+
+
+```{r}
+intermediate_output <- data.frame(intermediate_output, y = train_data2$label)
+ggplot(intermediate_output, aes(X1, X2, color = factor(y))) +
+  geom_point()
+```
+

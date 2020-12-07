@@ -1,0 +1,256 @@
+---
+title: "Loan Prediction Zindi"
+author: "mburu"
+date: "April 18, 2020"
+output:
+  html_document:
+    highlight: pygments
+    theme: united
+    toc: yes
+  html_notebook:
+    highlight: pygments
+    theme: united
+    toc: yes
+  pdf_document:
+    toc: yes
+  beamer_presentation:
+    highlight: pygments
+header-includes:
+- \usetheme{CambridgeUS}
+- \useinnertheme{rounded}
+- \usecolortheme{seahorse}
+- \usefonttheme{professionalfonts}
+- \usepackage{xcolor,soul,hyperref,cite,graphicx,amsmath}
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+```{r, echo=FALSE}
+#setwd("E:/R/Busara Data Analyst task")
+options("kableExtra.html.bsTable" = T)
+```
+
+
+```{r}
+library(tidyverse)
+library(data.table)
+library(caret)
+library(ggthemes)
+```
+
+
+
+```{r}
+
+trainperf <- fread("trainperf.csv")
+traindemographics <-fread("traindemographics.csv")
+testperf <-fread("testperf.csv")
+testdemographics <-fread("testdemographics.csv")
+SampleSubmission <- fread("SampleSubmission.csv")
+```
+
+
+
+```{r}
+train_data <- merge(traindemographics, trainperf, all.y = T, by = "customerid")
+test_data <- merge(testdemographics, testperf, all.y = T, by = "customerid")
+```
+
+```{r}
+dates <- c("birthdate" ,"approveddate", "creationdate" )
+train_data[, (dates) := lapply(.SD, as.Date), .SDcols = dates]
+train_data[, age := approveddate - birthdate]
+```
+
+
+```{r}
+
+train_data[, .N, by = .(good_bad_flag)] %>%
+    .[, perc := round(N/sum(N) * 100, 2)] %>%
+    
+     ggplot(aes(good_bad_flag, perc, fill =good_bad_flag)) +
+     geom_bar(stat = "identity") +
+     geom_text(aes(good_bad_flag, perc, label = paste(perc, "%"),
+                   vjust = .05, hjust = .5),
+               size = 4)+
+     theme_hc()+
+    labs(title = "Percentage of bad loans")+
+     scale_fill_colorblind(name = "")+
+    theme(legend.position = "none")
+
+
+
+```
+
+
+```{r}
+chars <- c("bank_account_type", "bank_name_clients", 
+           "bank_branch_clients", "employment_status_clients",
+           "level_of_education_clients")
+
+train_data[, (chars) := lapply(.SD, function(x) ifelse(x == "" | x == " ", NA, x)), .SDcols = chars]
+```
+
+
+```{r}
+
+naVals <- colSums(is.na(train_data))/nrow(train_data) * 100 
+
+withNa <- naVals[naVals>0]
+nms_na <- names(withNa)
+missing_perc <- data.table(variables = nms_na, perc = withNa) 
+
+
+```
+
+
+##
+
+```{r}
+ggplot(missing_perc, aes( reorder(variables, perc), perc))+
+    geom_bar(stat = "identity") +
+    theme_fivethirtyeight()+
+    coord_flip()
+```
+
+
+
+```{r}
+library(sf)
+library(raster)
+library(tidyverse)
+library(data.table)
+
+#population density file
+world <- raster("ppp_2019_1km_Aggregated.tif")
+
+
+#get projection for map
+proj4string = CRS(as.character(projection(world)))
+
+gps_data <- train_data[!is.na(latitude_gps)]
+chain_shape <- SpatialPointsDataFrame(gps_data[,.(longitude_gps,latitude_gps)], 
+                                                gps_data ,    #the R object to convert
+                                                proj4string = proj4string)   # assign a CRS 
+
+
+
+
+#outfile <- 'shape_files/chain.shp'
+#shapefile(chain_shape, outfile, overwrite=TRUE)
+# 
+
+
+
+gps_data[, pop_density := raster::extract(world, chain_shape, weights=FALSE, fun=mean)]
+
+```
+
+```{r}
+train_data1 <- merge(train_data,  gps_data[, .(customerid, pop_density)], by = "customerid", all.x = T)
+missingdemo <- train_data1[is.na(birthdate)]
+```
+
+
+
+```{r}
+# try out to add a missing coonvert 
+train_data1[, (chars) := lapply(.SD, fct_explicit_na, na_level = "missing"), .SDcols = chars]
+
+list_dfs <- list()
+for (i in 1:length(chars)) {
+  target_col = chars[i]
+
+  dt = train_data1[, .N, by = target_col] 
+  dt[, perc := round(N/sum(N) * 100, 2)]
+  dt[,grp_var := target_col]
+  list_dfs[[i]] = dt
+  print(dt)
+}
+
+train_data1[, bank_account_type := ifelse(bank_account_type == "missing", "Savings", bank_account_type)]
+train_data1[, bank_name_clients := ifelse(bank_name_clients == "missing", "GT Bank", bank_name_clients)]
+train_data1[, employment_status_clients := ifelse(employment_status_clients == "missing", "Permanent", employment_status_clients)]
+
+
+sum_dt <- rbindlist(list_dfs)
+
+train2 <- train_data1[, .(good_bad_flag, termdays, 
+                         loannumber, loanamount, 
+                         totaldue, bank_account_type, bank_name_clients, employment_status_clients, 
+                         level_of_education_clients, age, pop_density)]
+
+
+train2[, age := as.numeric(age)]
+
+
+train2[, loanamount_cat := cut(loanamount,
+                               breaks = c(0, 10000, 20000, max(loanamount, na.rm = T)),
+                               labels = c( "A", "B", "C"))]
+train_dummy <- dummies::dummy.data.frame(train2, names = c("bank_account_type",
+                                                           "bank_name_clients", "employment_status_clients", 
+                                                           "level_of_education_clients", "loanamount_cat")) %>% setDT()
+#train2[, age := ifelse(is.na(age), median(age, na.rm = T), age)]
+```
+
+
+
+```{r}
+library(mice)
+nms_var_0 <- nearZeroVar(train_dummy, names = T, freqCut = 19,  uniqueCut = 10)
+setnames(train_dummy, "level_of_education_clientsPost-Graduate", "level_of_education_clientsPost_Graduate", skip_absent = T)
+names(train_dummy) <- gsub(" ", "_", names(train_dummy))
+train_dummy2 <- mice(train_dummy, method = "cart", m= 5)
+train_final <- complete(train_dummy2, 3)
+```
+
+```{r}
+
+set.seed(200)
+
+setDT(train_final)
+neg_examples <- train_final[good_bad_flag == "Good"]
+
+neg_examples <- neg_examples[sample(1:nrow(neg_examples), 500)]
+
+train3 <- rbind(train_final[good_bad_flag == "Bad"], neg_examples)
+
+train3 <- train3[sample(1:nrow(train3), nrow(train3))]
+cv_fold <- createFolds(train3$good_bad_flag, k = 5)
+
+```
+
+
+
+```{r}
+library(Rtsne)
+nms <- names(train_final)
+
+pred_nms <- nms[nms != "good_bad_flag"]
+
+range01 <- function(x){
+  
+  (x-min(x))/(max(x)-min(x))
+  
+  }
+
+train3[, (pred_nms) := lapply(.SD ,range01), .SDcols = pred_nms]
+train3[,employment_status_clients1 := NULL]
+tsne_output <- Rtsne(as.matrix(train3[, -1]), check_duplicates = FALSE, PCA = FALSE)
+
+# Generate a data frame to plot the result
+tsne_plot <- data.frame(tsne_x = tsne_output$Y[,1],
+                        tsne_y = tsne_output$Y[,2],
+                        Class = train3$good_bad_flag)
+
+# Plot the embedding usign ggplot and the label
+ggplot(tsne_plot, aes(x = tsne_x, y = tsne_y, color = factor(Class))) + 
+  ggtitle("t-SNE of bad loans") + 
+  geom_text(aes(label = Class)) + theme(legend.position = "none")
+```
+
+
+
