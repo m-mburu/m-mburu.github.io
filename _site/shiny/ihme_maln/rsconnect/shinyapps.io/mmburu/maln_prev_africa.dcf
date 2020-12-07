@@ -1,0 +1,13 @@
+name: maln_prev_africa
+title: maln_prev_africa
+username:
+account: mmburu
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3183305
+bundleId: 3842667
+url: https://mmburu.shinyapps.io/maln_prev_africa/
+when: 1605011953.83071
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: cleaning_unicef_data.R
