@@ -1,6 +1,6 @@
 name: "my-website"
 navbar:
-  title: "My Website"
+  title: "Mburu ML"
   left:
     - text: "Home"
       href: index.html
