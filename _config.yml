@@ -1,14 +1,12 @@
 ame: "Data Analysis Blog"
 navbar:
-  title: "My cats' website"
+  title: "M Mburu"
   left:
     - text: "Home"
       href: index.html
   right: 
-    - icon: fa-envelope fa-lg
-      href: mailto:<cats@catemail.com>
     - icon: fa-github fa-lg
-      href: http://github.com/<YOUR_GH_NAME>/
+      href: http://github.com/m-mburu/
 output:
   html_document:
     theme: darkly
