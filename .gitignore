@@ -48,12 +48,13 @@ micro_train.csv
 micro_test.csv
 
 
-kaggle/big5test/data
-kaggle/mnist_digits/data
+_site/kaggle/big5test/data
+_site/kaggle/mnist_digits/data
 
 data-final.csv
 
 
 kaggle/mnist_digits/data
+_site/kaggle/mnist_digits/data/train.csv 
 
 shiny/ihme_maln/rsconnect
