@@ -1,6 +1,6 @@
-ame: "Data Analysis Blog"
+name: "m_mburu"
 navbar:
-  title: "M Mburu"
+  title: "ML/Viz/Spatial/Philosophy/Stats"
   left:
     - text: "Home"
       href: index.html
@@ -8,4 +8,4 @@ navbar:
     - icon: fa-github fa-lg
       href: http://github.com/m-mburu/
 
-theme: jekyll-theme-slate
+theme: jekyll-theme-darkly
