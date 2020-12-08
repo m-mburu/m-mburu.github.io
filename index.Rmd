@@ -2,16 +2,11 @@
 title: "Mburu"
 output:
   html_document:
-    toc: yes
-    toc_depth: 2
-    toc_float:
-      collapsed: no
-      smooth_scroll: no
     theme: united
     highlight: pygments
 ---
 
-My name is [Moses Mburu](https://m-mburu.github.io/cv/cv_mburu.html). This just some of the work I do when learning data science or just playing around.
+My name is [Moses Mburu](https://www.linkedin.com/in/mmburu/). This is just some of the work I do when learning data science or just playing around.
 
 | Description | Notebook | Source Code
 | ------------- | ------------- | ------------- |
