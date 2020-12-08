@@ -1,5 +1,5 @@
 ---
-title: "Mburu"
+title: "ML/Viz/Spatial/Philosophy/Stats"
 output:
   html_document:
     theme: united
