@@ -39,6 +39,7 @@ library(tidyverse)
 library(data.table)
 library(caret)
 library(ggthemes)
+library(lubridate)
 ```
 
 
@@ -57,18 +58,22 @@ SampleSubmission <- fread("SampleSubmission.csv")
 ```{r}
 train_data <- merge(traindemographics, trainperf, all.y = T, by = "customerid")
 test_data <- merge(testdemographics, testperf, all.y = T, by = "customerid")
+loan_data <- rbind(train_data[, set := "train"], test_data[, set := "test"], fill = T)
 ```
 
 ```{r}
 dates <- c("birthdate" ,"approveddate", "creationdate" )
-train_data[, (dates) := lapply(.SD, as.Date), .SDcols = dates]
-train_data[, age := approveddate - birthdate]
+loan_data[, (dates) := lapply(.SD, as.Date), .SDcols = dates]
+loan_data[, age := (as.numeric(approveddate - birthdate))/365]
+loan_data[, aprove_month := month(approveddate)]
+loan_data[, approve_day := wday(approveddate)]
+loan_data[, approve_year := year(approveddate)]
 ```
 
 
 ```{r}
 
-train_data[, .N, by = .(good_bad_flag)] %>%
+loan_data[!is.na(good_bad_flag), .N, by = .(good_bad_flag)] %>%
     .[, perc := round(N/sum(N) * 100, 2)] %>%
     
      ggplot(aes(good_bad_flag, perc, fill =good_bad_flag)) +
@@ -91,13 +96,13 @@ chars <- c("bank_account_type", "bank_name_clients",
            "bank_branch_clients", "employment_status_clients",
            "level_of_education_clients")
 
-train_data[, (chars) := lapply(.SD, function(x) ifelse(x == "" | x == " ", NA, x)), .SDcols = chars]
+loan_data[, (chars) := lapply(.SD, function(x) ifelse(x == "" | x == " ", NA, x)), .SDcols = chars]
 ```
 
 
 ```{r}
 
-naVals <- colSums(is.na(train_data))/nrow(train_data) * 100 
+naVals <- colSums(is.na(loan_data))/nrow(loan_data) * 100 
 
 withNa <- naVals[naVals>0]
 nms_na <- names(withNa)
@@ -119,138 +124,341 @@ ggplot(missing_perc, aes( reorder(variables, perc), perc))+
 
 
 ```{r}
-library(sf)
-library(raster)
-library(tidyverse)
-library(data.table)
+loan_data[, loannumber := as.numeric(loannumber)]
+missing_var_del <- missing_perc[perc>50, variables]
+## KNN imputation
+library(VIM)
+loan_data[, (dates):= NULL]
+loan_data[, referredby:= NULL]
+loan_data <- kNN(loan_data,useImputedDist = FALSE, k =10)
 
-#population density file
-world <- raster("ppp_2019_1km_Aggregated.tif")
-
-
-#get projection for map
-proj4string = CRS(as.character(projection(world)))
-
-gps_data <- train_data[!is.na(latitude_gps)]
-chain_shape <- SpatialPointsDataFrame(gps_data[,.(longitude_gps,latitude_gps)], 
-                                                gps_data ,    #the R object to convert
-                                                proj4string = proj4string)   # assign a CRS 
+setDT(loan_data)
+nms_all <- names(loan_data)
+nms_imp <- nms_all[grepl("_imp$", nms_all)]
 
 
+loan_data[, (nms_imp) := lapply(.SD, 
+                            function(x) ifelse(x == FALSE, 0, 1)),
+      .SDcols = nms_imp]
 
-
-#outfile <- 'shape_files/chain.shp'
-#shapefile(chain_shape, outfile, overwrite=TRUE)
-# 
-
-
-
-gps_data[, pop_density := raster::extract(world, chain_shape, weights=FALSE, fun=mean)]
+col_sum_imp <- loan_data[, colSums(.SD), .SDcols = nms_imp]
+col_sum_imp <- names(col_sum_imp[col_sum_imp == 0])
+#var_importants <- fread("var_importanta.csv")
+loan_data[, (col_sum_imp) := NULL]
 
 ```
 
-```{r}
-train_data1 <- merge(train_data,  gps_data[, .(customerid, pop_density)], by = "customerid", all.x = T)
-missingdemo <- train_data1[is.na(birthdate)]
-```
-
-
 
 ```{r}
-# try out to add a missing coonvert 
-train_data1[, (chars) := lapply(.SD, fct_explicit_na, na_level = "missing"), .SDcols = chars]
 
-list_dfs <- list()
-for (i in 1:length(chars)) {
-  target_col = chars[i]
 
-  dt = train_data1[, .N, by = target_col] 
-  dt[, perc := round(N/sum(N) * 100, 2)]
-  dt[,grp_var := target_col]
-  list_dfs[[i]] = dt
-  print(dt)
+loan_data[, good_bad_flag := factor(good_bad_flag, levels = c("Bad", "Good"))]
+
+nms_del1 <- c("set_imp", " good_bad_flag_imp", 
+              "approve_year","aprove_month", 
+              "year","systemloanid" )
+
+loan_data[, (nms_del1) := NULL]
+
+class_nms <- sapply(loan_data, class)
+nums <- class_nms[class_nms == "numeric"] %>% names()
+nums <- nums[!grepl("_imp|good_bad_flag", nums)]
+
+zero_one <- function(x){
+    
+    myvar <- (x - min(x))/(max(x) - min(x))
+    
+    myvar
 }
 
-train_data1[, bank_account_type := ifelse(bank_account_type == "missing", "Savings", bank_account_type)]
-train_data1[, bank_name_clients := ifelse(bank_name_clients == "missing", "GT Bank", bank_name_clients)]
-train_data1[, employment_status_clients := ifelse(employment_status_clients == "missing", "Permanent", employment_status_clients)]
+
+loan_data[, (nums) := lapply(.SD, zero_one), .SDcols = nums]
 
 
-sum_dt <- rbindlist(list_dfs)
-
-train2 <- train_data1[, .(good_bad_flag, termdays, 
-                         loannumber, loanamount, 
-                         totaldue, bank_account_type, bank_name_clients, employment_status_clients, 
-                         level_of_education_clients, age, pop_density)]
-
-
-train2[, age := as.numeric(age)]
-
-
-train2[, loanamount_cat := cut(loanamount,
-                               breaks = c(0, 10000, 20000, max(loanamount, na.rm = T)),
-                               labels = c( "A", "B", "C"))]
-train_dummy <- dummies::dummy.data.frame(train2, names = c("bank_account_type",
-                                                           "bank_name_clients", "employment_status_clients", 
-                                                           "level_of_education_clients", "loanamount_cat")) %>% setDT()
-#train2[, age := ifelse(is.na(age), median(age, na.rm = T), age)]
+train_data <- loan_data[set == "train"]
+train_data[, set:= NULL]
+test_data <- loan_data[set == "test"]
+test_data[, set:= NULL]
 ```
 
 
-
 ```{r}
-library(mice)
-nms_var_0 <- nearZeroVar(train_dummy, names = T, freqCut = 19,  uniqueCut = 10)
-setnames(train_dummy, "level_of_education_clientsPost-Graduate", "level_of_education_clientsPost_Graduate", skip_absent = T)
-names(train_dummy) <- gsub(" ", "_", names(train_dummy))
-train_dummy2 <- mice(train_dummy, method = "cart", m= 5)
-train_final <- complete(train_dummy2, 3)
-```
 
-```{r}
+train_bad <- train_data[good_bad_flag == "Bad"]
+train_good <- train_data[good_bad_flag == "Good"]
+n_row = nrow(train_good)
+n_row_dead = nrow(train_bad)
 
 set.seed(200)
+not_sample <- sample(1:n_row, n_row_dead)
+train_good <- train_good[not_sample]
+train_sampled <- rbind(train_bad, train_good)
 
-setDT(train_final)
-neg_examples <- train_final[good_bad_flag == "Good"]
+```
 
-neg_examples <- neg_examples[sample(1:nrow(neg_examples), 500)]
+```{r}
+## Model Cross validation
 
-train3 <- rbind(train_final[good_bad_flag == "Bad"], neg_examples)
+set.seed(100)
+cv_fold <- createFolds(train_sampled$good_bad_flag, k = 10)
 
-train3 <- train3[sample(1:nrow(train3), nrow(train3))]
-cv_fold <- createFolds(train3$good_bad_flag, k = 5)
+train_ctrl <- trainControl(method = "cv",
+                        number = 10,
+                        summaryFunction = twoClassSummary,
+                        classProbs = TRUE,
+                        allowParallel=T,
+                        index = cv_fold,
+                        verboseIter = FALSE,
+                        savePredictions = TRUE,
+                        search = "grid")
+
+
+xgb_grid <- expand.grid(nrounds = c(50,100),
+                        eta = 0.4,
+                        max_depth = c(2,3),
+                        gamma = c(0, .01),
+                        colsample_bytree = c(0.6, .8, 1),
+                        min_child_weight = 1,
+                        subsample =  c(.5, .8, 1))
+
+ 
+ranger_grid <- expand.grid(splitrule = c("extratrees", "gini"),
+                        mtry = c(10, 20, (ncol(train_data) - 2) ),
+                        min.node.size = c(1, 5))
+
+svm_grid <- expand.grid(C = c( 1, 3, 5, 20),
+                        sigma = seq(0.001, 0.524 , length.out = 7))
+
+
+
+```
+
+
+
+
+
+```{r}
+library(caret)
+library(caretEnsemble)
+library(tictoc)
+#tuneGrid= xgb_grid
+tic()
+
+model_list <- caretList(
+   good_bad_flag~.,
+    data=train_sampled[, .SD, .SDcols = !"customerid"],
+    metric = "ROC",
+    trControl=train_ctrl,
+    tuneList = list(caretModelSpec(method="xgbTree",tuneGrid= xgb_grid ),
+                    caretModelSpec(method = "svmRadial", tuneGrid = svm_grid),
+                    caretModelSpec(method="ranger", tuneGrid= ranger_grid)
+
+
+                   )
+)
+
+toc()
+```
+
+```{r}
+model_list
+```
+
+
+
+```{r}
+
+resamples_models <- resamples(model_list)
+
+dotplot(resamples_models, metric = "Sens")
+
+```
+
+
+
+
+## Model Statistics
+
+
+
+```{r}
+nms_models <- names(model_list)
+resamples_stat_list <- list()
+for (j in 1:length(nms_models)) {
+  model1 = model_list[[j]]
+  resample_stata <- thresholder(model1, 
+                              threshold = seq(.0, 1, by = 0.01), 
+                              final = TRUE, 
+                              statistics = "all") %>% setDT()
+  p= ggplot(resample_stata , aes(x = prob_threshold, y = F1, col = "F1")) + 
+  geom_point() + 
+  geom_point(aes(y = Sensitivity, col = "Sensitivity"))+
+  scale_x_continuous(breaks = seq(0, 1, by =.1))+
+    ggtitle(nms_models[j])
+  print(p)
+  resample_stata[, model:= nms_models[j]]
+  resamples_stat_list[[j]] = resample_stata
+}
+
+
+
+  
+```
+
+## ROC CURVE
+
+
+```{r}
+resamples_combined <- rbindlist(resamples_stat_list, fill = TRUE)
+library(plotly)
+ggplotly(ggplot(resamples_combined  , aes(x = 1-Specificity, y = Recall, color = model)) + 
+  geom_line(size = 1) + 
+  #geom_point(aes(y = Sensitivity, col = "Sensitivity"))+
+  scale_x_continuous(breaks = seq(0, 1, by =.1)) +
+  ggtitle(paste0("ROC for models"))+
+  scale_color_viridis_d())
+
+
+
+```
+
+
+## Precision Recall Curve
+
+
+```{r}
+
+
+ggplotly(ggplot(resamples_combined ,
+                aes( x = Recall, y = Precision, color = model)) + 
+  geom_line(size = 1) + 
+  #geom_point(aes(y = Sensitivity, col = "Sensitivity"))+
+  scale_x_continuous(breaks = seq(0, 1, by =.1))+
+  scale_color_viridis_d()+
+  ggtitle(paste0("Precision recall curve")))
+
 
 ```
 
 
 
 ```{r}
-library(Rtsne)
-nms <- names(train_final)
+library(iml)
+X_pred <-train_sampled[, .SD, .SDcols = !c("customerid", "good_bad_flag")] %>%
+  as.data.frame()
 
-pred_nms <- nms[nms != "good_bad_flag"]
+nms_models <- names(model_list)
 
-range01 <- function(x){
+iml_models <- list()
+
+for (i in 1:length(nms_models)) {
   
-  (x-min(x))/(max(x)-min(x))
-  
+  chain_rf_a <- model_list[[i]]
+  pred <- function(chain_rf_a, train_sampled)  {
+    results <- predict(chain_rf_a, newdata = train_sampled, type = "prob")
+    return(results[[1L]])
   }
+  
+  # it does not know how to deal with char values
 
-train3[, (pred_nms) := lapply(.SD ,range01), .SDcols = pred_nms]
-train3[,employment_status_clients1 := NULL]
-tsne_output <- Rtsne(as.matrix(train3[, -1]), check_duplicates = FALSE, PCA = FALSE)
 
-# Generate a data frame to plot the result
-tsne_plot <- data.frame(tsne_x = tsne_output$Y[,1],
-                        tsne_y = tsne_output$Y[,2],
-                        Class = train3$good_bad_flag)
+# get predicted values
+  iml_models[[i]] <- Predictor$new(model = chain_rf_a, 
+                      data =X_pred,
+                      predict.function = pred,
+                      y = train_sampled$good_bad_flag)
 
-# Plot the embedding usign ggplot and the label
-ggplot(tsne_plot, aes(x = tsne_x, y = tsne_y, color = factor(Class))) + 
-  ggtitle("t-SNE of bad loans") + 
-  geom_text(aes(label = Class)) + theme(legend.position = "none")
+
+}
+
+
+
+```
+
+# Feature Importance
+## Feature Importance
+
+
+```{r}
+plots <- list()
+for (i in 1:length(nms_models)) {
+  model_this = iml_models[[i]]
+  impa <- FeatureImp$new(model_this, loss = "ce")
+  var_importanta <-impa$results %>% data.table()
+
+  #write.csv(var_importanta, file = "var_importanta.csv", row.names = F)
+  setorder(var_importanta, -importance)
+  var10a <- var_importanta[1:20]
+  if(i == 2) write.csv(var10a, file = "svm_var.csv", row.names = F)
+  plots[[i]] <- ggplot(var10a, aes(reorder(feature,importance), importance))+
+  geom_point()+
+  ggtitle(nms_models[i])+
+   geom_linerange(aes(ymin=importance.05, ymax= importance.95), width=.3,
+                  position=position_dodge(width = .7)) +
+  coord_flip()
+  
+  
+}
+
+plots
+```
+
+## Shap Values
+
+
+```{r}
+nms <- names(model_list)
+ids <- which(nms == "ranger")
+shap_list <- vector("list", nrow(X_pred))
+model_list_shap <- list()
+model_this <- iml_models[[ids]]
+
+tic()
+
+#shap_list[[1]] <- shap_import
+
+for (i in 1:nrow(X_pred)) {
+  shap <- Shapley$new(model_this,  x.interest = X_pred[i, ], sample.size = 30)
+  shap_import <-shap$results %>% data.table()
+  shap_import <- shap_import[class == "Bad"]
+  shap_list[[i]] <- shap_import[,
+                                customerid := train_sampled[i, customerid]]
+
+  }
+toc()
+shap_values <- rbindlist(shap_list, fill = T)
+
+write.csv(shap_values, file = "shap_values.csv", row.names = F)
+
+
 ```
 
 
+
+```{r}
+library(ggforce)
+shap_values <-  fread("shap_values.csv")
+
+shap_values[, phi2 := abs(phi)]
+shap_imp <- shap_values[, .(Med = median(phi2),
+                            Mean = mean(phi2)), by = feature] %>%
+    setorder(-Mean)
+shap_imp <- shap_imp[1:20, ]
+
+shap_values <- shap_values[feature %in%shap_imp$feature]
+
+shap_values[, feature := factor(feature, levels = rev(shap_imp$feature) )]
+
+ggplot(shap_values, aes(feature, phi,  color = phi.var))+
+  geom_sina()+
+  geom_hline(yintercept = 0) +
+  scale_color_gradient(low="#2187E3", high="#F32858", 
+                       breaks=c(0,1), labels=c("Low","High"))+ 
+  theme_bw() + 
+    theme(axis.line.y = element_blank(), 
+          axis.ticks.y = element_blank(), # remove axis line
+          legend.position="bottom") +
+  coord_flip()
+
+```
 
