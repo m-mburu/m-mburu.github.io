@@ -17,10 +17,14 @@ output:
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
+## Data 
 [kenya poverty data](https://data.humdata.org/dataset/world-bank-poverty-indicators-for-kenya)
 [Uganda poverty data](https://data.humdata.org/dataset/world-bank-poverty-indicators-for-uganda)
 [Tanzania poverty data](https://data.humdata.org/dataset/world-bank-poverty-indicators-for-tanzania)
 [Tanzania poverty data](https://data.humdata.org/dataset/world-bank-poverty-indicators-for-rwanda)
+
+### Packages used
+
 ```{r}
 library(plotly)
 library(tidyverse)
@@ -31,6 +35,9 @@ library(tmap)
 library(ggthemes)
 ```
 
+## Read data
+
+- Read data and row bind
 
 ```{r}
 poverty_ken <- fread("poverty_data/poverty_ken.csv")
@@ -46,6 +53,10 @@ poverty_ea <- rbind(poverty_ken, poverty_uga, poverty_rwa, poverty_tza)
 poverty_ea[sample(nrow(poverty_ea), 10)] %>% datatable(options = list(scrollX = TRUE))
 ```
 
+## Minor Cleaning
+
+- Convert column names into lower 
+- Replace space with underscore
 
 
 ```{r}
@@ -63,6 +74,8 @@ poverty_ea <-  poverty_ea[!is.na(value)]
 poverty_ea[sample(nrow(poverty_ea), 10)] %>% datatable(options = list(scrollX = TRUE))
 
 ```
+
+## Plots
 
 
 
