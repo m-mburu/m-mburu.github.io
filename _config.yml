@@ -8,4 +8,4 @@ navbar:
     - icon: fa-github fa-lg
       href: http://github.com/m-mburu/
 
-theme: jekyll-theme-darkly
+theme: jekyll-theme-slate

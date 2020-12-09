@@ -3,9 +3,6 @@ title: "Cancer Data"
 author: "Mburu"
 date: "January 26, 2019"
 output:
-  html_notebook:
-    toc: yes
-    toc_depth: '2'
   html_document:
     toc: yes
     toc_depth: 2
@@ -14,6 +11,9 @@ output:
       smooth_scroll: no
     theme: united
     highlight: pygments
+  html_notebook:
+    toc: yes
+    toc_depth: '2'
 ---
 
 
@@ -49,9 +49,9 @@ library(ggthemes)
 library(DT)
 library(glmnet)
 
-cancer <- setDT(read_csv("data.csv"))
+cancer <- fread("data.csv")
 
-cancer[, X33 := NULL]
+cancer[, V33 := NULL]
 ```
 
 ```{r}
@@ -357,12 +357,12 @@ plot(xsim, col =as.factor(ysim), pch = 19,
 
 
 
-The question is, since there exists many lines that can separate the red and the black classes which is the best one. This introduces us to the maximal margin classification, In short SVM finds the hyperplane/line that gives the biggest margin/gap between the two classes. In this case SVM will choose the solid line as the hyperplane  while the margins are the dotted lines. The circled points that lie directly on the margin, or on the wrong side of the margin for their class, are known as support vectors. This shows that SVM uses this points to come up with a the decision boundary, the other points are not used.  In this case since it's a two dimensional space the equation of the separating line will be $$latex\beta_0 + \beta_1X_1 + \beta_2X_2$$.
-Then when equations evaluates to more than 0 then 1 is predicted $$latex\beta_0 + \beta_1X_1 + \beta_2X_2 > 0, y = 1$$
-and when it evaluates to less than zero then  predicted class is -1 $$latex\beta_0 + \beta_1X_1 + \beta_2X_2 < 0, \; y = -1$$
-This becomes maximisation problem $$latexwidth \; of \;the \; margin = M $$ $$\sum_{j=1}^{n}\beta_j = 1$$ 
+The question is, since there exists many lines that can separate the red and the black classes which is the best one. This introduces us to the maximal margin classification, In short SVM finds the hyperplane/line that gives the biggest margin/gap between the two classes. In this case SVM will choose the solid line as the hyperplane  while the margins are the dotted lines. The circled points that lie directly on the margin, or on the wrong side of the margin for their class, are known as support vectors. This shows that SVM uses this points to come up with a the decision boundary, the other points are not used.  In this case since it's a two dimensional space the equation of the separating line will be $$\beta_0 + \beta_1X_1 + \beta_2X_2$$.
+Then when equations evaluates to more than 0 then 1 is predicted $$\beta_0 + \beta_1X_1 + \beta_2X_2 > 0, y = 1$$
+and when it evaluates to less than zero then  predicted class is -1 $$\beta_0 + \beta_1X_1 + \beta_2X_2 < 0, \; y = -1$$
+This becomes maximisation problem $$width \; of \;the \; margin = M $$ $$\sum_{j=1}^{n}\beta_j = 1$$ 
 
-$$latexy_i(\beta_0 + \beta_1X_1 + \beta_2X_2) >= M$$
+$$y_i(\beta_0 + \beta_1X_1 + \beta_2X_2) >= M$$
 
 ```{r, echo = FALSE}
 
@@ -518,15 +518,15 @@ XGBoost is a type of an ensemble learner. Ensemble learning is where multiple ma
 Boosting methods are similar but in boosting samples are selected sequentially. For instance the first sample is selected and a decision tree is fitted, The model then picks the examples that were hard to learn and using this examples and a few others selected randomly from the training set the second model is fitted, Using the first model and the second model prediction is made, the model is evaluated and hard examples are picked and together with another randomly selected new examples from training set another model is trained. This is the process for boosting algorithms which continues for a specified number of n.
 
 In gradient boosting the first model is fitted to the original training set. Let say your fitting a simple regression model for ease of explanation. Then your first model will be
-$latex y = f(x) + \epsilon$. 
+$ y = f(x) + \epsilon$. 
 When you find that the error is too large one of the things you might try to do is add more features, use another algorithm, tune your algorithm, look for more training data etc. But what if the error is not white noise and it has some relationship with output $y$ . Then we can fit a second model.
-$latex \epsilon = f_1(x) + \epsilon_1$. then this process can continue lets say until n times. Then the final model will be
+$ \epsilon = f_1(x) + \epsilon_1$. then this process can continue lets say until n times. Then the final model will be
 
-$latex \epsilon_n = f_{n}(x) + \epsilon_{n-1}$. 
+$ \epsilon_n = f_{n}(x) + \epsilon_{n-1}$. 
 
-Then the final step is to add this models together with some weighting criteria $latex weights = \alpha 's$ which gives us the final function used for prediction.
+Then the final step is to add this models together with some weighting criteria $ weights = \alpha 's$ which gives us the final function used for prediction.
 
-$y =latex \alpha * f(x) + \alpha_1 * f_1(x) + \alpha_2 * f_2(x)...+ \alpha_n * f_n + \epsilon$
+$y = \alpha * f(x) + \alpha_1 * f_1(x) + \alpha_2 * f_2(x)...+ \alpha_n * f_n + \epsilon$
 
 ```{r}
 
@@ -557,6 +557,16 @@ xgb_grid <- expand.grid(nrounds = c(10, 50, 100),
                         
     )
 
+xgb_model <-train(label~.,
+                 data=train,
+                 method="xgbTree",
+                 trControl= xgb_ctrl,
+                 tuneGrid=xgb_grid,
+                 verbose=T,
+                 metric="ROC",
+                 nthread =4
+                     
+    )
 ```
 
 
