@@ -107,3 +107,56 @@ for (i in 1:n) {
 my_plots
 ```
 
+
+
+
+```{r}
+economy_and_growth <- fread("API_3_DS2_en_csv_v2_1743760.csv") 
+
+nms_old <- economy_and_growth[1,]  %>% as.character()
+nms_old
+economy_and_growth <- economy_and_growth[-1,]
+names(economy_and_growth) <- nms_old
+nms_new <- nms_old %>% tolower() 
+nms_new <- gsub("\\s", "_", nms_new)
+nms_new
+
+setnames(economy_and_growth, nms_old, nms_new)
+
+id_vars <- c("country_name", "country_code",
+             "indicator_name", "indicator_code")
+
+economy_and_growth <- melt(economy_and_growth,
+                                id.vars = id_vars, 
+                           variable.factor = F,
+                           value.factor = F,
+                           variable.name = "year")
+economy_and_growth[, value:= as.numeric(value)]
+
+economy_and_growth[, year := as.numeric(year)]
+economy_and_growth <-  economy_and_growth[!is.na(value)|!is.na(year)]
+economy_and_growth[sample(nrow(economy_and_growth), 10)] %>% datatable(options = list(scrollX = TRUE))
+```
+
+
+
+```{r}
+gni_gdp_savings_vec <- c("Gross savings (% of GNI)", 
+                         "Total debt service (% of exports of goods, services and primary income)",
+                         "Total debt service (% of GNI)",
+                         "General government final consumption expenditure (annual % growth)",
+                         "Trade (% of GDP)",
+                         "Price level ratio of PPP conversion factor (GDP) to market exchange rate")
+ea_country <- c("Kenya", "Uganda", "Rwanda", "Tanzania")
+gni_gdp_savings_df <- economy_and_growth[indicator_name %in% gni_gdp_savings_vec & country_name %in% ea_country ]
+```
+
+
+
+```{r}
+ggplot(gni_gdp_savings_df,
+       aes(year, value, group = country_name, 
+           color = country_name))+
+  facet_wrap(~indicator_name, scales = "free")+
+  geom_line()
+```

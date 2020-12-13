@@ -122,3 +122,19 @@ debt
 debt/ dollar
 ```
 
+
+
+
+```{r}
+
+gni_gdp_change_perc <- c("GNI growth (annual %)",  "GDP growth (annual %)")
+
+gni_gdp_change_df <- economy_and_growth_ken[indicator_name %in% gni_gdp_change_perc]
+ggplot(gni_gdp_change_df,
+       aes(year, value, group = indicator_name, 
+           color = indicator_name))+
+  geom_line()
+```
+
+```
+
