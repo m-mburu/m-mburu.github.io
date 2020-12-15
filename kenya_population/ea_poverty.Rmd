@@ -84,7 +84,7 @@ poverty_ea[, year := as.numeric(year)]
 
 poverty_ea <- poverty_ea[!grepl("^Annu", indicator_name)]
 poverty_ea_split <- split(poverty_ea, f = poverty_ea$indicator_name)
-i = 1
+
 n <- length(poverty_ea_split)
 my_plots <-htmltools::tagList()
 for (i in 1:n) {
@@ -142,21 +142,43 @@ economy_and_growth[sample(nrow(economy_and_growth), 10)] %>% datatable(options =
 
 ```{r}
 gni_gdp_savings_vec <- c("Gross savings (% of GNI)", 
+                         "Gross savings (% of GDP)",
                          "Total debt service (% of exports of goods, services and primary income)",
                          "Total debt service (% of GNI)",
-                         "General government final consumption expenditure (annual % growth)",
                          "Trade (% of GDP)",
+                         "Current account balance (% of GDP)",
+                         "Exports of goods and services (annual % growth)",
+                         "Manufacturing, value added (annual % growth)",
                          "Price level ratio of PPP conversion factor (GDP) to market exchange rate")
-ea_country <- c("Kenya", "Uganda", "Rwanda", "Tanzania")
+ea_country <- c("Kenya", "Uganda", "Korea, Rep.", "Tanzania", "Singapore")
+economy_and_growth[, unique(country_name)]
 gni_gdp_savings_df <- economy_and_growth[indicator_name %in% gni_gdp_savings_vec & country_name %in% ea_country ]
 ```
 
 
 
 ```{r}
-ggplot(gni_gdp_savings_df,
-       aes(year, value, group = country_name, 
-           color = country_name))+
-  facet_wrap(~indicator_name, scales = "free")+
-  geom_line()
+
+gni_gdp_savings_df_split <- split(gni_gdp_savings_df, f = gni_gdp_savings_df$indicator_name)
+n <- length(gni_gdp_savings_df_split)
+my_plots_econ <-htmltools::tagList()
+for (i in 1:n) {
+    df = gni_gdp_savings_df_split[[i]]
+    my_title = df[, unique(indicator_name)]
+    mn = df[, min(year)]
+    mx = df[, max(year)]
+    breaks = seq(mn, mx,by = 5)
+    p = ggplot(df, aes(year, value, group = country_name, color = country_name) ) +
+        geom_line(size = .3)+
+        theme_hc()+
+        labs(title = my_title, x = "year", y = "%")+
+      scale_color_colorblind(name="")+
+      scale_x_continuous(breaks = breaks)
+    
+    my_plots_econ[[i]] = ggplotly(p)
+    
+}
+
+my_plots_econ
+
 ```
