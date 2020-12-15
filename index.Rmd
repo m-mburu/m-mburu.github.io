@@ -6,6 +6,13 @@ output:
     highlight: pygments
 ---
 
+<head>
+    ...
+    <link rel="shortcut icon" type="image/png" href="icon.png">
+    
+  </head>
+  
+  
 My name is [Moses Mburu](https://www.linkedin.com/in/mmburu/). This is just some of the work I do when learning data science or just playing around.
 
 | Description | Notebook | Source Code
@@ -28,6 +35,8 @@ My name is [Moses Mburu](https://www.linkedin.com/in/mmburu/). This is just some
 | Mburu CV |[link](https://m-mburu.github.io/cv/cv_mburu.html) | [Rmarkdown (Rmd)](/cv/cv_mburu.Rmd)|
 | Malnutrition Prevalence Africa |[Shiny App ](https://mmburu.shinyapps.io/maln_prev_africa/) | [github repo](https://github.com/m-mburu/m-mburu.github.io/tree/master/shiny/ihme_maln)|
 | East Africa poverty data |[link ](https://m-mburu.github.io/kenya_population/ea_poverty.html) | [Rmarkdown (Rmd)](/kenya_population/ea_poverty.Rmd)|
+| Kenya debt |[link ](https://m-mburu.github.io/kenya_population/kenya_debt_and_dollar_price.html) | [Rmarkdown (Rmd)](/kenya_population/kenya_debt_and_dollar_price.Rmd)|
+
 
 
 
