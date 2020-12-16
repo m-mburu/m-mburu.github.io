@@ -10,9 +10,5 @@ navbar:
 
 theme: jekyll-theme-slate
 
-<head>
-    ...
-    <link rel="shortcut icon" type="image/png" href="icon.png">
-    
-  </head>
+
   

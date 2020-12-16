@@ -6,7 +6,14 @@ output:
     highlight: pygments
 ---
 
+<head>
+    
+    <link rel="shortcut icon" type="image/x-icon" href="icon.ico">
+    
+  </head>
 
+
+  
   
 My name is [Moses Mburu](https://www.linkedin.com/in/mmburu/). This is just some of the work I do when learning data science or just playing around.
 
