@@ -185,10 +185,12 @@ indicator_name <- c("Currency composition of PPG debt, U.S. dollars (%)",
                     "Interest payments on external debt (% of exports of goods, services and primary income)",
                     "Interest payments on external debt (% of GNI)",
                      "Short-term debt (% of total external debt)",
-                     "GNI (current US$)")
+                     "Multilateral debt (% of total external debt)" )
 
-
-ea_country <- c("Kenya", "Uganda", "Ghana", "Tanzania", "Singapore")
+debt_data[, unique(country_name)]
+debt_data[, unique(series_name)]
+#"Uganda", "Tanzania"
+ea_country <- c("Kenya", "Lower middle income" )
 
 
 debt_data <- debt_data[country_name %in% ea_country & series_name %in% indicator_name]
