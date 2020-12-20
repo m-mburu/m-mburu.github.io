@@ -15,7 +15,7 @@ output:
 
   
   
-My name is [Moses Mburu](https://www.linkedin.com/in/mmburu/). This is just some of the work I do when learning data science or just playing around.
+My name is [Moses Mburu](https://www.linkedin.com/in/mmburu/). This is just some of the work I do when learning data science.
 
 | Description | Notebook | Source Code
 | ------------- | ------------- | ------------- |
