@@ -4,23 +4,16 @@ author: "mburu"
 date: "April 18, 2020"
 output:
   html_document:
-    highlight: pygments
-    theme: united
     toc: yes
+    toc_depth: 3
+    toc_float:
+      collapsed: no
+      smooth_scroll: no
+    theme: united
+    highlight: pygments
   html_notebook:
-    highlight: pygments
-    theme: united
     toc: yes
-  pdf_document:
-    toc: yes
-  beamer_presentation:
-    highlight: pygments
-header-includes:
-- \usetheme{CambridgeUS}
-- \useinnertheme{rounded}
-- \usecolortheme{seahorse}
-- \usefonttheme{professionalfonts}
-- \usepackage{xcolor,soul,hyperref,cite,graphicx,amsmath}
+    toc_depth: '3'
 ---
 
 
@@ -28,11 +21,9 @@ header-includes:
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
 
-```{r, echo=FALSE}
-#setwd("E:/R/Busara Data Analyst task")
-options("kableExtra.html.bsTable" = T)
-```
+# Introduction
 
+## Packages used
 
 ```{r}
 library(tidyverse)
@@ -40,9 +31,11 @@ library(data.table)
 library(caret)
 library(ggthemes)
 library(lubridate)
+library(DT)
 ```
 
 
+## Reading data
 
 ```{r}
 
@@ -53,13 +46,24 @@ testdemographics <-fread("testdemographics.csv")
 SampleSubmission <- fread("SampleSubmission.csv")
 ```
 
+## Combine test set and train set
 
+- makes it easier for cleaning purposes
 
 ```{r}
 train_data <- merge(traindemographics, trainperf, all.y = T, by = "customerid")
 test_data <- merge(testdemographics, testperf, all.y = T, by = "customerid")
 loan_data <- rbind(train_data[, set := "train"], test_data[, set := "test"], fill = T)
+
+loan_data %>% head() %>%
+  datatable(options = list(scrollX= TRUE))
 ```
+
+## Feature engineering
+
+### Dates
+
+- Create new variables from dates eg age, loan year, loan day etc
 
 ```{r}
 dates <- c("birthdate" ,"approveddate", "creationdate" )
@@ -70,6 +74,7 @@ loan_data[, approve_day := wday(approveddate)]
 loan_data[, approve_year := year(approveddate)]
 ```
 
+## Bad loans distribution
 
 ```{r}
 
@@ -90,6 +95,13 @@ loan_data[!is.na(good_bad_flag), .N, by = .(good_bad_flag)] %>%
 
 ```
 
+# Some cleaning
+
+## Clean string variables
+
+- convert empty chars to NA
+
+
 
 ```{r}
 chars <- c("bank_account_type", "bank_name_clients", 
@@ -99,6 +111,8 @@ chars <- c("bank_account_type", "bank_name_clients",
 loan_data[, (chars) := lapply(.SD, function(x) ifelse(x == "" | x == " ", NA, x)), .SDcols = chars]
 ```
 
+
+## Missing values distribution
 
 ```{r}
 
@@ -112,7 +126,7 @@ missing_perc <- data.table(variables = nms_na, perc = withNa)
 ```
 
 
-##
+## Missing values distribution plot
 
 ```{r}
 ggplot(missing_perc, aes( reorder(variables, perc), perc))+
@@ -121,7 +135,7 @@ ggplot(missing_perc, aes( reorder(variables, perc), perc))+
     coord_flip()
 ```
 
-
+## KNN imputation
 
 ```{r}
 loan_data[, loannumber := as.numeric(loannumber)]
@@ -146,8 +160,13 @@ col_sum_imp <- names(col_sum_imp[col_sum_imp == 0])
 #var_importants <- fread("var_importanta.csv")
 loan_data[, (col_sum_imp) := NULL]
 
+loan_data %>% head() %>%
+  datatable(options = list(scrollX= TRUE))
 ```
 
+## More cleaning
+
+- eg standardizing 
 
 ```{r}
 
@@ -181,6 +200,9 @@ test_data <- loan_data[set == "test"]
 test_data[, set:= NULL]
 ```
 
+## Imbalanced Datasets
+
+- make the proportion  of good loans to be the same as that of bad loans 
 
 ```{r}
 
@@ -195,6 +217,11 @@ train_good <- train_good[not_sample]
 train_sampled <- rbind(train_bad, train_good)
 
 ```
+
+
+# Training Data
+
+## Tuning parameters and validation sets
 
 ```{r}
 ## Model Cross validation
@@ -234,6 +261,7 @@ svm_grid <- expand.grid(C = c( 1, 3, 5, 20),
 ```
 
 
+## Model Fitting
 
 
 
@@ -260,17 +288,22 @@ model_list <- caretList(
 toc()
 ```
 
+## Model Output
+
 ```{r}
 model_list
 ```
 
+# Model Perfomance
+
+## ROC CI
 
 
 ```{r}
 
 resamples_models <- resamples(model_list)
 
-dotplot(resamples_models, metric = "Sens")
+dotplot(resamples_models, metric = "ROC")
 
 ```
 
@@ -278,7 +311,6 @@ dotplot(resamples_models, metric = "Sens")
 
 
 ## Model Statistics
-
 
 
 ```{r}
@@ -340,7 +372,9 @@ ggplotly(ggplot(resamples_combined ,
 
 ```
 
+# Variable Importance
 
+## IML models 
 
 ```{r}
 library(iml)
@@ -375,8 +409,8 @@ for (i in 1:length(nms_models)) {
 
 ```
 
-# Feature Importance
-## Feature Importance
+
+## Feature Importance plots
 
 
 ```{r}
@@ -403,7 +437,7 @@ for (i in 1:length(nms_models)) {
 plots
 ```
 
-## Shap Values
+## Shap Values calculation
 
 
 ```{r}
@@ -434,6 +468,7 @@ write.csv(shap_values, file = "shap_values.csv", row.names = F)
 ```
 
 
+## Shap Values plot
 
 ```{r}
 library(ggforce)
