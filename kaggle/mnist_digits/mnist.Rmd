@@ -203,7 +203,7 @@ write.csv(df_pred1, file = "sample_submission.csv", row.names = F)
 ```{r, fig.width = 6, fig.height = 4}
 library(Rtsne)
 
-tsne_output <- Rtsne(train_x, check_duplicates = FALSE, PCA = FALSE)
+tsne_output <- Rtsne(train_x, check_duplicates = FALSE)
 
 # Generate a data frame to plot the result
 tsne_train <- data.table(tsne_x = tsne_output$Y[,1],
@@ -255,62 +255,36 @@ tsne_train[, cluster := NULL]
 
 
 
-```{r}
-# set model
-model_autoencoder <- keras_model_sequential()
-model_autoencoder %>%
-  layer_dense(units = 784, activation = "relu", input_shape = ncol(train_x)) %>%
-  layer_dense(units = 784, activation = "relu") %>%
-  layer_dense(units = 2, activation = "relu", name = "bottleneck") %>%
-  layer_dense(units = ncol(train_x))
-
-# view model layers
-
-summary(model_autoencoder)
-```
 
 
 ```{r}
+library(kernlab)
+col_sum <- colSums(train_data2[, .SD, .SDcols = !"label"])
 
-# compile model
-model_autoencoder %>% compile(
-  loss = "mean_squared_error", 
-  optimizer = "adam"
-)
-
-# fit model
-model_autoencoder %>% fit(
-  x = train_x, 
-  y = train_x, 
-  epochs = 10,
-  verbose = 1
-)
-```
+zero_var_cols <- col_sum[col_sum == 0] %>% names()
+train_data2 <- train_data2[, .SD, .SDcols = !zero_var_cols]
+df_nms <-  data.frame(vars = names(train_data2))
+write.csv(df_nms, file = "df_nms.csv", row.names = F)
+mnist_matrix <- train_data2[, .SD, .SDcols = !"label"] %>% na.omit %>% as.matrix()
 
 
+spec_models <- list()
+tot_withinss <- c()
+for(i in 1:10){
+    
+    spec_fit <- specc(mnist_matrix, centers=i+1)
+    tot_withinss[i] <-withinss(spec_fit) %>% median()
+    spec_models[[i]] <- spec_fit
+}
 
-```{r}
+plot( tot_withinss)
 
-evaluate(model_autoencoder, train_x, train_x)
+spec_fit_final <- specc(mnist_matrix, centers=10)
 
-evaluate(model_autoencoder, test_own_x, test_own_x)
 
 ```
 
 
-```{r}
-# extract the bottleneck layer
-intermediate_layer_model <- keras_model(inputs = model_autoencoder$input,
-                                        outputs = get_layer(model_autoencoder, "bottleneck")$output)
-
-intermediate_output <- predict(intermediate_layer_model, train_x)
-
-```
 
 
-```{r}
-intermediate_output <- data.frame(intermediate_output, y = train_data2$label)
-ggplot(intermediate_output, aes(X1, X2, color = factor(y))) +
-  geom_point()
-```
 

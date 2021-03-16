@@ -88,9 +88,13 @@ poverty_data[sample(nrow(poverty_data), 10)] %>% datatable(options = list(scroll
 
 ```{r}
 poverty_data[, year := as.numeric(year)]
-ea_country <- c("Kenya", "Uganda", "Ghana", "Tanzania", "Singapore")
+ea_country <- c("Kenya", "Uganda", "Ghana", "Tanzania")
 
+poverty_data[, unique(series_name)]
+  
 indicator <- c("Poverty gap at $1.90 a day (2011 PPP) (%)", 
+               "Income share held by highest 10%",
+               "Income share held by lowest 10%", 
                "Income share held by highest 20%",
                "Income share held by lowest 20%",
                "Multidimensional poverty, Drinking water (% of population deprived)",
@@ -165,7 +169,7 @@ gni_gdp_savings_vec <- c("Gross savings (% of GNI)",
                          "Exports of goods and services (annual % growth)",
                          "Manufacturing, value added (annual % growth)",
                          "Price level ratio of PPP conversion factor (GDP) to market exchange rate")
-ea_country <- c("Kenya", "Uganda", "Korea, Rep.", "Tanzania", "Singapore")
+ea_country <- c("Kenya", "Uganda",  "Tanzania")
 economy_and_growth[, unique(country_name)]
 gni_gdp_savings_df <- economy_and_growth[indicator_name %in% gni_gdp_savings_vec & country_name %in% ea_country ]
 ```

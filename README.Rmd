@@ -3,8 +3,7 @@ title: "My ML/Viz/Spatial Journey/ Just having Fun"
 author: "Mburu"
 date: "4/18/2020"
 output:
-  html_document: default
-  
+  github_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -30,8 +29,5 @@ knitr::opts_chunk$set(echo = TRUE)
 | Airbnb NYC |[Notebook (HTML)](https://m-mburu.github.io/kaggle/newyork_airbnb/newyork_airbnb.html) | [R Markdown (Rmd)](/kaggle/newyork_airbnb/newyork_airbnb.Rmd)|
 | Explainable ML |[Notebook (HTML)](https://m-mburu.github.io/kaggle/heart_disease/heart_disease.html) | [R Markdown (Rmd)](/kaggle/heart_disease/heart_disease.Rmd)|
 | Introduction to deep learning |[Notebook (HTML)](https://m-mburu.github.io/datacamp/introduction_deeplearning/introduction-to-deep-learning-in-python.html) | [Python notebook (ipnb)](/datacamp/introduction_deeplearning/introduction-to-deep-learning-in-python.ipynb)|
-| Mburu CV |[Notebook (HTML)](https://m-mburu.github.io/cv/cv_mburu.html) | [Rmarkdown (ipnb)](/cv/cv_mburu.Rmd)|
-| Malnutrition Prevalence Africa |[Shiny App ](https://mmburu.shinyapps.io/maln_prev_africa/) | [github repo](https://github.com/m-mburu/m-mburu.github.io/tree/master/shiny/ihme_maln)|
-
 
 
