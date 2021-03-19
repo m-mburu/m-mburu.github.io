@@ -1,20 +1,32 @@
 
 library(tidyverse)
 library(data.table)
-years = 5 *12 %>% as.integer()
-mon = 12000
+years = 1 *12 %>% as.integer()
+mon = 000
 
-vars <- rnorm(100000, mean = .067, sd = .001)
+vars <- rnorm(100000, mean = .08, sd = .001)
 
 hist(vars)
-sum_vars = 12000
+sum_vars =12000
 hist_vals <- c()
 interest <- c()
 deposits <- c()
 lump =0000
 lump_months = c(3, 5, 8)
 daily_interest <- list()
-for(i in 1:years){
+
+
+rates <- function(sum_vars, mon, lump = 0, lump_months = c(3, 5, 8), interest_rate = 0.067){
+    
+    vars <- rnorm(100000, mean = interest_rate, sd = .001)
+    
+    hist_vals <- c()
+    interest <- c()
+    deposits <- c()
+    daily_interest <- list()
+    
+    
+    for(i in 1:years){
     
     
     interest_sum = 0
@@ -32,11 +44,17 @@ for(i in 1:years){
     hist_vals[i] = sum_vars
     deposits[i] = deposit
     
+ 
     
+    }
     
+    return(list(interest = interest, sum_vars = sum_vars,hist_vals =  hist_vals, deposits = deposits ))
 }
 
-plot(hist_vals, type = "l")
+
+df <- rates(sum_vars=400000, mon = 0, lump = 0, lump_months = c(3, 5, 8), interest_rate = 0.08)
+plot(df$hist_vals, type = "l")
+df
 hist_vals
 interest
 
