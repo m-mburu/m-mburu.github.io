@@ -8,3 +8,5 @@ navbar:
       href: about.html
     - text: "Blog"
       href: blog.html
+gems:
+  - jekyll-paginate
