@@ -51,7 +51,7 @@ kramdown:
 
 # Build settings
 include:
-  - _pages                  # all your pages can be put inside pages (except articles)
+  - _site                  # all your pages can be put inside pages (except articles)
 exclude:
   - README.md
   - vendor
