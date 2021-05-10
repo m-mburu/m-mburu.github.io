@@ -1,22 +1,24 @@
+
+
 # The main config file for your Jekyll template
 
 # Site settings
-title: Christoph Molnar Analytics               # used for the html title of every page
-desc: Professional website of Christoph Molnar
+title: Moses Mburu| ML/Viz/Spatial/Philosophy/Stats               # used for the html title of every page
+desc: Projects website for Mburu
 
-url: https://christophm.github.io      # put your website hosting url here
+url: https://m-mburu.github.io      # put your website hosting url here
 baseurl: ''                 # the subpath of your site, e.g. /blog
 permalink: /:year/:title/   # how should we display posts url
 
 # Meta settings
-email: christoph.molnar.ai@gmail.com
-author: Christoph Molnar
-twitter_username: ChristophMolnar
-github_username: christophM
-github_source: christophm.github.io
+
+author: Moses Mburu
+twitter_username: mmburu_w
+github_username: m-mburu
+github_source: m-mburu.github.io
 
 # Put your ga tracking code below
-google_analytics: 'UA-XXXXXXXX-X'
+#google_analytics: 'UA-XXXXXXXX-X'
 
 # Pagination settings
 paginate: 5                           # number of posts to show per page
@@ -26,12 +28,12 @@ paginate_path: "/articles/page:num/"  # link scheme for articles, should be letf
 # Used to define the navigation menu items
 # > Title is the tile of the navigation item, url the url and desc is the tooltip
 navigation:
-  - title: Book
-    url: /book/
-    desc: Book on Interpretable Machine Learning
+  # - title: Book
+  #   url: /book/
+  #   desc: Book on Interpretable Machine Learning
   - title: Blog
     url: /blog/
-    desc: My blog
+    desc: Blog
 
 # Used by Jekyll to recognize what is a post and what is a page
 defaults:
@@ -51,9 +53,15 @@ kramdown:
 
 # Build settings
 include:
-  - _site                  # all your pages can be put inside pages (except articles)
+  - _pages                  # all your pages can be put inside pages (except articles)
 exclude:
   - README.md
   - vendor
 gems:
   - jekyll-paginate
+
+
+
+
+
+
