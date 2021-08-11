@@ -35,7 +35,7 @@ heart %>% head %>%
 
 ## Some Cleaning
 
-You can can the variable levels from [here](https://archive.ics.uci.edu/ml/datasets/Heart+Disease)
+You can can check the variable levels from [here](https://archive.ics.uci.edu/ml/datasets/Heart+Disease)
 
 ```{r}
 heart[, sex := factor(sex, 

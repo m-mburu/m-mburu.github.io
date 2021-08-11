@@ -279,12 +279,15 @@ for(i in 1:10){
 
 plot( tot_withinss)
 
-spec_fit_final <- specc(mnist_matrix, centers=10)
 
 
 ```
 
 
 
+```{r}
+spec_fit_final <- spec_models[[4]]
+
+```
 
 

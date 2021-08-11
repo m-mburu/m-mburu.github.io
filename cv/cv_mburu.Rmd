@@ -4,8 +4,6 @@ author: ""
 date: "9/8/2020"
 output:
   pdf_document:
-    toc: yes
-    toc_depth: '2'
   html_document:
     css: style.css
     toc: yes
@@ -33,7 +31,7 @@ Blog: https://m-mburu.github.io/
 ## Data Analyst
 
 
-Data Analyst, with substantial experience in data management, data analysis and machine learning. I have worked in healthcare with a bias towards malnutrition, financial diaries research in low income areas  and agricultural research. I have gained in-depth knowledge of using statistical/programming languages such as R, Python and SQL for analysis. I enjoy using data to solve problems and I’m always researching on new methods/tools/skills to help me become efficient in my work.
+Data Analyst, with substantial experience in data management, statistical analysis and machine learning. I have worked in healthcare with a bias towards malnutrition, financial diaries research in low income areas  and agricultural research. I have gained in-depth knowledge of using statistical/programming languages such as R, Python and SQL for analysis. I enjoy using data to solve problems and I’m always researching on new methods/tools/skills to help me become efficient in my work.
 
 
 # EMPLOYMENT HISTORY

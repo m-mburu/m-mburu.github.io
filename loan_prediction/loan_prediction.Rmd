@@ -18,7 +18,9 @@ output:
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+knitr::opts_chunk$set(echo = TRUE, 
+                      warning = FALSE, 
+                      message = FALSE)
 ```
 
 # Introduction
@@ -34,6 +36,7 @@ library(lubridate)
 library(DT)
 ```
 
+# Description 
 
 ## Reading data
 
@@ -51,15 +54,22 @@ SampleSubmission <- fread("SampleSubmission.csv")
 - makes it easier for cleaning purposes
 
 ```{r}
-train_data <- merge(traindemographics, trainperf, all.y = T, by = "customerid")
-test_data <- merge(testdemographics, testperf, all.y = T, by = "customerid")
-loan_data <- rbind(train_data[, set := "train"], test_data[, set := "test"], fill = T)
+train_data <- merge(traindemographics, 
+                    trainperf, all.y = T,
+                    by = "customerid")
+
+test_data <- merge(testdemographics, 
+                   testperf, all.y = T, 
+                   by = "customerid")s
+
+loan_data <- rbind(train_data[, set := "train"],
+                   test_data[, set := "test"], fill = T)
 
 loan_data %>% head() %>%
   datatable(options = list(scrollX= TRUE))
 ```
 
-## Feature engineering
+# Feature engineering
 
 ### Dates
 

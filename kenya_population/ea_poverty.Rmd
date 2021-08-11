@@ -180,7 +180,8 @@ gni_gdp_savings_df <- economy_and_growth[indicator_name %in% gni_gdp_savings_vec
 
 gni_gdp_savings_df_split <- split(gni_gdp_savings_df, f = gni_gdp_savings_df$indicator_name)
 n <- length(gni_gdp_savings_df_split)
-my_plots_econ <-htmltools::tagList()
+#my_plots_econ <-htmltools::tagList()
+my_plots_econ <-list()
 for (i in 1:n) {
     df = gni_gdp_savings_df_split[[i]]
     my_title = df[, unique(indicator_name)]
