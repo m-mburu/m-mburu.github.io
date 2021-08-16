@@ -64,7 +64,7 @@ system.time(read.csv("movies.csv"))
 ```
 
     ##    user  system elapsed 
-    ##   0.127   0.003   0.130
+    ##   0.126   0.004   0.130
 
 ``` r
 # How long does it take to read movies from RDS?
@@ -72,7 +72,7 @@ system.time(readRDS("movies.rds"))
 ```
 
     ##    user  system elapsed 
-    ##   0.032   0.000   0.032
+    ##   0.031   0.000   0.031
 
 ## Elapsed time
 
@@ -97,206 +97,206 @@ compare
 
 | expr                   |      time |
 |:-----------------------|----------:|
-| readRDS(“movies.rds”)  |  32483755 |
-| readRDS(“movies.rds”)  |  31659122 |
-| read.csv(“movies.csv”) | 122965235 |
-| readRDS(“movies.rds”)  |  34842030 |
-| read.csv(“movies.csv”) | 118982760 |
-| read.csv(“movies.csv”) | 120360682 |
-| readRDS(“movies.rds”)  |  30406190 |
-| read.csv(“movies.csv”) | 120023886 |
-| read.csv(“movies.csv”) | 123721137 |
-| readRDS(“movies.rds”)  |  35540330 |
-| readRDS(“movies.rds”)  |  30040996 |
-| read.csv(“movies.csv”) | 120866010 |
-| read.csv(“movies.csv”) | 122992148 |
-| readRDS(“movies.rds”)  |  30275578 |
-| read.csv(“movies.csv”) | 122294406 |
-| readRDS(“movies.rds”)  |  31041673 |
-| read.csv(“movies.csv”) | 127457629 |
-| readRDS(“movies.rds”)  |  30982716 |
-| readRDS(“movies.rds”)  |  32007577 |
-| read.csv(“movies.csv”) | 135784789 |
-| read.csv(“movies.csv”) | 124695981 |
-| readRDS(“movies.rds”)  |  30887828 |
-| readRDS(“movies.rds”)  |  30294069 |
-| readRDS(“movies.rds”)  |  30683784 |
-| read.csv(“movies.csv”) | 130685853 |
-| read.csv(“movies.csv”) | 123862966 |
-| read.csv(“movies.csv”) | 128496905 |
-| readRDS(“movies.rds”)  |  30671630 |
-| read.csv(“movies.csv”) | 167466846 |
-| read.csv(“movies.csv”) | 127581070 |
-| readRDS(“movies.rds”)  |  30712088 |
-| read.csv(“movies.csv”) | 156300717 |
-| readRDS(“movies.rds”)  |  31367455 |
-| read.csv(“movies.csv”) | 135226121 |
-| readRDS(“movies.rds”)  |  31766145 |
-| read.csv(“movies.csv”) | 135733422 |
-| readRDS(“movies.rds”)  |  30955534 |
-| readRDS(“movies.rds”)  |  30857522 |
-| readRDS(“movies.rds”)  |  30286550 |
-| read.csv(“movies.csv”) | 128071590 |
-| readRDS(“movies.rds”)  |  31152871 |
-| readRDS(“movies.rds”)  |  30543145 |
-| readRDS(“movies.rds”)  |  43462002 |
-| readRDS(“movies.rds”)  |  31091426 |
-| readRDS(“movies.rds”)  |  29993360 |
-| read.csv(“movies.csv”) | 133482826 |
-| read.csv(“movies.csv”) | 130700453 |
-| readRDS(“movies.rds”)  |  32244155 |
-| read.csv(“movies.csv”) | 130951000 |
-| read.csv(“movies.csv”) | 154136267 |
-| readRDS(“movies.rds”)  |  30288900 |
-| readRDS(“movies.rds”)  |  30092242 |
-| read.csv(“movies.csv”) | 127183377 |
-| read.csv(“movies.csv”) | 129740927 |
-| readRDS(“movies.rds”)  |  31115845 |
-| readRDS(“movies.rds”)  |  30286265 |
-| readRDS(“movies.rds”)  |  30197020 |
-| readRDS(“movies.rds”)  |  31927915 |
-| read.csv(“movies.csv”) | 152004631 |
-| readRDS(“movies.rds”)  |  30480358 |
-| read.csv(“movies.csv”) | 126607275 |
-| read.csv(“movies.csv”) | 131514103 |
-| read.csv(“movies.csv”) | 126669277 |
-| readRDS(“movies.rds”)  |  33737875 |
-| readRDS(“movies.rds”)  |  29630980 |
-| readRDS(“movies.rds”)  |  30948024 |
-| readRDS(“movies.rds”)  |  31319804 |
-| readRDS(“movies.rds”)  |  30563318 |
-| readRDS(“movies.rds”)  |  33689680 |
-| read.csv(“movies.csv”) | 127531778 |
-| readRDS(“movies.rds”)  |  31243101 |
-| readRDS(“movies.rds”)  |  31051412 |
-| readRDS(“movies.rds”)  |  30648852 |
-| read.csv(“movies.csv”) | 133183172 |
-| read.csv(“movies.csv”) | 125697340 |
-| read.csv(“movies.csv”) | 131878447 |
-| read.csv(“movies.csv”) | 158989339 |
-| readRDS(“movies.rds”)  |  31061978 |
-| read.csv(“movies.csv”) | 127671723 |
-| read.csv(“movies.csv”) | 154961981 |
-| read.csv(“movies.csv”) | 122746939 |
-| readRDS(“movies.rds”)  |  30762206 |
-| read.csv(“movies.csv”) | 123681373 |
-| readRDS(“movies.rds”)  |  31509041 |
-| read.csv(“movies.csv”) | 123306284 |
-| readRDS(“movies.rds”)  |  33313130 |
-| readRDS(“movies.rds”)  |  29708849 |
-| readRDS(“movies.rds”)  |  29975253 |
-| read.csv(“movies.csv”) | 128311459 |
-| readRDS(“movies.rds”)  |  33028859 |
-| read.csv(“movies.csv”) | 122322635 |
-| read.csv(“movies.csv”) | 125199871 |
-| read.csv(“movies.csv”) | 126736885 |
-| read.csv(“movies.csv”) | 128479907 |
-| read.csv(“movies.csv”) | 125583033 |
-| read.csv(“movies.csv”) | 133718503 |
-| readRDS(“movies.rds”)  |  30956094 |
-| read.csv(“movies.csv”) | 154476698 |
-| readRDS(“movies.rds”)  |  30778656 |
-| read.csv(“movies.csv”) | 124484937 |
-| readRDS(“movies.rds”)  |  30720752 |
-| read.csv(“movies.csv”) | 156473287 |
-| read.csv(“movies.csv”) | 124388382 |
-| readRDS(“movies.rds”)  |  33207526 |
-| readRDS(“movies.rds”)  |  30561954 |
-| read.csv(“movies.csv”) | 131469765 |
-| read.csv(“movies.csv”) | 131867397 |
-| readRDS(“movies.rds”)  |  30927478 |
-| readRDS(“movies.rds”)  |  30198602 |
-| read.csv(“movies.csv”) | 129675250 |
-| read.csv(“movies.csv”) | 130288831 |
-| read.csv(“movies.csv”) | 132919354 |
-| read.csv(“movies.csv”) | 158757666 |
-| read.csv(“movies.csv”) | 126610712 |
-| read.csv(“movies.csv”) | 128006706 |
-| readRDS(“movies.rds”)  |  31044682 |
-| read.csv(“movies.csv”) | 154161022 |
-| readRDS(“movies.rds”)  |  31437696 |
-| readRDS(“movies.rds”)  |  31798106 |
-| read.csv(“movies.csv”) | 131044075 |
-| read.csv(“movies.csv”) | 130509583 |
-| read.csv(“movies.csv”) | 137182977 |
-| readRDS(“movies.rds”)  |  31229746 |
-| read.csv(“movies.csv”) | 129673653 |
-| read.csv(“movies.csv”) | 132973748 |
-| read.csv(“movies.csv”) | 157622049 |
-| readRDS(“movies.rds”)  |  30527515 |
-| readRDS(“movies.rds”)  |  31509199 |
-| readRDS(“movies.rds”)  |  30420068 |
-| read.csv(“movies.csv”) | 127677153 |
-| read.csv(“movies.csv”) | 129715944 |
-| read.csv(“movies.csv”) | 128860472 |
-| read.csv(“movies.csv”) | 129632456 |
-| readRDS(“movies.rds”)  |  31508090 |
-| readRDS(“movies.rds”)  |  32349651 |
-| read.csv(“movies.csv”) | 157844399 |
-| read.csv(“movies.csv”) | 133688779 |
-| read.csv(“movies.csv”) | 135694389 |
-| readRDS(“movies.rds”)  |  30773018 |
-| readRDS(“movies.rds”)  |  30973695 |
-| readRDS(“movies.rds”)  |  30770484 |
-| readRDS(“movies.rds”)  |  30061336 |
-| read.csv(“movies.csv”) | 131551786 |
-| read.csv(“movies.csv”) | 135888714 |
-| read.csv(“movies.csv”) | 156411433 |
-| read.csv(“movies.csv”) | 130645361 |
-| read.csv(“movies.csv”) | 132189298 |
-| readRDS(“movies.rds”)  |  34148254 |
-| readRDS(“movies.rds”)  |  29966920 |
-| readRDS(“movies.rds”)  |  30498838 |
-| readRDS(“movies.rds”)  |  30375728 |
-| readRDS(“movies.rds”)  |  30680600 |
-| read.csv(“movies.csv”) | 128915670 |
-| read.csv(“movies.csv”) | 128670233 |
-| readRDS(“movies.rds”)  |  33845780 |
-| read.csv(“movies.csv”) | 129069927 |
-| readRDS(“movies.rds”)  |  31515691 |
-| readRDS(“movies.rds”)  |  33859954 |
-| read.csv(“movies.csv”) | 151178110 |
-| readRDS(“movies.rds”)  |  31069258 |
-| read.csv(“movies.csv”) | 130978862 |
-| readRDS(“movies.rds”)  |  31016991 |
-| readRDS(“movies.rds”)  |  30408455 |
-| readRDS(“movies.rds”)  |  32814350 |
-| read.csv(“movies.csv”) | 130834175 |
-| read.csv(“movies.csv”) | 136761168 |
-| read.csv(“movies.csv”) | 128501246 |
-| readRDS(“movies.rds”)  |  31295380 |
-| readRDS(“movies.rds”)  |  30114361 |
-| readRDS(“movies.rds”)  |  30854036 |
-| read.csv(“movies.csv”) | 131286041 |
-| read.csv(“movies.csv”) | 135374088 |
-| readRDS(“movies.rds”)  |  31361753 |
-| read.csv(“movies.csv”) | 129252565 |
-| readRDS(“movies.rds”)  |  31314411 |
-| readRDS(“movies.rds”)  |  31442496 |
-| readRDS(“movies.rds”)  |  33527409 |
-| readRDS(“movies.rds”)  |  30705665 |
-| readRDS(“movies.rds”)  |  33244070 |
-| read.csv(“movies.csv”) | 129723478 |
-| read.csv(“movies.csv”) | 133476727 |
-| readRDS(“movies.rds”)  |  30706914 |
-| readRDS(“movies.rds”)  |  30213465 |
-| read.csv(“movies.csv”) | 164200944 |
-| readRDS(“movies.rds”)  |  31865304 |
-| read.csv(“movies.csv”) | 126807949 |
-| readRDS(“movies.rds”)  |  33586923 |
-| read.csv(“movies.csv”) | 126270822 |
-| readRDS(“movies.rds”)  |  58055253 |
-| read.csv(“movies.csv”) | 132766249 |
-| read.csv(“movies.csv”) | 130683899 |
-| readRDS(“movies.rds”)  |  31567983 |
-| read.csv(“movies.csv”) | 129983028 |
-| readRDS(“movies.rds”)  |  34852981 |
-| read.csv(“movies.csv”) | 135365099 |
-| readRDS(“movies.rds”)  |  31793115 |
-| readRDS(“movies.rds”)  |  31201304 |
-| read.csv(“movies.csv”) | 129056343 |
-| read.csv(“movies.csv”) | 130201301 |
-| readRDS(“movies.rds”)  |  33394176 |
+| readRDS(“movies.rds”)  |  31071458 |
+| readRDS(“movies.rds”)  |  30031711 |
+| read.csv(“movies.csv”) | 127878070 |
+| readRDS(“movies.rds”)  |  35910087 |
+| read.csv(“movies.csv”) | 120675864 |
+| read.csv(“movies.csv”) | 123733109 |
+| read.csv(“movies.csv”) | 123285662 |
+| readRDS(“movies.rds”)  |  30170839 |
+| readRDS(“movies.rds”)  |  33132470 |
+| read.csv(“movies.csv”) | 125732459 |
+| readRDS(“movies.rds”)  |  30302471 |
+| read.csv(“movies.csv”) | 121926533 |
+| readRDS(“movies.rds”)  |  30585383 |
+| readRDS(“movies.rds”)  |  29378145 |
+| read.csv(“movies.csv”) | 126186806 |
+| read.csv(“movies.csv”) | 125436070 |
+| read.csv(“movies.csv”) | 148366956 |
+| readRDS(“movies.rds”)  |  30550730 |
+| read.csv(“movies.csv”) | 125148429 |
+| read.csv(“movies.csv”) | 128983758 |
+| read.csv(“movies.csv”) | 146951663 |
+| read.csv(“movies.csv”) | 120612347 |
+| read.csv(“movies.csv”) | 121701061 |
+| read.csv(“movies.csv”) | 123711031 |
+| read.csv(“movies.csv”) | 130127017 |
+| read.csv(“movies.csv”) | 123931513 |
+| read.csv(“movies.csv”) | 124668132 |
+| readRDS(“movies.rds”)  |  33604666 |
+| read.csv(“movies.csv”) | 130222079 |
+| read.csv(“movies.csv”) | 154414607 |
+| read.csv(“movies.csv”) | 132892261 |
+| read.csv(“movies.csv”) | 122885438 |
+| read.csv(“movies.csv”) | 133527646 |
+| readRDS(“movies.rds”)  |  36807043 |
+| readRDS(“movies.rds”)  |  33894375 |
+| read.csv(“movies.csv”) | 132544443 |
+| readRDS(“movies.rds”)  |  30303654 |
+| read.csv(“movies.csv”) | 132432035 |
+| readRDS(“movies.rds”)  |  33749810 |
+| read.csv(“movies.csv”) | 157976966 |
+| read.csv(“movies.csv”) | 123789107 |
+| readRDS(“movies.rds”)  |  30611962 |
+| read.csv(“movies.csv”) | 132239202 |
+| read.csv(“movies.csv”) | 131219638 |
+| readRDS(“movies.rds”)  |  32842114 |
+| readRDS(“movies.rds”)  |  36534550 |
+| readRDS(“movies.rds”)  |  32274455 |
+| readRDS(“movies.rds”)  |  32299301 |
+| readRDS(“movies.rds”)  |  32677420 |
+| read.csv(“movies.csv”) | 133557894 |
+| readRDS(“movies.rds”)  |  32385523 |
+| readRDS(“movies.rds”)  |  34636364 |
+| readRDS(“movies.rds”)  |  34080161 |
+| readRDS(“movies.rds”)  |  31864697 |
+| read.csv(“movies.csv”) | 129884016 |
+| readRDS(“movies.rds”)  |  34148438 |
+| readRDS(“movies.rds”)  |  31315152 |
+| readRDS(“movies.rds”)  |  34390950 |
+| readRDS(“movies.rds”)  |  31455542 |
+| readRDS(“movies.rds”)  |  32529648 |
+| readRDS(“movies.rds”)  |  34486180 |
+| read.csv(“movies.csv”) | 131607749 |
+| readRDS(“movies.rds”)  |  32049431 |
+| read.csv(“movies.csv”) | 134759972 |
+| read.csv(“movies.csv”) | 130439288 |
+| readRDS(“movies.rds”)  |  32907691 |
+| readRDS(“movies.rds”)  |  34058312 |
+| readRDS(“movies.rds”)  |  34039455 |
+| read.csv(“movies.csv”) | 135812431 |
+| read.csv(“movies.csv”) | 128895360 |
+| readRDS(“movies.rds”)  |  33734700 |
+| readRDS(“movies.rds”)  |  31160528 |
+| readRDS(“movies.rds”)  |  40388806 |
+| readRDS(“movies.rds”)  |  31951567 |
+| read.csv(“movies.csv”) | 132760932 |
+| read.csv(“movies.csv”) | 161375927 |
+| read.csv(“movies.csv”) | 135502640 |
+| readRDS(“movies.rds”)  |  32185501 |
+| read.csv(“movies.csv”) | 138912864 |
+| read.csv(“movies.csv”) | 139245325 |
+| read.csv(“movies.csv”) | 139879167 |
+| readRDS(“movies.rds”)  |  33943486 |
+| readRDS(“movies.rds”)  |  34358778 |
+| read.csv(“movies.csv”) | 144498532 |
+| read.csv(“movies.csv”) | 136898951 |
+| readRDS(“movies.rds”)  |  34670409 |
+| readRDS(“movies.rds”)  |  30660295 |
+| read.csv(“movies.csv”) | 134729185 |
+| read.csv(“movies.csv”) | 174763357 |
+| read.csv(“movies.csv”) | 151010100 |
+| readRDS(“movies.rds”)  |  41809617 |
+| readRDS(“movies.rds”)  |  34862472 |
+| read.csv(“movies.csv”) | 157293434 |
+| readRDS(“movies.rds”)  |  32217468 |
+| read.csv(“movies.csv”) | 139276963 |
+| read.csv(“movies.csv”) | 131344302 |
+| read.csv(“movies.csv”) | 138504457 |
+| read.csv(“movies.csv”) | 132392786 |
+| readRDS(“movies.rds”)  |  33189477 |
+| readRDS(“movies.rds”)  |  33647501 |
+| read.csv(“movies.csv”) | 137409314 |
+| read.csv(“movies.csv”) | 127768104 |
+| readRDS(“movies.rds”)  |  32129318 |
+| readRDS(“movies.rds”)  |  36365543 |
+| read.csv(“movies.csv”) | 140875123 |
+| read.csv(“movies.csv”) | 141590123 |
+| readRDS(“movies.rds”)  |  35385726 |
+| read.csv(“movies.csv”) | 134029756 |
+| readRDS(“movies.rds”)  |  34254107 |
+| readRDS(“movies.rds”)  |  39655783 |
+| readRDS(“movies.rds”)  |  32829800 |
+| readRDS(“movies.rds”)  |  35411691 |
+| readRDS(“movies.rds”)  |  46157611 |
+| readRDS(“movies.rds”)  |  35333245 |
+| read.csv(“movies.csv”) | 192933983 |
+| read.csv(“movies.csv”) | 130325062 |
+| readRDS(“movies.rds”)  |  39203410 |
+| readRDS(“movies.rds”)  |  33398740 |
+| read.csv(“movies.csv”) | 129614344 |
+| read.csv(“movies.csv”) | 129094900 |
+| read.csv(“movies.csv”) | 126923224 |
+| read.csv(“movies.csv”) | 127713700 |
+| read.csv(“movies.csv”) | 149302337 |
+| readRDS(“movies.rds”)  |  31173404 |
+| readRDS(“movies.rds”)  |  31941574 |
+| read.csv(“movies.csv”) | 124697345 |
+| readRDS(“movies.rds”)  |  31141371 |
+| read.csv(“movies.csv”) | 125332288 |
+| readRDS(“movies.rds”)  |  31066922 |
+| readRDS(“movies.rds”)  |  29348509 |
+| read.csv(“movies.csv”) | 128301698 |
+| read.csv(“movies.csv”) | 129265695 |
+| read.csv(“movies.csv”) | 143580319 |
+| read.csv(“movies.csv”) | 124068476 |
+| read.csv(“movies.csv”) | 123699803 |
+| readRDS(“movies.rds”)  |  32939924 |
+| readRDS(“movies.rds”)  |  29666126 |
+| read.csv(“movies.csv”) | 125279675 |
+| read.csv(“movies.csv”) | 127478141 |
+| readRDS(“movies.rds”)  |  31402954 |
+| readRDS(“movies.rds”)  |  30233230 |
+| readRDS(“movies.rds”)  |  30096529 |
+| read.csv(“movies.csv”) | 128091503 |
+| readRDS(“movies.rds”)  |  29951123 |
+| read.csv(“movies.csv”) | 131455466 |
+| readRDS(“movies.rds”)  |  30279235 |
+| read.csv(“movies.csv”) | 124059495 |
+| readRDS(“movies.rds”)  |  33063307 |
+| read.csv(“movies.csv”) | 123194662 |
+| read.csv(“movies.csv”) | 125069300 |
+| readRDS(“movies.rds”)  |  33999359 |
+| readRDS(“movies.rds”)  |  29652806 |
+| read.csv(“movies.csv”) | 128184651 |
+| read.csv(“movies.csv”) | 126437738 |
+| readRDS(“movies.rds”)  |  30619506 |
+| readRDS(“movies.rds”)  |  30516408 |
+| read.csv(“movies.csv”) | 127079810 |
+| readRDS(“movies.rds”)  |  33805763 |
+| readRDS(“movies.rds”)  |  30189456 |
+| readRDS(“movies.rds”)  |  32706030 |
+| readRDS(“movies.rds”)  |  32859696 |
+| readRDS(“movies.rds”)  |  30086247 |
+| readRDS(“movies.rds”)  |  29618974 |
+| read.csv(“movies.csv”) | 126630163 |
+| readRDS(“movies.rds”)  |  33671213 |
+| read.csv(“movies.csv”) | 130386795 |
+| read.csv(“movies.csv”) | 130646045 |
+| read.csv(“movies.csv”) | 152636659 |
+| read.csv(“movies.csv”) | 136962497 |
+| read.csv(“movies.csv”) | 134501125 |
+| readRDS(“movies.rds”)  |  31167499 |
+| readRDS(“movies.rds”)  |  33411497 |
+| readRDS(“movies.rds”)  |  31271058 |
+| readRDS(“movies.rds”)  |  32624942 |
+| read.csv(“movies.csv”) | 133210866 |
+| readRDS(“movies.rds”)  |  31669344 |
+| read.csv(“movies.csv”) | 130200396 |
+| readRDS(“movies.rds”)  |  30600080 |
+| read.csv(“movies.csv”) | 128931407 |
+| read.csv(“movies.csv”) | 136212978 |
+| read.csv(“movies.csv”) | 128596088 |
+| readRDS(“movies.rds”)  |  34287619 |
+| readRDS(“movies.rds”)  |  30359770 |
+| read.csv(“movies.csv”) | 129000861 |
+| read.csv(“movies.csv”) | 133138012 |
+| readRDS(“movies.rds”)  |  30538352 |
+| read.csv(“movies.csv”) | 127710923 |
+| readRDS(“movies.rds”)  |  31137000 |
+| read.csv(“movies.csv”) | 134962805 |
+| readRDS(“movies.rds”)  |  33483668 |
+| read.csv(“movies.csv”) | 155828548 |
+| readRDS(“movies.rds”)  |  30690721 |
+| readRDS(“movies.rds”)  |  31236778 |
+| readRDS(“movies.rds”)  |  31037677 |
+| read.csv(“movies.csv”) | 128369150 |
+| read.csv(“movies.csv”) | 127832456 |
+| readRDS(“movies.rds”)  |  33950104 |
+| read.csv(“movies.csv”) | 133269865 |
+| readRDS(“movies.rds”)  |  30280731 |
+| readRDS(“movies.rds”)  |  30362842 |
 
 </div>
 
@@ -353,20 +353,20 @@ res <- benchmark_io(runs = 1, size = 50)
 
     ## # IO benchmarks (2 tests) for size 50 MB:
 
-    ##   Writing a csv with 6250000 values: 4 (sec).
+    ##   Writing a csv with 6250000 values: 4.02 (sec).
 
-    ##   Reading a csv with 6250000 values: 1.58 (sec).
+    ##   Reading a csv with 6250000 values: 1.44 (sec).
 
 ``` r
 # Plot the results
 plot(res)
 ```
 
-    ## You are ranked 1 out of 119 machines.
+    ## You are ranked 2 out of 119 machines.
 
     ## Press return to get next plot
 
-    ## You are ranked 3 out of 119 machines.
+    ## You are ranked 2 out of 119 machines.
 
 ![](efficient_R_code_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->![](efficient_R_code_files/figure-gfm/unnamed-chunk-5-2.png)<!-- -->
 
@@ -379,55 +379,55 @@ res <- benchmark_std(runs = 10)
 
     ## # Programming benchmarks (5 tests):
 
-    ##  3,500,000 Fibonacci numbers calculation (vector calc): 0.116 (sec).
+    ##  3,500,000 Fibonacci numbers calculation (vector calc): 0.113 (sec).
 
-    ##  Grand common divisors of 1,000,000 pairs (recursion): 0.394 (sec).
+    ##  Grand common divisors of 1,000,000 pairs (recursion): 0.396 (sec).
 
-    ##  Creation of a 3,500 x 3,500 Hilbert matrix (matrix calc): 0.162 (sec).
+    ##  Creation of a 3,500 x 3,500 Hilbert matrix (matrix calc): 0.171 (sec).
 
-    ##  Creation of a 3,000 x 3,000 Toeplitz matrix (loops): 1.12 (sec).
+    ##  Creation of a 3,000 x 3,000 Toeplitz matrix (loops): 1.15 (sec).
 
-    ##  Escoufier's method on a 60 x 60 matrix (mixed): 0.737 (sec).
+    ##  Escoufier's method on a 60 x 60 matrix (mixed): 0.762 (sec).
 
     ## # Matrix calculation benchmarks (5 tests):
 
-    ##  Creation, transp., deformation of a 5,000 x 5,000 matrix: 0.283 (sec).
+    ##  Creation, transp., deformation of a 5,000 x 5,000 matrix: 0.282 (sec).
 
-    ##  2,500 x 2,500 normal distributed random matrix^1,000: 0.148 (sec).
+    ##  2,500 x 2,500 normal distributed random matrix^1,000: 0.155 (sec).
 
-    ##  Sorting of 7,000,000 random values: 0.519 (sec).
+    ##  Sorting of 7,000,000 random values: 0.538 (sec).
 
-    ##  2,500 x 2,500 cross-product matrix (b = a' * a): 7.27 (sec).
+    ##  2,500 x 2,500 cross-product matrix (b = a' * a): 7.35 (sec).
 
-    ##  Linear regr. over a 5,000 x 500 matrix (c = a \ b'): 0.595 (sec).
+    ##  Linear regr. over a 5,000 x 500 matrix (c = a \ b'): 0.605 (sec).
 
     ## # Matrix function benchmarks (5 tests):
 
-    ##  Cholesky decomposition of a 3,000 x 3,000 matrix: 3.88 (sec).
+    ##  Cholesky decomposition of a 3,000 x 3,000 matrix: 3.83 (sec).
 
-    ##  Determinant of a 2,500 x 2,500 random matrix: 2.14 (sec).
+    ##  Determinant of a 2,500 x 2,500 random matrix: 2.16 (sec).
 
-    ##  Eigenvalues of a 640 x 640 random matrix: 0.462 (sec).
+    ##  Eigenvalues of a 640 x 640 random matrix: 0.457 (sec).
 
-    ##  FFT over 2,500,000 random values: 0.176 (sec).
+    ##  FFT over 2,500,000 random values: 0.174 (sec).
 
-    ##  Inverse of a 1,600 x 1,600 random matrix: 2.13 (sec).
+    ##  Inverse of a 1,600 x 1,600 random matrix: 2.09 (sec).
 
 ``` r
 plot(res)
 ```
 
-    ## You are ranked 3 out of 749 machines.
+    ## You are ranked 5 out of 749 machines.
 
     ## Press return to get next plot
 
-    ## You are ranked 94 out of 747 machines.
+    ## You are ranked 96 out of 747 machines.
 
 ![](efficient_R_code_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
     ## Press return to get next plot
 
-    ## You are ranked 163 out of 747 machines.
+    ## You are ranked 160 out of 747 machines.
 
 ![](efficient_R_code_files/figure-gfm/unnamed-chunk-6-2.png)<!-- -->![](efficient_R_code_files/figure-gfm/unnamed-chunk-6-3.png)<!-- -->
 
@@ -458,4 +458,27 @@ system.time(res_grow <- growing(30000))
 ```
 
     ##    user  system elapsed 
-    ##   0.669   0.000   0.669
+    ##    0.62    0.00    0.62
+
+Timings - pre-allocation In the previous exercise, growing the vector
+took around 2 seconds. How long does it take when we pre-allocate the
+vector? The pre\_allocate() function is defined below.
+
+``` r
+n <- 30000
+# Fast code
+pre_allocate <- function(n) {
+    x <- numeric(n) # Pre-allocate
+    for(i in 1:n) 
+        x[i] <- rnorm(1)
+    x
+}
+
+
+# Use <- with system.time() to store the result as res_allocate
+n <- 30000
+system.time(res_allocate <- pre_allocate(n))
+```
+
+    ##    user  system elapsed 
+    ##   0.033   0.000   0.034
