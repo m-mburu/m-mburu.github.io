@@ -3,9 +3,6 @@ title: "The reduction in weekly working hours in Europe"
 subtitle: "Looking at the development between 1996 and 2006"
 author: "Insert your name here"
 output:
-  github_document:
-    toc: true
-    toc_depth: 4
   html_document:
     theme: cosmo
     highlight: monochrome
@@ -14,6 +11,9 @@ output:
     toc_depth: 4
     code_folding: hide
     css: style.css
+  github_document:
+    toc: true
+    toc_depth: 4
 ---
 
 ## Summary 

@@ -79,7 +79,7 @@ home_training %>%
 
 | min\_sell\_price | max\_sell\_price | mean\_sell\_price | sd\_sell\_price |
 |-----------------:|-----------------:|------------------:|----------------:|
-|           350000 |           650000 |          479747.9 |        81623.51 |
+|           350000 |           650000 |          478773.5 |        80047.73 |
 
 ``` r
 home_test %>% 
@@ -88,7 +88,7 @@ home_test %>%
 
 | min\_sell\_price | max\_sell\_price | mean\_sell\_price | sd\_sell\_price |
 |-----------------:|-----------------:|------------------:|----------------:|
-|           350000 |           650000 |          477548.3 |        79534.92 |
+|           350000 |           650000 |          479804.6 |        83181.14 |
 
 ## Fitting a linear regression model
 
@@ -125,9 +125,9 @@ tidy(lm_fit) %>%
 
 | term         |    estimate |   std.error | statistic | p.value |
 |:-------------|------------:|------------:|----------:|--------:|
-| (Intercept)  | 287089.4926 | 7457.552404 | 38.496477 |       0 |
-| home\_age    |  -1516.6642 |  172.503564 | -8.792075 |       0 |
-| sqft\_living |    105.1862 |    2.711123 | 38.798012 |       0 |
+| (Intercept)  | 291774.3706 | 7550.546299 | 38.642816 |       0 |
+| home\_age    |  -1501.5834 |  174.898792 | -8.585442 |       0 |
+| sqft\_living |    102.9247 |    2.755434 | 37.353351 |       0 |
 
 ## Predicting home selling prices
 
@@ -167,12 +167,12 @@ home_test_results %>%
 
 | selling\_price | home\_age | sqft\_living |    .pred |
 |---------------:|----------:|-------------:|---------:|
-|         411000 |        18 |         1130 | 378649.9 |
-|         464950 |        19 |         2190 | 488630.6 |
-|         525000 |        16 |         2100 | 483713.8 |
-|         559900 |        20 |         2930 | 564951.7 |
-|         525000 |        28 |         2450 | 502329.0 |
-|         379500 |         7 |         1410 | 424785.3 |
+|         411000 |        18 |         1130 | 381050.8 |
+|         635000 |         4 |         3350 | 630565.7 |
+|         495000 |        21 |         1650 | 430066.8 |
+|         464950 |        19 |         2190 | 488649.3 |
+|         425000 |        11 |         1920 | 472872.3 |
+|         535000 |         3 |         2360 | 530171.9 |
 
 </div>
 
@@ -205,7 +205,7 @@ home_test_results %>%
 
 | .metric | .estimator | .estimate |
 |:--------|:-----------|----------:|
-| rmse    | standard   |  48668.18 |
+| rmse    | standard   |  47946.05 |
 
 </div>
 
@@ -219,7 +219,7 @@ home_test_results %>%
 
 | .metric | .estimator | .estimate |
 |:--------|:-----------|----------:|
-| rsq     | standard   |  0.627124 |
+| rsq     | standard   | 0.6673122 |
 
 </div>
 
@@ -289,12 +289,12 @@ predictions_df %>% head()
 
 | id               |    .pred | .row | selling\_price | .config               |
 |:-----------------|---------:|-----:|---------------:|:----------------------|
-| train/test split | 396136.0 |    3 |         411000 | Preprocessor1\_Model1 |
-| train/test split | 481109.0 |    8 |         464950 | Preprocessor1\_Model1 |
-| train/test split | 502161.9 |   13 |         525000 | Preprocessor1\_Model1 |
-| train/test split | 590357.6 |   14 |         559900 | Preprocessor1\_Model1 |
-| train/test split | 453832.0 |   19 |         525000 | Preprocessor1\_Model1 |
-| train/test split | 406596.5 |   31 |         379500 | Preprocessor1\_Model1 |
+| train/test split | 400052.7 |    3 |         411000 | Preprocessor1\_Model1 |
+| train/test split | 695621.3 |    4 |         635000 | Preprocessor1\_Model1 |
+| train/test split | 441355.8 |    6 |         495000 | Preprocessor1\_Model1 |
+| train/test split | 476270.7 |    8 |         464950 | Preprocessor1\_Model1 |
+| train/test split | 437876.0 |    9 |         425000 | Preprocessor1\_Model1 |
+| train/test split | 478999.8 |   10 |         535000 | Preprocessor1\_Model1 |
 
 </div>
 
@@ -383,12 +383,12 @@ logistic_fit %>% tidy()
 
 <div class="kable-table">
 
-| term             |   estimate | std.error |  statistic |   p.value |
-|:-----------------|-----------:|----------:|-----------:|----------:|
-| (Intercept)      |  2.0389485 | 0.5824120 |  3.5008696 | 0.0004637 |
-| avg\_call\_mins  | -0.0108098 | 0.0013077 | -8.2665252 | 0.0000000 |
-| avg\_intl\_mins  |  0.0209922 | 0.0030757 |  6.8252159 | 0.0000000 |
-| monthly\_charges |  0.0032632 | 0.0048288 |  0.6757688 | 0.4991875 |
+| term             |   estimate | std.error | statistic |   p.value |
+|:-----------------|-----------:|----------:|----------:|----------:|
+| (Intercept)      |  1.8228629 | 0.5789116 |  3.148776 | 0.0016396 |
+| avg\_call\_mins  | -0.0099405 | 0.0012841 | -7.741396 | 0.0000000 |
+| avg\_intl\_mins  |  0.0221433 | 0.0030544 |  7.249645 | 0.0000000 |
+| monthly\_charges |  0.0008847 | 0.0046737 |  0.189299 | 0.8498585 |
 
 </div>
 
@@ -433,12 +433,12 @@ telecom_results %>%
 
 | canceled\_service | .pred\_class | .pred\_yes | .pred\_no |
 |:------------------|:-------------|-----------:|----------:|
-| no                | no           |  0.3938890 | 0.6061110 |
-| no                | no           |  0.4886031 | 0.5113969 |
-| no                | no           |  0.0801975 | 0.9198025 |
-| no                | no           |  0.2668612 | 0.7331388 |
-| no                | no           |  0.2509528 | 0.7490472 |
-| no                | no           |  0.1993100 | 0.8006900 |
+| yes               | yes          |  0.5588097 | 0.4411903 |
+| no                | yes          |  0.5984371 | 0.4015629 |
+| no                | no           |  0.0218216 | 0.9781784 |
+| yes               | no           |  0.1959547 | 0.8040453 |
+| no                | yes          |  0.5530747 | 0.4469253 |
+| no                | no           |  0.0847185 | 0.9152815 |
 
 </div>
 
@@ -466,8 +466,8 @@ conf_mat(telecom_results, truth = canceled_service,
 
     ##           Truth
     ## Prediction yes  no
-    ##        yes  36  25
-    ##        no   46 137
+    ##        yes  34  14
+    ##        no   48 148
 
 ``` r
 # Calculate the accuracy
@@ -479,7 +479,7 @@ accuracy(telecom_results, truth = canceled_service,
 
 | .metric  | .estimator | .estimate |
 |:---------|:-----------|----------:|
-| accuracy | binary     | 0.7090164 |
+| accuracy | binary     | 0.7459016 |
 
 </div>
 
@@ -494,7 +494,7 @@ sens(telecom_results, truth = canceled_service,
 
 | .metric | .estimator | .estimate |
 |:--------|:-----------|----------:|
-| sens    | binary     | 0.4390244 |
+| sens    | binary     | 0.4146341 |
 
 </div>
 
@@ -509,7 +509,7 @@ spec(telecom_results, truth = canceled_service,
 
 | .metric | .estimator | .estimate |
 |:--------|:-----------|----------:|
-| spec    | binary     |  0.845679 |
+| spec    | binary     | 0.9135802 |
 
 </div>
 
@@ -545,9 +545,9 @@ telecom_metrics(telecom_results,
 
 | .metric  | .estimator | .estimate |
 |:---------|:-----------|----------:|
-| accuracy | binary     | 0.7090164 |
-| sens     | binary     | 0.4390244 |
-| spec     | binary     | 0.8456790 |
+| accuracy | binary     | 0.7459016 |
+| sens     | binary     | 0.4146341 |
+| spec     | binary     | 0.9135802 |
 
 </div>
 
@@ -564,19 +564,19 @@ conf_mat(telecom_results,
 
 | .metric               | .estimator | .estimate |
 |:----------------------|:-----------|----------:|
-| accuracy              | binary     | 0.7090164 |
-| kap                   | binary     | 0.3039216 |
-| sens                  | binary     | 0.4390244 |
-| spec                  | binary     | 0.8456790 |
-| ppv                   | binary     | 0.5901639 |
-| npv                   | binary     | 0.7486339 |
-| mcc                   | binary     | 0.3105751 |
-| j\_index              | binary     | 0.2847034 |
-| bal\_accuracy         | binary     | 0.6423517 |
-| detection\_prevalence | binary     | 0.2500000 |
-| precision             | binary     | 0.5901639 |
-| recall                | binary     | 0.4390244 |
-| f\_meas               | binary     | 0.5034965 |
+| accuracy              | binary     | 0.7459016 |
+| kap                   | binary     | 0.3656491 |
+| sens                  | binary     | 0.4146341 |
+| spec                  | binary     | 0.9135802 |
+| ppv                   | binary     | 0.7083333 |
+| npv                   | binary     | 0.7551020 |
+| mcc                   | binary     | 0.3900079 |
+| j\_index              | binary     | 0.3282144 |
+| bal\_accuracy         | binary     | 0.6641072 |
+| detection\_prevalence | binary     | 0.1967213 |
+| precision             | binary     | 0.7083333 |
+| recall                | binary     | 0.4146341 |
+| f\_meas               | binary     | 0.5230769 |
 
 </div>
 
@@ -652,11 +652,11 @@ threshold_df %>%
 | .threshold | specificity | sensitivity |
 |-----------:|------------:|------------:|
 |       -Inf |   0.0000000 |           1 |
-|  0.0222566 |   0.0000000 |           1 |
-|  0.0401480 |   0.0061728 |           1 |
-|  0.0440635 |   0.0123457 |           1 |
-|  0.0479229 |   0.0185185 |           1 |
-|  0.0494516 |   0.0246914 |           1 |
+|  0.0218216 |   0.0000000 |           1 |
+|  0.0345143 |   0.0061728 |           1 |
+|  0.0540177 |   0.0123457 |           1 |
+|  0.0556071 |   0.0185185 |           1 |
+|  0.0624909 |   0.0246914 |           1 |
 
 </div>
 
@@ -677,7 +677,7 @@ roc_auc(telecom_results, truth = canceled_service, .pred_yes)
 
 | .metric  | .estimator | .estimate |
 |:---------|:-----------|----------:|
-| roc\_auc | binary     | 0.7523336 |
+| roc\_auc | binary     | 0.7585818 |
 
 </div>
 
@@ -707,8 +707,8 @@ telecom_last_fit %>%
 
 | .metric  | .estimator | .estimate | .config               |
 |:---------|:-----------|----------:|:----------------------|
-| accuracy | binary     | 0.7090164 | Preprocessor1\_Model1 |
-| roc\_auc | binary     | 0.7523336 | Preprocessor1\_Model1 |
+| accuracy | binary     | 0.7459016 | Preprocessor1\_Model1 |
+| roc\_auc | binary     | 0.7585818 | Preprocessor1\_Model1 |
 
 </div>
 
@@ -740,12 +740,12 @@ last_fit_results %>%
 
 | id               | .pred\_yes | .pred\_no | .row | .pred\_class | canceled\_service | .config               |
 |:-----------------|-----------:|----------:|-----:|:-------------|:------------------|:----------------------|
-| train/test split |  0.3938890 | 0.6061110 |   13 | no           | no                | Preprocessor1\_Model1 |
-| train/test split |  0.4886031 | 0.5113969 |   16 | no           | no                | Preprocessor1\_Model1 |
-| train/test split |  0.0801975 | 0.9198025 |   19 | no           | no                | Preprocessor1\_Model1 |
-| train/test split |  0.2668612 | 0.7331388 |   20 | no           | no                | Preprocessor1\_Model1 |
-| train/test split |  0.2509528 | 0.7490472 |   23 | no           | no                | Preprocessor1\_Model1 |
-| train/test split |  0.1993100 | 0.8006900 |   27 | no           | no                | Preprocessor1\_Model1 |
+| train/test split |  0.5588097 | 0.4411903 |   11 | yes          | yes               | Preprocessor1\_Model1 |
+| train/test split |  0.5984371 | 0.4015629 |   18 | yes          | no                | Preprocessor1\_Model1 |
+| train/test split |  0.0218216 | 0.9781784 |   37 | no           | no                | Preprocessor1\_Model1 |
+| train/test split |  0.1959547 | 0.8040453 |   38 | no           | yes               | Preprocessor1\_Model1 |
+| train/test split |  0.5530747 | 0.4469253 |   45 | yes          | no                | Preprocessor1\_Model1 |
+| train/test split |  0.0847185 | 0.9152815 |   50 | no           | no                | Preprocessor1\_Model1 |
 
 </div>
 
@@ -765,10 +765,10 @@ last_fit_metrics(last_fit_results,
 
 | .metric  | .estimator | .estimate |
 |:---------|:-----------|----------:|
-| accuracy | binary     | 0.7090164 |
-| sens     | binary     | 0.4390244 |
-| spec     | binary     | 0.8456790 |
-| roc\_auc | binary     | 0.7523336 |
+| accuracy | binary     | 0.7459016 |
+| sens     | binary     | 0.4146341 |
+| spec     | binary     | 0.9135802 |
+| roc\_auc | binary     | 0.7585818 |
 
 </div>
 
@@ -803,8 +803,8 @@ logistic_fit %>%
 
 | .metric  | .estimator | .estimate | .config               |
 |:---------|:-----------|----------:|:----------------------|
-| accuracy | binary     | 0.7745902 | Preprocessor1\_Model1 |
-| roc\_auc | binary     | 0.8499699 | Preprocessor1\_Model1 |
+| accuracy | binary     | 0.8114754 | Preprocessor1\_Model1 |
+| roc\_auc | binary     | 0.8633695 | Preprocessor1\_Model1 |
 
 </div>
 
