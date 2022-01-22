@@ -1,9 +1,12 @@
 ---
 title: "Handling Missing Data with Imputations in R"
-output: 
-    html_document:
-        css: "github.css"
-    github_document: default
+output:
+  html_document:
+    css: github.css
+    theme: lumen
+    highlight: pygments
+  github_document: default
+  pdf_document: default
 ---
 
 # The problem of missing data
@@ -790,5 +793,216 @@ print(imp_res$OOBerror)
 
 - ***Compare the errors and the run times of the two imputation models. Can you see a relation? There ain't no such thing as a free lunch, they say. To get a more precise imputation, you had to spend more in computing time! Congratulations on finishing the chapter! See you in the final chapter, where you will learn to incorporate uncertainty from imputation into your analyses and predictions.***
 
-#
+# Uncertainty from imputation
+
+## Wrapping imputation & modeling in a function
+Whenever you perform any analysis or modeling on imputed data, you should account for the uncertainty from imputation. Running a model on a dataset imputed only once ignores the fact that imputation estimates the missing values with uncertainty. Standard errors from such a model tend to be too small. The solution to this is multiple imputation and one way to implement it is by bootstrapping.
+
+In the upcoming exercises, you will work with the familiar biopics data. The goal is to use multiple imputation by bootstrapping and linear regression to see if, based on the data at hand, biographical movies featuring females earn less than those about males.
+
+Let's start with writing a function that creates a bootstrap sample, imputes it, and fits a linear regression model.
+
+
+```{r}
+calc_gender_coef <- function(data, indices) {
+  # Get bootstrap sample
+  data_boot <- data[indices, ]
+  # Impute with kNN imputation
+  data_imp <- kNN(data_boot, k = 5)
+  # Fit linear regression
+  linear_model <- lm(earnings ~ sub_sex + sub_type + year,data = data_imp)
+  # Extract and return gender coefficient
+  gender_coefficient <- coef(linear_model)[2]
+  return(gender_coefficient)
+}
+```
+
+***The calc_gender_coef() function you have just coded takes the data and bootstrap indices as inputs, and outputs our statistic of interest - the impact of gender on earnings from linear regression. You can now feed this function to the bootstrapping algorithm!***
+
+## Running the bootstrap
+Good job writing calc_gender_coef() in the last exercise! This function creates a bootstrap sample, imputes it and, outputs the linear regression coefficient describing the impact of movie subject's being a female on the movie's earnings.
+
+In this exercise, you will use the boot package in order to obtain a bootstrapped distribution of such coefficients. The spread of this distribution will capture the uncertainty from imputation. You will also look at how the bootstrapped distribution differs from a single-time imputation and regression. Let's do some bootstrapping!
+
+```{r}
+# Load the boot library
+library(boot)
+
+# Run bootstrapping on biopics data
+boot_results <- boot(biopics, statistic = calc_gender_coef, R = 50)
+
+# Print and plot bootstrapping results
+print(boot_results)
+plot(boot_results)
+# Calculate and print confidence interval
+boot_ci <- boot.ci(boot_results, conf = .95, type = "norm")
+print(boot_ci)
+```
+
+- ***If you had run the kNN imputation and the regression analysis on biopics data only once, you would have obtained the female-coefficient of -1.45 (called 'original' in the console output), suggesting that movies about females indeed earn less. However, correcting for the uncertainty from imputation, you have obtained the distribution that covers both negative and postive values!***
+
+
+### Bootstrapping confidence intervals
+Having bootstrapped the distribution of the female-effect coefficient in the last exercise, you can now use it to estimate a confidence interval. It will allow you to make the following assessment about your data: "Given the uncertainty from imputation, we are 95% sure that the female-effect on earnings is between a and b", where a and b are the lower and upper bounds of the interval.
+
+In the last exercise, you have run bootstrapping with R = 50 replicates. In most applications, however, this is not enough. In this exercise, you can use boot_results that were prepared for you using 1000 replicates. First, you will look at the bootstrapped distribution to see if it looks normal. If so, you can then rely on the normal distribution to calculate the confidence interval.
+
+```{r}
+# Run bootstrapping on biopics data
+boot_results <- boot(biopics, statistic = calc_gender_coef, R = 1000)
+
+# Print and plot bootstrapping results
+print(boot_results)
+plot(boot_results)
+
+
+
+# Calculate and print confidence interval
+boot_ci <- boot.ci(boot_results, conf = .95, type = "norm")
+print(boot_ci)
+```
+
+- ***Despite the coefficient  leaning to be a negative relationship, bootstrap replicates show that some movies with female leads actually earn more! Accounting for the uncertainty from imputation, you cannot be 100% sure about the direction of this relation, even though a single analysis suggests otherwise.***
+
+## The mice flow: mice - with - pool
+Multiple imputation by chained equations, or MICE, allows us to estimate the uncertainty from imputation by imputing a data set multiple times with model-based imputation, while drawing from conditional distributions. This way, each imputed data set is slightly different. Then, an analysis is conducted on each of them and the results are pooled together, yielding the quantities of interest, alongside their confidence intervals that reflect the imputation uncertainty.
+
+In this exercise, you will practice the typical MICE flow: mice() - with() - pool(). You will perform a regression analysis on the biopics data to see which subject occupation, sub_type, is associated with highest movie earnings. Let's play with mice!
+
+```{r}
+# Load mice package
+library(mice)
+
+# Impute biopics with mice using 5 imputations
+biopics_multiimp <- mice(biopics, m = 5, seed = 3108)
+
+# Fit linear regression to each imputed data set 
+lm_multiimp <- with(biopics_multiimp,  lm(earnings~year+sub_type ))
+
+# Pool and summarize regression results
+lm_pooled <- pool(lm_multiimp)
+summary(lm_pooled, conf.int = TRUE, conf.level = 0.95)
+```
+
+***You have followed the mice - with - pool flow to impute, model and pool the results. Now take a look at the console output: a couple of sub_types have a positive impact on earnings. However, accounting for imputation uncertainty with 95% confidence, we are never sure of these effects, as the lower bounds are negative! With one exception: for sub_typeAthlete / military, both upper and lower bounds are positive. What we can say for sure is thus that movies about military athletes are popular!***
+
+## Choosing default models
+MICE creates a separate imputation model for each variable in the data. What kind of model it is depends on the type of the variable in question. A popular way to specify the kinds of models we want to use is set a default model for each of the four variable types.
+
+You can do this by passing the defaultMethod argument to mice(), which should be a vector of length 4 containing the default imputation methods for:
+
+Continuous variables,
+Binary variables,
+Categorical variables (unordered factors),
+Factor variables (ordered factors).
+In this exercise, you will take advantage of mice's documentation to view the list of available methods and to pick the desired ones for the algorithm to use. Let's do some model selection!
+
+```{r}
+
+# Impute biopics using the methods specified in the instruction
+biopics_multiimp <- mice(biopics, m = 20, 
+                         defaultMethod = c("cart", "lda", "pmm", "polr"))
+
+# Print biopics_multiimp
+print(biopics_multiimp)
+```
+
+- ***The ability to specify imputation models might come in handy when you see some specific methods underperforming. Another factor infuencing how the imputation methods work is the set of predictors they use. Let's look at how to set these in the next exercise.***
+
+
+## Using predictor matrix
+An important decision that needs to be taken when using model-based imputation is which variables should be included as predictors, and in which models. In mice(), this is governed by the predictor matrix and by default, all variables are used to impute all others.
+
+In case of many variables in the data or little time to do a proper model selection, you can use mice's functionality to create a predictor matrix based on the correlations between the variables. This matrix can then be passed to mice(). In this exercise, you will practice exactly this: you will first build a predictor matrix such that each variable will be imputed using variables most correlated to it; then, you will feed your predictor matrix to the imputing function. Let's try this simple model selection!
+
+```{r}
+# Create predictor matrix with minimum correlation of 0.1
+pred_mat <- quickpred(biopics, mincor = 0.1)
+
+# Impute biopics with mice
+biopics_multiimp <- mice(biopics, 
+                         m = 10, 
+                         predictorMatrix = pred_mat,
+                         seed = 3108)
+
+# Print biopics_multiimp
+print(biopics_multiimp)
+```
+
+1. Look at the predictor matrix you've used that is printed in the console. Which variables have been used as predictors to impute earnings?
+-  country, year and non_white
+
+- ***Provides an easy way to set up predictor matrices, but if you can afford it, you should try to choose the predictors based on the insights from data analytics or on domain knowledge.***
+
+## Analyzing missing data patterns
+The first step in working with incomplete data is to gain some insights into the missingness patterns, and a good way to do it is with visualizations. You will start your analysis of the africa data with employing the VIM package to create two visualizations: the aggregation plot and the spine plot. They will tell you how many data are missing, in which variables and configurations, and whether we can say something about the missing data mechanism. Let's kick off with some plotting!
+
+
+
+```{r}
+africa <- read.csv( "data/africa_clean.csv")
+# Load VIM
+library(VIM)
+
+# Draw a combined aggregation plot of africa
+africa %>%
+  aggr(combined = TRUE, numbers = TRUE)
+```
+
+### Question
+- Based on the aggregation plot you have just created, which of the following statements is TRUE?
+- ans Whenever gdp_pc is missing, trade is missing too
+
+```{r}
+
+# Draw a spine plot of country vs trade
+africa %>% 
+  select(country ,trade) %>%
+  spineMiss()
+```
+
+### Question
+
+- Based on the spine plot you have just created, which of the following statements is TRUE?
+- ***Correct, there are not that many missing values! Also, notice from the spine plot that the africa data seem to be MAR - at least with respect to the GDP and country, which means it can be imputed. Let's try multiple imputation to fill-in the missing values in the next exercise!***
+
+
+## Imputing and inspecting outcomes
+
+Good job on visualizing missing data in the previous exercise! You have discovered there are some missing entries in GDP, gdp_pc, and trade as percentage of GDP, trade. Also, you suspect the data are MAR, and thus imputable. In this exercise, you will make use of multiple imputation from the mice package to impute the africa data. Then, you will draw a strip plot of gdp_pc vs trade to see if the imputed data do not break the relation between these variables. Let mice do the job!
+
+```{r}
+# Load mice
+library(mice)
+
+# Impute africa with mice
+africa_multiimp <- mice(africa, m = 5, defaultMethod = "cart", seed = 3108)
+
+# Draw a stripplot of gdp_pc versus trade
+stripplot(africa_multiimp, gdp_pc ~ trade | .imp, pch = 20, cex = 2)
+```
+
+- ***t seems the imputation works well: there are small clusters in the scatter plots, likely corresponding to different countries. Each imputed data point fits into one of the clusters, instead of being an outlier somewhere between the clusters. Having done the imputation, you can now proceed to modeling!***
+
+
+## Inference with imputed data
+In the last exercise, you have run mice to multiply impute the africa data. In this one, you will implement the other two steps of the mice - with - pool flow you've learned about earlier in the course. The model of interest is a linear regression that explains the GDP, gdp_pc, with other variables. You are particularly interested in the coefficient of civil liberties, civlib. Is more liberty associated with more economic growth once we incorporate the uncertainty from imputation? Let's find out!
+
+
+```{r}
+# Fit linear regression to each imputed data set
+lm_multiimp <- with(africa_multiimp, lm(gdp_pc ~ country + year + trade + infl + civlib))
+
+# Pool regression results
+lm_pooled <- pool(lm_multiimp)
+
+# Summarize pooled results
+summary(lm_pooled, conf.int = TRUE, conf.level = 0.90)
+```
+
+
+### Question
+- Based on the summary of the pooled regression results that you have just printed to the console, which of the following statements about the civil liberties in Africa is false?
+
+- ***Correct, this one is false! Since the lower and upper bounds have different signs, we cannot be sure of the direction of the effect. Congratulations, you have come a long way and learned a lot. Well done! Let's sum it all up in the final video of the course.***
 
