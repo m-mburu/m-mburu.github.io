@@ -15,7 +15,7 @@ output:
     highlight: pygments
 ---
 
-<center>
+\begin{center}
 
 Moses Mburu
 
@@ -26,7 +26,7 @@ LinkedIn: https://www.linkedin.com/in/mmburu/
 Blog: https://m-mburu.github.io/ 
 
 
-</center>
+\end{center}
 
 ## Data Analyst
 
@@ -99,7 +99,7 @@ In my current role I work under the CHAIN Network where we are focused on optimi
 
 
 ### Bachelor of Science in Statistics, University of Nairobi, 2012 – 2016: 
-- Area of study included Exploratory data analysis, Statistical modelling, computation and data analysis, analysis and design, Time series analysis
+- Area of study included Exploratory data analysis, Statistical modelling, computation and data analysis, analysis and design of experiments, Time series analysis
 
 ### Spatial Data: Data Camp 
 - Area of study included visualizing spatial data using ggplot2, tmap and leaflet, spatial analysis with sf and raster, interactive maps with leaflet and spatial statistics, such as point pattern analysis, areal statistics and geo-statistics

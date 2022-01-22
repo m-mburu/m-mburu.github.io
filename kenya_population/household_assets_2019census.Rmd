@@ -4,13 +4,17 @@ author: "Mburu"
 date: "7/7/2020"
 output:
   html_document:
-    toc: true
+    toc: yes
     toc_depth: 2
     toc_float:
-      collapsed: false
-      smooth_scroll: false
+      collapsed: no
+      smooth_scroll: no
     theme: united
     highlight: pygments
+    css: github.css
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
 ---
 
 ```{r setup, include=FALSE}

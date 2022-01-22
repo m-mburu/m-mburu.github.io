@@ -1,0 +1,39 @@
+---
+title: "Kenya Inflation"
+author: "Mburu"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: yes
+    toc_depth: 3
+    theme: united
+    highlight: pygments
+    css: github.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+
+library(plotly)
+library(tidyverse)
+library(data.table)
+library(sf)
+library(DT)
+library(tmap)
+library(ggthemes)
+```
+
+###
+
+```{r}
+inflation_rates <- fread("kenya_debt/Inflation Rates.csv")
+nms_new <- function(df){
+    nms_old <- names(df)
+    nms_new <- nms_old %>% tolower() 
+    nms_new <- gsub("\\s", "_", nms_new)
+    nms_new
+
+}
+inflation_rates[, date := paste(Year)]
+```
+

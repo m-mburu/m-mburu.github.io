@@ -39,6 +39,7 @@ vignettes/*.pdf
 .Renviron
 
 # large files
+*.sav
 *.tif
 
 *.zip
