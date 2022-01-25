@@ -9,10 +9,12 @@ output:
     toc_float:
       collapsed: no
       smooth_scroll: no
-    theme: united
+    css: style.css
     highlight: pygments
-    css: "github.css"
   html_notebook:
+    toc: yes
+    toc_depth: '2'
+  pdf_document:
     toc: yes
     toc_depth: '2'
 ---

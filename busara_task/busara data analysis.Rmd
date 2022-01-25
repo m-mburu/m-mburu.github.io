@@ -3,17 +3,20 @@ title: "Busara Data Analysis"
 author: "mburu"
 date: "February 16, 2019"
 output:
-  word_document:
-    toc: yes
-    toc_depth: '2'
   html_document:
     toc: yes
     toc_depth: 2
     toc_float:
       collapsed: no
       smooth_scroll: no
-    theme: united
     highlight: pygments
+    css: style.css
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+  word_document:
+    toc: yes
+    toc_depth: '2'
 ---
 
 ```{r setup, include=FALSE}
