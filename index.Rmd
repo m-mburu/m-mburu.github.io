@@ -39,6 +39,7 @@ My name is [Moses Mburu](https://www.linkedin.com/in/mmburu/). This is just some
 | East Africa poverty data |[link ](https://m-mburu.github.io/kenya_population/ea_poverty.html) | [Rmarkdown (Rmd)](/kenya_population/ea_poverty.Rmd)|
 | Kenya debt |[link ](https://m-mburu.github.io/kenya_population/kenya_debt_and_dollar_price.html) | [Rmarkdown (Rmd)](/kenya_population/kenya_debt_and_dollar_price.Rmd)|
 | Data camp imputation in R |[link ](https://m-mburu.github.io/datacamp/imputations_in_R/imputations_in_R.html) | [Rmarkdown (Rmd)](/datacamp/imputations_in_R/imputations_in_R.Rmd)|
+| Datacamp Anomaly detection in R |[link ](https://m-mburu.github.io/datacamp/anomaly_detection_R/anomaly_detection.html) | [Rmarkdown (Rmd)](/datacamp/anomaly_detection_R/anomaly_detection.Rmd)|
 
 
 

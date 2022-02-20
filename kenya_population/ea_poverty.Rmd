@@ -9,7 +9,7 @@ output:
     toc_float:
       collapsed: false
       smooth_scroll: false
-    theme: united
+    css: "style.css"
     highlight: pygments
 ---
 
