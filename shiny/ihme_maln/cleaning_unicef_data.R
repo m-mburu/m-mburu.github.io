@@ -15,7 +15,7 @@ unicef_stunting <- unicef_stunting[, 1:idx]
 
 nms <- nms[1:idx]
 
-nms <- gsub("\\s", "_", nms) %>% tolower()
+nms <- gsub("\\s", "_", nms) %>% str_to_lower()
 
 names(unicef_stunting) <- nms
 
@@ -66,27 +66,27 @@ unicef_stunting_m <- unicef_stunting_m %>%
 unicef_stunting_m[, country := as.character(countryname)]
 
 unicef_stunting_m[, countryname := ifelse(grepl( "^congo$",
-                                                 tolower(countryname) ),
+                                                 str_to_lower(countryname) ),
                                           "Republic of the Congo", countryname)]
 
 # unicef_stunting_m[, countryname := ifelse(grepl( "cabo verde",
-#                                                  tolower(countryname) ), 
+#                                                  str_to_lower(countryname) ), 
 #                                           "Cape Verde", countryname)]
 # 
 unicef_stunting_m[, countryname := ifelse(grepl( "côte d'ivoire",
-                                                 tolower(countryname), fixed = TRUE ),
+                                                 str_to_lower(countryname), fixed = TRUE ),
                                           "Ivory Coast", countryname)]
 
 
 unicef_stunting_m[, countryname := ifelse(grepl( "tanzania",
-                                                 tolower(countryname) ),
+                                                 str_to_lower(countryname) ),
                                           "tanzania", countryname)]
 
 
 africa_unicef <- unicef_stunting_m[unregion == "Africa"]
 
 
-x  <- unique(africa_unicef$countryname) %>% tolower
+x  <- unique(africa_unicef$countryname) %>% str_to_lower
 
 countries <-  world %>% 
     filter(continent == "Africa") %>% setDT()
@@ -95,18 +95,18 @@ countries <-  world %>%
 
 
 countries[,  name_long := ifelse(grepl( "eSwatini", name_long), "eswatini" ,  name_long)]
-countries[,  name_long := ifelse(grepl( "tanzania", tolower( name_long) ), "tanzania" ,  name_long)]
-countries[,  name_long := ifelse(grepl( "guinea bissau", tolower( name_long) ), "guinea-bissau" ,  name_long)]
-countries[,  name_long := ifelse(grepl( "the gambia", tolower( name_long) ), "gambia" ,  name_long)]
+countries[,  name_long := ifelse(grepl( "tanzania", str_to_lower( name_long) ), "tanzania" ,  name_long)]
+countries[,  name_long := ifelse(grepl( "guinea bissau", str_to_lower( name_long) ), "guinea-bissau" ,  name_long)]
+countries[,  name_long := ifelse(grepl( "the gambia", str_to_lower( name_long) ), "gambia" ,  name_long)]
 
 countries[, name_long := ifelse(grepl( "côte d'ivoire",
-                                                 tolower(name_long), fixed = TRUE),
+                                                 str_to_lower(name_long), fixed = TRUE),
                                           "Ivory Coast", name_long)]
 
-africa_count <- countries#[tolower(name_long) %in%
-                                      #tolower(africa_unicef$countryname)]
+africa_count <- countries[str_to_lower(name_long) %in%
+                                      str_to_lower(africa_unicef$countryname)]
 
-y <- unique(africa_count$name_long) %>% tolower()
+y <- unique(africa_count$name_long) %>% str_to_lower()
 
 x[!x %in% y ]
 
@@ -134,18 +134,18 @@ interest_var <- c("national_r", "male_r",
 africa_unicef[, unique(variable)]
 africa_unicef <- africa_unicef[variable %in% interest_var | type %in% "month"]
 africa_unicef <- africa_unicef[ci == "r"]
-africa_unicef[, countryname := tolower(countryname)]
+africa_unicef[, countryname := str_to_lower(countryname)]
 africa_split <- split(africa_unicef,
                       by = c("countryname", "variable"), drop = TRUE)
 
 
 comb_list <- list()
-df_comp[, countryname := tolower(countryname) ]
+df_comp[, countryname := str_to_lower(countryname) ]
 
 for (i in 1:length(africa_split)) {
     
     df = africa_split[[i]]
-    #df[, countryname := tolower(countryname) ]
+    #df[, countryname := str_to_lower(countryname) ]
     country = df[, unique(countryname)]
     df_comp1 <- df_comp[countryname ==  country]
     
@@ -176,8 +176,8 @@ africa_unicef[, age := str_trim(gsub("^_|_$", "", age))]
 africa_unicef[, countryname := as.character(countryname)]
 africa_count[, countryname := as.character(countryname)]
 
-africa_unicef[, countryname := tolower(countryname)]
-africa_count[, countryname := tolower(countryname)]
+africa_unicef[, countryname := str_to_lower(countryname)]
+africa_count[, countryname := str_to_lower(countryname)]
 
 africa_unicef <- merge(africa_unicef, 
                        africa_count[, .(countryname, gdpPercap, lifeExp)], by = "countryname",
@@ -185,7 +185,7 @@ africa_unicef <- merge(africa_unicef,
 
 africa_unicef[, country := paste0(country," ", value, " %")]
 #africa_unicef[, formal_en := paste0(formal_en, " ", value, "%")]
-write_csv(africa_unicef, path = "data/africa_unicef.csv")
+save(africa_unicef,  "data/africa_unicef.rda")
 
 
 
@@ -218,8 +218,8 @@ africa_count[, stunting_prev := raster::extract(world_stunting, africa_count_sp,
                                             na.rm = T)]
 
 
-write_csv(africa_count[, .(countryname, wasting_prev, underweight_prev, stunting_prev)],
-          path = "data/africa_malnutrition_prev.csv")
+save(africa_count[, .(countryname, wasting_prev, underweight_prev, stunting_prev)],
+          file = "data/africa_malnutrition_prev.rda")
 
 
 ## test

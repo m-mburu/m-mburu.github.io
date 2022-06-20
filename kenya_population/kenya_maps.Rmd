@@ -41,6 +41,7 @@ setDT(kenya_5yr_births)
 
 
 
+
 ```{r}
 old_nms_births <- names(kenya_5yr_births)
 new_nms_births <- gsub("\\s", "_", old_nms_births) %>%
@@ -51,7 +52,8 @@ setnames(kenya_5yr_births, old_nms_births, new_nms_births)
 
 
 ```{r}
-numerics_nms <- new_nms_births[new_nms_births != "county"]
+numerics_nms <- c("total", "notified", "not_notified",
+                  "don’t_know", "not_stated", "percent_notified")
 
 kenya_5yr_births[, (numerics_nms) := lapply(.SD, function(x) gsub(",", "", x)), .SDcols = numerics_nms]
 kenya_5yr_births[, (numerics_nms) := lapply(.SD, as.numeric), .SDcols = numerics_nms]

@@ -51,3 +51,59 @@ readGoogleSheet <- function(url, na.string="", header=TRUE){
     ret <- readHTMLTable(htmlTable, header=header, stringsAsFactors=FALSE, as.data.frame=TRUE)
     lapply(ret, function(x){ x[ x == na.string] <- NA; x})
 }
+
+
+nms_clean <- function(data_set){
+    nms_old <- names(data_set)
+    nms_new <- nms_old %>% tolower() 
+    nms_new <- gsub("\\s", "_", nms_new)
+    nms_new <- gsub("\\.$", "", nms_new)
+    nms_new <- gsub("\\(|\\)|%", "", nms_new)
+    nms_new <- gsub("/", "", nms_new)
+    setDT(data_set)
+    setnames(data_set, nms_old, nms_new)
+    data_set
+}
+
+#targets = 1:ncol(df)
+data_table <- function(df){
+    library(DT)
+    datatable(df,
+              rownames = FALSE,
+              style = "bootstrap4", class = 'cell-border stripe',
+              options = list(scrollX = TRUE,
+                             columnDefs = list(list(className = 'dt-center'))
+              ) 
+    )%>%
+        formatStyle(names(df), textAlign = 'center')
+}
+
+
+spss_label_function <- function(alea_spss_df) {
+    
+    "This function labels categorical variables from spss data and returns a data frame"
+    df_attr <- lapply(alea_spss_df, attributes)
+    nms <- names(alea_spss_df)
+    list_levels <- list()
+    setDT(alea_spss_df)
+    for (i in 1:length(df_attr)) {
+        nms_i = nms[i]
+        x_var = df_attr[[i]]
+        n = length(x_var)
+        nms_i_list <- names(x_var)
+        spss_labels = x_var$labels
+        lvl_lp =spss_labels
+        lbl_lp = names(spss_labels)
+        len_labels = length(lbl_lp)
+        if(! "labels"  %in% nms_i_list| (len_labels==1 )) next
+        col_label = x_var$label
+        lbl_lp = gsub('\\"', "", lbl_lp)
+        #alea_spss_df[, (nms_i) := factor(get(nms_i), levels = lvl_lp, labels = lbl_lp)]
+        #alea_spss_df[, (nms_i) := as.character(.SD), .SDcols = nms_i]
+        #alea_spss_df[, (nms_i) := factor(.SD,  levels = lvl_lp, labels = lbl_lp), .SDcols = nms_i]
+        alea_spss_df[[nms_i]] = factor(alea_spss_df[[nms_i]], levels = lvl_lp, labels = lbl_lp)
+        Hmisc::label(alea_spss_df[[nms_i]]) <- col_label
+    }
+    setDT(alea_spss_df)
+    return(alea_spss_df)
+}

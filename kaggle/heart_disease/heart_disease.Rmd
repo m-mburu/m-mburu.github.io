@@ -23,6 +23,7 @@ library(data.table)
 library(caret)
 library(DT)
 library(iml)
+library(patchwork)
 library(gridExtra)
 heart <- fread("heart.csv")
 
@@ -268,11 +269,14 @@ shap_values <- rbindlist(shap_list, fill = T)
 library(ggforce)
 
 shap_values[, feature := factor(feature, levels = rev(var_important$feature) )]
+minx <- shap_values[, min(phi.var)]
+maxx <- shap_values[, max(phi.var)]
 ggplot(shap_values, aes(feature, phi,  color = phi.var))+
-  geom_sina()+
+  #geom_point()+
+    ggbeeswarm::geom_quasirandom(groupOnX = FALSE, varwidth = TRUE, size = 0.9, alpha = 0.25) +
   geom_hline(yintercept = 0) +
   scale_color_gradient(low="#2187E3", high="#F32858", 
-                       breaks=c(0,1), labels=c("Low","High"))+ 
+                       breaks=c(minx,maxx), labels=c("Low","High"), limits=c(minx,maxx))+ 
   theme_bw() + 
     theme(axis.line.y = element_blank(), 
           axis.ticks.y = element_blank(), # remove axis line
