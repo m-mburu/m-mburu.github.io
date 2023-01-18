@@ -11,7 +11,7 @@ output:
       smooth_scroll: no
     theme: united
     highlight: pygments
-    #css: github.css
+    css: "style.css"
   pdf_document:
     toc: yes
     toc_depth: '2'

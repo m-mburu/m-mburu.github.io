@@ -60,16 +60,15 @@ nms_clean <- function(data_set){
     nms_new <- gsub("\\.$", "", nms_new)
     nms_new <- gsub("\\(|\\)|%", "", nms_new)
     nms_new <- gsub("/", "", nms_new)
-<<<<<<< HEAD
+
     nms_new <- gsub("-", "_", nms_new)
-=======
->>>>>>> 72524f2a36b6f916e8250f7ab8027ed3fdfd9143
+
     setDT(data_set)
     setnames(data_set, nms_old, nms_new)
     data_set
 }
 
-<<<<<<< HEAD
+
 nms_clean_vec <- function(nms_old){
     nms_new <- nms_old %>% tolower() 
     nms_new <- gsub("\\s", "_", nms_new)
@@ -80,8 +79,7 @@ nms_clean_vec <- function(nms_old){
     nms_new
 }
 
-=======
->>>>>>> 72524f2a36b6f916e8250f7ab8027ed3fdfd9143
+
 #targets = 1:ncol(df)
 data_table <- function(df){
     library(DT)
