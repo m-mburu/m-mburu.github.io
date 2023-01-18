@@ -3,6 +3,7 @@ library(data.table)
 library(shiny)
 library(shinydashboard)
 
+<<<<<<< HEAD
 load("data/finaccess_2021.rda")
 
 df <- finaccess_2021[, .(freq = .N), by = .(County, A24)][
@@ -39,3 +40,6 @@ fin_col_labels[, finacces_labels := str_replace_all(finacces_labels, finacces_nm
 fin_col_labels[, finacces_labels := str_replace_all(finacces_labels, "^\\.", "")]
 
 fin_col_labels[, finacces_labels := str_trim(finacces_labels)]
+=======
+load("kenya_pop/data/finaccess_2021.rda")
+>>>>>>> 72524f2a36b6f916e8250f7ab8027ed3fdfd9143
