@@ -10,7 +10,7 @@ library(plotly)
 library(ggthemes)
 library(data.table)
 library(gapminder)
-
+library(bslib)
 africa_unicef <- fread("data/africa_unicef.csv")
 
 
@@ -102,6 +102,18 @@ africa_prev_melt <- merge(africa_prev_melt, africa_country, by = "countryname" )
 africa_prev_melt[, ihm_maln_estimate := round(ihm_maln_estimate * 100, 2)]
 
 africa_prev_melt[, country_name := paste0(country, " ", ihm_maln_estimate, " %" )]
+
+mytheme <-  bs_theme(bootswatch = "lumen", version = 4,
+                     # Controls the default grayscale palette
+                     #bg = "#202123", fg = "#B8BCC2",
+                     # Controls the accent (e.g., hyperlink, button, etc) colors
+                     #primary = "#EA80FC", secondary = "#48DAC6",
+                     base_font = c("Grandstander", "sans-serif", "Ubuntu"),
+                     code_font = c("Courier", "monospace"),
+                     heading_font = c('Helvetica Neue', 'Helvetica', "sans-serif"))
+# Can also add lower-level customization
+# "input-border-color" = "#EA80FC")
+
 
 # africa_unicef_merge <- merge(africa_unicef,
 #                              africa_count, 

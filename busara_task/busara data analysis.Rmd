@@ -404,11 +404,12 @@ ggplot(end_month, aes(day_month, Freq )) +
 * What you would expect.
 
 ```{r}
-deposits <- figari_sheet2[, .(CustomerID)] %>% group_by(CustomerID) %>%
-    group_by(freq = n()) %>% setDT()
+deposits <- figari_sheet2[, .(freq = .N), by = CustomerID] 
 
 #approximmately poison
-hist(deposits$freq, col = "black", main = "Deposits", xlab = "Deposits")
+hist(deposits$freq, col = "black",
+     main = "Deposits", 
+     xlab = "Deposits")
 ```
 
 # ***Subset People who have made one deposit***

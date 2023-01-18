@@ -690,3 +690,10 @@ code .do { color: #969896; }
 code .an { color: #008080; }
 code .cv { color: #008080; }
 code .in { color: #008080; }
+
+
+.girafe_container_std {
+    position: relative;
+    text-align: center;
+    width: 960px !important;
+}

@@ -61,3 +61,6 @@ kaggle/mnist_digits/data
 _site/files/kaggle/mnist_digits/data/train.csv 
 
 shiny/ihme_maln/rsconnect
+
+kaggle/data/climate_changeGlobalLandTemperaturesByCity.csv
+kaggle/climate_change/

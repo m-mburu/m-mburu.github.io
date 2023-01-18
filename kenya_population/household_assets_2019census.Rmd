@@ -11,7 +11,7 @@ output:
       smooth_scroll: no
     theme: united
     highlight: pygments
-    css: github.css
+    #css: github.css
   pdf_document:
     toc: yes
     toc_depth: '2'
@@ -38,6 +38,8 @@ library(sf)
 library(DT)
 library(tmap)
 library(ggthemes)
+library(ggiraph)
+
 ```
 
 # Read data set
@@ -85,15 +87,26 @@ sub_county_melt <- melt(sub_county,
 ```{r, fig.width=10, fig.height=4.5}
 kenya_dat <- sub_county_melt[county == "kenya"]
 
-p <- ggplot(kenya_dat, aes(variable, value)) +
-    geom_bar(stat = "identity", width = 0.5, fill ="slategray2"  ) +
-    geom_text(aes(variable, value, label = paste0(value, "%")),
+p <- ggplot(kenya_dat, aes(variable, value, tooltip = paste(variable, " : ", value))) +
+    geom_bar_interactive(stat = "identity", width = 0.5, fill ="slategray2"  ) +
+    geom_text_interactive(aes(variable, value, label = paste0(value, "%")),
               position = position_dodge(width = 0.5),
-              vjust = 0.001, size = 4)+
+              vjust = 0.001, size = 3)+
     labs(x = "Household assets", y = "%",
          title = "% of households with various assets 2019 census",
          caption = "twitter\n@mmburu_w")+
-    theme_fivethirtyeight()
+    theme_fivethirtyeight()+
+  theme(
+    axis.text = element_text(size = 7, angle = 45, vjust = 1, hjust =1),
+    plot.title = element_text_interactive(size =11)
+  )
+p1 <- girafe(ggobj = p, width_svg = 7, height_svg = 4.5, 
+  options = list(
+    opts_sizing(rescale = T) )
+  )
+
+p1
+
 p
 ```
 

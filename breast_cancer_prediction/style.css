@@ -126,6 +126,8 @@ h6 {
 	font-family: Lato, Helvetica, Arial, sans-serif;
 	margin: .75em 0;
 	text-transform: none;
+	font-weight: 200;
+	color: #00a2ab;
 }
 h1,
 h2 {

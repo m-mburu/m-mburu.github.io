@@ -52,6 +52,7 @@ library(ggthemes)
 library(DT)
 library(glmnet)
 
+options(scipen = 1, digits = 4)
 cancer <- fread("data.csv")
 
 cancer[, V33 := NULL]
@@ -128,7 +129,7 @@ cancer[, diagnosis := as.factor(diagnosis)]
 ```{r}
 
 cor(cancer[, -(1:2), with = F]) %>%
-  datatable(options = list(scrollX = TRUE)) 
+  datatable(options = list(scrollX = TRUE), style = "bootstrap4") 
 
 ```
 
@@ -565,7 +566,7 @@ xgb_model <-train(label~.,
                  method="xgbTree",
                  trControl= xgb_ctrl,
                  tuneGrid=xgb_grid,
-                 verbose=T,
+                 verbosity=0,
                  metric="ROC",
                  nthread =4
                      

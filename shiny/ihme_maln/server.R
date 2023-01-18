@@ -10,7 +10,9 @@ library(ggthemes)
 library(data.table)
 library(gapminder)
 library(ggthemes)
+
 server <- function(input, output) { 
+    tmap_options(check.and.fix = TRUE) 
     test1 <- reactive({
         if(input$segment == 'National') {
             

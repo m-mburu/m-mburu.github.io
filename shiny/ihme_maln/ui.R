@@ -17,11 +17,18 @@ library(shinythemes)
 #     bg = "#202123", fg = "#B8BCC2", primary = "#EA80FC", 
 #     base_font = font_google("Grandstander")
 # )
-
-ui <-  navbarPage(theme = "flatly" ,"Malnutrition Prevalence in Africa 0 - 5 years",
+#theme = "flatly" ,
+ui <-  navbarPage("Malnutrition Prevalence in Africa 0 - 5 years",
+                  theme = "style.css",
+                 # footer = includeHTML("footer.html"),
+                  fluid = TRUE, 
+                  collapsible = TRUE,
+                  
                   
                   ###define user interface section of Participants to be replaced tabs
+                  
                   tabPanel("UNICEF Estimate Africa Stunting Prevalence Ages 0 - 5 Years",
+                           shinyjs::useShinyjs(),
                            tabsetPanel(type = "pills",
                                        #define table for Participant Replacement   
                                        tabPanel("Africa Stunting Prevalence Ages 0 - 5 Years",
@@ -51,17 +58,17 @@ ui <-  navbarPage(theme = "flatly" ,"Malnutrition Prevalence in Africa 0 - 5 yea
                                                             condition = "input.segment == 'Age'",
                                                             selectInput("age", "Age in months stunting levels",
                                                                         child_age, selected = "0_5")),
-                                             
+                                                        
                                                         selectInput("year_select_maln", "Select, Year",
                                                                     choices = year_unicef ,
                                                                     selected = 2019)),
-                                                        # downloadButton(
-                                                        #     "replace_dwn",label = ("cp missing sample")),
-                                                        # br(),br(),br(),
-                                                        
+                                                    # downloadButton(
+                                                    #     "replace_dwn",label = ("cp missing sample")),
+                                                    # br(),br(),br(),
+                                                    
                                                     mainPanel(
                                                         
-                    
+                                                        
                                                         
                                                         tmapOutput("afri_prev", width = "100%", height = 800), br()
                                                         
@@ -85,7 +92,7 @@ ui <-  navbarPage(theme = "flatly" ,"Malnutrition Prevalence in Africa 0 - 5 yea
                                                     ),
                                                     mainPanel(
                                                         plotlyOutput("countries_line"), br(), br(),
-                                                
+                                                        
                                                         
                                                         plotlyOutput("compare_bar_tab2"), br()
                                                         

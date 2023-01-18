@@ -9,7 +9,7 @@ output:
     toc_float:
       collapsed: false
       smooth_scroll: false
-    theme: united
+    css: "style.csss"
     highlight: pygments
 ---
 ```{r setup, include=FALSE}
@@ -25,15 +25,20 @@ library(data.table)
 library(sf)
 library(DT)
 library(tmap)
+library(rKenyaCensus)
 ```
 
 
 ```{r}
-kenya_5yr_births <- readGoogleSheet("https://docs.google.com/spreadsheets/d/e/2PACX-1vSf-yNXNk68cIOH0Rb6alaDk9SxKEMm3h6kb2p8jxT8oMdfj4OqUDbs2Ln9OOGGCI9V7SNiZJCDWm4H/pubhtml")
-
-kenya_5yr_births <- cleanGoogleTable(kenya_5yr_births , table = 1, skip = 1 ) %>%
-  setDT()
+# kenya_5yr_births <- readGoogleSheet("https://docs.google.com/spreadsheets/d/e/2PACX-1vSf-yNXNk68cIOH0Rb6alaDk9SxKEMm3h6kb2p8jxT8oMdfj4OqUDbs2Ln9OOGGCI9V7SNiZJCDWm4H/pubhtml")
+# 
+# kenya_5yr_births <- cleanGoogleTable(kenya_5yr_births , table = 1, skip = 1 ) %>%
+#   setDT()
+data(V4_T2.40)
+kenya_5yr_births = V4_T2.40
+setDT(kenya_5yr_births)
 ```
+
 
 
 
@@ -47,7 +52,8 @@ setnames(kenya_5yr_births, old_nms_births, new_nms_births)
 
 
 ```{r}
-numerics_nms <- new_nms_births[new_nms_births != "county"]
+numerics_nms <- c("total", "notified", "not_notified",
+                  "don’t_know", "not_stated", "percent_notified")
 
 kenya_5yr_births[, (numerics_nms) := lapply(.SD, function(x) gsub(",", "", x)), .SDcols = numerics_nms]
 kenya_5yr_births[, (numerics_nms) := lapply(.SD, as.numeric), .SDcols = numerics_nms]
@@ -78,6 +84,7 @@ setDT(kenya_counties)
 kenya_counties[, county := tolower(gsub("\\s", "-", county))]
 
 kenya_births_counties <- merge(kenya_counties, kenya_5yr_births, by = "county" )
+setnames(kenya_births_counties, "percent_notified", "per_cent_in_health_facility")
 kenya_births_counties[, county := paste(county, " ", per_cent_in_health_facility,"%", sep = "" )]
 
 kenya_births_counties <- st_set_geometry(kenya_births_counties, "geometry")
