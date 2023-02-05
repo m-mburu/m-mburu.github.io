@@ -13,5 +13,20 @@
   },
   "myblog/cv/cv_mburu.Rmd": {
     "cv_mburu.html": "000f4f96"
+  },
+  "myblog/datacamp/regression_r/regression.Rmd": {
+    "regression.html": "1399c914"
+  },
+  "myblog/datacamp/regression_r/logistic_regression.Rmd": {
+    "logistic_regression.html": "abc25d3b"
+  },
+  "myblog/datacamp/anomaly_detection_R/anomaly_detection.Rmd": {
+    "anomaly_detection.html": "602e5ed1"
+  },
+  "myblog/datacamp/sampling_R/sampling_R.Rmd": {
+    "sampling_R.html": "2e0f4b4f"
+  },
+  "myblog/datacamp/tidymodels/tidymodels.Rmd": {
+    "tidymodels.html": "35c1a8ad"
   }
 }

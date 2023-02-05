@@ -19,7 +19,7 @@ library(DT)
 library(tictoc)
 ```
 
-##  Reading data
+## Reading data
 
 ```{r}
 shap_values <- fread("shap_values.csv")
@@ -31,4 +31,3 @@ shap_values_wide <- shap_values %>%
 
 
 ```
-

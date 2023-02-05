@@ -294,7 +294,6 @@ In this exercise, you will use the results from your logistic regression model, 
 
 The telecom_results tibble has been loaded into your session.
 
-
 ```{r}
 # Calculate the confusion matrix
 conf_mat(telecom_results, truth = canceled_service,
@@ -316,8 +315,8 @@ spec(telecom_results, truth = canceled_service,
 
 ```
 
-
 ## Creating custom metric sets
+
 The yardstick package also provides the ability to create custom sets of model metrics. In cases where the cost of obtaining false negative errors is different from the cost of false positive errors, it may be important to examine a specific set of performance metrics.
 
 Instead of calculating accuracy, sensitivity, and specificity separately, you can create your own metric function that calculates all three at the same time.
@@ -325,7 +324,6 @@ Instead of calculating accuracy, sensitivity, and specificity separately, you ca
 In this exercise, you will use the results from your logistic regression model, telecom_results, to calculate a custom set of performance metrics. You will also use a confusion matrix to calculate all available binary classification metrics in tidymodelsall at once.
 
 The telecom_results tibble has been loaded into your session.
-
 
 ```{r}
 # Create a custom metric function
@@ -344,8 +342,8 @@ conf_mat(telecom_results,
   summary()
 ```
 
-
 ## Plotting the confusion matrix
+
 Calculating performance metrics with the yardstick package provides insight into how well a classification model is performing on the test dataset. Most yardstick functions return a single number that summarizes classification performance.
 
 Many times, it is helpful to create visualizations of the confusion matrix to more easily communicate your results.
@@ -353,7 +351,6 @@ Many times, it is helpful to create visualizations of the confusion matrix to mo
 In this exercise, you will make a heat map and mosaic plot of the confusion matrix from your logistic regression model on the telecom_df dataset.
 
 Your model results tibble, telecom_results, has been loaded into your session.
-
 
 ```{r}
 # Create a confusion matrix
@@ -371,6 +368,7 @@ conf_mat(telecom_results,
 ```
 
 ## ROC curves and area under the ROC curve
+
 ROC curves are used to visualize the performance of a classification model across a range of probability thresholds. An ROC curve with the majority of points near the upper left corner of the plot indicates that a classification model is able to correctly predict both the positive and negative outcomes correctly across a wide range of probability thresholds.
 
 The area under this curve provides a letter grade summary of model performance.
@@ -396,14 +394,11 @@ threshold_df %>%
 roc_auc(telecom_results, truth = canceled_service, .pred_yes)
 ```
 
-
-Streamlining the modeling process
-The last_fit() function is designed to streamline the modeling workflow in tidymodels. Instead of training your model on the training data and building a results tibble using the test data, last_fit() accomplishes this with one function.
+Streamlining the modeling process The last_fit() function is designed to streamline the modeling workflow in tidymodels. Instead of training your model on the training data and building a results tibble using the test data, last_fit() accomplishes this with one function.
 
 In this exercise, you will train the same logistic regression model as you fit in the previous exercises, except with the last_fit() function.
 
 Your data split object, telecom_split, and model specification, logistic_model, have been loaded into your session.
-
 
 ```{r}
 # Train model with last_fit()
@@ -416,14 +411,13 @@ telecom_last_fit %>%
   collect_metrics()
 ```
 
-
 ## Collecting predictions and creating custom metrics
+
 Using the last_fit() modeling workflow also saves time in collecting model predictions. Instead of manually creating a tibble of model results, there are helper functions that extract this information automatically.
 
 In this exercise, you will use your trained model, telecom_last_fit, to create a tibble of model results on the test dataset as well as calculate custom performance metrics.
 
 You trained model, telecom_last_fit, has been loaded into this session.
-
 
 ```{r}
 # Collect predictions
@@ -445,14 +439,13 @@ last_fit_metrics(last_fit_results,
                  .pred_yes)
 ```
 
-
 ## Complete modeling workflow
+
 In this exercise, you will use the last_fit() function to train a logistic regression model and evaluate its performance on the test data by assessing the ROC curve and the area under the ROC curve.
 
 Similar to previous exercises, you will predict canceled_service in the telecom_df data, but with an additional predictor variable to see if you can improve model performance.
 
 The telecom_df tibble, telecom_split, and logistic_model objects from the previous exercises have been loaded into your workspace. The telecom_split object contains the instructions for randomly splitting the telecom_df tibble into training and test sets. The logistic_model object is a parsnip specification of a logistic regression model.
-
 
 ```{r}
 # Train a logistic regression model
@@ -471,4 +464,3 @@ logistic_fit %>%
   roc_curve(truth = canceled_service, .pred_yes) %>% 
   autoplot()
 ```
-
