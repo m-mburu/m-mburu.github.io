@@ -16,7 +16,6 @@ output:
     toc_depth: '3'
 ---
 
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, 
                       warning = FALSE, 
@@ -36,7 +35,7 @@ library(lubridate)
 library(DT)
 ```
 
-# Description 
+# Description
 
 ## Reading data
 
@@ -51,7 +50,7 @@ SampleSubmission <- fread("SampleSubmission.csv")
 
 ## Combine test set and train set
 
-- makes it easier for cleaning purposes
+-   makes it easier for cleaning purposes
 
 ```{r}
 train_data <- merge(traindemographics, 
@@ -60,8 +59,10 @@ train_data <- merge(traindemographics,
 
 test_data <- merge(testdemographics, 
                    testperf, all.y = T, 
-                   by = "customerid")s
+                   by = "customerid")
 
+train_data[, approveddate := as.character(approveddate)]
+train_data[, creationdate := as.character(creationdate)]
 loan_data <- rbind(train_data[, set := "train"],
                    test_data[, set := "test"], fill = T)
 
@@ -73,7 +74,7 @@ loan_data %>% head() %>%
 
 ### Dates
 
-- Create new variables from dates eg age, loan year, loan day etc
+-   Create new variables from dates eg age, loan year, loan day etc
 
 ```{r}
 dates <- c("birthdate" ,"approveddate", "creationdate" )
@@ -109,9 +110,7 @@ loan_data[!is.na(good_bad_flag), .N, by = .(good_bad_flag)] %>%
 
 ## Clean string variables
 
-- convert empty chars to NA
-
-
+-   convert empty chars to NA
 
 ```{r}
 chars <- c("bank_account_type", "bank_name_clients", 
@@ -120,7 +119,6 @@ chars <- c("bank_account_type", "bank_name_clients",
 
 loan_data[, (chars) := lapply(.SD, function(x) ifelse(x == "" | x == " ", NA, x)), .SDcols = chars]
 ```
-
 
 ## Missing values distribution
 
@@ -134,7 +132,6 @@ missing_perc <- data.table(variables = nms_na, perc = withNa)
 
 
 ```
-
 
 ## Missing values distribution plot
 
@@ -176,7 +173,7 @@ loan_data %>% head() %>%
 
 ## More cleaning
 
-- eg standardizing 
+-   eg standardizing
 
 ```{r}
 
@@ -212,7 +209,7 @@ test_data[, set:= NULL]
 
 ## Imbalanced Datasets
 
-- make the proportion  of good loans to be the same as that of bad loans 
+-   make the proportion of good loans to be the same as that of bad loans
 
 ```{r}
 
@@ -227,7 +224,6 @@ train_good <- train_good[not_sample]
 train_sampled <- rbind(train_bad, train_good)
 
 ```
-
 
 # Training Data
 
@@ -270,10 +266,7 @@ svm_grid <- expand.grid(C = c( 1, 3, 5, 20),
 
 ```
 
-
 ## Model Fitting
-
-
 
 ```{r}
 library(caret)
@@ -308,7 +301,6 @@ model_list
 
 ## ROC CI
 
-
 ```{r}
 
 resamples_models <- resamples(model_list)
@@ -317,11 +309,7 @@ dotplot(resamples_models, metric = "ROC")
 
 ```
 
-
-
-
 ## Model Statistics
-
 
 ```{r}
 nms_models <- names(model_list)
@@ -349,7 +337,6 @@ for (j in 1:length(nms_models)) {
 
 ## ROC CURVE
 
-
 ```{r}
 resamples_combined <- rbindlist(resamples_stat_list, fill = TRUE)
 library(plotly)
@@ -364,9 +351,7 @@ ggplotly(ggplot(resamples_combined  , aes(x = 1-Specificity, y = Recall, color =
 
 ```
 
-
 ## Precision Recall Curve
-
 
 ```{r}
 
@@ -384,7 +369,7 @@ ggplotly(ggplot(resamples_combined ,
 
 # Variable Importance
 
-## IML models 
+## IML models
 
 ```{r}
 library(iml)
@@ -419,9 +404,7 @@ for (i in 1:length(nms_models)) {
 
 ```
 
-
 ## Feature Importance plots
-
 
 ```{r}
 plots <- list()
@@ -449,7 +432,6 @@ plots
 
 ## Shap Values calculation
 
-
 ```{r}
 nms <- names(model_list)
 ids <- which(nms == "ranger")
@@ -476,7 +458,6 @@ write.csv(shap_values, file = "shap_values.csv", row.names = F)
 
 
 ```
-
 
 ## Shap Values plot
 
@@ -506,4 +487,3 @@ ggplot(shap_values, aes(feature, phi,  color = phi.var))+
   coord_flip()
 
 ```
-
