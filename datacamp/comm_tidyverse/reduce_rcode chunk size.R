@@ -1,1 +1,0 @@
-#On line 27, reduce the font of the R code elements, which are wrapped in pre HTML tags, to 10px.

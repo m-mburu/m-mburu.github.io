@@ -1,0 +1,86 @@
+Country Name,Country ISO3,Year,Indicator Name,Indicator Code,Value
+Kenya,KEN,2018,Population living in slums (% of urban population),EN.POP.SLUM.UR.ZS,46.5
+Kenya,KEN,2016,Population living in slums (% of urban population),EN.POP.SLUM.UR.ZS,46.5
+Kenya,KEN,2014,Population living in slums (% of urban population),EN.POP.SLUM.UR.ZS,56
+Kenya,KEN,2010,Population living in slums (% of urban population),EN.POP.SLUM.UR.ZS,54.70000076
+Kenya,KEN,2005,Population living in slums (% of urban population),EN.POP.SLUM.UR.ZS,54.79999924
+Kenya,KEN,2000,Population living in slums (% of urban population),EN.POP.SLUM.UR.ZS,54.79999924
+Kenya,KEN,1995,Population living in slums (% of urban population),EN.POP.SLUM.UR.ZS,54.79999924
+Kenya,KEN,1990,Population living in slums (% of urban population),EN.POP.SLUM.UR.ZS,54.90000153
+Kenya,KEN,2015,Income share held by second 20%,SI.DST.02ND.20,10.3
+Kenya,KEN,2005,Income share held by second 20%,SI.DST.02ND.20,9.1
+Kenya,KEN,1997,Income share held by second 20%,SI.DST.02ND.20,9.3
+Kenya,KEN,1994,Income share held by second 20%,SI.DST.02ND.20,10
+Kenya,KEN,1992,Income share held by second 20%,SI.DST.02ND.20,6.7
+Kenya,KEN,2015,Income share held by third 20%,SI.DST.03RD.20,14.6
+Kenya,KEN,2005,Income share held by third 20%,SI.DST.03RD.20,13.4
+Kenya,KEN,1997,Income share held by third 20%,SI.DST.03RD.20,13.6
+Kenya,KEN,1994,Income share held by third 20%,SI.DST.03RD.20,14.6
+Kenya,KEN,1992,Income share held by third 20%,SI.DST.03RD.20,10.7
+Kenya,KEN,2015,Income share held by fourth 20%,SI.DST.04TH.20,21.5
+Kenya,KEN,2005,Income share held by fourth 20%,SI.DST.04TH.20,20.4
+Kenya,KEN,1997,Income share held by fourth 20%,SI.DST.04TH.20,20.2
+Kenya,KEN,1994,Income share held by fourth 20%,SI.DST.04TH.20,21.3
+Kenya,KEN,1992,Income share held by fourth 20%,SI.DST.04TH.20,17.3
+Kenya,KEN,2015,Income share held by highest 20%,SI.DST.05TH.20,47.5
+Kenya,KEN,2005,Income share held by highest 20%,SI.DST.05TH.20,52.2
+Kenya,KEN,1997,Income share held by highest 20%,SI.DST.05TH.20,51.3
+Kenya,KEN,1994,Income share held by highest 20%,SI.DST.05TH.20,48.9
+Kenya,KEN,1992,Income share held by highest 20%,SI.DST.05TH.20,61.8
+Kenya,KEN,2015,Income share held by highest 10%,SI.DST.10TH.10,31.6
+Kenya,KEN,2005,Income share held by highest 10%,SI.DST.10TH.10,36.8
+Kenya,KEN,1997,Income share held by highest 10%,SI.DST.10TH.10,36.3
+Kenya,KEN,1994,Income share held by highest 10%,SI.DST.10TH.10,33.4
+Kenya,KEN,1992,Income share held by highest 10%,SI.DST.10TH.10,47.9
+Kenya,KEN,2015,Proportion of people living below 50 percent of median income (%),SI.DST.50MD,14
+Kenya,KEN,2005,Proportion of people living below 50 percent of median income (%),SI.DST.50MD,16.8
+Kenya,KEN,1997,Proportion of people living below 50 percent of median income (%),SI.DST.50MD,16.1
+Kenya,KEN,1994,Proportion of people living below 50 percent of median income (%),SI.DST.50MD,17.5
+Kenya,KEN,1992,Proportion of people living below 50 percent of median income (%),SI.DST.50MD,21.6
+Kenya,KEN,2015,Income share held by lowest 10%,SI.DST.FRST.10,2.4
+Kenya,KEN,2005,Income share held by lowest 10%,SI.DST.FRST.10,1.8
+Kenya,KEN,1997,Income share held by lowest 10%,SI.DST.FRST.10,2.3
+Kenya,KEN,1994,Income share held by lowest 10%,SI.DST.FRST.10,1.9
+Kenya,KEN,1992,Income share held by lowest 10%,SI.DST.FRST.10,1.2
+Kenya,KEN,2015,Income share held by lowest 20%,SI.DST.FRST.20,6.2
+Kenya,KEN,2005,Income share held by lowest 20%,SI.DST.FRST.20,5
+Kenya,KEN,1997,Income share held by lowest 20%,SI.DST.FRST.20,5.6
+Kenya,KEN,1994,Income share held by lowest 20%,SI.DST.FRST.20,5.2
+Kenya,KEN,1992,Income share held by lowest 20%,SI.DST.FRST.20,3.4
+Kenya,KEN,2015,Poverty headcount ratio at $1.90 a day (2011 PPP) (% of population),SI.POV.DDAY,37.1
+Kenya,KEN,2005,Poverty headcount ratio at $1.90 a day (2011 PPP) (% of population),SI.POV.DDAY,43.9
+Kenya,KEN,1997,Poverty headcount ratio at $1.90 a day (2011 PPP) (% of population),SI.POV.DDAY,32.2
+Kenya,KEN,1994,Poverty headcount ratio at $1.90 a day (2011 PPP) (% of population),SI.POV.DDAY,31.7
+Kenya,KEN,1992,Poverty headcount ratio at $1.90 a day (2011 PPP) (% of population),SI.POV.DDAY,31.7
+Kenya,KEN,2015,Poverty gap at $1.90 a day (2011 PPP) (%),SI.POV.GAPS,11.7
+Kenya,KEN,2005,Poverty gap at $1.90 a day (2011 PPP) (%),SI.POV.GAPS,16.4
+Kenya,KEN,1997,Poverty gap at $1.90 a day (2011 PPP) (%),SI.POV.GAPS,9.9
+Kenya,KEN,1994,Poverty gap at $1.90 a day (2011 PPP) (%),SI.POV.GAPS,11.4
+Kenya,KEN,1992,Poverty gap at $1.90 a day (2011 PPP) (%),SI.POV.GAPS,11.9
+Kenya,KEN,2015,Gini index (World Bank estimate),SI.POV.GINI,40.8
+Kenya,KEN,2005,Gini index (World Bank estimate),SI.POV.GINI,46.5
+Kenya,KEN,1997,Gini index (World Bank estimate),SI.POV.GINI,45
+Kenya,KEN,1994,Gini index (World Bank estimate),SI.POV.GINI,43.1
+Kenya,KEN,1992,Gini index (World Bank estimate),SI.POV.GINI,57.5
+Kenya,KEN,2015,Poverty headcount ratio at $3.20 a day (2011 PPP) (% of population),SI.POV.LMIC,66.5
+Kenya,KEN,2005,Poverty headcount ratio at $3.20 a day (2011 PPP) (% of population),SI.POV.LMIC,69.6
+Kenya,KEN,1997,Poverty headcount ratio at $3.20 a day (2011 PPP) (% of population),SI.POV.LMIC,59.8
+Kenya,KEN,1994,Poverty headcount ratio at $3.20 a day (2011 PPP) (% of population),SI.POV.LMIC,60.9
+Kenya,KEN,1992,Poverty headcount ratio at $3.20 a day (2011 PPP) (% of population),SI.POV.LMIC,54.4
+Kenya,KEN,2015,Poverty gap at $3.20 a day (2011 PPP) (%),SI.POV.LMIC.GP,28.6
+Kenya,KEN,2005,Poverty gap at $3.20 a day (2011 PPP) (%),SI.POV.LMIC.GP,33.5
+Kenya,KEN,1997,Poverty gap at $3.20 a day (2011 PPP) (%),SI.POV.LMIC.GP,25
+Kenya,KEN,1994,Poverty gap at $3.20 a day (2011 PPP) (%),SI.POV.LMIC.GP,26
+Kenya,KEN,1992,Poverty gap at $3.20 a day (2011 PPP) (%),SI.POV.LMIC.GP,24.9
+Kenya,KEN,2015,Poverty headcount ratio at national poverty lines (% of population),SI.POV.NAHC,36.1
+Kenya,KEN,2005,Poverty headcount ratio at national poverty lines (% of population),SI.POV.NAHC,46.8
+Kenya,KEN,2015,Poverty headcount ratio at $5.50 a day (2011 PPP) (% of population),SI.POV.UMIC,86.6
+Kenya,KEN,2005,Poverty headcount ratio at $5.50 a day (2011 PPP) (% of population),SI.POV.UMIC,88.3
+Kenya,KEN,1997,Poverty headcount ratio at $5.50 a day (2011 PPP) (% of population),SI.POV.UMIC,83.3
+Kenya,KEN,1994,Poverty headcount ratio at $5.50 a day (2011 PPP) (% of population),SI.POV.UMIC,84.5
+Kenya,KEN,1992,Poverty headcount ratio at $5.50 a day (2011 PPP) (% of population),SI.POV.UMIC,76.2
+Kenya,KEN,2015,Poverty gap at $5.50 a day (2011 PPP) (%),SI.POV.UMIC.GP,49.4
+Kenya,KEN,2005,Poverty gap at $5.50 a day (2011 PPP) (%),SI.POV.UMIC.GP,53.3
+Kenya,KEN,1997,Poverty gap at $5.50 a day (2011 PPP) (%),SI.POV.UMIC.GP,45.4
+Kenya,KEN,1994,Poverty gap at $5.50 a day (2011 PPP) (%),SI.POV.UMIC.GP,46.4
+Kenya,KEN,1992,Poverty gap at $5.50 a day (2011 PPP) (%),SI.POV.UMIC.GP,42.4

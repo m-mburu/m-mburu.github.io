@@ -1,0 +1,99 @@
+Country Name,Country ISO3,Year,Indicator Name,Indicator Code,Value
+#country+name,#country+code,#date+year,#indicator+name,#indicator+code,#indicator+value+num
+Rwanda,RWA,2018,Population living in slums (% of urban population),EN.POP.SLUM.UR.ZS,42.0999984741211
+Rwanda,RWA,2016,Population living in slums (% of urban population),EN.POP.SLUM.UR.ZS,45.5
+Rwanda,RWA,2014,Population living in slums (% of urban population),EN.POP.SLUM.UR.ZS,53.2000007629395
+Rwanda,RWA,2010,Population living in slums (% of urban population),EN.POP.SLUM.UR.ZS,65.0999984741211
+Rwanda,RWA,2005,Population living in slums (% of urban population),EN.POP.SLUM.UR.ZS,71.5999984741211
+Rwanda,RWA,2000,Population living in slums (% of urban population),EN.POP.SLUM.UR.ZS,79.6999969482422
+Rwanda,RWA,1995,Population living in slums (% of urban population),EN.POP.SLUM.UR.ZS,87.9000015258789
+Rwanda,RWA,1990,Population living in slums (% of urban population),EN.POP.SLUM.UR.ZS,96
+Rwanda,RWA,2016,Income share held by second 20%,SI.DST.02ND.20,9.8
+Rwanda,RWA,2013,Income share held by second 20%,SI.DST.02ND.20,9.6
+Rwanda,RWA,2010,Income share held by second 20%,SI.DST.02ND.20,9.1
+Rwanda,RWA,2005,Income share held by second 20%,SI.DST.02ND.20,8.1
+Rwanda,RWA,2000,Income share held by second 20%,SI.DST.02ND.20,8.9
+Rwanda,RWA,2016,Income share held by third 20%,SI.DST.03RD.20,13.6
+Rwanda,RWA,2013,Income share held by third 20%,SI.DST.03RD.20,13.2
+Rwanda,RWA,2010,Income share held by third 20%,SI.DST.03RD.20,12.7
+Rwanda,RWA,2005,Income share held by third 20%,SI.DST.03RD.20,11.7
+Rwanda,RWA,2000,Income share held by third 20%,SI.DST.03RD.20,12.6
+Rwanda,RWA,2016,Income share held by fourth 20%,SI.DST.04TH.20,19.8
+Rwanda,RWA,2013,Income share held by fourth 20%,SI.DST.04TH.20,19
+Rwanda,RWA,2010,Income share held by fourth 20%,SI.DST.04TH.20,18.5
+Rwanda,RWA,2005,Income share held by fourth 20%,SI.DST.04TH.20,17.6
+Rwanda,RWA,2000,Income share held by fourth 20%,SI.DST.04TH.20,18.4
+Rwanda,RWA,2016,Income share held by highest 20%,SI.DST.05TH.20,50.8
+Rwanda,RWA,2013,Income share held by highest 20%,SI.DST.05TH.20,52.2
+Rwanda,RWA,2010,Income share held by highest 20%,SI.DST.05TH.20,54.1
+Rwanda,RWA,2005,Income share held by highest 20%,SI.DST.05TH.20,58
+Rwanda,RWA,2000,Income share held by highest 20%,SI.DST.05TH.20,54.9
+Rwanda,RWA,2016,Income share held by highest 10%,SI.DST.10TH.10,35.6
+Rwanda,RWA,2013,Income share held by highest 10%,SI.DST.10TH.10,37.9
+Rwanda,RWA,2010,Income share held by highest 10%,SI.DST.10TH.10,39.8
+Rwanda,RWA,2005,Income share held by highest 10%,SI.DST.10TH.10,43.9
+Rwanda,RWA,2000,Income share held by highest 10%,SI.DST.10TH.10,40.8
+Rwanda,RWA,2016,Proportion of people living below 50 percent of median income (%),SI.DST.50MD,12.4
+Rwanda,RWA,2013,Proportion of people living below 50 percent of median income (%),SI.DST.50MD,12.1
+Rwanda,RWA,2010,Proportion of people living below 50 percent of median income (%),SI.DST.50MD,12.5
+Rwanda,RWA,2005,Proportion of people living below 50 percent of median income (%),SI.DST.50MD,16
+Rwanda,RWA,2000,Proportion of people living below 50 percent of median income (%),SI.DST.50MD,14
+Rwanda,RWA,2016,Income share held by lowest 10%,SI.DST.FRST.10,2.4
+Rwanda,RWA,2013,Income share held by lowest 10%,SI.DST.FRST.10,2.4
+Rwanda,RWA,2010,Income share held by lowest 10%,SI.DST.FRST.10,2.3
+Rwanda,RWA,2005,Income share held by lowest 10%,SI.DST.FRST.10,1.7
+Rwanda,RWA,2000,Income share held by lowest 10%,SI.DST.FRST.10,2
+Rwanda,RWA,2016,Income share held by lowest 20%,SI.DST.FRST.20,6
+Rwanda,RWA,2013,Income share held by lowest 20%,SI.DST.FRST.20,6
+Rwanda,RWA,2010,Income share held by lowest 20%,SI.DST.FRST.20,5.6
+Rwanda,RWA,2005,Income share held by lowest 20%,SI.DST.FRST.20,4.5
+Rwanda,RWA,2000,Income share held by lowest 20%,SI.DST.FRST.20,5.2
+Rwanda,RWA,2016,Poverty headcount ratio at $1.90 a day (2011 PPP) (% of population),SI.POV.DDAY,56.5
+Rwanda,RWA,2013,Poverty headcount ratio at $1.90 a day (2011 PPP) (% of population),SI.POV.DDAY,57.9
+Rwanda,RWA,2010,Poverty headcount ratio at $1.90 a day (2011 PPP) (% of population),SI.POV.DDAY,63.2
+Rwanda,RWA,2005,Poverty headcount ratio at $1.90 a day (2011 PPP) (% of population),SI.POV.DDAY,69.1
+Rwanda,RWA,2000,Poverty headcount ratio at $1.90 a day (2011 PPP) (% of population),SI.POV.DDAY,78
+Rwanda,RWA,2016,Poverty gap at $1.90 a day (2011 PPP) (%),SI.POV.GAPS,20.9
+Rwanda,RWA,2013,Poverty gap at $1.90 a day (2011 PPP) (%),SI.POV.GAPS,21.3
+Rwanda,RWA,2010,Poverty gap at $1.90 a day (2011 PPP) (%),SI.POV.GAPS,25.5
+Rwanda,RWA,2005,Poverty gap at $1.90 a day (2011 PPP) (%),SI.POV.GAPS,32
+Rwanda,RWA,2000,Poverty gap at $1.90 a day (2011 PPP) (%),SI.POV.GAPS,38.9
+Rwanda,RWA,2016,Gini index (World Bank estimate),SI.POV.GINI,43.7
+Rwanda,RWA,2013,Gini index (World Bank estimate),SI.POV.GINI,45.1
+Rwanda,RWA,2010,Gini index (World Bank estimate),SI.POV.GINI,47.2
+Rwanda,RWA,2005,Gini index (World Bank estimate),SI.POV.GINI,52
+Rwanda,RWA,2000,Gini index (World Bank estimate),SI.POV.GINI,48.5
+Rwanda,RWA,2016,Poverty headcount ratio at $3.20 a day (2011 PPP) (% of population),SI.POV.LMIC,80.3
+Rwanda,RWA,2013,Poverty headcount ratio at $3.20 a day (2011 PPP) (% of population),SI.POV.LMIC,81.9
+Rwanda,RWA,2010,Poverty headcount ratio at $3.20 a day (2011 PPP) (% of population),SI.POV.LMIC,84
+Rwanda,RWA,2005,Poverty headcount ratio at $3.20 a day (2011 PPP) (% of population),SI.POV.LMIC,85.6
+Rwanda,RWA,2000,Poverty headcount ratio at $3.20 a day (2011 PPP) (% of population),SI.POV.LMIC,90.6
+Rwanda,RWA,2016,Poverty gap at $3.20 a day (2011 PPP) (%),SI.POV.LMIC.GP,41
+Rwanda,RWA,2013,Poverty gap at $3.20 a day (2011 PPP) (%),SI.POV.LMIC.GP,42
+Rwanda,RWA,2010,Poverty gap at $3.20 a day (2011 PPP) (%),SI.POV.LMIC.GP,45.9
+Rwanda,RWA,2005,Poverty gap at $3.20 a day (2011 PPP) (%),SI.POV.LMIC.GP,51.1
+Rwanda,RWA,2000,Poverty gap at $3.20 a day (2011 PPP) (%),SI.POV.LMIC.GP,57.9
+Rwanda,RWA,2017,Multidimensional poverty headcount ratio (% of total population),SI.POV.MDIM,28.7
+Rwanda,RWA,2014,Multidimensional poverty headcount ratio (% of total population),SI.POV.MDIM,32.9
+Rwanda,RWA,2011,Multidimensional poverty headcount ratio (% of total population),SI.POV.MDIM,44.4
+Rwanda,RWA,2017,Multidimensional poverty intensity (average share of deprivations experienced by the poor),SI.POV.MDIM.IT,51.5
+Rwanda,RWA,2014,Multidimensional poverty intensity (average share of deprivations experienced by the poor),SI.POV.MDIM.IT,51.7
+Rwanda,RWA,2011,Multidimensional poverty intensity (average share of deprivations experienced by the poor),SI.POV.MDIM.IT,53.8
+Rwanda,RWA,2016,Poverty headcount ratio at national poverty lines (% of population),SI.POV.NAHC,38.2
+Rwanda,RWA,2013,Poverty headcount ratio at national poverty lines (% of population),SI.POV.NAHC,39.1
+Rwanda,RWA,2016,Poverty headcount ratio at $5.50 a day (2011 PPP) (% of population),SI.POV.UMIC,91.9
+Rwanda,RWA,2013,Poverty headcount ratio at $5.50 a day (2011 PPP) (% of population),SI.POV.UMIC,92.6
+Rwanda,RWA,2010,Poverty headcount ratio at $5.50 a day (2011 PPP) (% of population),SI.POV.UMIC,93.2
+Rwanda,RWA,2005,Poverty headcount ratio at $5.50 a day (2011 PPP) (% of population),SI.POV.UMIC,93.7
+Rwanda,RWA,2000,Poverty headcount ratio at $5.50 a day (2011 PPP) (% of population),SI.POV.UMIC,95.9
+Rwanda,RWA,2016,Poverty gap at $5.50 a day (2011 PPP) (%),SI.POV.UMIC.GP,60.4
+Rwanda,RWA,2013,Poverty gap at $5.50 a day (2011 PPP) (%),SI.POV.UMIC.GP,61.5
+Rwanda,RWA,2010,Poverty gap at $5.50 a day (2011 PPP) (%),SI.POV.UMIC.GP,64.3
+Rwanda,RWA,2005,Poverty gap at $5.50 a day (2011 PPP) (%),SI.POV.UMIC.GP,67.6
+Rwanda,RWA,2000,Poverty gap at $5.50 a day (2011 PPP) (%),SI.POV.UMIC.GP,72.9
+Rwanda,RWA,2016,"Survey mean consumption or income per capita, bottom 40% of population (2011 PPP $ per day)",SI.SPR.PC40,1
+Rwanda,RWA,2013,"Survey mean consumption or income per capita, bottom 40% of population (2011 PPP $ per day)",SI.SPR.PC40,0.99
+Rwanda,RWA,2016,"Annualized average growth rate in per capita real survey mean consumption or income, bottom 40% of population (%)",SI.SPR.PC40.ZG,0.31
+Rwanda,RWA,2016,"Survey mean consumption or income per capita, total population (2011 PPP $ per day)",SI.SPR.PCAP,2.54
+Rwanda,RWA,2013,"Survey mean consumption or income per capita, total population (2011 PPP $ per day)",SI.SPR.PCAP,2.55
+Rwanda,RWA,2016,"Annualized average growth rate in per capita real survey mean consumption or income, total population (%)",SI.SPR.PCAP.ZG,-0.17

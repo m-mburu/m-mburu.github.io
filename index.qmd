@@ -1,0 +1,5 @@
+---
+title: "Data Science Projects"
+---
+
+-   Data Science projects I have been working when I'm bored &#128522;

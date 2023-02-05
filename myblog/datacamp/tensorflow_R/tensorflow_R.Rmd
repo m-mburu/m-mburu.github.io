@@ -1,0 +1,17 @@
+---
+title: "Introduction to TensorFlow in R"
+author: "Mburu"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = TRUE, warning = FALSE)
+```
+
+```{r,  warning = TRUE}
+library(tensorflow)
+msg = tf$constant('Hello, TensorFlow!')
+tf$print(msg)
+```
+

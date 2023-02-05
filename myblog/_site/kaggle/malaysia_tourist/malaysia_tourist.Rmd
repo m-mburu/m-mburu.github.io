@@ -1,0 +1,32 @@
+---
+title: "Malaysian Tourist Sites"
+author: "Mburu"
+date: "7/17/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+
+
+```{r}
+library(tidyverse)
+library(data.table)
+library(leaflet)
+
+tourist_site <-fread("dataset tempat perlancongan Malaysia.csv")
+
+tourist_site[, site_label := paste0(Negeri, ", " ,`Nama Tempat`)]
+```
+
+
+## Leaflet Map
+
+```{r }
+leaflet(tourist_site) %>%
+    addTiles() %>%
+    addMarkers(~Longitude, ~Latitude, label = ~site_label )
+```
+
