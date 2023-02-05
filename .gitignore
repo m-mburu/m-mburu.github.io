@@ -58,9 +58,10 @@ data-final.csv
 
 
 myblog/kaggle/mnist_digits/data
-myblog/_site/files/kaggle/mnist_digits/data/train.csv 
+myblog/_site/files/kaggle/mnist_digits/data/train.csv
 
 myblog/shiny/ihme_maln/rsconnect
 
 myblog/kaggle/data/climate_changeGlobalLandTemperaturesByCity.csv
 myblog/kaggle/climate_change/
+/.quarto/
