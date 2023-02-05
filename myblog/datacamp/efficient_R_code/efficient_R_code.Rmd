@@ -208,7 +208,7 @@ Examine the code on the right that performs a standard data analysis. It loads a
 
 ```{r}
 # Load the data set
-data(movies, package = "ggplot2") 
+data(movies, package = "ggplot2movies") 
 
 # Load the profvis package
 library(profvis)

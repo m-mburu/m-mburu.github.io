@@ -19,23 +19,18 @@ output:
     toc_depth: '2'
 ---
 
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
 
-
-
-
 # ***Data Set***
 
+In this tutorial I'm going to predict whether a breast cancer tumor is benign or malignant. Using [Wiscosin breast cancer data set](https://www.kaggle.com/uciml/breast-cancer-wisconsin-data) available on Kaggle. The 30 predictors are divided into three parts first is Mean ( variables 3-13), Standard Error(13-23) and Worst(23-32) and each contain 10 parameter (radius, texture,area, perimeter, smoothness,compactness,concavity,concave points,symmetry and fractal dimension of the tumor). When predicting cancer breast tumor types there two types of cost;
 
-In this tutorial I'm going to predict whether a breast cancer tumor is benign or malignant. Using [Wiscosin breast cancer data set](https://www.kaggle.com/uciml/breast-cancer-wisconsin-data)  available on Kaggle. The 30 predictors are divided into three parts first is Mean ( variables 3-13), Standard Error(13-23) and Worst(23-32) and each contain 10 parameter (radius, texture,area, perimeter, smoothness,compactness,concavity,concave points,symmetry and fractal dimension of the tumor). When predicting cancer breast tumor types there two types of cost;
+-   The cost of telling someone who has malignant tumor that they have benign these are the false negatives in this case someone might not seek medical help which is can cause death.
+-   Telling someone that they have malignant type of tumor but they don't which is usually false positives. In this case you subject someone to unnecessary stress
 
-* The cost of telling someone who has malignant tumor that they have benign these are the false negatives in this case someone might not seek medical help which is can cause death.
-* Telling someone that they have malignant type of tumor but they don't which is usually false positives. In this case you subject someone to unnecessary stress
-
-So it's highly desirable that our model has good accuracy $ f_1 score$ and high recall.
+So it's highly desirable that our model has good accuracy \$ f_1 score\$ and high recall.
 
 ```{r, message=FALSE, warning=FALSE}
 
@@ -67,11 +62,9 @@ head(cancer)  %>%
 
 # ***Visualization and Feature selection***
 
-***Percentage of women with malignant tumor***
------
+## ***Percentage of women with malignant tumor***
 
 The percentage of women with malignant tumor is 37.26%(212 out 569) while the rest 62.74%(357) had benign tumors.
-
 
 ```{r, fig.width = 6.5, fig.height = 4.5 }
 
@@ -94,8 +87,7 @@ ggplot(aes(x=diagnosis, y=perc, fill = diagnosis)) +
 
 ```
 
-***Boxplots***
------
+## ***Boxplots***
 
 From the boxplots we can identify variables where we expect there is a significance difference between the two groups of cancer tumors. When using a boxplot if two distributions do not averlap or more than 75% of two boxplot do not overlap then we expect that there is a significance difference in the mean/median between the two groups. Some of the variables where the distribution of two cancer tumors are significantly different are radius_mean, texture_mean etc. The visible differences between malignant tumors and benign tumors can be seen in means of all cells and worst means where worst means is the average of all the worst cells. The distribution of malignant tumors have higher scores than the benign tumors in this cases.
 
@@ -109,9 +101,7 @@ ggplot(cancerm, aes(x = diagnosis, y = value))+
 
 ```
 
-
-***Features Scaling***
------
+## ***Features Scaling***
 
 We find that some variables are highly correlated. We can use principle component analysis for dimension reduction. Since variables are correlated it's evident that we can use a smaller set of features to build our models.
 
@@ -123,8 +113,7 @@ cancer[, (predictors) := lapply(.SD, function(x) scale(x)), .SDcols = predictors
 cancer[, diagnosis := as.factor(diagnosis)]
 ```
 
-***Correlation matrix***
------
+## ***Correlation matrix***
 
 ```{r}
 
@@ -133,8 +122,7 @@ cor(cancer[, -(1:2), with = F]) %>%
 
 ```
 
-***Principle Component Analysis***
--------
+## ***Principle Component Analysis***
 
 Using the elbow rule we can use the first 5 principle components. Using 15 principle components we will have achieved al most 100% of the variance from the original data set.
 
@@ -143,9 +131,7 @@ Using the elbow rule we can use the first 5 principle components. Using 15 princ
 pca <- prcomp(cancer[, predictors, with = F], scale. = F)
 ```
 
-
-***Variance Explained***
------
+## ***Variance Explained***
 
 Since PCA forms new characteristics the variance explained plot shows the amount of variation of the original features captured by each principle component. The new features are simply linear combinations of the old features.
 
@@ -159,13 +145,9 @@ prop_var * 100
 sum(prop_var[1:15])
 ```
 
-
-***Scree plot***
------
+## ***Scree plot***
 
 Scree plot shows the variance explained by each principle component which reduces as the number of principle components increase.
-
-
 
 ```{r}
 
@@ -175,10 +157,9 @@ plot(prop_var, xlab = "Principal Component",
 
 ```
 
-***Cumulative Variance Explained***
------
+## ***Cumulative Variance Explained***
 
-The cumulative of variance plot helps  to choose the number of features based on the amount of variation from original data set you want captured. In this case, I wanted to use number of principle components that capture almost 100% of the variation. After trying with different number of principle components I found out that the accuracy of the models did not increase after the 15th principle components.
+The cumulative of variance plot helps to choose the number of features based on the amount of variation from original data set you want captured. In this case, I wanted to use number of principle components that capture almost 100% of the variation. After trying with different number of principle components I found out that the accuracy of the models did not increase after the 15th principle components.
 
 ```{r}
 
@@ -189,9 +170,7 @@ plot(cum_var, xlab = "Principal Component",
 
 ```
 
-
-***Construct new data set***
------
+## ***Construct new data set***
 
 We use the first 15 principle components as our new predictors, then we randomly split data into training and test set in 7:3 ratio.
 
@@ -205,43 +184,34 @@ train <- pcadat[train_sample,]
 test <- pcadat[-train_sample,]
 ```
 
-
-
 # ***Model Fitting***
 
-
-* Some of the importants terms to understand: 
-Accuracy:
+-   Some of the importants terms to understand: Accuracy:
 
 $$Accuracy  = \frac{True\: positives+ True \; Negatives \;Classes}{N}$$
 
-- Precision: Of  all the patients we predicted that they have cancer malignant how many actually have cancer
-$$Precision  = \frac{True \; Positives}{Predicted \; Positives}$$
+-   Precision: Of all the patients we predicted that they have cancer malignant how many actually have cancer $$Precision  = \frac{True \; Positives}{Predicted \; Positives}$$
 
-- Recall(sensitivity): Of all the patients that have malignant cancer how many did we detect. This is the true positive rate
-$$Recall= \frac{True \; Positives}{Actual \; Positives}$$
-- Specifity is the true negative rate. Of all the patient who did not have malignant tumors how many did we detect
-$$Recall= \frac{True \; Negatives}{Actual \; Negatives}$$
+-   Recall(sensitivity): Of all the patients that have malignant cancer how many did we detect. This is the true positive rate $$Recall= \frac{True \; Positives}{Actual \; Positives}$$
 
-***Logistic regression***
------
+-   Specifity is the true negative rate. Of all the patient who did not have malignant tumors how many did we detect $$Recall= \frac{True \; Negatives}{Actual \; Negatives}$$
+
+## ***Logistic regression***
+
 This is one of generalized linear models which deals with binary data. There is a generalization of this model which is called multinomial regression where you can fit multi class data. The equation for logistic regression model is:
 
-$$log(\frac{p}{1-p}) = \beta_0 + \beta_1*X_1 + ... \beta_n * X_n$$ 
-and using mle the cost function can be derived as:
-$$J(\theta) = -\frac{1}{m}\sum_{i=1}^{m} y^i log(h_\theta(x^i)) + (1-y^i) log(1 - h_\theta(x^i))$$
-Given that $$y = 0$$  $$y = 1$$ . Finding $$\beta$$ s we minimizing the cost function.
+$$log(\frac{p}{1-p}) = \beta_0 + \beta_1*X_1 + ... \beta_n * X_n$$ and using mle the cost function can be derived as: $$J(\theta) = -\frac{1}{m}\sum_{i=1}^{m} y^i log(h_\theta(x^i)) + (1-y^i) log(1 - h_\theta(x^i))$$ Given that $$y = 0$$ $$y = 1$$ . Finding $$\beta$$ s we minimizing the cost function.
 
 ```{r, message=TRUE, warning= TRUE}
 fit_glm <- glm(label ~., data = train, family = binomial)
 ```
 
-***Regularization in logistic regression***
------
+## ***Regularization in logistic regression***
 
-The warning "glm.fit: fitted probabilities numerically 0 or 1 occurred" shows that there is a perfect separation/over fitting. In this case you can load glmnet library and fit a regularized logistic regression. These can be achieved by adding a regularization term to the cost function.The L1 regularization(Lasso) adds a penalty equal to the sum of the absolute values of the coefficients. 
+The warning "glm.fit: fitted probabilities numerically 0 or 1 occurred" shows that there is a perfect separation/over fitting. In this case you can load glmnet library and fit a regularized logistic regression. These can be achieved by adding a regularization term to the cost function.The L1 regularization(Lasso) adds a penalty equal to the sum of the absolute values of the coefficients.
 
 $$J(\theta) = -\frac{1}{m}\sum_{i=0}^{m} y^i log(h_\theta(x^i)) + (1-y^i) log(1 - h_\theta(x^i)) + \frac {\lambda}{2m}\sum_{j=1}^{n} |\theta^i|$$
+
 ```{r}
 
 trainx <- train[,-1]
@@ -288,9 +258,8 @@ glmnet_model <- train(
 )
 
 ```
+
 s
-
-
 
 ```{r}
 
@@ -311,7 +280,6 @@ ggplot(resample_glmnet , aes(x = prob_threshold, y = F1)) +
 
 ```
 
-
 ```{r}
 library(caTools)
 
@@ -322,12 +290,10 @@ pred_glm1 <- ifelse(pred_glm[, "M"] > 0.4, "M", "B")
 #pred_glm1 <- predict(glmnet_model, test, type = "raw")
 ```
 
-
 ```{r}
 pred_glm1 <- factor(pred_glm1, levels = levels(test$label))
 
 ```
-
 
 ```{r}
 
@@ -336,16 +302,11 @@ confusionMatrix(pred_glm1, test$label,positive = "M")
   
 ```
 
-
-
-***SVM***
------
+## ***SVM***
 
 Support Vector Machines is a type of supervised learning algorithm that is used for classification and regression. Most of the times however, it's used for classification.
 
 To understand how SVM works consider the following example of linearly separable data. It's clear that we can separate the two classes using a straight line(decision boundary). Which is normally referred to a separating hyperplane.
-
-
 
 ```{r, echo=FALSE}
 
@@ -359,12 +320,7 @@ plot(xsim, col =as.factor(ysim), pch = 19,
 
 ```
 
-
-
-The question is, since there exists many lines that can separate the red and the black classes which is the best one. This introduces us to the maximal margin classification, In short SVM finds the hyperplane/line that gives the biggest margin/gap between the two classes. In this case SVM will choose the solid line as the hyperplane  while the margins are the dotted lines. The circled points that lie directly on the margin, or on the wrong side of the margin for their class, are known as support vectors. This shows that SVM uses this points to come up with a the decision boundary, the other points are not used.  In this case since it's a two dimensional space the equation of the separating line will be $$\beta_0 + \beta_1X_1 + \beta_2X_2$$.
-Then when equations evaluates to more than 0 then 1 is predicted $$\beta_0 + \beta_1X_1 + \beta_2X_2 > 0, y = 1$$
-and when it evaluates to less than zero then  predicted class is -1 $$\beta_0 + \beta_1X_1 + \beta_2X_2 < 0, \; y = -1$$
-This becomes maximisation problem $$width \; of \;the \; margin = M $$ $$\sum_{j=1}^{n}\beta_j = 1$$ 
+The question is, since there exists many lines that can separate the red and the black classes which is the best one. This introduces us to the maximal margin classification, In short SVM finds the hyperplane/line that gives the biggest margin/gap between the two classes. In this case SVM will choose the solid line as the hyperplane while the margins are the dotted lines. The circled points that lie directly on the margin, or on the wrong side of the margin for their class, are known as support vectors. This shows that SVM uses this points to come up with a the decision boundary, the other points are not used. In this case since it's a two dimensional space the equation of the separating line will be $$\beta_0 + \beta_1X_1 + \beta_2X_2$$. Then when equations evaluates to more than 0 then 1 is predicted $$\beta_0 + \beta_1X_1 + \beta_2X_2 > 0, y = 1$$ and when it evaluates to less than zero then predicted class is -1 $$\beta_0 + \beta_1X_1 + \beta_2X_2 < 0, \; y = -1$$ This becomes maximisation problem $$width \; of \;the \; margin = M $$ $$\sum_{j=1}^{n}\beta_j = 1$$
 
 $$y_i(\beta_0 + \beta_1X_1 + \beta_2X_2) >= M$$
 
@@ -398,8 +354,6 @@ abline((beta0 - 1) / beta[2], -beta[1] / beta[2], lty = 2)
 abline((beta0 + 1) / beta[2], -beta[1] / beta[2], lty = 2)
 ```
 
-
-
 This is a best case scenario but in most cases the classes are noisy. Consider the plot below no matter which line you choose some points are bound to be on the wrong side of the desicion boundary. Thus maximal margin classification would not work.
 
 ```{r, echo=FALSE}
@@ -417,10 +371,8 @@ plot(xsim, col =as.factor(ysim), pch = 19,
 
 SVM then introduces what is called a soft margin. In naive explanation you can think of this as a margin that allows some points to be on the wrong side. By introducing an error term we allow for some slack. Thus in a two case the maximisation becomes $$y_i(\beta_0 + \beta_1X_1 + \beta_2X_2) >= M(1- \epsilon)$$
 
-$$\sum_{i=0}^{n} \epsilon_i <= C$$
-C is a tuning parameter which determines the width of the margin while $$\epsilon_i  \;'s$$ are slack variables.
-that allow individual observations to fall on the wrong side of the margin.
-In some cases the decision boundary maybe non linear. In case your are dealing with logistic regression you will be forced to introduce polynomial terms which might result in a very large feature space. SVM then introduces what are called kernels 
+$$\sum_{i=0}^{n} \epsilon_i <= C$$ C is a tuning parameter which determines the width of the margin while $$\epsilon_i  \;'s$$ are slack variables. that allow individual observations to fall on the wrong side of the margin. In some cases the decision boundary maybe non linear. In case your are dealing with logistic regression you will be forced to introduce polynomial terms which might result in a very large feature space. SVM then introduces what are called kernels
+
 ```{r, echo=FALSE}
 
 dat = data.frame(xsim, y = as.factor(ysim))
@@ -455,8 +407,7 @@ abline((beta0 - 1) / beta[2], -beta[1] / beta[2], lty = 2)
 abline((beta0 + 1) / beta[2], -beta[1] / beta[2], lty = 2)
 ```
 
-***Tuning SVM***
------
+## ***Tuning SVM***
 
 ```{r,}
 
@@ -480,9 +431,6 @@ svm_model <- train(
 
 ```
 
-
-
-
 ```{r,}
 resample_svm <- thresholder(svm_model, 
                               threshold = seq(.0, 1, by = 0.05), 
@@ -499,11 +447,6 @@ ggplot(resample_svm , aes(x = prob_threshold, y = F1, col = "F1")) +
 
 ```
 
-
-
-
-
-
 ```{r}
 
 pred_svm <-predict(svm_model, newdata = test, type = "prob")
@@ -516,19 +459,15 @@ confusionMatrix(test$label, pred_svm, positive = "M")
   
 ```
 
-***Xgboost***
------
-XGBoost is a type of an ensemble learner. Ensemble learning is where multiple machine learning algorithms are used at the same time for prediction. A good example will be Random Forests. In random Forest multiple decision trees are used together for prediction. There are two main types of ensemble learners, bagging and boosting. Random forest use the bagging approach. Trees are built from random subsets(rows and columns) of training set and then the final prediction is the weighted sum of all decision trees functions.
-Boosting methods are similar but in boosting samples are selected sequentially. For instance the first sample is selected and a decision tree is fitted, The model then picks the examples that were hard to learn and using this examples and a few others selected randomly from the training set the second model is fitted, Using the first model and the second model prediction is made, the model is evaluated and hard examples are picked and together with another randomly selected new examples from training set another model is trained. This is the process for boosting algorithms which continues for a specified number of n.
+## ***Xgboost***
 
-In gradient boosting the first model is fitted to the original training set. Let say your fitting a simple regression model for ease of explanation. Then your first model will be
-$ y = f(x) + \epsilon$. 
-When you find that the error is too large one of the things you might try to do is add more features, use another algorithm, tune your algorithm, look for more training data etc. But what if the error is not white noise and it has some relationship with output $y$ . Then we can fit a second model.
-$ \epsilon = f_1(x) + \epsilon_1$. then this process can continue lets say until n times. Then the final model will be
+XGBoost is a type of an ensemble learner. Ensemble learning is where multiple machine learning algorithms are used at the same time for prediction. A good example will be Random Forests. In random Forest multiple decision trees are used together for prediction. There are two main types of ensemble learners, bagging and boosting. Random forest use the bagging approach. Trees are built from random subsets(rows and columns) of training set and then the final prediction is the weighted sum of all decision trees functions. Boosting methods are similar but in boosting samples are selected sequentially. For instance the first sample is selected and a decision tree is fitted, The model then picks the examples that were hard to learn and using this examples and a few others selected randomly from the training set the second model is fitted, Using the first model and the second model prediction is made, the model is evaluated and hard examples are picked and together with another randomly selected new examples from training set another model is trained. This is the process for boosting algorithms which continues for a specified number of n.
 
-$ \epsilon_n = f_{n}(x) + \epsilon_{n-1}$. 
+In gradient boosting the first model is fitted to the original training set. Let say your fitting a simple regression model for ease of explanation. Then your first model will be \$ y = f(x) + \epsilon\$. When you find that the error is too large one of the things you might try to do is add more features, use another algorithm, tune your algorithm, look for more training data etc. But what if the error is not white noise and it has some relationship with output $y$ . Then we can fit a second model. \$ \epsilon = f_1(x) + \epsilon\_1\$. then this process can continue lets say until n times. Then the final model will be
 
-Then the final step is to add this models together with some weighting criteria $ weights = \alpha 's$ which gives us the final function used for prediction.
+\$ \epsilon*n = f*{n}(x) + \epsilon\_{n-1}\$.
+
+Then the final step is to add this models together with some weighting criteria \$ weights = \alpha 's\$ which gives us the final function used for prediction.
 
 $y = \alpha * f(x) + \alpha_1 * f_1(x) + \alpha_2 * f_2(x)...+ \alpha_n * f_n + \epsilon$
 
@@ -573,16 +512,7 @@ xgb_model <-train(label~.,
     )
 ```
 
-
-
-
-
-
-
 Increasing cut of increases the precision. A greater fraction of those who will be predicted that they have cancer will turn out that they have, but the algorithm is likely to have lower recall. If we want to avoid too many cases of people cancer being predicted that they do not have cancer. It will be very bad to tell someone that they do not have cancer but they have. If we lower the probability let say to 0.3 then we want to make sure that even if there is a 30% chance you have cancer then you should be flagged.
-
-
-
 
 ```{r}
 resample_xgb <- thresholder(xgb_model, 
@@ -599,12 +529,6 @@ ggplot(resample_xgb , aes(x = prob_threshold, y = F1, col = "F1")) +
 
 ```
 
-
-
-
-
-
-
 ```{r}
 pred_xgb <-predict(xgb_model, newdata = test, type = "prob")
 pred_xgb1 <- ifelse(pred_xgb[, "M"] > 0.4, "M", "B")
@@ -613,9 +537,7 @@ pred_xgb1 <- factor(pred_xgb1, levels = levels(test$label))
 confusionMatrix(pred_xgb1,test$label,  positive = "M") 
 ```
 
-
-***Learning Curves***
------
+## ***Learning Curves***
 
 ```{r, fig.width = 7.5, fig.height =  4.5}
 
@@ -663,13 +585,9 @@ legend("topright", legend = c("Test", "Train"), pch = 19, col = c("red", "blue")
 
 ```
 
-
-***Error Analysis***
------
+## ***Error Analysis***
 
 Look at the examples that the algorithm misclassified to see if there is a trend. Generally you are trying to find out the weak points of your algorithm. Checking why your algorithm is making those errors. For instance, from the boxplots below the malignant tumors that were misclassified had lower radius mean compared to mislassified benign tumors. This contrary to what we saw in the first boxplots graph.
-
-
 
 ```{r}
 
@@ -681,8 +599,6 @@ test_mis_svm <- df[(diagnosis == "M" & pred_svm == 0) |( diagnosis == "B" & pred
 
 
 ```
-
-
 
 ```{r, fig.width = 11, fig.height = 7}
 

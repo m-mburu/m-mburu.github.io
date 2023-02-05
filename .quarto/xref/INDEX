@@ -28,5 +28,14 @@
   },
   "myblog/datacamp/tidymodels/tidymodels.Rmd": {
     "tidymodels.html": "35c1a8ad"
+  },
+  "myblog/datacamp/efficient_R_code/efficient_R_code.Rmd": {
+    "efficient_R_code.html": "c9127cd2"
+  },
+  "blogs.qmd": {
+    "blogs.html": "7501fd62"
+  },
+  "myblog/breast_cancer_prediction/cancer_data.Rmd": {
+    "cancer_data.html": "b4bf962b"
   }
 }
