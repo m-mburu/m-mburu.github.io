@@ -5,6 +5,10 @@ project:
 website:
   title: "Data Science Projects"
   navbar:
+    search: true
+    background: light
+    collapse-below: lg
+    type: light
     left:
       - href: index.qmd
         text: Home
