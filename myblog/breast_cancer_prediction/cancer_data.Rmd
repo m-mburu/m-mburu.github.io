@@ -465,7 +465,7 @@ XGBoost is a type of an ensemble learner. Ensemble learning is where multiple ma
 
 In gradient boosting the first model is fitted to the original training set. Let say your fitting a simple regression model for ease of explanation. Then your first model will be \$ y = f(x) + \epsilon\$. When you find that the error is too large one of the things you might try to do is add more features, use another algorithm, tune your algorithm, look for more training data etc. But what if the error is not white noise and it has some relationship with output $y$ . Then we can fit a second model. \$ \epsilon = f_1(x) + \epsilon\_1\$. then this process can continue lets say until n times. Then the final model will be
 
-\$ \epsilon*n = f*{n}(x) + \epsilon\_{n-1}\$.
+\$ \epsilon*n = f\*{n}(x) + \epsilon\_{n-1}\$.
 
 Then the final step is to add this models together with some weighting criteria \$ weights = \alpha 's\$ which gives us the final function used for prediction.
 

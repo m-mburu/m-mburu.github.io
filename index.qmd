@@ -1,5 +1,5 @@
 ---
-title: "Data Science Projects"
+title: "Mburu"
 ---
 
--   Data Science projects I have been working when I'm bored &#128522;
+-   Data Science projects I have been working on 😊
