@@ -23,11 +23,13 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 
 
 
+
 # Creating an igraph object
 
 Here you will learn how to create an igraph 'object' from data stored in an edgelist. The data are friendships in a group of students. You will also learn how to make a basic visualization of the network.
 
 Each row of the friends dataframe represents an edge in the network.
+
 
 
 
@@ -68,12 +70,14 @@ plot(g)
 
 
 
+
 # Counting vertices and edges
 A lot of basic information about a network 
 can be extracted from an igraph object. In this exercise
 you will learn how to count the vertices and edges
 from a network by applying several functions to the graph object g.
 Each row of the friends dataframe represents an edge in the network.
+
 
 
 
@@ -103,9 +107,11 @@ gorder(g)
 
 
 
+
 # Node attributes and subsetting
 
 In this exercise you will learn how to add attributes to vertices in the network and view them.
+
 
 
 
@@ -151,11 +157,13 @@ V(g)[[1:5]]
 
 
 
+
 # Edge attributes and subsetting
 In this exercise you will learn how to add attributes 
 to edges in the network and view them. For instance, 
 we will add the attribute 'hours' that represents how 
 many hours per week each pair of friends spend with each other.
+
 
 
 
@@ -194,12 +202,14 @@ E(g)[[hours>= 4]]
 
 
 
+
 # Visualizing attributes
 
 In this exercise we will learn how to create igraph
 objects with attributes directly from dataframes and
 how to visualize attributes in plots. We will use a 
 second network of friendship connections between students.
+
 
 
 
@@ -232,6 +242,7 @@ plot(g1, vertex.label.color = "black")
 
 
 
+
 # Quiz on attributes
 - What term is typically used to describe the relative strength of edges?
 - weight
@@ -240,6 +251,7 @@ plot(g1, vertex.label.color = "black")
 # Igraph network layouts
 
 The igraph package provides several built in layout algorithms for network visualization. Depending upon the size of a given network different layouts may be more effective in communicating the structure of the network. Ideally the best layout is the one that minimizes the number of edges that cross each other in the network. In this exercise you will explore just a few of the many default layout algorithms. Re-executing the code for each plot will lead to a slightly different version of the same layout type. Doing this a few times can help to find the best looking visualization for your network.
+
 
 
 
@@ -275,8 +287,10 @@ plot(g1, vertex.label.color = "black", layout = m1)
 
 
 
+
 # Visualizing edges
 In this exercise you will learn how to change the size of edges in a network based on their weight, as well as how to remove edges from a network which can sometimes be helpful in more effectively visualizing large and highly clustered networks. In this introductory chapter, we have just scratched the surface of what's possible in visualizing igraph networks. You will continue to develop these skills in future chapters.
+
 
 
 
@@ -322,9 +336,11 @@ plot(g2,
 
 
 
+
 # Directed igraph objects
 
 In this exercise you will learn how to create a directed graph from a dataframe, how to inspect whether a graph object is directed and/or weighted and how to extract those vertices at the beginning and end of directed edges.
+
 
 
 
@@ -354,11 +370,13 @@ table(head_of(g, E(g)))
 
 
 
+
 # Identifying edges for each vertex
 In this exercise you will learn how to identify particular edges. 
 You will learn how to determine if an edge exists between two 
 vertices as well as finding all vertices connected in either
 direction to a given vertex.
+
 
 
 
@@ -396,6 +414,7 @@ incident(g, '184', mode = c("out"))
 
 
 
+
 ## Neighbors
 
 Often in network analysis it is important to explore the patterning 
@@ -405,6 +424,7 @@ neighboring vertices are shared even by unconnected vertices indicating
 how two vertices may have an indirect relationship through others.
 In this exercise you will learn how to identify neighbors and shared
 neighbors between pairs of vertices.
+
 
 
 
@@ -426,6 +446,7 @@ n1 <-neighbors(g, '42', mode = c('out'))
 n2 <- neighbors(g, '124', mode = c('in'))
 intersection(n1, n2)
 ```
+
 
 
 
@@ -459,6 +480,7 @@ disease spreads through the network.
 
 
 
+
 ```{r}
 
 # Which two vertices are the furthest apart in the graph ?
@@ -473,6 +495,7 @@ ego(g, 2, '42', mode = c('out'))
 # Identify vertices that can reach vertex 42 within two connections
 ego(g, 2, '42', mode = c('in'))
 ```
+
 
 
 
@@ -504,6 +527,7 @@ key children who have high out-degrees and infect many other children.
 
 
 
+
 ```{r}
 
 # Calculate the out-degree of each vertex
@@ -526,6 +550,7 @@ which.max(g.outd)
 
 
 
+
 # Betweenness
 
 Another measure of the importance of a given vertex is its betweenness.
@@ -539,6 +564,7 @@ the disease to other parts of the network. In this exercise, you will
 identify the betweenness score for each vertex and then make a new plot 
 of the network adjusting the vertex size by its betweenness score to
 highlight these key vertices.
+
 
 
 
@@ -572,6 +598,7 @@ plot(g,
 
 
 
+
 # Visualizing important nodes and edges
 
 One issue with the measles dataset is that there are three 
@@ -584,6 +611,7 @@ betweenness. One way to explore the importance of this vertex is
 by visualizing the geodesic distances of connections going out 
 from this individual. In this exercise you shall create a plot 
 of these distances from this patient zero.
+
 
 
 
@@ -624,6 +652,7 @@ plot(g184,
 
 
 
+
 - Which measure of a vertex importance is determined by how often that vertex lies on the shortest path between any two vertices in a network?
 
 * Betweenness
@@ -642,6 +671,7 @@ eigenvector centrality. Individuals with high eigenvector
 centrality are those that are highly connected to other
 highly connected individuals. You will then make an
 exploratory visualization of the network.
+
 
 
 
@@ -683,6 +713,7 @@ main = "Forrest Gump Network"
 
 
 
+
 ## Network density and average path length
 
 The first graph level metric you will explore is the density of a graph. 
@@ -696,6 +727,7 @@ paths between all pairs of vertices in the network. The longest path
 length between any pair of vertices is called the diameter of the 
 network graph. You will calculate the diameter and average path 
 length of the original graph g.
+
 
 
 
@@ -726,6 +758,7 @@ g.apl
 
 
 
+
 - If a graph has 7 vertices there are 21 possible edges in the network.
 If 14 edges exist, what is the density of the network?
 
@@ -741,6 +774,7 @@ graph is one that has the same number of vertices as your original
 graph and approximately the same density as the original graph. 
 Here you will create one random graph that is based on the original
 Forrest Gump Network.
+
 
 
 
@@ -772,6 +806,7 @@ mean_distance(g.random, directed = FALSE)
 
 
 
+
 # Network randomizations
 
 In the previous exercise you may have noticed that the average path 
@@ -790,6 +825,7 @@ randomization test.
 
 The graph g, and its average path length (that you calculated in the
 previous exercise), g.apl are in your workspace.
+
 
 
 
@@ -826,6 +862,7 @@ mean(gl.apls  < g.apl)
 
 
 
+
 ## Randomization quiz
 - Randomization tests enable you to identify:
 * Whether features of your original network are particularly unusual.
@@ -844,6 +881,7 @@ You will also learn how to identify the number of closed triangles that
 any given vertex is a part of and its local transitivity - that is, 
 the proportion of closed triangles that the vertex is a part of 
 given the theoretical number of triangles it could be a part of.
+
 
 
 
@@ -876,6 +914,7 @@ transitivity(g, vids='BUBBA', type = "local")
 
 
 
+
 # Transitivity randomizations
 
 As you did for the average path length, let's investigate
@@ -883,6 +922,7 @@ if the global transitivity of the Forrest Gump network is
 significantly higher than we would expect by chance for
 random networks of the same size and density. You can compare
 Forrest Gump's global transitivity to 1000 other random networks.
+
 
 
 
@@ -911,6 +951,7 @@ mean(gl.trs > g.tr)
 
 
 
+
 # Cliques
 Identifying cliques is a common practice in undirected networks. 
 In a clique every two unique nodes are adjacent - that means that 
@@ -919,6 +960,7 @@ in the clique. In this exercise you will identify the largest cliques
 in the Forrest Gump network. You will also identify the number of 
 maximal cliques of various sizes. A clique is maximal if it cannot
 be extended to a larger clique.
+
 
 
 
@@ -947,6 +989,7 @@ table(unlist(lapply(clq, length)))
 
 
 
+
 # Visualize largest cliques
 
 Often in network visualization you will need to subset part
@@ -957,6 +1000,7 @@ were two cliques of size 9. You will plot these side-by-side after
 creating two new igraph objects by subsetting out these cliques 
 from the main network. The function subgraph() enables you to choose
 which vertices to keep in a new network object.
+
 
 
 
@@ -1006,6 +1050,7 @@ plot(gs2,
 
 
 
+
 # Assortativity
 
 In this exercise you will determine the assortativity() of the second 
@@ -1014,6 +1059,7 @@ preferentially attached vertices are to other vertices with identical
 attributes. You will also determine the degree assortativity which 
 determines how preferentially attached are vertices to other vertices
 of a similar degree.
+
 
 
 
@@ -1047,6 +1093,7 @@ assortativity.degree(g1, directed = FALSE)
 
 
 
+
 # Using randomizations to assess assortativity
 
 In this exercise you will determine how likely the observed
@@ -1054,6 +1101,7 @@ assortativity in the friendship network is given the genders of
 vertices by performing a randomization procedure. You will randomly
 permute the gender of vertices in the network 1000 times and recalculate
 the assortativity for each random network.
+
 
 
 
@@ -1087,6 +1135,7 @@ abline(v = observed.assortativity, col = "red", lty = 3, lwd=2)
 
 
 
+
 # Reciprocity
 
 The reciprocity of a directed network reflects the proportion of 
@@ -1096,6 +1145,7 @@ inter-connected directed networks are. An example of a such a network
 may be grooming exchanges in chimpanzees. Certain chimps may groom another
 but do not get groomed by that individual, whereas other chimps may both 
 groom each other and so would have a reciprocal tie.
+
 
 
 
@@ -1123,6 +1173,7 @@ groom each other and so would have a reciprocal tie.
 
 
 
+
 ## What does assortativity measure 
 
 - How likely vertices are to connect to others that share some attribute in common.
@@ -1136,6 +1187,7 @@ club members interacted outside the karate club as well as at the club.
 Using this network you will determine how many sub-communities the network
 has and which club members belong to which subgroups. You will also plot
 the networks by community membership.
+
 
 
 
@@ -1165,11 +1217,13 @@ plot(kc, g)
 
 
 
+
 # Edge-betweenness community detection
 An alternative community detection method is edge-betweenness.
 In this exercise you will repeat the community detection of 
 the karate club using this method and compare the results 
 visually to the fast-greedy method.
+
 
 
 
@@ -1202,6 +1256,7 @@ plot(gc, g)
 
 
 
+
 # Interactive networks with threejs
 
 In this course you have exclusively used igraph to make
@@ -1213,6 +1268,7 @@ basic interactive network plot of the karate club network using the
 threejs package. Once you have produced the visualization be sure to 
 move the network around with your mouse. You should be able to scroll 
 in and out of the network as well as rotate the network.
+
 
 
 
@@ -1240,6 +1296,7 @@ graphjs(g1, vertex.size = 1)
 
 
 
+
 # Sizing vertices in threejs
 
 As with all network visualizations it is often worth adjusting the 
@@ -1247,6 +1304,7 @@ size of vertices to illustrate their relative importance. This is
 also straightforward in threejs. In this exercise you will create 
 an interactive threejs plot of the karate club network and size 
 vertices based on their relative eigenvector centrality.
+
 
 
 
@@ -1275,10 +1333,12 @@ graphjs(g, vertex.size = v)
 
 
 
+
 # 3D community network graph
 Finally in this exercise you will create an interactive
 threejs plot with the vertices based on their community
 membership as produced by the fast-greedy community detection method.
+
 
 
 
