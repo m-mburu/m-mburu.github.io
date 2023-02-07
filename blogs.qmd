@@ -1,10 +1,6 @@
 ---
 title: "Mburu | ML/Viz/Spatial/Philosophy/Stats"
-output:
-  html_document:
-    theme: united
-    highlight: pygments
-    css: "breast_cancer_prediction/style.css"
+
 ---
 
 <head><link rel="shortcut icon" type="image/x-icon" href="icon.ico"></head>

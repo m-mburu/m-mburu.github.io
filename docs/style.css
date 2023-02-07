@@ -20,6 +20,24 @@ body {
 	font-size: 16px !important;
 	font-size: 1.6rem;
 }
+
+
+ ul.nav {
+   background-color: white;       
+   border: 1px solid #999;
+   height: 20px; /*This is an example*/
+   margin: 0px auto;
+   width: 400px;        
+ }
+
+ ul.nav li {
+   background-color: white; /*Example background color*/
+   display: block;
+   float: left;
+   height: 20px; /*This is an example*/
+   width: 80px;  /*This is 20% of 400px*/      
+ }
+ 
 input[type="text"],
 input[type="email"],
 input[type="url"],

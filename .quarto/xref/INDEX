@@ -40,5 +40,17 @@
   },
   "myblog/kenya_population/household_assets_2019census.Rmd": {
     "household_assets_2019census.html": "e1ae6f30"
+  },
+  "myblog/datacamp/network-analysis-in-r/network_analysis_r.Rmd": {
+    "network_analysis_r.html": "5e801526"
+  },
+  "myblog/datacamp/ml_tree_methods_r/ml_tree_methods.Rmd": {
+    "ml_tree_methods.html": "1a6faf8e"
+  },
+  "myblog/datacamp/introduction_deeplearning/final miniproject.ipynb": {
+    "final miniproject.html": "f1f7c0a6"
+  },
+  "myblog/datacamp/introduction_deeplearning/introduction-to-deep-learning-in-python.ipynb": {
+    "introduction-to-deep-learning-in-python.html": "28038b09"
   }
 }

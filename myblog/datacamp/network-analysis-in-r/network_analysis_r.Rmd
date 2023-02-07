@@ -14,7 +14,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, eval = FALSE)
 ```
 
 # Creating an igraph object
@@ -384,6 +384,7 @@ In this chapter you will use a social network based on the movie Forrest Gump. E
 ```{r, Forrest Gump network, fig.width=10, fig.height=10}
 
 gump <- read.csv("gump.csv")
+setnames(gump, c("V1", "V2"),  c("to", "from"))
 # Inspect Forrest Gump Movie dataset
 head(gump) %>% kable()
 
