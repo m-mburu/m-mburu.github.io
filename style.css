@@ -42,7 +42,13 @@ body {
    width: 80px;  /*This is 20% of 400px*/      
  }
  
-
+#quarto-header {
+    background-color: lightblue !important;  
+    display: inline-block;
+    color: black !important;
+    list-style-type: none;
+    border: 1px solid #999;
+}
  
 input[type="text"],
 input[type="email"],
