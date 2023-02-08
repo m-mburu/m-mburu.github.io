@@ -7,7 +7,6 @@ website:
   navbar:
     search: true
     background: light
-    collapse-below: lg
     type: light
     left:
       - href: index.qmd

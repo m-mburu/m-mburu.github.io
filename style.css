@@ -25,7 +25,8 @@ body {
  ul.nav {
    background-color: lightblue !important;  
    display: inline-block;
-  list-style-type: none;
+   color: black !important;
+   list-style-type: none;
    border: 1px solid #999;
    height: 20px; /*This is an example*/
    margin: 0px auto;
@@ -34,6 +35,7 @@ body {
 
  ul.nav li {
    background-color: lightblue !important; /*Example background color*/
+   color: black !important;
    display: block;
    float: left;
    height: 20px; /*This is an example*/
