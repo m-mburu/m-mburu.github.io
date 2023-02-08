@@ -1,5 +1,8 @@
 ---
 title: ""
+format: 
+    html:
+        css: style.css
 ---
 
 -   Data Science projects I have been working on 😊

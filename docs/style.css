@@ -14,7 +14,7 @@ Text Domain: lyretail
 /* Global */
 
 body {
-	background-color: white !important;
+	background-color: white;
 	color: #345151;
 	font-family: Georgia, Times, serif;
 	font-size: 16px !important;
@@ -22,21 +22,14 @@ body {
 }
 
 
- ul.nav {
-   background-color: white;       
-   border: 1px solid #999;
-   height: 20px; /*This is an example*/
-   margin: 0px auto;
-   width: 400px;        
- }
-
- ul.nav li {
-   background-color: white; /*Example background color*/
-   display: block;
-   float: left;
-   height: 20px; /*This is an example*/
-   width: 80px;  /*This is 20% of 400px*/      
- }
+ 
+#quarto-header {
+    background-color: black !important;  
+    display: inline-block;
+    color: black !important;
+    list-style-type: none;
+    border: 1px solid #999;
+}
  
 input[type="text"],
 input[type="email"],

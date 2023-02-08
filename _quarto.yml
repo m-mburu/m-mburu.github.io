@@ -6,8 +6,9 @@ website:
   title: "Data Science Projects"
   navbar:
     search: true
-    background: light
-    type: light
+    background: dark 
+    type: dark
+    display: inline-block;
     left:
       - href: index.qmd
         text: Home
@@ -19,7 +20,6 @@ website:
 format:
   html:
     theme: lumen
-    css: style.css
     toc: true
 
 editor: visual
