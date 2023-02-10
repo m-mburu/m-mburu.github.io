@@ -294,13 +294,6 @@
     "text": "Profvis in action\nExamine the code on the right that performs a standard data analysis. It loads and selects data, plots the data of interest, and adds in a regression line.\n\n# Load the data set\ndata(movies, package = \"ggplot2movies\") \n\n# Load the profvis package\nlibrary(profvis)\n\n# Profile the following code with the profvis function\nprofvis({\n  # Load and select data\n  comedies <- movies[movies$Comedy == 1, ]\n\n  # Plot data of interest\n  plot(comedies$year, comedies$rating)\n\n  # Loess regression line\n  model <- loess(rating ~ year, data = comedies)\n  j <- order(comedies$year)\n  \n  # Add fitted line to the plot\n  lines(comedies$year[j], model$fitted[j], col = \"red\")\n})    ## Remember the closing brackets!"
   },
   {
-    "objectID": "blogs.html",
-    "href": "blogs.html",
-    "title": "Mburu | ML/Viz/Spatial/Philosophy/Stats",
-    "section": "",
-    "text": "Description\nNotebook\nSource Code\n\n\n\n\nBreast cancer prediction\nlink\nR Markdown (Rmd)\n\n\nBusara task\nlink\nR Markdown (Rmd)\n\n\nZindi loan prediction\nlink\nR Markdown (Rmd)\n\n\nTZ Water Pumps\nlink\nR Markdown (Rmd)\n\n\nIntro to dimension reduction\nlink\nR Markdown (Rmd)\n\n\nClustering\nlink\nR Markdown (Rmd)\n\n\nKenya maps\nlink\nR Markdown (Rmd)\n\n\nKenya 2019 household assets\nlink\nR Markdown (Rmd)\n\n\nIntroduction to association analysis\nlink\nR Markdown (Rmd)\n\n\nDigit recognition MNIST\nlink\nR Markdown (Rmd)\n\n\nML with tree models\nlink\nR Markdown (Rmd))\n\n\nNetwork Analysis\nlink\nR Markdown (Rmd))\n\n\nAirbnb NYC\nlink\nR Markdown (Rmd)\n\n\nExplainable ML\nlink\nR Markdown (Rmd)\n\n\nIntroduction to deep learning\nlink\nPython notebook (ipnb)\n\n\nMburu CV\nlink\nRmarkdown (Rmd)\n\n\nMalnutrition Prevalence Africa\nShiny App\ngithub repo\n\n\nEast Africa poverty data\nlink\nRmarkdown (Rmd)\n\n\nKenya debt\nlink\nRmarkdown (Rmd)\n\n\nData camp imputation in R\nlink\nRmarkdown (Rmd)\n\n\nDatacamp Anomaly detection in R\nlink\nRmarkdown (Rmd)"
-  },
-  {
     "objectID": "myblog/breast_cancer_prediction/cancer_data.html",
     "href": "myblog/breast_cancer_prediction/cancer_data.html",
     "title": "Cancer Data",

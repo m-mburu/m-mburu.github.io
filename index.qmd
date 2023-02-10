@@ -2,7 +2,7 @@
 title: ""
 format: 
     html:
-        css: style.css
+        css: index.css
 ---
 
 -   Data Science projects I have been working on 😊
