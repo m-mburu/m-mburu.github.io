@@ -7,8 +7,8 @@ website:
   site-url: https://m-mburu.github.io/
   navbar:
     search: true
-    background: light  
-    type: dark
+    background: dark  
+    type: light
     display: inline-block;
     float: center;
     color: #f2f2f2;
@@ -16,6 +16,7 @@ website:
     padding: 14px 16px;
     text-decoration: none;
     font-size: 17px;
+    text-color:  black
     left:
       - href: index.qmd
         text: Home
