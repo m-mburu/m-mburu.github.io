@@ -64,5 +64,14 @@
   },
   "posts/datacamp/Intro_Python_Data/Intro_datascience.ipynb": {
     "Intro_datascience.html": "8f4a4924"
+  },
+  "posts/datacamp/imputations_in_R/imputations_in_R.Rmd": {
+    "imputations_in_R.html": "53b166a7"
+  },
+  "posts/datacamp/functions_in_R/functions_R.Rmd": {
+    "functions_R.html": "7772f91d"
+  },
+  "posts/datacamp/tensorflow_R/tensorflow_R.Rmd": {
+    "tensorflow_R.html": "3b760636"
   }
 }

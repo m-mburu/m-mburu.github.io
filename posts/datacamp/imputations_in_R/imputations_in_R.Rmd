@@ -694,6 +694,7 @@ Let's plant some random forests!
 
 ```{r}
 # Load the missForest package
+biopics <- read_csv("data/biopics.csv")
 library(missForest)
 
 cont_lev <- c("UK", "US/UK", "Canada US", 

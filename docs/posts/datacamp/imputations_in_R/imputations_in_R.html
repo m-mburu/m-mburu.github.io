@@ -1,0 +1,2200 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Mburu Blog - Handling Missing Data with Imputations in R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../style.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Mburu Blog</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/m-mburu"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/mmburu_w"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Handling Missing Data with Imputations in R</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="the-problem-of-missing-data" class="level1">
+<h1>The problem of missing data</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">echo =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">message =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">warning =</span> <span class="cn">FALSE</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="linear-regression-with-incomplete-data" class="level2">
+<h2 class="anchored" data-anchor-id="linear-regression-with-incomplete-data">Linear regression with incomplete data</h2>
+<p>Missing data is a common problem and dealing with it appropriately is extremely important. Ignoring the missing data points or filling them incorrectly may cause the models to work in unexpected ways and cause the predictions and inferences to be biased.</p>
+<p>In this chapter, you will be working with the biopics dataset. It contains information on a number of biographical movies, including their earnings, subject characteristics and some other variables. Some of the data points are, however, missing. The original data comes with the fivethirtyeight R package, but in this course, you will work with a slightly preprocessed version.</p>
+<p>In this exercise, you will get to know the dataset and fit a linear regression model to explain a movie’s earnings. Let’s begin!</p>
+<section id="print-first-10-observations" class="level3">
+<h3 class="anchored" data-anchor-id="print-first-10-observations">Print first 10 observations</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>biopics <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/biopics.csv"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Print first 10 observations</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(biopics, <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 7%">
+<col style="width: 13%">
+<col style="width: 12%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 15%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">country</th>
+<th style="text-align: right;">year</th>
+<th style="text-align: right;">earnings</th>
+<th style="text-align: right;">sub_num</th>
+<th style="text-align: left;">sub_type</th>
+<th style="text-align: left;">sub_race</th>
+<th style="text-align: right;">non_white</th>
+<th style="text-align: left;">sub_sex</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">UK</td>
+<td style="text-align: right;">1971</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Criminal</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">Male</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">US/UK</td>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">56.700</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Other</td>
+<td style="text-align: left;">African</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Male</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">US/UK</td>
+<td style="text-align: right;">2010</td>
+<td style="text-align: right;">18.300</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Athlete</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">Male</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2014</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Other</td>
+<td style="text-align: left;">White</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">Male</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">US</td>
+<td style="text-align: right;">1998</td>
+<td style="text-align: right;">0.537</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Other</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">Male</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">US</td>
+<td style="text-align: right;">2008</td>
+<td style="text-align: right;">81.200</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Other</td>
+<td style="text-align: left;">other</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Male</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">UK</td>
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">1.130</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Musician</td>
+<td style="text-align: left;">White</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">Male</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">US</td>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">95.000</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Athlete</td>
+<td style="text-align: left;">African</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Male</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">US</td>
+<td style="text-align: right;">1994</td>
+<td style="text-align: right;">19.600</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Athlete</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">Male</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">US/UK</td>
+<td style="text-align: right;">1987</td>
+<td style="text-align: right;">1.080</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Author</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">Male</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="get-the-number-of-missing-values-per-variable" class="level3">
+<h3 class="anchored" data-anchor-id="get-the-number-of-missing-values-per-variable">Get the number of missing values per variable</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the number of missing values per variable</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>biopics <span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.na</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">colSums</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  country      year  earnings   sub_num  sub_type  sub_race non_white   sub_sex 
+        0         0       324         0         0       197         0         0 </code></pre>
+</div>
+</div>
+</section>
+<section id="fit-linear-regression-to-predict-earnings" class="level3">
+<h3 class="anchored" data-anchor-id="fit-linear-regression-to-predict-earnings">Fit linear regression to predict earnings</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit linear regression to predict earnings</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>model_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(earnings <span class="sc">~</span> country <span class="sc">+</span> year <span class="sc">+</span> sub_type, </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> biopics)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = earnings ~ country + year + sub_type, data = biopics)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-56.283 -20.466  -5.251   6.871 285.210 
+
+Coefficients:
+                             Estimate Std. Error t value Pr(&gt;|t|)   
+(Intercept)                 -743.2411   273.2831  -2.720  0.00682 **
+countryCanada/UK              -6.9648    19.5228  -0.357  0.72146   
+countryUK                      7.0207    15.4945   0.453  0.65071   
+countryUS                     30.9079    15.0039   2.060  0.04004 * 
+countryUS/Canada              31.6905    18.8308   1.683  0.09316 . 
+countryUS/UK                  23.7589    15.4580   1.537  0.12508   
+countryUS/UK/Canada           -4.8187    29.6967  -0.162  0.87118   
+year                           0.3783     0.1359   2.784  0.00562 **
+sub_typeActivist             -21.7103    13.0520  -1.663  0.09701 . 
+sub_typeActor                -41.6236    16.8004  -2.478  0.01364 * 
+sub_typeActress              -34.9628    17.5264  -1.995  0.04673 * 
+sub_typeActress / activist     7.1816    37.6378   0.191  0.84877   
+sub_typeArtist               -25.2620    13.8543  -1.823  0.06898 . 
+sub_typeAthlete              -10.7316    12.1242  -0.885  0.37661   
+sub_typeAthlete / military    66.3717    37.6682   1.762  0.07882 . 
+sub_typeAuthor               -25.9330    12.6080  -2.057  0.04034 * 
+sub_typeAuthor (poet)        -17.1963    17.1851  -1.001  0.31759   
+sub_typeComedian             -29.3344    18.3419  -1.599  0.11053   
+sub_typeCriminal              -7.3534    12.2475  -0.600  0.54857   
+sub_typeGovernment           -16.9917    23.5048  -0.723  0.47016   
+sub_typeHistorical            -4.0166    12.6665  -0.317  0.75133   
+sub_typeJournalist           -30.6610    28.0016  -1.095  0.27418   
+sub_typeMedia                -15.7588    16.7744  -0.939  0.34806   
+sub_typeMedicine               5.0987    21.0749   0.242  0.80895   
+sub_typeMilitary              15.1616    14.0730   1.077  0.28196   
+sub_typeMilitary / activist   29.8300    37.6688   0.792  0.42888   
+sub_typeMusician             -21.1765    12.1482  -1.743  0.08206 . 
+sub_typeOther                -17.5989    11.4405  -1.538  0.12476   
+sub_typePolitician           -21.0700    37.6688  -0.559  0.57623   
+sub_typeSinger                 1.0769    14.9161   0.072  0.94248   
+sub_typeTeacher               42.4600    37.6407   1.128  0.25997   
+sub_typeWorld leader           0.5964    16.2407   0.037  0.97072   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 36 on 405 degrees of freedom
+  (324 observations deleted due to missingness)
+Multiple R-squared:  0.1799,    Adjusted R-squared:  0.1171 
+F-statistic: 2.865 on 31 and 405 DF,  p-value: 1.189e-06</code></pre>
+</div>
+</div>
+</section>
+<section id="analyzing-regression-output" class="level3">
+<h3 class="anchored" data-anchor-id="analyzing-regression-output">Analyzing regression output</h3>
+<ul>
+<li>You are interested in how well the model you’ve just built fits the data. To measure this, you want to calculate the median absolute difference between the true and predicted earnings. You run the following line of code:</li>
+<li>As some observations were removed from the model, the two vectors inside abs() have different lengths, and so the entries of the shorter one get replicated to enable the subtraction. Consequently, the resulting number has no meaning. Analyzing models fit to incomplete data can be treacherous</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(<span class="fu">abs</span>(biopics<span class="sc">$</span>earnings <span class="sc">-</span> model_1<span class="sc">$</span>fitted.values), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 21.66698</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="comparing-models" class="level2">
+<h2 class="anchored" data-anchor-id="comparing-models">Comparing models</h2>
+<p>Choosing the best of multiple competing models can be tricky if these models are built on incomplete data. In this exercise, you will extend the model you have built previously by adding one more explanatory variable: the race of the movie’s subject. Then, you will try to compare it to the previous model.</p>
+<p>As a reminder, this is how you have fitted the first model:</p>
+<ul>
+<li>model_1 &lt;- lm(earnings ~ country + year + sub_type, data = biopics) Let’s see if we can judge whether adding the race variable improves the model!</li>
+</ul>
+<section id="fit-linear-regression-to-predict-earnings-1" class="level3">
+<h3 class="anchored" data-anchor-id="fit-linear-regression-to-predict-earnings-1">Fit linear regression to predict earnings</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit linear regression to predict earnings</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>model_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(earnings <span class="sc">~</span> country <span class="sc">+</span> year <span class="sc">+</span> sub_type <span class="sc">+</span> sub_race, </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> biopics)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Print summaries of both models</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = earnings ~ country + year + sub_type + sub_race, 
+    data = biopics)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-58.323 -16.237  -4.018   5.614 200.234 
+
+Coefficients:
+                             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                -139.27034  287.97218  -0.484 0.629031    
+countryCanada/UK              4.00206   18.25641   0.219 0.826643    
+countryUK                    13.84774   14.91395   0.929 0.353943    
+countryUS                    31.42015   14.32201   2.194 0.029069 *  
+countryUS/Canada             18.29811   18.65109   0.981 0.327403    
+countryUS/UK                 29.40669   14.79424   1.988 0.047817 *  
+countryUS/UK/Canada           5.28487   34.26999   0.154 0.877553    
+year                          0.08053    0.14277   0.564 0.573156    
+sub_typeActivist            -22.70696   13.91011  -1.632 0.103718    
+sub_typeActor               -37.18944   16.80696  -2.213 0.027722 *  
+sub_typeActress             -29.08213   17.54697  -1.657 0.098561 .  
+sub_typeActress / activist   22.74806   34.10892   0.667 0.505370    
+sub_typeArtist              -16.16366   14.44232  -1.119 0.264019    
+sub_typeAthlete               1.82705   13.21810   0.138 0.890163    
+sub_typeAthlete / military   81.76200   33.27768   2.457 0.014619 *  
+sub_typeAuthor              -16.89061   13.34913  -1.265 0.206817    
+sub_typeAuthor (poet)       -10.46216   17.81790  -0.587 0.557562    
+sub_typeComedian            -29.04858   19.58703  -1.483 0.139185    
+sub_typeCriminal             -3.63899   13.49577  -0.270 0.787636    
+sub_typeGovernment           -3.98375   21.53144  -0.185 0.853347    
+sub_typeHistorical           -1.84026   13.64400  -0.135 0.892806    
+sub_typeJournalist          -19.52435   25.70076  -0.760 0.448085    
+sub_typeMedia               -23.58188   18.39661  -1.282 0.200952    
+sub_typeMedicine             19.79476   33.28029   0.595 0.552465    
+sub_typeMilitary            -11.90055   15.58559  -0.764 0.445772    
+sub_typeMusician            -11.87866   12.76816  -0.930 0.352999    
+sub_typeOther                -8.26334   12.46291  -0.663 0.507854    
+sub_typePolitician          -13.12470   33.28805  -0.394 0.693677    
+sub_typeSinger               12.59513   15.42311   0.817 0.414829    
+sub_typeTeacher              52.19210   33.25064   1.570 0.117624    
+sub_typeWorld leader          5.70258   15.84955   0.360 0.719272    
+sub_raceAsian               -33.21461   17.04703  -1.948 0.052365 .  
+sub_raceHispanic            -25.63976    9.37824  -2.734 0.006657 ** 
+sub_raceMid Eastern          -0.75224   11.54403  -0.065 0.948091    
+sub_raceMulti racial        -26.03619    9.67832  -2.690 0.007571 ** 
+sub_raceother               -23.90532   12.36017  -1.934 0.054113 .  
+sub_raceWhite               -20.10327    5.90967  -3.402 0.000767 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 31.01 on 280 degrees of freedom
+  (444 observations deleted due to missingness)
+Multiple R-squared:  0.2566,    Adjusted R-squared:  0.161 
+F-statistic: 2.684 on 36 and 280 DF,  p-value: 3.145e-06</code></pre>
+</div>
+</div>
+<ul>
+<li>The two models are not comparable, because each of them is based on a different data sample.</li>
+<li>With incomplete datasets, changing the model’s architecture can impact the set of observations that are actually used by the model. This might prevent us from comparing different models.</li>
+</ul>
+</section>
+</section>
+<section id="recognizing-missing-data-mechanisms" class="level2">
+<h2 class="anchored" data-anchor-id="recognizing-missing-data-mechanisms">Recognizing missing data mechanisms</h2>
+<p>In this exercise, you will face six different scenarios in which some data are missing. Try assigning each of them to the most likely missing data mechanism. As a refresher, here are some general guidelines:</p>
+<ul>
+<li>If the reason for missingness is purely random, it’s MCAR.</li>
+<li>If the reason for missingness can be explained by another variable, it’s MAR.</li>
+<li>If the reason for missingness depends on the missing value itself, it’s MNAR.</li>
+</ul>
+<p>Further explanation from <a href="https://www.ncbi.nlm.nih.gov/books/NBK493614/">Missing data mechanisms</a></p>
+<ul>
+<li>Missing completely at random (MCAR). When data are MCAR, the fact that the data are missing is independent of the observed and unobserved data. In other words, no systematic differences exist between participants with missing data and those with complete data. For example, some participants may have missing laboratory values because a batch of lab samples was processed improperly. In these instances, the missing data reduce the analyzable population of the study and consequently, the statistical power, but do not introduce bias: when data are MCAR, the data which remain can be considered a simple random sample of the full data set of interest. MCAR is generally regarded as a strong and often unrealistic assumption.</li>
+<li>Missing at random (MAR). When data are MAR, the fact that the data are missing is systematically related to the observed but not the unobserved data.15 For example, a registry examining depression may encounter data that are MAR if male participants are less likely to complete a survey about depression severity than female participants. That is, if probability of completion of the survey is related to their sex (which is fully observed) but not the severity of their depression, then the data may be regarded as MAR. Complete case analyses, which are based on only observations for which all relevant data are present and no fields are missing, of a data set containing MAR data may or may not result in bias. If the complete case analysis is biased, however, proper accounting for the known factors (in the above example, sex) can produce unbiased results in analysis.</li>
+<li>Missing not at random (MNAR). When data are MNAR, the fact that the data are missing is systematically related to the unobserved data, that is, the missingness is related to events or factors which are not measured by the researcher. To extend the previous example, the depression registry may encounter data that are MNAR if participants with severe depression are more likely to refuse to complete the survey about depression severity. As with MAR data, complete case analysis of a data set containing MNAR data may or may not result in bias; if the complete case analysis is biased, however, the fact that the sources of missing data are themselves unmeasured means that (in general) this issue cannot be addressed in analysis and the estimate of effect will likely be biased.</li>
+</ul>
+<p><img src="data/miss_mecha.png" class="img-fluid" alt="Missing mechanisms examples"> ## t-test for MAR: data preparation Great work on classifying the missing data mechanisms in the last exercise! Of all three, MAR is arguably the most important one to detect, as many imputation methods assume the data are MAR. This exercise will, therefore, focus on testing for MAR.</p>
+<p>You will be working with the familiar biopics data. The goal is to test whether the number of missing values in earnings differs per subject’s gender. In this exercise, you will only prepare the data for the t-test. First, you will create a dummy variable indicating missingness in earnings. Then, you will split it per gender by first filtering the data to keep one of the genders, and then pulling the dummy variable. For filtering, it might be helpful to print biopics’s head() in the console and examine the gender variable.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a dummy variable for missing earnings</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>biopics <span class="ot">&lt;-</span> biopics <span class="sc">%&gt;%</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">missing_earnings =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(earnings), <span class="cn">TRUE</span>, <span class="cn">FALSE</span>))</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Pull the missing earnings dummy for males</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>missing_earnings_males <span class="ot">&lt;-</span> biopics <span class="sc">%&gt;%</span> </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sub_sex <span class="sc">==</span> <span class="st">"Male"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(missing_earnings)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Pull the missing earnings dummy for females</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>missing_earnings_females <span class="ot">&lt;-</span> biopics <span class="sc">%&gt;%</span> </span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sub_sex <span class="sc">==</span> <span class="st">"Female"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(missing_earnings)</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the t-test</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(missing_earnings_males, missing_earnings_females)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  missing_earnings_males and missing_earnings_females
+t = 1.1116, df = 294.39, p-value = 0.2672
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.03606549  0.12969214
+sample estimates:
+mean of x mean of y 
+0.4366438 0.3898305 </code></pre>
+</div>
+</div>
+<ul>
+<li>Notice how the missing earnings percentage is not significantly different for both genders, even though the sample values (at the bottom of the test’s output) differ by almost 5 percentage points. Also, keep in mind that the conclusion that the data are not MAR is only valid for the specific variables we have tested.</li>
+</ul>
+</section>
+<section id="aggregation-plot" class="level2">
+<h2 class="anchored" data-anchor-id="aggregation-plot">Aggregation plot</h2>
+<p>The aggregation plot provides the answer to the basic question one may ask about an incomplete dataset: in which combinations of variables the data are missing, and how often? It is very useful for gaining a high-level overview of the missingness patterns. For example, it makes it immediately visible if there is some combination of variables that are often missing together, which might suggest some relation between them.</p>
+<p>In this exercise, you will first draw the aggregation plot for the biopics data and then practice making conclusions based on it. Let’s do some plotting!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the VIM package</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(VIM)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw an aggregation plot of biopics</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>biopics <span class="sc">%&gt;%</span> </span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aggr</span>(<span class="at">combined =</span> <span class="cn">TRUE</span>, <span class="at">numbers =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="imputations_in_R_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li><p>10% of the observations have missing values in both earnings and sub_race.</p></li>
+<li><p>There are more missing values in sub_race than in earnings. This is false</p></li>
+<li><p>42% of the observations have no missing entries.</p></li>
+<li><p>There are exactly two variables in the biopics data that have missing values.</p></li>
+<li><p>This one is false! It is actually the other way round, there are more missing values in earnings. You can see it from the bars above the plot. Now that you have a high-level overview of the missingness in the data, let’s look more closely at specific variables!</p></li>
+</ul>
+</section>
+<section id="spine-plot" class="level2">
+<h2 class="anchored" data-anchor-id="spine-plot">Spine plot</h2>
+<p>The aggregation plot you have drawn in the previous exercise gave you some high-level overview of the missing data. If you are interested in the interaction between specific variables, a spine plot is the way to go. It allows you to study the percentage of missing values in one variable for different values of the other, which is conceptually very similar to the t-tests you have been running in the previous lesson.</p>
+<p>In this exercise, you will draw a spine plot to investigate the percentage of missing data in earnings for different categories of sub_race. Is there more missing data on earnings for some specific races of the movie’s main character? Let’s find out! The VIM package has already been loaded for you.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw a spine plot to analyse missing values in earnings by sub_race</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>biopics <span class="sc">%&gt;%</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(sub_race, earnings) <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">spineMiss</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="imputations_in_R_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<section id="based-on-the-spine-plot-you-have-just-created-which-of-the-following-statements-is-false" class="level3">
+<h3 class="anchored" data-anchor-id="based-on-the-spine-plot-you-have-just-created-which-of-the-following-statements-is-false">Based on the spine plot you have just created, which of the following statements is false?</h3>
+<ol type="a">
+<li><p>In the vast majority of movies, the main character is white.</p></li>
+<li><p>When the main subject is African, we are the most likely to have complete earnings information.</p></li>
+<li><p>As far as earnings and sub_race are concerned, the data seem to be MAR.</p></li>
+<li><p>The race that appears most rarely in the data has around 40% of earnings missing.</p></li>
+</ol>
+<ul>
+<li><strong><em>This one is false! The scarcest race is Asian, as this bar is the thinnest. The missing earnings, however, amount to around 20%, not 40%. Let’s build upon the idea of a spine plot to create one more visualization in the next exercise!</em></strong></li>
+</ul>
+</section>
+</section>
+<section id="mosaic-plot" class="level2">
+<h2 class="anchored" data-anchor-id="mosaic-plot">Mosaic plot</h2>
+<p>The spine plot you have created in the previous exercise allows you to study missing data patterns between two variables at a time. This idea is generalized to more variables in the form of a mosaic plot.</p>
+<p>In this exercise, you will start by creating a dummy variable indicating whether the United States was involved in the production of each movie. To do this, you will use the grepl() function, which checks if the string passed as its first argument is present in the object passed as its second argument. Then, you will draw a mosaic plot to see if the subject’s gender correlates with the amount of missing data on earnings for both US and non-US movies.</p>
+<p>The biopics data as well as the VIM package are already loaded for you. Let’s do some exploratory plotting!</p>
+<p>Note that a propriety display_image()function has been created to return the output from the latest VIMpackage version. Make sure to expand the HTML Viewer section.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data for plotting and draw a mosaic plot</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>biopics <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create a dummy variable for US-produced movies</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">is_US_movie =</span> <span class="fu">grepl</span>(<span class="st">"US"</span>, country)) <span class="sc">%&gt;%</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Draw mosaic plot</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mosaicMiss</span>(<span class="at">highlight =</span> <span class="st">"earnings"</span>, </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">plotvars =</span> <span class="fu">c</span>(<span class="st">"is_US_movie"</span>, <span class="st">"sub_sex"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="imputations_in_R_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Return plot from latest VIM package - expand the HTML viewer section</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">#display_image()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><strong><em>Before you expand the output, notice how, for non-US movies, there is less missing data on earnings for movies featuring females. This doesn’t look MCAR! You are now done with Chapter 1 and ready to take a deep dive into imputation methods.</em></strong></li>
+</ul>
+</section>
+</section>
+<section id="donor-based-imputation" class="level1">
+<h1>Donor-based imputation</h1>
+<section id="smelling-the-danger-of-mean-imputation" class="level2">
+<h2 class="anchored" data-anchor-id="smelling-the-danger-of-mean-imputation">Smelling the danger of mean imputation</h2>
+<p>One of the most popular imputation methods is the mean imputation, in which missing values in a variable are replaced with the mean of the observed values in this variable. However, in many cases this simple approach is a poor choice. Sometimes a quick look at the data can already alert you to the dangers of mean-imputing.</p>
+<p>In this chapter, you will be working with a subsample of the Tropical Atmosphere Ocean (tao) project data. The dataset consists of atmospheric measurements taken in two different time periods at five different locations. The data comes with the VIM package.</p>
+<p>In this exercise you will familiarize yourself with the data and perform a simple analysis that will indicate what the consequences of mean imputation could be. Let’s take a look at the tao data!</p>
+<section id="print-first-10-observations-1" class="level3">
+<h3 class="anchored" data-anchor-id="print-first-10-observations-1">Print first 10 observations</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>tao <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/tao.csv"</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Print first 10 observations</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tao, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   year latitude longitude sea_surface_temp air_temp humidity uwind vwind
+1  1997        0      -110            27.59    27.15     79.6  -6.4   5.4
+2  1997        0      -110            27.55    27.02     75.8  -5.3   5.3
+3  1997        0      -110            27.57    27.00     76.5  -5.1   4.5
+4  1997        0      -110            27.62    26.93     76.2  -4.9   2.5
+5  1997        0      -110            27.65    26.84     76.4  -3.5   4.1
+6  1997        0      -110            27.83    26.94     76.7  -4.4   1.6
+7  1997        0      -110            28.01    27.04     76.5  -2.0   3.5
+8  1997        0      -110            28.04    27.11     78.3  -3.7   4.5
+9  1997        0      -110            28.02    27.21     78.6  -4.2   5.0
+10 1997        0      -110            28.05    27.25     76.9  -3.6   3.5</code></pre>
+</div>
+</div>
+</section>
+<section id="get-the-number-of-missing-values-per-column" class="level3">
+<h3 class="anchored" data-anchor-id="get-the-number-of-missing-values-per-column">Get the number of missing values per column</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the number of missing values per column</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>tao <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">is.na</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colSums</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            year         latitude        longitude sea_surface_temp 
+               0                0                0                3 
+        air_temp         humidity            uwind            vwind 
+              81               93                0                0 </code></pre>
+</div>
+</div>
+</section>
+<section id="calculate-the-number-of-missing-values-in-air_temp-per-year" class="level3">
+<h3 class="anchored" data-anchor-id="calculate-the-number-of-missing-values-in-air_temp-per-year">Calculate the number of missing values in air_temp per year</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the number of missing values in air_temp per year</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>tao <span class="sc">%&gt;%</span> </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">num_miss =</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(air_temp))) <span class="sc">%&gt;%</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: right;">year</th>
+<th style="text-align: right;">num_miss</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1993</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1997</td>
+<td style="text-align: right;">77</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="mean-imputing-the-temperature" class="level2">
+<h2 class="anchored" data-anchor-id="mean-imputing-the-temperature">Mean-imputing the temperature</h2>
+<p>Mean imputation can be a risky business. If the variable you are mean-imputing is correlated with other variables, this correlation might be destroyed by the imputed values. You saw it looming in the previous exercise when you analyzed the air_temp variable.</p>
+<p>To find out whether these concerns are valid, in this exercise you will perform mean imputation on air_temp, while also creating a binary indicator for where the values are imputed. It will come in handy in the next exercise, when you will be assessing your imputation’s performance. Let’s fill in those missing values!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>tao_imp <span class="ot">&lt;-</span> tao <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create a binary indicator for missing values in air_temp</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">air_temp_imp =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(air_temp), <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Impute air_temp with its mean</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">air_temp =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(air_temp), <span class="fu">mean</span>(air_temp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), air_temp))</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the first 10 rows of tao_imp</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tao_imp, <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">head</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 10%">
+<col style="width: 11%">
+<col style="width: 20%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">year</th>
+<th style="text-align: right;">latitude</th>
+<th style="text-align: right;">longitude</th>
+<th style="text-align: right;">sea_surface_temp</th>
+<th style="text-align: right;">air_temp</th>
+<th style="text-align: right;">humidity</th>
+<th style="text-align: right;">uwind</th>
+<th style="text-align: right;">vwind</th>
+<th style="text-align: left;">air_temp_imp</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1997</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">-110</td>
+<td style="text-align: right;">27.59</td>
+<td style="text-align: right;">27.15</td>
+<td style="text-align: right;">79.6</td>
+<td style="text-align: right;">-6.4</td>
+<td style="text-align: right;">5.4</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1997</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">-110</td>
+<td style="text-align: right;">27.55</td>
+<td style="text-align: right;">27.02</td>
+<td style="text-align: right;">75.8</td>
+<td style="text-align: right;">-5.3</td>
+<td style="text-align: right;">5.3</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1997</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">-110</td>
+<td style="text-align: right;">27.57</td>
+<td style="text-align: right;">27.00</td>
+<td style="text-align: right;">76.5</td>
+<td style="text-align: right;">-5.1</td>
+<td style="text-align: right;">4.5</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1997</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">-110</td>
+<td style="text-align: right;">27.62</td>
+<td style="text-align: right;">26.93</td>
+<td style="text-align: right;">76.2</td>
+<td style="text-align: right;">-4.9</td>
+<td style="text-align: right;">2.5</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1997</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">-110</td>
+<td style="text-align: right;">27.65</td>
+<td style="text-align: right;">26.84</td>
+<td style="text-align: right;">76.4</td>
+<td style="text-align: right;">-3.5</td>
+<td style="text-align: right;">4.1</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1997</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">-110</td>
+<td style="text-align: right;">27.83</td>
+<td style="text-align: right;">26.94</td>
+<td style="text-align: right;">76.7</td>
+<td style="text-align: right;">-4.4</td>
+<td style="text-align: right;">1.6</td>
+<td style="text-align: left;">FALSE</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<section id="assessing-imputation-quality-with-margin-plot" class="level3">
+<h3 class="anchored" data-anchor-id="assessing-imputation-quality-with-margin-plot">Assessing imputation quality with margin plot</h3>
+<p>In the last exercise, you have mean-imputed air_temp and added an indicator variable to denote which values were imputed, called air_temp_imp. Time to see how well this works.</p>
+<p>Upon examining the tao data, you might have noticed that it also contains a variable called sea_surface_temp, which could reasonably be expected to be positively correlated with air_temp. If that’s the case, you would expect these two temperatures to be both high or both low at the same time. Imputing mean air temperature when the sea temperature is high or low would break this relation.</p>
+<p>To find out, in this exercise you will select the two temperature variables and the indicator variable and use them to draw a margin plot. Let’s assess the mean imputation!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw a margin plot of air_temp vs sea_surface_temp</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>tao_imp <span class="sc">%&gt;%</span> </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(air_temp, sea_surface_temp, air_temp_imp) <span class="sc">%&gt;%</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">marginplot</span>(<span class="at">delimiter =</span> <span class="st">"imp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="imputations_in_R_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><strong>Question</strong></p>
+<ul>
+<li><p>Judging by the margin plot you have drawn, what’s wrong with this mean imputation?</p></li>
+<li><p><em>Possible Answers</em></p></li>
+</ul>
+<ol type="i">
+<li><p>All the imputed air_temp values are the same, no matter the sea_surface_temp. This breaks the correlation between these two variables.</p></li>
+<li><p>The imputed values are located in the space where there is no observed data, which makes them outliers.</p></li>
+<li><p>The variance of the imputed data differs from the one of observed data.</p></li>
+<li><p>All three above answers are correct. <strong><em>correct</em></strong></p></li>
+</ol>
+<ul>
+<li><strong><em>Notice how air and sea surface temperatures correlate. Imputing average air temperature in the observations where sea surface temperature is high creates clearly outlying data points and destroys the relation between these two variables. If the sea surface temperature is high, we would like to impute air temperature values that are also high. Head over to the upcoming video to learn a method that is able to do that!</em></strong></li>
+</ul>
+</section>
+<section id="the-problem-of-mean-imputation" class="level3">
+<h3 class="anchored" data-anchor-id="the-problem-of-mean-imputation">The problem of mean imputation</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tao_imp, <span class="fu">aes</span>(air_temp, sea_surface_temp, <span class="at">color =</span> air_temp_imp))<span class="sc">+</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_brewer</span>(<span class="at">name =</span> <span class="st">"Imputed"</span>, <span class="at">type =</span> <span class="st">"qual"</span>, <span class="at">palette =</span> <span class="st">"Dark2"</span>)<span class="sc">+</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="imputations_in_R_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="vanilla-hot-deck" class="level3">
+<h3 class="anchored" data-anchor-id="vanilla-hot-deck">Vanilla hot-deck</h3>
+<p>Hot-deck imputation is a simple method that replaces every missing value in a variable by the last observed value in this variable. It’s very fast, as only one pass through the data is needed, but in its simplest form, hot-deck may sometimes break relations between the variables.</p>
+<p>In this exercise, you will try it out on the tao dataset. You will hot-deck-impute missing values in the air temperature column air_temp and then draw a margin plot to analyze the relation between the imputed values with the sea surface temperature column sea_surface_temp. Let’s see how it works!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load VIM package</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(VIM)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Impute air_temp in tao with hot-deck imputation</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>tao_imp <span class="ot">&lt;-</span> <span class="fu">hotdeck</span>(tao, <span class="at">variable =</span> <span class="st">"air_temp"</span>)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the number of missing values in each variable</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>tao_imp <span class="sc">%&gt;%</span> </span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.na</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">colSums</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            year         latitude        longitude sea_surface_temp 
+               0                0                0                3 
+        air_temp         humidity            uwind            vwind 
+               0               93                0                0 
+    air_temp_imp 
+               0 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw a margin plot of air_temp vs sea_surface_temp</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>tao_imp <span class="sc">%&gt;%</span> </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(air_temp, sea_surface_temp, air_temp_imp) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">marginplot</span>(<span class="at">delimiter =</span> <span class="st">"imp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="imputations_in_R_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li><strong><em>Does the imputation look good? Notice the observations in the top left part of the plot with imputed air_temp and high sea_surface_temp. These observations must have been preceded by ones with low air_temp in the data frame, and so after hot-deck imputation, they ended up being outliers with low air_temp and high sea_surface_temp.</em></strong></li>
+</ul>
+</section>
+<section id="hot-deck-tricks-tips-i-imputing-within-domains" class="level3">
+<h3 class="anchored" data-anchor-id="hot-deck-tricks-tips-i-imputing-within-domains">Hot-deck tricks &amp; tips I: imputing within domains</h3>
+<p>One trick that may help when hot-deck imputation breaks the relations between the variables is imputing within domains. What this means is that if the variable to be imputed is correlated with another, categorical variable, one can simply run hot-deck separately for each of its categories.</p>
+<p>For instance, you might expect air temperature to depend on time, as we are seeing the average temperatures rising due to global warming. The time indicator you have available in the tao data is a categorical variable, year. Let’s first check if the average air temperature is different in each of the two studied years and then run hot-deck within year domains. Finally, you will draw the margin plot again to assess the imputation performance.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate mean air_temp per year</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>tao <span class="sc">%&gt;%</span> </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">average_air_temp =</span> <span class="fu">mean</span>(air_temp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: right;">year</th>
+<th style="text-align: right;">average_air_temp</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1993</td>
+<td style="text-align: right;">23.36596</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1997</td>
+<td style="text-align: right;">27.10979</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Hot-deck-impute air_temp in tao by year domain</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>tao_imp <span class="ot">&lt;-</span> <span class="fu">hotdeck</span>(tao, <span class="at">variable =</span> <span class="st">"air_temp"</span>, <span class="at">domain_var =</span> <span class="st">"year"</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw a margin plot of air_temp vs sea_surface_temp</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>tao_imp <span class="sc">%&gt;%</span> </span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(air_temp, sea_surface_temp, air_temp_imp) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">marginplot</span>(<span class="at">delimiter =</span> <span class="st">"imp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="imputations_in_R_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li><strong><em>The results look much better this time. However, if you look at the top right corner of the plot, you will see that the variance in the imputed (orange) values is somewhat larger than among the observed (blue) values. Let’s see if we can improve even further in the next exercise</em></strong></li>
+</ul>
+</section>
+<section id="hot-deck-tricks-tips-ii-sorting-by-correlated-variables" class="level3">
+<h3 class="anchored" data-anchor-id="hot-deck-tricks-tips-ii-sorting-by-correlated-variables">Hot-deck tricks &amp; tips II: sorting by correlated variables</h3>
+<p>Another trick that can boost the performance of hot-deck imputation is sorting the data by variables correlated to the one we want to impute.</p>
+<p>For instance, in all the margin plots you have been drawing recently, you have seen that air temperature is strongly correlated with sea surface temperature, which makes a lot of sense. You can exploit this knowledge to improve your hot-deck imputation. If you first order the data by sea_surface_temp, then every imputed air_temp value will come from a donor with a similar sea_surface_temp. Let’s see how this will work!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Hot-deck-impute air_temp in tao ordering by sea_surface_temp</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>tao_imp <span class="ot">&lt;-</span> <span class="fu">hotdeck</span>(tao, </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">variable =</span> <span class="st">"air_temp"</span>, </span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">ord_var =</span> <span class="st">"sea_surface_temp"</span>)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw a margin plot of air_temp vs sea_surface_temp</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>tao_imp <span class="sc">%&gt;%</span> </span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(air_temp, sea_surface_temp, air_temp_imp) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">marginplot</span>(<span class="at">delimiter =</span> <span class="st">"imp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="imputations_in_R_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li><strong><em>This time the imputation seems not to impact the relation between air and sea temperatures: if not for the colors, you likely wouldn’t know which ones are the imputed values. Hot-deck imputation, possibly enhanced with domain-imputing or sorting, is a fast and simple method that can serve you well in many situations. However, sometimes you may need a more complex approach. Head over to the next video to learn about k-Nearest-Neighbors imputation!</em></strong></li>
+</ul>
+</section>
+<section id="just-a-little-experiment" class="level3">
+<h3 class="anchored" data-anchor-id="just-a-little-experiment">Just a little experiment</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Hot-deck-impute air_temp in tao ordering by sea_surface_temp</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>tao_imp <span class="ot">&lt;-</span> <span class="fu">hotdeck</span>(tao, </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">variable =</span> <span class="st">"air_temp"</span>, </span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">ord_var =</span> <span class="st">"sea_surface_temp"</span>,</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">domain_var =</span> <span class="st">"year"</span>)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw a margin plot of air_temp vs sea_surface_temp</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>tao_imp <span class="sc">%&gt;%</span> </span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(air_temp, sea_surface_temp, air_temp_imp) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">marginplot</span>(<span class="at">delimiter =</span> <span class="st">"imp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="imputations_in_R_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="choosing-the-number-of-neighbors" class="level3">
+<h3 class="anchored" data-anchor-id="choosing-the-number-of-neighbors">Choosing the number of neighbors</h3>
+<p>k-Nearest-Neighbors (or kNN) imputation fills the missing values in an observation based on the values coming from the k other observations that are most similar to it. The number of these similar observations, called neighbors, that are considered is a parameter that has to be chosen beforehand.</p>
+<p>How to choose k? One way is to try different values and see how they impact the relations between the imputed and observed data.</p>
+<p>Let’s try imputing humidity in the tao data using three different values of k and see how the imputed values fit the relation between humidity and sea_surface_temp.</p>
+<ul>
+<li><strong>Impute humidity with kNN imputation using 30 neighbors and draw a marginplot() of sea_surface_temp vs humidity.</strong></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Impute humidity using 30 neighbors</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>tao_imp <span class="ot">&lt;-</span> <span class="fu">kNN</span>(tao, <span class="at">k =</span> <span class="dv">30</span>, <span class="at">variable =</span> <span class="st">"humidity"</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw a margin plot of sea_surface_temp vs humidity</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>tao_imp <span class="sc">%&gt;%</span> </span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(sea_surface_temp, humidity, humidity_imp) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">marginplot</span>(<span class="at">delimiter =</span> <span class="st">"imp"</span>, <span class="at">main =</span> <span class="st">"k = 30"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="imputations_in_R_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li><strong>Impute humidity with kNN imputation using 15 neighbors and draw a margin plot of sea_surface_temp vs humidity.</strong></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Impute humidity using 15 neighbors</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>tao_imp <span class="ot">&lt;-</span> <span class="fu">kNN</span>(tao, <span class="at">k =</span> <span class="dv">15</span>, <span class="at">variable =</span> <span class="st">"humidity"</span>)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw a margin plot of sea_surface_temp vs humidity</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>tao_imp <span class="sc">%&gt;%</span> </span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(sea_surface_temp, humidity, humidity_imp) <span class="sc">%&gt;%</span> </span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">marginplot</span>(<span class="at">delimiter =</span> <span class="st">"imp"</span>, <span class="at">main =</span> <span class="st">"k = 15"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="imputations_in_R_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li><strong>Impute humidity with kNN imputation using 5 neighbors and draw a margin plot of sea_surface_temp vs humidity.</strong></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Impute humidity using 5 neighbors</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>tao_imp <span class="ot">&lt;-</span> <span class="fu">kNN</span>(tao, <span class="at">k =</span> <span class="dv">5</span>, <span class="at">variable =</span> <span class="st">"humidity"</span>)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw a margin plot of sea_surface_temp vs humidity</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>tao_imp <span class="sc">%&gt;%</span> </span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(sea_surface_temp, humidity, humidity_imp) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">marginplot</span>(<span class="at">delimiter =</span> <span class="st">"imp"</span>, <span class="at">main =</span> <span class="st">"k = 5"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="imputations_in_R_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li><strong><em>You can browse through the three plots you have just drawn. The last one seems to capture the most variation in the data, so you should be good to use k = 5 in this case. Let’s look at how we can improve on this default kNN imputation with some tricks!</em></strong></li>
+</ul>
+</section>
+</section>
+<section id="knn-tricks-tips-i-weighting-donors" class="level2">
+<h2 class="anchored" data-anchor-id="knn-tricks-tips-i-weighting-donors">kNN tricks &amp; tips I: weighting donors</h2>
+<p>A variation of kNN imputation that is frequently applied uses the so-called distance-weighted aggregation. What this means is that when we aggregate the values from the neighbors to obtain a replacement for a missing value, we do so using the weighted mean and the weights are inverted distances from each neighbor. As a result, closer neighbors have more impact on the imputed value.</p>
+<p>In this exercise, you will apply the distance-weighted aggregation while imputing the tao data. This will only require passing two additional arguments to the kNN() function. Let’s try it out!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the VIM package</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(VIM)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Impute humidity with kNN using distance-weighted mean</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>tao_imp <span class="ot">&lt;-</span> <span class="fu">kNN</span>(tao, </span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">k =</span> <span class="dv">5</span>, </span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">variable =</span> <span class="st">"humidity"</span>, </span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">numFun =</span> weighted.mean,</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">weightDist =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>tao_imp <span class="sc">%&gt;%</span> </span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(sea_surface_temp, humidity, humidity_imp) <span class="sc">%&gt;%</span> </span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">marginplot</span>(<span class="at">delimiter =</span> <span class="st">"imp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="imputations_in_R_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li><strong><em>Distance-weighted aggregation makes the kNN imputation more robust to situations where an observation is unique in some way and doesn’t have many very similar neighbors. In such cases, the least similar neighbors get assigned a small weight and contribute less to the imputed values. Head over to the last exercise of this chapter to learn one more trick that makes kNN more robust and accurate!</em></strong></li>
+</ul>
+</section>
+<section id="knn-tricks-tips-ii-sorting-variables" class="level2">
+<h2 class="anchored" data-anchor-id="knn-tricks-tips-ii-sorting-variables">kNN tricks &amp; tips II: sorting variables</h2>
+<p>As the k-Nearest Neighbors algorithm loops over the variables in the data to impute them, it computes distances between observations using other variables, some of which have already been imputed in the previous steps. This means that if the variables located earlier in the data have a lot of missing values, then the subsequent distance calculation is based on a lot of imputed values. This introduces noise to the distance calculation.</p>
+<p>For this reason, it is a good practice to sort the variables increasingly by the number of missing values before performing kNN imputation. This way, each distance calculation is based on as much observed data and as little imputed data as possible.</p>
+<p>Let’s try this out on the tao data!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get tao variable names sorted by number of NAs</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>vars_by_NAs <span class="ot">&lt;-</span> tao <span class="sc">%&gt;%</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">is.na</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colSums</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>(<span class="at">decreasing =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>()</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>vars_by_NAs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "year"             "latitude"         "longitude"        "uwind"           
+[5] "vwind"            "sea_surface_temp" "air_temp"         "humidity"        </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort tao variables and feed it to kNN imputation</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>tao_imp <span class="ot">&lt;-</span> tao <span class="sc">%&gt;%</span> </span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(vars_by_NAs) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kNN</span>(<span class="at">k =</span> <span class="dv">5</span>)</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>tao_imp <span class="sc">%&gt;%</span> </span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(sea_surface_temp, humidity, humidity_imp) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">marginplot</span>(<span class="at">delimiter =</span> <span class="st">"imp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="imputations_in_R_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li><strong><em>The kNN you have just coded should be more accurate and robust against faulty imputations, so remember to sort your variables first before performing kNN imputation! This brings us to the end of this chapter. Keep it up! See you in Chapter 3, where you will learn to use statistical and machine learning models to impute missing values!</em></strong></li>
+</ul>
+</section>
+</section>
+<section id="model-based-imputation" class="level1">
+<h1>Model-based imputation</h1>
+<section id="linear-regression-imputation" class="level2">
+<h2 class="anchored" data-anchor-id="linear-regression-imputation">Linear regression imputation</h2>
+<p>Sometimes, you can use domain knowledge, previous research or simply your common sense to describe the relations between the variables in your data. In such cases, model-based imputation is a great solution, as it allows you to impute each variable according to a statistical model that you can specify yourself, taking into account any assumptions you might have about how the variables impact each other.</p>
+<p>For continuous variables, a popular model choice is linear regression. It doesn’t restrict you to linear relations though! You can always include a square or a logarithm of a variable in the predictors. In this exercise, you will work with the simputation package to run a single linear regression imputation on the tao data and analyze the results. Let’s give it a try!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the simputation package</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(simputation)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Impute air_temp and humidity with linear regression</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>formula <span class="ot">&lt;-</span> air_temp <span class="sc">+</span> humidity <span class="sc">~</span> year <span class="sc">+</span> latitude <span class="sc">+</span> sea_surface_temp</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>tao_imp <span class="ot">&lt;-</span> <span class="fu">impute_lm</span>(tao, formula)</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the number of missing values per column</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>tao_imp <span class="sc">%&gt;%</span> </span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">is.na</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colSums</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            year         latitude        longitude sea_surface_temp 
+               0                0                0                3 
+        air_temp         humidity            uwind            vwind 
+               3                2                0                0 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print rows of tao_imp in which air_temp or humidity are still missing </span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>tao_imp <span class="sc">%&gt;%</span> </span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(air_temp) <span class="sc">|</span> <span class="fu">is.na</span>(humidity)) <span class="sc">%&gt;%</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 12%">
+<col style="width: 14%">
+<col style="width: 23%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 8%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">year</th>
+<th style="text-align: right;">latitude</th>
+<th style="text-align: right;">longitude</th>
+<th style="text-align: right;">sea_surface_temp</th>
+<th style="text-align: right;">air_temp</th>
+<th style="text-align: right;">humidity</th>
+<th style="text-align: right;">uwind</th>
+<th style="text-align: right;">vwind</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1993</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">-95</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">-5.6</td>
+<td style="text-align: right;">3.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1993</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">-95</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">-6.3</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1993</td>
+<td style="text-align: right;">-2</td>
+<td style="text-align: right;">-95</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">89.9</td>
+<td style="text-align: right;">-3.4</td>
+<td style="text-align: right;">2.4</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li><strong><em>Linear regression fails when at least one of the predictors is missing. In this case, it was sea_surface_temp. In the next exercise, you will fix it by initializing the missing values before running impute_lm()</em></strong></li>
+</ul>
+</section>
+<section id="initializing-missing-values-iterating-over-variables" class="level2">
+<h2 class="anchored" data-anchor-id="initializing-missing-values-iterating-over-variables">Initializing missing values &amp; iterating over variables</h2>
+<p>As you have just seen, running impute_lm() might not fill-in all the missing values. To ensure you impute all of them, you should initialize the missing values with a simple method, such as the hot-deck imputation you learned about in the previous chapter, which simply feeds forward the last observed value.</p>
+<p>Moreover, a single imputation is usually not enough. It is based on the basic initialized values and could be biased. A proper approach is to iterate over the variables, imputing them one at a time in the locations where they were originally missing.</p>
+<p>In this exercise, you will first initialize the missing values with hot-deck imputation and then loop five times over air_temp and humidity from the tao data to impute them with linear regression. Let’s get to it!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize missing values with hot-deck</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>tao_imp <span class="ot">&lt;-</span> <span class="fu">hotdeck</span>(tao)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create boolean masks for where air_temp and humidity are missing</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>missing_air_temp <span class="ot">&lt;-</span> tao_imp<span class="sc">$</span>air_temp_imp</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>missing_humidity <span class="ot">&lt;-</span>  tao_imp<span class="sc">$</span>humidity_imp</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) {</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Set air_temp to NA in places where it was originally missing and re-impute it</span></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>  tao_imp<span class="sc">$</span>air_temp[missing_air_temp] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>  tao_imp <span class="ot">&lt;-</span> <span class="fu">impute_lm</span>(tao_imp, air_temp <span class="sc">~</span> year <span class="sc">+</span> latitude <span class="sc">+</span> sea_surface_temp <span class="sc">+</span> humidity)</span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Set humidity to NA in places where it was originally missing and re-impute it</span></span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>  tao_imp<span class="sc">$</span>humidity[missing_humidity] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>  tao_imp <span class="ot">&lt;-</span> <span class="fu">impute_lm</span>(tao_imp, humidity <span class="sc">~</span> year <span class="sc">+</span> latitude <span class="sc">+</span> sea_surface_temp <span class="sc">+</span> air_temp)</span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><strong><em>That’s a professional approach to model-based imputation you have just coded! But how do we know that 5 is the proper number of iterations to run? Let’s look at the convergence in the next exercise!</em></strong></li>
+</ul>
+</section>
+<section id="detecting-convergence" class="level2">
+<h2 class="anchored" data-anchor-id="detecting-convergence">Detecting convergence</h2>
+<p>Great job iterating over the variables in the last exercise! But how many iterations are needed? When the imputed values don’t change with the new iteration, we can stop.</p>
+<p>You will now extend your code to compute the differences between the imputed variables in subsequent iterations. To do this, you will use the Mean Absolute Percentage Change function, defined for you as follows:</p>
+<p>mapc &lt;- function(a, b) { mean(abs(b - a) / a, na.rm = TRUE) } mapc() outputs a single number that tells you how much b differs from a. You will use it to check how much the imputed variables change across iterations. Based on this, you will decide how many of them are needed!</p>
+<p>The boolean masks missing_air_temp and missing_humidity are available for you, as is the hotdeck-initialized tao_imp data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>mapc <span class="ot">&lt;-</span> <span class="cf">function</span>(a, b) {</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(<span class="fu">abs</span>(b <span class="sc">-</span> a) <span class="sc">/</span> a, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>diff_air_temp <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>diff_humidity <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) {</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Assign the outcome of the previous iteration (or initialization) to prev_iter</span></span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>  prev_iter <span class="ot">&lt;-</span> tao_imp</span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Impute air_temp and humidity at originally missing locations</span></span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>  tao_imp<span class="sc">$</span>air_temp[missing_air_temp] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>  tao_imp <span class="ot">&lt;-</span> <span class="fu">impute_lm</span>(tao_imp, air_temp <span class="sc">~</span> year <span class="sc">+</span> latitude <span class="sc">+</span> sea_surface_temp <span class="sc">+</span> humidity)</span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>  tao_imp<span class="sc">$</span>humidity[missing_humidity] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>  tao_imp <span class="ot">&lt;-</span> <span class="fu">impute_lm</span>(tao_imp, humidity <span class="sc">~</span> year <span class="sc">+</span> latitude <span class="sc">+</span> sea_surface_temp <span class="sc">+</span> air_temp)</span>
+<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate MAPC for air_temp and humidity and append them to previous iteration's MAPCs</span></span>
+<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a>  diff_air_temp <span class="ot">&lt;-</span> <span class="fu">c</span>(diff_air_temp, <span class="fu">mapc</span>(prev_iter<span class="sc">$</span>air_temp, tao_imp<span class="sc">$</span>air_temp))</span>
+<span id="cb43-18"><a href="#cb43-18" aria-hidden="true" tabindex="-1"></a>  diff_humidity <span class="ot">&lt;-</span> <span class="fu">c</span>(diff_humidity, <span class="fu">mapc</span>(prev_iter<span class="sc">$</span>humidity, tao_imp<span class="sc">$</span>humidity))</span>
+<span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb43-20"><a href="#cb43-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-21"><a href="#cb43-21" aria-hidden="true" tabindex="-1"></a>df_diff  <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(diff_air_temp, diff_humidity)</span>
+<span id="cb43-22"><a href="#cb43-22" aria-hidden="true" tabindex="-1"></a>plot_diffs <span class="ot">&lt;-</span> <span class="cf">function</span>(a, b) {</span>
+<span id="cb43-23"><a href="#cb43-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="st">"mapc"</span> <span class="ot">=</span> <span class="fu">c</span>(a, b),</span>
+<span id="cb43-24"><a href="#cb43-24" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Variable"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"air_temp"</span>, <span class="fu">length</span>(a)),</span>
+<span id="cb43-25"><a href="#cb43-25" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">rep</span>(<span class="st">"humidity"</span>, <span class="fu">length</span>(b))),</span>
+<span id="cb43-26"><a href="#cb43-26" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Iterations"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(a), <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(b))) <span class="sc">%&gt;%</span> </span>
+<span id="cb43-27"><a href="#cb43-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(Iterations, mapc, <span class="at">color =</span> Variable)) <span class="sc">+</span></span>
+<span id="cb43-28"><a href="#cb43-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb43-29"><a href="#cb43-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"Mean absolute percentage change"</span>) <span class="sc">+</span></span>
+<span id="cb43-30"><a href="#cb43-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">"Changes in imputed variables' values across iterations"</span>) <span class="sc">+</span></span>
+<span id="cb43-31"><a href="#cb43-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
+<span id="cb43-32"><a href="#cb43-32" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb43-33"><a href="#cb43-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-34"><a href="#cb43-34" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_diffs</span>(diff_air_temp, diff_humidity)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="imputations_in_R_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li><strong><em>Two are enough, as the third one brings virtually no change anymore!</em></strong></li>
+</ul>
+</section>
+<section id="logistic-regression-imputation" class="level2">
+<h2 class="anchored" data-anchor-id="logistic-regression-imputation">Logistic regression imputation</h2>
+<p>A popular choice for imputing binary variables is logistic regression. Unfortunately, there is no function similar to impute_lm() that would do it. That’s why you’ll write such a function yourself!</p>
+<p>Let’s call the function impute_logreg(). Its first argument will be a data frame df, whose missing values have been initialized and only containing missing values in the column to be imputed. The second argument will be a formula for the logistic regression model.</p>
+<p>The function will do the following:</p>
+<p>Keep the locations of missing values. Build the model. Make predictions. Replace missing values with predictions. Don’t worry about the line creating imp_var - this is just a way to extract the name of the column to impute from the formula. Let’s do some functional programming!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>impute_logreg <span class="ot">&lt;-</span> <span class="cf">function</span>(df, formula) {</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract name of response variable</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  imp_var <span class="ot">&lt;-</span> <span class="fu">as.character</span>(formula[<span class="dv">2</span>])</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Save locations where the response is missing</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>  missing_imp_var <span class="ot">&lt;-</span> <span class="fu">is.na</span>(df[imp_var])</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Fit logistic regression mode</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>  logreg_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(formula, <span class="at">data =</span> df, <span class="at">family =</span> binomial)</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Predict the response and convert it to 0s and 1s</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>  preds <span class="ot">&lt;-</span> <span class="fu">predict</span>(logreg_model, <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>  preds <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(preds <span class="sc">&gt;=</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Impute missing values with predictions</span></span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>  df[missing_imp_var, imp_var] <span class="ot">&lt;-</span>preds[missing_imp_var]</span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(df)</span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="drawing-from-conditional-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="drawing-from-conditional-distribution">Drawing from conditional distribution</h2>
+<p>Simply calling predict() on a model will always return the same value for the same values of the predictors. This results in a small variability in imputed data. In order to increase it, so that the imputation replicates the variability from the original data, we can draw from the conditional distribution. What this means is that instead of always predicting 1 whenever the model outputs a probability larger than 0.5, we can draw the prediction from a binomial distribution described by the probability returned by the model.</p>
+<p>You will work on the code you have written in the previous exercise. The following line was removed:</p>
+<p>preds &lt;- ifelse(preds &gt;= 0.5, 1, 0) Your task is to fill its place with drawing from a binomial distribution. That’s just one line of code!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a> impute_logreg <span class="ot">&lt;-</span> <span class="cf">function</span>(df, formula) {</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract name of response variable</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  imp_var <span class="ot">&lt;-</span> <span class="fu">as.character</span>(formula[<span class="dv">2</span>])</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Save locations where the response is missing</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>  missing_imp_var <span class="ot">&lt;-</span> <span class="fu">is.na</span>(df[imp_var])</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Fit logistic regression mode</span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>  logreg_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(formula, <span class="at">data =</span> df, <span class="at">family =</span> binomial)</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Predict the response</span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>  preds <span class="ot">&lt;-</span> <span class="fu">predict</span>(logreg_model, <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sample the predictions from binomial distribution</span></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>  preds <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="fu">length</span>(preds), <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> preds)</span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Impute missing values with predictions</span></span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>  df[missing_imp_var, imp_var] <span class="ot">&lt;-</span> preds[missing_imp_var]</span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(df)</span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><strong><em>Drawing from the conditional distribution will make the imputed data’s variability more similar to the one of original, observed data. With this powerful function at hand, you are now ready to design a model-based imputation flow that takes care of both continuous and binary variables. Let’s do it in the next exercise!</em></strong></li>
+</ul>
+</section>
+<section id="model-based-imputation-with-multiple-variable-types" class="level2">
+<h2 class="anchored" data-anchor-id="model-based-imputation-with-multiple-variable-types">Model-based imputation with multiple variable types</h2>
+<p>Great job on writing the function to implement logistic regression imputation with drawing from conditional distribution. That’s pretty advanced statistics you have coded! In this exercise, you will combine what you learned so far about model-based imputation to impute different types of variables in the tao data.</p>
+<p>Your task is to iterate over variables just like you have done in the previous chapter and impute two variables:</p>
+<p>is_hot, a new binary variable that was created out of air_temp, which is 1 if air_temp is at or above 26 degrees and is 0 otherwise; humidity, a continuous variable you are already familiar with. You will have to use the linear regression function you have learned before, as well as your own function for logistic regression. Let’s get to it!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize missing values with hot-deck</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>tao <span class="ot">&lt;-</span> tao <span class="sc">%&gt;%</span> </span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">is_hot =</span> <span class="fu">ifelse</span>(air_temp <span class="sc">&gt;</span> <span class="dv">26</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>tao_imp <span class="ot">&lt;-</span> <span class="fu">hotdeck</span>(tao)</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create boolean masks for where is_hota and humidity are missing</span></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>missing_is_hot <span class="ot">&lt;-</span> tao_imp<span class="sc">$</span>is_hot_imp</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>missing_humidity <span class="ot">&lt;-</span> tao_imp<span class="sc">$</span>humidity_imp</span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) {</span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Set is_hot to NA in places where it was originally missing and re-impute it</span></span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>  tao_imp<span class="sc">$</span>is_hot[missing_is_hot] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>  tao_imp <span class="ot">&lt;-</span> <span class="fu">impute_logreg</span>(tao_imp, is_hot <span class="sc">~</span> sea_surface_temp)</span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Set humidity to NA in places where it was originally missing and re-impute it</span></span>
+<span id="cb46-15"><a href="#cb46-15" aria-hidden="true" tabindex="-1"></a>  tao_imp<span class="sc">$</span>humidity[missing_humidity] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb46-16"><a href="#cb46-16" aria-hidden="true" tabindex="-1"></a>  tao_imp <span class="ot">&lt;-</span> <span class="fu">impute_lm</span>(tao_imp, </span>
+<span id="cb46-17"><a href="#cb46-17" aria-hidden="true" tabindex="-1"></a>  humidity <span class="sc">~</span> sea_surface_temp <span class="sc">+</span> air_temp)</span>
+<span id="cb46-18"><a href="#cb46-18" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><strong><em>You have used the simputation package where possible, filling the gaps with your own programming, in order to run a model-based imputation that takes care of both continuous and binary variables, additionally inreasing variability in imputed data in the latter case. Well done! Let’s continue to the final lesson of this chapter, where you will learn how to use tree-based machine learning models for imputation.</em></strong></li>
+</ul>
+</section>
+<section id="imputing-with-random-forests" class="level2">
+<h2 class="anchored" data-anchor-id="imputing-with-random-forests">Imputing with random forests</h2>
+<p>A machine learning approach to imputation might be both more accurate and easier to implement compared to traditional statistical models. First, it doesn’t require you to specify relationships between variables. Moreover, machine learning models such as random forests are able to discover highly complex, non-linear relations and exploit them to predict missing values.</p>
+<p>In this exercise, you will get acquainted with the missForest package, which builds a separate random forest to predict missing values for each variable, one by one. You will call the imputing function on the biographic movies data, biopics, which you have worked with earlier in the course and then extract the filled-in data as well as the estimated imputation errors.</p>
+<p>Let’s plant some random forests!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the missForest package</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>biopics <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/biopics.csv"</span>)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(missForest)</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>cont_lev <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"UK"</span>, <span class="st">"US/UK"</span>, <span class="st">"Canada US"</span>, </span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>           <span class="st">"Canada/UK"</span>, <span class="st">"US/Canada"</span>, <span class="st">"US/UK/Canada"</span>)</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>biopics <span class="ot">&lt;-</span> biopics <span class="sc">%&gt;%</span></span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">country =</span> <span class="fu">factor</span>(country, <span class="at">levels =</span> cont_lev))</span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>biopics <span class="ot">&lt;-</span> biopics <span class="sc">%&gt;%</span></span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_if</span>(is.character, factor)</span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Impute biopics data using missForest</span></span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a>biopics <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(biopics)</span>
+<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a>imp_res <span class="ot">&lt;-</span> <span class="fu">missForest</span>(biopics)</span>
+<span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-16"><a href="#cb47-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract imputed data and check for missing values</span></span>
+<span id="cb47-17"><a href="#cb47-17" aria-hidden="true" tabindex="-1"></a>imp_data <span class="ot">&lt;-</span> imp_res<span class="sc">$</span>ximpnhanes_imp</span>
+<span id="cb47-18"><a href="#cb47-18" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">sum</span>(<span class="fu">is.na</span>(imp_data)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract and print imputation errors</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>imp_err <span class="ot">&lt;-</span> imp_res<span class="sc">$</span>OOBerror</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(imp_err)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     NRMSE        PFC 
+0.01928484 0.14432903 </code></pre>
+</div>
+</div>
+<p><strong><em>Note that missForest() outputs a list and you have to manually extract the imputed data - it’s a common mistake to overlook it when building a data processing pipeline. Also, take a look at the errors. Can you tell which variables have been imputed particularly well? Let’s look at it more closely in the next exercise!</em></strong></p>
+</section>
+<section id="variable-wise-imputation-errors" class="level2">
+<h2 class="anchored" data-anchor-id="variable-wise-imputation-errors">Variable-wise imputation errors</h2>
+<p>In the previous exercise you have extracted the estimated imputation errors from missForest’s output. This gave you two numbers:</p>
+<p>the normalized root mean squared error (NRMSE) for all continuous variables; the proportion of falsely classified entries (PFC) for all categorical variables. However, it could well be that the imputation model performs great for one continuous variable and poor for another! To diagnose such cases, it is enough to tell missForest to produce variable-wise error estimates. This is done by setting the variablewise argument to TRUE.</p>
+<p>The biopics data and missForest package have already been loaded for you, so let’s take a closer look at the errors!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Impute biopics data with missForest computing per-variable errors</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>imp_res <span class="ot">&lt;-</span> <span class="fu">missForest</span>(biopics, <span class="at">variablewise =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract and print imputation errors</span></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>per_variable_errors <span class="ot">&lt;-</span> imp_res<span class="sc">$</span>OOBerror</span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(per_variable_errors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        PFC         MSE         MSE         MSE         PFC         PFC 
+  0.3385827   0.0000000 998.4068755   0.0000000   0.0000000   0.1897163 
+        MSE         PFC 
+  0.0000000   0.0000000 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename errors' columns to include variable names</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(per_variable_errors) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="fu">names</span>(biopics), </span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>                                    <span class="fu">names</span>(per_variable_errors),</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">sep =</span> <span class="st">"_"</span>)</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the renamed errors</span></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(per_variable_errors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  country_PFC      year_MSE  earnings_MSE   sub_num_MSE  sub_type_PFC 
+    0.3385827     0.0000000   998.4068755     0.0000000     0.0000000 
+ sub_race_PFC non_white_MSE   sub_sex_PFC 
+    0.1897163     0.0000000     0.0000000 </code></pre>
+</div>
+</div>
+</section>
+<section id="speed-accuracy-trade-off" class="level2">
+<h2 class="anchored" data-anchor-id="speed-accuracy-trade-off">Speed-accuracy trade-off</h2>
+<p>In the last video, you have seen there are two knobs you can tune to influence the performance of the random forests:</p>
+<p>Number of decision trees in each forest. Number of variables used for splitting within decision trees. Increasing each of them might improve the accuracy of the imputation model, but it will also require more time to run. In this exercise, you will explore these ideas yourself by fitting missForest() to the biopics data twice with different settings. As you follow the instructions, pay attention to the errors you will be printing, and to the time the code takes to run.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set number of trees to 50 and number of variables used for splitting to 6</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>imp_res <span class="ot">&lt;-</span> <span class="fu">missForest</span>(biopics, <span class="at">ntree =</span> <span class="dv">5</span>, <span class="at">mtry =</span> <span class="dv">2</span>)</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the resulting imputation errors</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(imp_res<span class="sc">$</span>OOBerror)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     NRMSE        PFC 
+0.02315201 0.20332849 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set number of trees to 50 and number of variables used for splitting to 6</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>imp_res <span class="ot">&lt;-</span> <span class="fu">missForest</span>(biopics, <span class="at">ntree =</span> <span class="dv">50</span>, <span class="at">mtry =</span> <span class="dv">6</span>)</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the resulting imputation errors</span></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(imp_res<span class="sc">$</span>OOBerror)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     NRMSE        PFC 
+0.02110847 0.14142165 </code></pre>
+</div>
+</div>
+<ul>
+<li><strong><em>Compare the errors and the run times of the two imputation models. Can you see a relation? There ain’t no such thing as a free lunch, they say. To get a more precise imputation, you had to spend more in computing time! Congratulations on finishing the chapter! See you in the final chapter, where you will learn to incorporate uncertainty from imputation into your analyses and predictions.</em></strong></li>
+</ul>
+</section>
+</section>
+<section id="uncertainty-from-imputation" class="level1">
+<h1>Uncertainty from imputation</h1>
+<section id="wrapping-imputation-modeling-in-a-function" class="level2">
+<h2 class="anchored" data-anchor-id="wrapping-imputation-modeling-in-a-function">Wrapping imputation &amp; modeling in a function</h2>
+<p>Whenever you perform any analysis or modeling on imputed data, you should account for the uncertainty from imputation. Running a model on a dataset imputed only once ignores the fact that imputation estimates the missing values with uncertainty. Standard errors from such a model tend to be too small. The solution to this is multiple imputation and one way to implement it is by bootstrapping.</p>
+<p>In the upcoming exercises, you will work with the familiar biopics data. The goal is to use multiple imputation by bootstrapping and linear regression to see if, based on the data at hand, biographical movies featuring females earn less than those about males.</p>
+<p>Let’s start with writing a function that creates a bootstrap sample, imputes it, and fits a linear regression model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>calc_gender_coef <span class="ot">&lt;-</span> <span class="cf">function</span>(data, indices) {</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Get bootstrap sample</span></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>  data_boot <span class="ot">&lt;-</span> data[indices, ]</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Impute with kNN imputation</span></span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>  data_imp <span class="ot">&lt;-</span> <span class="fu">kNN</span>(data_boot, <span class="at">k =</span> <span class="dv">5</span>)</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Fit linear regression</span></span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>  linear_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(earnings <span class="sc">~</span> sub_sex <span class="sc">+</span> sub_type <span class="sc">+</span> year,<span class="at">data =</span> data_imp)</span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract and return gender coefficient</span></span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a>  gender_coefficient <span class="ot">&lt;-</span> <span class="fu">coef</span>(linear_model)[<span class="dv">2</span>]</span>
+<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(gender_coefficient)</span>
+<span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong><em>The calc_gender_coef() function you have just coded takes the data and bootstrap indices as inputs, and outputs our statistic of interest - the impact of gender on earnings from linear regression. You can now feed this function to the bootstrapping algorithm!</em></strong></p>
+</section>
+<section id="running-the-bootstrap" class="level2">
+<h2 class="anchored" data-anchor-id="running-the-bootstrap">Running the bootstrap</h2>
+<p>Good job writing calc_gender_coef() in the last exercise! This function creates a bootstrap sample, imputes it and, outputs the linear regression coefficient describing the impact of movie subject’s being a female on the movie’s earnings.</p>
+<p>In this exercise, you will use the boot package in order to obtain a bootstrapped distribution of such coefficients. The spread of this distribution will capture the uncertainty from imputation. You will also look at how the bootstrapped distribution differs from a single-time imputation and regression. Let’s do some bootstrapping!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the boot library</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Run bootstrapping on biopics data</span></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>boot_results <span class="ot">&lt;-</span> <span class="fu">boot</span>(biopics, <span class="at">statistic =</span> calc_gender_coef, <span class="at">R =</span> <span class="dv">50</span>)</span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print and plot bootstrapping results</span></span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(boot_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ORDINARY NONPARAMETRIC BOOTSTRAP
+
+
+Call:
+boot(data = biopics, statistic = calc_gender_coef, R = 50)
+
+
+Bootstrap Statistics :
+    original    bias    std. error
+t1*  2.64305 -1.859911    5.456893</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(boot_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="imputations_in_R_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate and print confidence interval</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>boot_ci <span class="ot">&lt;-</span> <span class="fu">boot.ci</span>(boot_results, <span class="at">conf =</span> .<span class="dv">95</span>, <span class="at">type =</span> <span class="st">"norm"</span>)</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(boot_ci)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+Based on 50 bootstrap replicates
+
+CALL : 
+boot.ci(boot.out = boot_results, conf = 0.95, type = "norm")
+
+Intervals : 
+Level      Normal        
+95%   (-6.192, 15.198 )  
+Calculations and Intervals on Original Scale</code></pre>
+</div>
+</div>
+<ul>
+<li><strong><em>If you had run the kNN imputation and the regression analysis on biopics data only once, you would have obtained the female-coefficient of -1.45 (called ‘original’ in the console output), suggesting that movies about females indeed earn less. However, correcting for the uncertainty from imputation, you have obtained the distribution that covers both negative and postive values!</em></strong></li>
+</ul>
+<section id="bootstrapping-confidence-intervals" class="level3">
+<h3 class="anchored" data-anchor-id="bootstrapping-confidence-intervals">Bootstrapping confidence intervals</h3>
+<p>Having bootstrapped the distribution of the female-effect coefficient in the last exercise, you can now use it to estimate a confidence interval. It will allow you to make the following assessment about your data: “Given the uncertainty from imputation, we are 95% sure that the female-effect on earnings is between a and b”, where a and b are the lower and upper bounds of the interval.</p>
+<p>In the last exercise, you have run bootstrapping with R = 50 replicates. In most applications, however, this is not enough. In this exercise, you can use boot_results that were prepared for you using 1000 replicates. First, you will look at the bootstrapped distribution to see if it looks normal. If so, you can then rely on the normal distribution to calculate the confidence interval.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run bootstrapping on biopics data</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>boot_results <span class="ot">&lt;-</span> <span class="fu">boot</span>(biopics, <span class="at">statistic =</span> calc_gender_coef, <span class="at">R =</span> <span class="dv">1000</span>)</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print and plot bootstrapping results</span></span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(boot_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ORDINARY NONPARAMETRIC BOOTSTRAP
+
+
+Call:
+boot(data = biopics, statistic = calc_gender_coef, R = 1000)
+
+
+Bootstrap Statistics :
+    original     bias    std. error
+t1* 2.172231 -0.7234102    3.785335</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(boot_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="imputations_in_R_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate and print confidence interval</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>boot_ci <span class="ot">&lt;-</span> <span class="fu">boot.ci</span>(boot_results, <span class="at">conf =</span> .<span class="dv">95</span>, <span class="at">type =</span> <span class="st">"norm"</span>)</span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(boot_ci)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+Based on 1000 bootstrap replicates
+
+CALL : 
+boot.ci(boot.out = boot_results, conf = 0.95, type = "norm")
+
+Intervals : 
+Level      Normal        
+95%   (-4.523, 10.315 )  
+Calculations and Intervals on Original Scale</code></pre>
+</div>
+</div>
+<ul>
+<li><strong><em>Despite the coefficient leaning to be a negative relationship, bootstrap replicates show that some movies with female leads actually earn more! Accounting for the uncertainty from imputation, you cannot be 100% sure about the direction of this relation, even though a single analysis suggests otherwise.</em></strong></li>
+</ul>
+</section>
+</section>
+<section id="the-mice-flow-mice---with---pool" class="level2">
+<h2 class="anchored" data-anchor-id="the-mice-flow-mice---with---pool">The mice flow: mice - with - pool</h2>
+<p>Multiple imputation by chained equations, or MICE, allows us to estimate the uncertainty from imputation by imputing a data set multiple times with model-based imputation, while drawing from conditional distributions. This way, each imputed data set is slightly different. Then, an analysis is conducted on each of them and the results are pooled together, yielding the quantities of interest, alongside their confidence intervals that reflect the imputation uncertainty.</p>
+<p>In this exercise, you will practice the typical MICE flow: mice() - with() - pool(). You will perform a regression analysis on the biopics data to see which subject occupation, sub_type, is associated with highest movie earnings. Let’s play with mice!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load mice package</span></span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mice)</span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Impute biopics with mice using 5 imputations</span></span>
+<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a>biopics_multiimp <span class="ot">&lt;-</span> <span class="fu">mice</span>(biopics, <span class="at">m =</span> <span class="dv">5</span>, <span class="at">seed =</span> <span class="dv">3108</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ iter imp variable
+  1   1  country  earnings  sub_race
+  1   2  country  earnings  sub_race
+  1   3  country  earnings  sub_race
+  1   4  country  earnings  sub_race
+  1   5  country  earnings  sub_race
+  2   1  country  earnings  sub_race
+  2   2  country  earnings  sub_race
+  2   3  country  earnings  sub_race
+  2   4  country  earnings  sub_race
+  2   5  country  earnings  sub_race
+  3   1  country  earnings  sub_race
+  3   2  country  earnings  sub_race
+  3   3  country  earnings  sub_race
+  3   4  country  earnings  sub_race
+  3   5  country  earnings  sub_race
+  4   1  country  earnings  sub_race
+  4   2  country  earnings  sub_race
+  4   3  country  earnings  sub_race
+  4   4  country  earnings  sub_race
+  4   5  country  earnings  sub_race
+  5   1  country  earnings  sub_race
+  5   2  country  earnings  sub_race
+  5   3  country  earnings  sub_race
+  5   4  country  earnings  sub_race
+  5   5  country  earnings  sub_race</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit linear regression to each imputed data set </span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>lm_multiimp <span class="ot">&lt;-</span> <span class="fu">with</span>(biopics_multiimp,  <span class="fu">lm</span>(earnings<span class="sc">~</span>year<span class="sc">+</span>sub_type ))</span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Pool and summarize regression results</span></span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a>lm_pooled <span class="ot">&lt;-</span> <span class="fu">pool</span>(lm_multiimp)</span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_pooled, <span class="at">conf.int =</span> <span class="cn">TRUE</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                             term     estimate  std.error   statistic
+1                     (Intercept) -408.5476080 188.003023 -2.17309063
+2                            year    0.2195188   0.091547  2.39788059
+3  sub_typeAcademic (Philosopher)  -12.0393151  39.386794 -0.30566883
+4                sub_typeActivist  -12.5649024  12.493282 -1.00573272
+5                   sub_typeActor  -23.5461708  15.296101 -1.53935771
+6                 sub_typeActress  -17.5662047  12.764488 -1.37617778
+7      sub_typeActress / activist   20.3881286  35.764655  0.57006362
+8                  sub_typeArtist  -22.4452374  13.451761 -1.66857238
+9                 sub_typeAthlete   -0.8963086  13.009378 -0.06889712
+10     sub_typeAthlete / military   82.4367906  35.569407  2.31763188
+11                 sub_typeAuthor  -19.1635360  12.262989 -1.56271336
+12          sub_typeAuthor (poet)  -20.0620382  14.444056 -1.38894771
+13               sub_typeComedian  -18.1686840  16.980795 -1.06995483
+14               sub_typeCriminal   -5.8479945  13.420469 -0.43575187
+15             sub_typeGovernment   16.0450423  46.390726  0.34586746
+16             sub_typeHistorical   -3.7623435  11.294642 -0.33310871
+17             sub_typeJournalist  -22.8565780  26.181388 -0.87300866
+18                  sub_typeMedia   -7.0627461  18.145706 -0.38922410
+19               sub_typeMedicine   19.1339721  20.966662  0.91259031
+20               sub_typeMilitary   27.6733819  17.764776  1.55776701
+21    sub_typeMilitary / activist   41.9247600  35.860752  1.16909873
+22               sub_typeMusician  -14.1096056  11.123075 -1.26849868
+23                  sub_typeOther  -12.5957619  11.127539 -1.13194499
+24             sub_typePolitician   -8.9752400  35.860752 -0.25028030
+25                 sub_typeSinger   -2.3189932  14.863480 -0.15601953
+26                sub_typeTeacher   55.5076474  35.777696  1.55145953
+27           sub_typeWorld leader    1.9363047  14.102239  0.13730477
+           df    p.value         2.5 %      97.5 %
+1    8.441788 0.05977554 -838.16570234  21.0704863
+2    8.986358 0.04007631    0.01237714   0.4266604
+3   78.086760 0.76067020  -90.45102629  66.3723961
+4   23.732194 0.32468917  -38.36517557  13.2353708
+5   23.125611 0.13728938  -55.17905857   8.0867171
+6   63.616800 0.17359176  -43.06915926   7.9367499
+7  533.362518 0.56887459  -49.86873468  90.6449919
+8   17.334211 0.11316311  -50.78434701   5.8938723
+9   11.560021 0.94624889  -29.36142352  27.5688062
+10 610.794724 0.02079891   12.58361683 152.2899644
+11  18.269586 0.13527579  -44.89989577   6.5728238
+12  40.490599 0.17244132  -49.24354989   9.1194734
+13  68.008128 0.28842244  -52.05326005  15.7158921
+14  10.341265 0.67197238  -35.61744245  23.9214534
+15   5.438799 0.74242360 -100.36959617 132.4596809
+16  19.622883 0.74258502  -27.35161361  19.8269266
+17 401.472498 0.38318021  -74.32631797  28.6131621
+18  10.959555 0.70456670  -47.01916501  32.8936729
+19  11.569949 0.38008106  -26.73749557  65.0054398
+20   7.029288 0.16307001  -14.29818398  69.6449479
+21 499.260259 0.24292173  -28.53182460 112.3813447
+22  20.977532 0.21851670  -37.24281435   9.0236032
+23  15.905797 0.27443480  -36.19645010  11.0049264
+24 499.260259 0.80247354  -79.43182460  61.4813447
+25  16.388102 0.87792336  -33.76762529  29.1296390
+26 528.585147 0.12139010  -14.77627920 125.7915739
+27  27.018773 0.89180799  -26.99815808  30.8707674</code></pre>
+</div>
+</div>
+<p><strong><em>You have followed the mice - with - pool flow to impute, model and pool the results. Now take a look at the console output: a couple of sub_types have a positive impact on earnings. However, accounting for imputation uncertainty with 95% confidence, we are never sure of these effects, as the lower bounds are negative! With one exception: for sub_typeAthlete / military, both upper and lower bounds are positive. What we can say for sure is thus that movies about military athletes are popular!</em></strong></p>
+</section>
+<section id="choosing-default-models" class="level2">
+<h2 class="anchored" data-anchor-id="choosing-default-models">Choosing default models</h2>
+<p>MICE creates a separate imputation model for each variable in the data. What kind of model it is depends on the type of the variable in question. A popular way to specify the kinds of models we want to use is set a default model for each of the four variable types.</p>
+<p>You can do this by passing the defaultMethod argument to mice(), which should be a vector of length 4 containing the default imputation methods for:</p>
+<p>Continuous variables, Binary variables, Categorical variables (unordered factors), Factor variables (ordered factors). In this exercise, you will take advantage of mice’s documentation to view the list of available methods and to pick the desired ones for the algorithm to use. Let’s do some model selection!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Impute biopics using the methods specified in the instruction</span></span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>biopics_multiimp <span class="ot">&lt;-</span> <span class="fu">mice</span>(biopics, <span class="at">m =</span> <span class="dv">20</span>, </span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">defaultMethod =</span> <span class="fu">c</span>(<span class="st">"cart"</span>, <span class="st">"lda"</span>, <span class="st">"pmm"</span>, <span class="st">"polr"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ iter imp variable
+  1   1  country  earnings  sub_race
+  1   2  country  earnings  sub_race
+  1   3  country  earnings  sub_race
+  1   4  country  earnings  sub_race
+  1   5  country  earnings  sub_race
+  1   6  country  earnings  sub_race
+  1   7  country  earnings  sub_race
+  1   8  country  earnings  sub_race
+  1   9  country  earnings  sub_race
+  1   10  country  earnings  sub_race
+  1   11  country  earnings  sub_race
+  1   12  country  earnings  sub_race
+  1   13  country  earnings  sub_race
+  1   14  country  earnings  sub_race
+  1   15  country  earnings  sub_race
+  1   16  country  earnings  sub_race
+  1   17  country  earnings  sub_race
+  1   18  country  earnings  sub_race
+  1   19  country  earnings  sub_race
+  1   20  country  earnings  sub_race
+  2   1  country  earnings  sub_race
+  2   2  country  earnings  sub_race
+  2   3  country  earnings  sub_race
+  2   4  country  earnings  sub_race
+  2   5  country  earnings  sub_race
+  2   6  country  earnings  sub_race
+  2   7  country  earnings  sub_race
+  2   8  country  earnings  sub_race
+  2   9  country  earnings  sub_race
+  2   10  country  earnings  sub_race
+  2   11  country  earnings  sub_race
+  2   12  country  earnings  sub_race
+  2   13  country  earnings  sub_race
+  2   14  country  earnings  sub_race
+  2   15  country  earnings  sub_race
+  2   16  country  earnings  sub_race
+  2   17  country  earnings  sub_race
+  2   18  country  earnings  sub_race
+  2   19  country  earnings  sub_race
+  2   20  country  earnings  sub_race
+  3   1  country  earnings  sub_race
+  3   2  country  earnings  sub_race
+  3   3  country  earnings  sub_race
+  3   4  country  earnings  sub_race
+  3   5  country  earnings  sub_race
+  3   6  country  earnings  sub_race
+  3   7  country  earnings  sub_race
+  3   8  country  earnings  sub_race
+  3   9  country  earnings  sub_race
+  3   10  country  earnings  sub_race
+  3   11  country  earnings  sub_race
+  3   12  country  earnings  sub_race
+  3   13  country  earnings  sub_race
+  3   14  country  earnings  sub_race
+  3   15  country  earnings  sub_race
+  3   16  country  earnings  sub_race
+  3   17  country  earnings  sub_race
+  3   18  country  earnings  sub_race
+  3   19  country  earnings  sub_race
+  3   20  country  earnings  sub_race
+  4   1  country  earnings  sub_race
+  4   2  country  earnings  sub_race
+  4   3  country  earnings  sub_race
+  4   4  country  earnings  sub_race
+  4   5  country  earnings  sub_race
+  4   6  country  earnings  sub_race
+  4   7  country  earnings  sub_race
+  4   8  country  earnings  sub_race
+  4   9  country  earnings  sub_race
+  4   10  country  earnings  sub_race
+  4   11  country  earnings  sub_race
+  4   12  country  earnings  sub_race
+  4   13  country  earnings  sub_race
+  4   14  country  earnings  sub_race
+  4   15  country  earnings  sub_race
+  4   16  country  earnings  sub_race
+  4   17  country  earnings  sub_race
+  4   18  country  earnings  sub_race
+  4   19  country  earnings  sub_race
+  4   20  country  earnings  sub_race
+  5   1  country  earnings  sub_race
+  5   2  country  earnings  sub_race
+  5   3  country  earnings  sub_race
+  5   4  country  earnings  sub_race
+  5   5  country  earnings  sub_race
+  5   6  country  earnings  sub_race
+  5   7  country  earnings  sub_race
+  5   8  country  earnings  sub_race
+  5   9  country  earnings  sub_race
+  5   10  country  earnings  sub_race
+  5   11  country  earnings  sub_race
+  5   12  country  earnings  sub_race
+  5   13  country  earnings  sub_race
+  5   14  country  earnings  sub_race
+  5   15  country  earnings  sub_race
+  5   16  country  earnings  sub_race
+  5   17  country  earnings  sub_race
+  5   18  country  earnings  sub_race
+  5   19  country  earnings  sub_race
+  5   20  country  earnings  sub_race</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print biopics_multiimp</span></span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(biopics_multiimp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Class: mids
+Number of multiple imputations:  20 
+Imputation methods:
+  country      year  earnings   sub_num  sub_type  sub_race non_white   sub_sex 
+    "pmm"        ""    "cart"        ""        ""     "pmm"        ""        "" 
+PredictorMatrix:
+         country year earnings sub_num sub_type sub_race non_white sub_sex
+country        0    1        1       1        1        1         1       1
+year           1    0        1       1        1        1         1       1
+earnings       1    1        0       1        1        1         1       1
+sub_num        1    1        1       0        1        1         1       1
+sub_type       1    1        1       1        0        1         1       1
+sub_race       1    1        1       1        1        0         1       1
+Number of logged events:  300 
+  it im      dep meth
+1  1  1  country  pmm
+2  1  1 earnings cart
+3  1  1 sub_race  pmm
+4  1  2  country  pmm
+5  1  2 earnings cart
+6  1  2 sub_race  pmm
+                                                                                                                                           out
+1 sub_typeActress / activist, sub_typeAthlete / military, sub_typeGovernment, sub_typeMilitary / activist, sub_typePolitician, sub_typeTeacher
+2                                                                                             countryCanada US, sub_typeAcademic (Philosopher)
+3                                                                                                countryCanada US, sub_typeMilitary / activist
+4 sub_typeActress / activist, sub_typeAthlete / military, sub_typeGovernment, sub_typeMilitary / activist, sub_typePolitician, sub_typeTeacher
+5                                                                                             countryCanada US, sub_typeAcademic (Philosopher)
+6                                                                                                countryCanada US, sub_typeMilitary / activist</code></pre>
+</div>
+</div>
+<ul>
+<li><strong><em>The ability to specify imputation models might come in handy when you see some specific methods underperforming. Another factor infuencing how the imputation methods work is the set of predictors they use. Let’s look at how to set these in the next exercise.</em></strong></li>
+</ul>
+</section>
+<section id="using-predictor-matrix" class="level2">
+<h2 class="anchored" data-anchor-id="using-predictor-matrix">Using predictor matrix</h2>
+<p>An important decision that needs to be taken when using model-based imputation is which variables should be included as predictors, and in which models. In mice(), this is governed by the predictor matrix and by default, all variables are used to impute all others.</p>
+<p>In case of many variables in the data or little time to do a proper model selection, you can use mice’s functionality to create a predictor matrix based on the correlations between the variables. This matrix can then be passed to mice(). In this exercise, you will practice exactly this: you will first build a predictor matrix such that each variable will be imputed using variables most correlated to it; then, you will feed your predictor matrix to the imputing function. Let’s try this simple model selection!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create predictor matrix with minimum correlation of 0.1</span></span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>pred_mat <span class="ot">&lt;-</span> <span class="fu">quickpred</span>(biopics, <span class="at">mincor =</span> <span class="fl">0.1</span>)</span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Impute biopics with mice</span></span>
+<span id="cb78-5"><a href="#cb78-5" aria-hidden="true" tabindex="-1"></a>biopics_multiimp <span class="ot">&lt;-</span> <span class="fu">mice</span>(biopics, </span>
+<span id="cb78-6"><a href="#cb78-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">m =</span> <span class="dv">10</span>, </span>
+<span id="cb78-7"><a href="#cb78-7" aria-hidden="true" tabindex="-1"></a>                         <span class="at">predictorMatrix =</span> pred_mat,</span>
+<span id="cb78-8"><a href="#cb78-8" aria-hidden="true" tabindex="-1"></a>                         <span class="at">seed =</span> <span class="dv">3108</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ iter imp variable
+  1   1  country  earnings  sub_race
+  1   2  country  earnings  sub_race
+  1   3  country  earnings  sub_race
+  1   4  country  earnings  sub_race
+  1   5  country  earnings  sub_race
+  1   6  country  earnings  sub_race
+  1   7  country  earnings  sub_race
+  1   8  country  earnings  sub_race
+  1   9  country  earnings  sub_race
+  1   10  country  earnings  sub_race
+  2   1  country  earnings  sub_race
+  2   2  country  earnings  sub_race
+  2   3  country  earnings  sub_race
+  2   4  country  earnings  sub_race
+  2   5  country  earnings  sub_race
+  2   6  country  earnings  sub_race
+  2   7  country  earnings  sub_race
+  2   8  country  earnings  sub_race
+  2   9  country  earnings  sub_race
+  2   10  country  earnings  sub_race
+  3   1  country  earnings  sub_race
+  3   2  country  earnings  sub_race
+  3   3  country  earnings  sub_race
+  3   4  country  earnings  sub_race
+  3   5  country  earnings  sub_race
+  3   6  country  earnings  sub_race
+  3   7  country  earnings  sub_race
+  3   8  country  earnings  sub_race
+  3   9  country  earnings  sub_race
+  3   10  country  earnings  sub_race
+  4   1  country  earnings  sub_race
+  4   2  country  earnings  sub_race
+  4   3  country  earnings  sub_race
+  4   4  country  earnings  sub_race
+  4   5  country  earnings  sub_race
+  4   6  country  earnings  sub_race
+  4   7  country  earnings  sub_race
+  4   8  country  earnings  sub_race
+  4   9  country  earnings  sub_race
+  4   10  country  earnings  sub_race
+  5   1  country  earnings  sub_race
+  5   2  country  earnings  sub_race
+  5   3  country  earnings  sub_race
+  5   4  country  earnings  sub_race
+  5   5  country  earnings  sub_race
+  5   6  country  earnings  sub_race
+  5   7  country  earnings  sub_race
+  5   8  country  earnings  sub_race
+  5   9  country  earnings  sub_race
+  5   10  country  earnings  sub_race</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print biopics_multiimp</span></span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(biopics_multiimp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Class: mids
+Number of multiple imputations:  10 
+Imputation methods:
+  country      year  earnings   sub_num  sub_type  sub_race non_white   sub_sex 
+"polyreg"        ""     "pmm"        ""        "" "polyreg"        ""        "" 
+PredictorMatrix:
+         country year earnings sub_num sub_type sub_race non_white sub_sex
+country        0    1        1       0        0        0         0       0
+year           0    0        0       0        0        0         0       0
+earnings       1    1        0       0        0        1         1       0
+sub_num        0    0        0       0        0        0         0       0
+sub_type       0    0        0       0        0        0         0       0
+sub_race       0    1        1       1        1        0         1       0
+Number of logged events:  100 
+  it im      dep    meth                         out
+1  1  1 earnings     pmm            countryCanada US
+2  1  1 sub_race polyreg sub_typeMilitary / activist
+3  1  2 earnings     pmm            countryCanada US
+4  1  2 sub_race polyreg sub_typeMilitary / activist
+5  1  3 earnings     pmm            countryCanada US
+6  1  3 sub_race polyreg sub_typeMilitary / activist</code></pre>
+</div>
+</div>
+<ol type="1">
+<li>Look at the predictor matrix you’ve used that is printed in the console. Which variables have been used as predictors to impute earnings?</li>
+</ol>
+<ul>
+<li><p>country, year and non_white</p></li>
+<li><p><strong><em>Provides an easy way to set up predictor matrices, but if you can afford it, you should try to choose the predictors based on the insights from data analytics or on domain knowledge.</em></strong></p></li>
+</ul>
+</section>
+<section id="analyzing-missing-data-patterns" class="level2">
+<h2 class="anchored" data-anchor-id="analyzing-missing-data-patterns">Analyzing missing data patterns</h2>
+<p>The first step in working with incomplete data is to gain some insights into the missingness patterns, and a good way to do it is with visualizations. You will start your analysis of the africa data with employing the VIM package to create two visualizations: the aggregation plot and the spine plot. They will tell you how many data are missing, in which variables and configurations, and whether we can say something about the missing data mechanism. Let’s kick off with some plotting!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>africa <span class="ot">&lt;-</span> <span class="fu">read.csv</span>( <span class="st">"data/africa_clean.csv"</span>)</span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Load VIM</span></span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(VIM)</span>
+<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw a combined aggregation plot of africa</span></span>
+<span id="cb82-6"><a href="#cb82-6" aria-hidden="true" tabindex="-1"></a>africa <span class="sc">%&gt;%</span></span>
+<span id="cb82-7"><a href="#cb82-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aggr</span>(<span class="at">combined =</span> <span class="cn">TRUE</span>, <span class="at">numbers =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="imputations_in_R_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<section id="question" class="level3">
+<h3 class="anchored" data-anchor-id="question">Question</h3>
+<ul>
+<li>Based on the aggregation plot you have just created, which of the following statements is TRUE?</li>
+<li>ans Whenever gdp_pc is missing, trade is missing too</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw a spine plot of country vs trade</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>africa <span class="sc">%&gt;%</span> </span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country ,trade) <span class="sc">%&gt;%</span></span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spineMiss</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="imputations_in_R_files/figure-html/unnamed-chunk-41-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="question-1" class="level3">
+<h3 class="anchored" data-anchor-id="question-1">Question</h3>
+<ul>
+<li>Based on the spine plot you have just created, which of the following statements is TRUE?</li>
+<li><strong><em>Correct, there are not that many missing values! Also, notice from the spine plot that the africa data seem to be MAR - at least with respect to the GDP and country, which means it can be imputed. Let’s try multiple imputation to fill-in the missing values in the next exercise!</em></strong></li>
+</ul>
+</section>
+</section>
+<section id="imputing-and-inspecting-outcomes" class="level2">
+<h2 class="anchored" data-anchor-id="imputing-and-inspecting-outcomes">Imputing and inspecting outcomes</h2>
+<p>Good job on visualizing missing data in the previous exercise! You have discovered there are some missing entries in GDP, gdp_pc, and trade as percentage of GDP, trade. Also, you suspect the data are MAR, and thus imputable. In this exercise, you will make use of multiple imputation from the mice package to impute the africa data. Then, you will draw a strip plot of gdp_pc vs trade to see if the imputed data do not break the relation between these variables. Let mice do the job!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load mice</span></span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mice)</span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Impute africa with mice</span></span>
+<span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a>africa_multiimp <span class="ot">&lt;-</span> <span class="fu">mice</span>(africa, <span class="at">m =</span> <span class="dv">5</span>, <span class="at">defaultMethod =</span> <span class="st">"cart"</span>, <span class="at">seed =</span> <span class="dv">3108</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ iter imp variable
+  1   1  gdp_pc  trade
+  1   2  gdp_pc  trade
+  1   3  gdp_pc  trade
+  1   4  gdp_pc  trade
+  1   5  gdp_pc  trade
+  2   1  gdp_pc  trade
+  2   2  gdp_pc  trade
+  2   3  gdp_pc  trade
+  2   4  gdp_pc  trade
+  2   5  gdp_pc  trade
+  3   1  gdp_pc  trade
+  3   2  gdp_pc  trade
+  3   3  gdp_pc  trade
+  3   4  gdp_pc  trade
+  3   5  gdp_pc  trade
+  4   1  gdp_pc  trade
+  4   2  gdp_pc  trade
+  4   3  gdp_pc  trade
+  4   4  gdp_pc  trade
+  4   5  gdp_pc  trade
+  5   1  gdp_pc  trade
+  5   2  gdp_pc  trade
+  5   3  gdp_pc  trade
+  5   4  gdp_pc  trade
+  5   5  gdp_pc  trade</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw a stripplot of gdp_pc versus trade</span></span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="fu">stripplot</span>(africa_multiimp, gdp_pc <span class="sc">~</span> trade <span class="sc">|</span> .imp, <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">cex =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="imputations_in_R_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li><strong><em>t seems the imputation works well: there are small clusters in the scatter plots, likely corresponding to different countries. Each imputed data point fits into one of the clusters, instead of being an outlier somewhere between the clusters. Having done the imputation, you can now proceed to modeling!</em></strong></li>
+</ul>
+</section>
+<section id="inference-with-imputed-data" class="level2">
+<h2 class="anchored" data-anchor-id="inference-with-imputed-data">Inference with imputed data</h2>
+<p>In the last exercise, you have run mice to multiply impute the africa data. In this one, you will implement the other two steps of the mice - with - pool flow you’ve learned about earlier in the course. The model of interest is a linear regression that explains the GDP, gdp_pc, with other variables. You are particularly interested in the coefficient of civil liberties, civlib. Is more liberty associated with more economic growth once we incorporate the uncertainty from imputation? Let’s find out!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit linear regression to each imputed data set</span></span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>lm_multiimp <span class="ot">&lt;-</span> <span class="fu">with</span>(africa_multiimp, <span class="fu">lm</span>(gdp_pc <span class="sc">~</span> country <span class="sc">+</span> year <span class="sc">+</span> trade <span class="sc">+</span> infl <span class="sc">+</span> civlib))</span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Pool regression results</span></span>
+<span id="cb87-5"><a href="#cb87-5" aria-hidden="true" tabindex="-1"></a>lm_pooled <span class="ot">&lt;-</span> <span class="fu">pool</span>(lm_multiimp)</span>
+<span id="cb87-6"><a href="#cb87-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-7"><a href="#cb87-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize pooled results</span></span>
+<span id="cb87-8"><a href="#cb87-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_pooled, <span class="at">conf.int =</span> <span class="cn">TRUE</span>, <span class="at">conf.level =</span> <span class="fl">0.90</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              term      estimate    std.error  statistic       df      p.value
+1      (Intercept) -30068.441810 5618.7067367 -5.3514880 107.7805 4.954407e-07
+2   countryBurundi     67.199848   61.9274336  1.0851386 107.8599 2.802797e-01
+3  countryCameroon    650.257144   58.5640793 11.1033444 107.1503 1.591166e-19
+4     countryCongo   1343.288063  113.7299489 11.8112078 106.8653 4.209726e-21
+5   countrySenegal    527.686999   78.7955032  6.6969177 106.7578 1.027035e-09
+6    countryZambia    415.136577   83.9727225  4.9437075 107.0560 2.853378e-06
+7             year     15.335776    2.8263293  5.4260402 107.7640 3.574950e-07
+8            trade      4.941659    1.5893889  3.1091568 105.7726 2.410907e-03
+9             infl     -4.347124    0.9876079 -4.4016696 108.0009 2.533732e-05
+10          civlib    -49.411852  132.1837617 -0.3738118 107.4442 7.092809e-01
+             5 %          95 %
+1  -39390.518971 -20746.364650
+2     -35.544192    169.943888
+3     553.087683    747.426605
+4    1154.583058   1531.993068
+5     396.945387    658.428610
+6     275.808050    554.465103
+7      10.646566     20.024986
+8       2.304247      7.579071
+9      -5.985649     -2.708598
+10   -268.725783    169.902078</code></pre>
+</div>
+</div>
+<section id="question-2" class="level3">
+<h3 class="anchored" data-anchor-id="question-2">Question</h3>
+<ul>
+<li><p>Based on the summary of the pooled regression results that you have just printed to the console, which of the following statements about the civil liberties in Africa is false?</p></li>
+<li><p><strong><em>Correct, this one is false! Since the lower and upper bounds have different signs, we cannot be sure of the direction of the effect. Congratulations, you have come a long way and learned a lot. Well done! Let’s sum it all up in the final video of the course.</em></strong></p></li>
+</ul>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
