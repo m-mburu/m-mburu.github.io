@@ -1,0 +1,14 @@
+{
+  "hash": "006cf3b37419a1202b9a57c35d20bf5d",
+  "result": {
+    "markdown": "---\ntitle: \"Inflation Kenya\"\nauthor: \"Mburu\"\ndate: \"7/7/2020\"\noutput:\n  html_document:\n    toc: true\n    toc_depth: 2\n    toc_float:\n      collapsed: false\n      smooth_scroll: false\n    theme: united\n    highlight: pygments\n    css: github.css\n---\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(plotly)\nlibrary(tidyverse)\nlibrary(data.table)\nlibrary(sf)\nlibrary(DT)\nlibrary(tmap)\nlibrary(ggthemes)\nlibrary(here)\n```\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

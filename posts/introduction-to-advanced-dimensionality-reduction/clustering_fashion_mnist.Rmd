@@ -14,7 +14,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, eval = FALSE)
 ```
 
 
@@ -24,7 +24,7 @@ library(tidyverse)
 library(knitr)
 library(data.table)
 
-fashion_mnist <- fread(unzip("fashionmnist.zip", "fashion-mnist_train.csv"))
+load("fashion_mnist.rda")
 ```
 
 ## Process

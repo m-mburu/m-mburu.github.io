@@ -28,7 +28,7 @@ library(ggthemes)
 
 ```{r}
 inflation_rates <- fread(here("kenya_debt/Inflation Rates.csv"))
-
+source(".Rprofile")
 inflation_rates <- nms_clean(inflation_rates)
 inflation_rates[, date := as.Date(paste(year, month, "01", sep = "-"), "%Y-%b-%d")]
 setnames(inflation_rates, 

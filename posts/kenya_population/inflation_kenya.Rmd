@@ -18,7 +18,6 @@ output:
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
-
 ```{r}
 library(plotly)
 library(tidyverse)
@@ -29,4 +28,3 @@ library(tmap)
 library(ggthemes)
 library(here)
 ```
-

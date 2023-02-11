@@ -11,10 +11,9 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,
                       message = FALSE,
-                      warning = FALSE)
+                      warning = FALSE,
+                      eval = FALSE)
 ```
-
-
 
 ```{r}
 library(tidyverse)
@@ -34,8 +33,6 @@ names(cancer) <- nms
 str(cancer)
 cancer[, id := NULL]
 ```
-
-
 
 ```{r}
 cancer[, .(freq = .N),
@@ -67,7 +64,6 @@ test_set <- cancer[-train_sample,]
 
 ## Fit model
 
-
 ```{r}
 library(broom)
 glm_mod <- glm(diagnosis ~ .,
@@ -78,24 +74,19 @@ glm_mod <- glm(diagnosis ~ .,
 tidy(glm_mod) %>% kable
 ```
 
-
 ## Forward
-
 
 ```{r}
 forward_select <- step(glm_mod, direction = "forward")
 ```
 
-
-
 ## Backward
-
 
 ```{r}
 back_select <- step(glm_mod, direction = "backward")
 ```
 
-## Using Entropy-Based Feature Selection Algorithms 
+## Using Entropy-Based Feature Selection Algorithms
 
 ```{r}
 library(FSelectorRcpp)
@@ -103,7 +94,6 @@ x <- information_gain(diagnosis ~ ., train_set)
 x %>% arrange(desc(importance)) %>%
   kable()
 ```
-
 
 ## Recursive Feature Elimination (RFE)
 
@@ -122,13 +112,11 @@ lmProfile
 lmProfile$optVariables
 ```
 
-
 ```{r}
 var
 ```
 
 ## Model
-
 
 ```{r}
 cv_fold <- createFolds(train_set$diagnosis, k = 5)
@@ -148,8 +136,6 @@ glm_grid <- expand.grid(
                       )
 
 ```
-
-
 
 ```{r}
 full_model <- train(
@@ -194,7 +180,6 @@ back_model <- train(
 back_model
 ```
 
-
 ## Fit model with variables selected from backward selection
 
 ```{r}
@@ -209,7 +194,6 @@ back_model <- train(
 
 back_model
 ```
-
 
 ## Fit model with variables selected from entropy
 
@@ -231,7 +215,6 @@ entropy_model <- train(
 entropy_model 
 ```
 
-
 ## Fit model with variables selected Recursive Feature Elimination
 
 ```{r}
@@ -250,7 +233,6 @@ recu_model <- train(
 recu_model 
 ```
 
-
 ## Full model test accuracy
 
 ```{r}
@@ -266,7 +248,6 @@ for_glm1 <- factor(for_glm1, levels = levels(test_set$diagnosis))
 confusionMatrix(for_glm1, test_set$diagnosis,positive = "M") 
   
 ```
-
 
 ## Forward test accuracy
 
@@ -284,7 +265,6 @@ confusionMatrix(for_glm1, test_set$diagnosis,positive = "M")
   
 ```
 
-
 ## Backward test accuracy
 
 ```{r}
@@ -300,10 +280,6 @@ for_glm1 <- factor(for_glm1, levels = levels(test_set$diagnosis))
 confusionMatrix(for_glm1, test_set$diagnosis,positive = "M") 
   
 ```
-
-
-
-
 
 ## entropy method test accuracy
 
@@ -321,7 +297,6 @@ confusionMatrix(for_glm1, test_set$diagnosis,positive = "M")
   
 ```
 
-
 ## Recursive Feature Elimination method test accuracy
 
 ```{r}
@@ -337,4 +312,3 @@ for_glm1 <- factor(for_glm1, levels = levels(test_set$diagnosis))
 confusionMatrix(for_glm1, test_set$diagnosis,positive = "M") 
   
 ```
-

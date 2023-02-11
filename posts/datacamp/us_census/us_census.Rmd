@@ -11,11 +11,13 @@ knitr::opts_chunk$set(echo = TRUE,
 ```
 
 ## Obtain and set your Census API key
+
 tidycensus is an R package designed to return data from the US Census Bureau ready for use within the Tidyverse.
 
 To acquire data from the US Census Bureau using the tidycensus R package, you must first acquire and set a Census API key. After obtaining your key, you can install it for future use with the census_api_key() function in tidycensus.
 
 This exercise uses a fake API key for purposes of illustration.
+
 ```{r}
 # Load the tidycensus package into your R session
 library(tidycensus)
@@ -31,8 +33,7 @@ census_api_key(api_key)
 
 ```
 
-##Setting a cache directory
-Spatial data from the US Census Bureau can get very big - sometimes hundreds of megabytes in size. By default, tigris functions download data from the US Census Bureau's website - but this can get tiresome if downloading the same large datasets over and over. To resolve this, tigris includes an option to cache downloaded data on a user's computer for future use, meaning that files only have to be downloaded from the Census website once. In this exercise, you'll get acquainted with the caching functionality in tigris.
+##Setting a cache directory Spatial data from the US Census Bureau can get very big - sometimes hundreds of megabytes in size. By default, tigris functions download data from the US Census Bureau's website - but this can get tiresome if downloading the same large datasets over and over. To resolve this, tigris includes an option to cache downloaded data on a user's computer for future use, meaning that files only have to be downloaded from the Census website once. In this exercise, you'll get acquainted with the caching functionality in tigris.
 
 ```{r}
 # Set the cache directory
@@ -45,12 +46,11 @@ options(tigris_use_cache = TRUE)
 getOption("tigris_use_cache")
 ```
 
-
 ## Getting Census data with tidycensus
+
 In this exercise, you will load and inspect data from the 2010 US Census and 2012-2016 American Community Survey. The core functions of get_decennial() and get_acs() in tidycensus are used to obtain data from these sources; the 2010 Census and 2012-2016 ACS are the defaults for these functions, respectively.
 
 By inspecting the data, you'll get a sense of differences between decennial US Census data and data from the ACS, which is based on a sample and subject to a margin of error. Whereas get_decennial() returns a data value for each row, get_acs() returns estimate and moe columns representing the ACS estimate and margin of error.
-
 
 ```{r}
 # Obtain and view state populations from the 2010 US Census
@@ -67,8 +67,8 @@ state_income <- get_acs(geography = "state",
 head(state_income)
 ```
 
-
 ## Understanding tidycensus options
+
 As discussed in this lesson, Census data comprise thousands of variables available across dozens of geographies! Most of these geography-variable combinations are accessible with tidycensus; however, it helps to understand the package options.
 
 Some data, like Census tracts, are only available by state, and users might want to subset by county; tidycensus facilitates this with state and county parameters when appropriate. Additionally, tidycensus includes the Census variable ID in the variable column; however, a user might want to supply her own variable name, which can be accomplished with a named vector.
@@ -103,8 +103,8 @@ travis_income2 <- get_acs(geography = "tract",
 head(travis_income2)
 ```
 
-
 ## Tidy and wide data in tidycensus
+
 By default, tidycensus functions return tidy data frames, in which each row represents a unique unit-variable combination. However, at times it is useful to have each Census variable in its own column for some methods of visualization and analysis. To accomplish this, you can set output = "wide" in your calls to get_acs() or get_decennial(), which will place estimates/values and margins of error in their own columns.
 
 ```{r}
@@ -123,6 +123,7 @@ plot(or_wide$hhincomeE, or_wide$medageE)
 ```
 
 ## Loading variables in tidycensus
+
 There are hundreds of thousands of variables in the decennial Census and American Community Survey samples, which can make it difficult to know which variable codes to use! tidycensus aims to make this easier with the load_variables() function, which obtains a dataset of variables from a specified sample and loads it into R as a browsable data frame.
 
 ```{r}
@@ -143,10 +144,9 @@ v00 <- load_variables(year = 2000,
 
 ```
 
-
 ## Exploring variables with tidyverse tools
-Once loaded, your dataset of Census or ACS variables might contain thousands of rows. In RStudio, it is recommended to use the View() function to interactively search for these variables. Outside of RStudio, these datasets can be browsed using tidyverse filtering tools.
 
+Once loaded, your dataset of Census or ACS variables might contain thousands of rows. In RStudio, it is recommended to use the View() function to interactively search for these variables. Outside of RStudio, these datasets can be browsed using tidyverse filtering tools.
 
 ```{r}
 
@@ -159,6 +159,7 @@ filter(v16p, str_detect(label, fixed("public transportation",
 ```
 
 ## Comparing geographies with ggplot2 visualizations
+
 When exploring Census or ACS data, you'll often want to know how data varies among different geographic units. For example - which US states have higher - or lower - median household incomes? This can be accomplished through visualization using dot plots, which are particularly effective for showing ranks visually. In this exercise, you'll use the popular ggplot2 data visualization package to accomplish this.
 
 ```{r}
@@ -177,8 +178,8 @@ ggplot(ne_income, aes(x = estimate, y = reorder(NAME, estimate))) +
   geom_point()
 ```
 
-
 ## Customizing ggplot2 visualizations of ACS data
+
 While the ggplot2 defaults are excellent for exploratory visualization of data, you'll likely want to customize your charts before sharing them with others. In this exercise, you'll customize your tidycensus dot plot by modifying the chart colors, tick labels, and axis labels. You'll also learn how to format labels using the scales package, as label formatters can be imported using the :: syntax.
 
 ```{r, fig.width=8, fig.height=4.5}
@@ -200,10 +201,9 @@ g_label <- g_scale +
 g_label
 ```
 
-
 ## Download and view a table of data from the ACS
-Variables in the decennial Census and American Community Survey are organized into tables, within which they share a common prefix. Commonly, analysts will want to work with all variables in a given table, as these variables might represent different aspects of a common characteristic (such as race or income levels). To request data for an entire table in tidycensus, users can specify a table argument with the table prefix, and optionally cache a dataset of table codes to speed up table searching in future requests. In this exercise, you'll acquire a table of variables representing different income bands, then filter out the denominator rows.
 
+Variables in the decennial Census and American Community Survey are organized into tables, within which they share a common prefix. Commonly, analysts will want to work with all variables in a given table, as these variables might represent different aspects of a common characteristic (such as race or income levels). To request data for an entire table in tidycensus, users can specify a table argument with the table prefix, and optionally cache a dataset of table codes to speed up table searching in future requests. In this exercise, you'll acquire a table of variables representing different income bands, then filter out the denominator rows.
 
 ```{r}
 
@@ -217,6 +217,7 @@ head(wa_income)
 ```
 
 ## Get a summary variable and calculate percentages
+
 Many variables in the Census and American Community Survey are represented as counts or estimated counts. While count data is useful for some applications, it is often good practice to normalize count data by its denominator to convert it to a proportion or percentage to make clearer comparisons. This is facilitated in tidycensus with the summary_var argument, which allows users to request that a variable is given its own column in a tidy Census dataset. This value can then be used as the denominator for subsequent calculations of percentages.
 
 Summary question: When the summary_var parameter is requested in get_acs(), what information is returned by the function?
@@ -239,8 +240,8 @@ ca_race_pct <- ca_race %>%
 head(ca_race_pct)
 ```
 
-
 ## Finding the largest group by county
+
 tidyverse data wrangling tools in packages like dplyr and purrr are extremely powerful for exploring Census data. tidycensus is specifically designed with data exploration within the tidyverse in mind. For example, users might be interested in finding out the largest racial/ethnic group within each county for a given state. This can be accomplished using dplyr grouping capabilities, which allow users to identify the largest ACS group estimate and filter to retain the rows that match that group.
 
 ```{r}
@@ -258,9 +259,10 @@ ca_largest %>%
 ```
 
 ## Recoding variables and calculating group sums
-dplyr, one of the core packages within the tidyverse, includes numerous functions for data wrangling. This functionality allows users to recode datasets, define groups within those datasets, and perform calculations over those groups. Such operations commonly take place within a pipe, denoted with the %>% operator.
 
-In this exercise, you'll work with ACS data in just such a tidyverse workflow. You'll be identifying median household income variables in ACS table B19001 that are below $35,000; between $35,000 and $75,000; and above $75,000. You'll then tabulate the number of households that fall into each group for counties in Washington.
+dplyr, one of the core packages within the tidyverse, includes numerous functions for data wrangling. This functionality allows users to recode datasets, define groups within those datasets, and perform calculations over those groups. Such operations commonly take place within a pipe, denoted with the %\>% operator.
+
+In this exercise, you'll work with ACS data in just such a tidyverse workflow. You'll be identifying median household income variables in ACS table B19001 that are below \$35,000; between \$35,000 and \$75,000; and above \$75,000. You'll then tabulate the number of households that fall into each group for counties in Washington.
 
 ```{r}
 # Use a tidy workflow to wrangle ACS data
@@ -278,6 +280,7 @@ wa_grouped
 ```
 
 ## Comparing ACS estimates for multiple years
+
 The American Community Survey is updated every year, which allows researchers to use ACS datasets to study demographic changes over time.
 
 In this exercise, you'll learn how to use the tidyverse function map_df() to work with multi-year ACS data. map_df() helps analysts iterate through a sequence of values, compute a process for each of those values, then combine the results into a single data frame. You'll be using map_df() in this way with ACS data, as you iterate through a vector of years, retrieve ACS data for each year, and combine the results. This will allow you to view how ACS estimates have changed over time.
@@ -297,6 +300,7 @@ mi_cities %>% arrange(NAME, year)
 ```
 
 ## Inspecting margins of error
+
 ACS data are distinct from decennial Census data in that they represent estimates with an associated margin of error. ACS margins of error by default represent a 90 percent confidence level around an estimate, which means that we are 90 percent sure that the true value falls within a range of the reported estimate plus or minus the reported margin of error.
 
 In this exercise, you'll get some experience working with data that has high margins of error relative to their estimates. We'll use the example of poverty for the population aged 75 and above for Census tracts in Vermont.
@@ -317,15 +321,11 @@ moe_check <- filter(vt_eldpov, moe > estimate)
 nrow(moe_check) / nrow(vt_eldpov)
 ```
 
-
 ## Using margin of error functions in tidycensus
+
 While the Census Bureau API and tidycensus return pre-computed margins of error for you, you may want to derive new estimates from downloaded ACS data and in turn understand the margins of error around these derived estimates. tidycensus includes four functions (listed below) to help you with these tasks, each of which incorporates the recommended formulas from the US Census Bureau.
 
-moe_sum()
-moe_product()
-moe_ratio()
-moe_prop()
-
+moe_sum() moe_product() moe_ratio() moe_prop()
 
 ```{r}
 # Calculate a margin of error for a sum
@@ -351,8 +351,8 @@ moe_prop(num = 374,
 
 ```
 
-
 ## Calculating group-wise margins of error
+
 One way to reduce margins of error in an ACS analysis is to combine estimates when appropriate. This can be accomplished using tidyverse group-wise data analysis tools. In this exercise, you'll combine estimates for male and female elderly poverty in Vermont, and use the moe_sum() function as part of this group-wise analysis. While you may lose some detail with this type of approach, your estimates will be more reliable relative to their margins of error than before you combined them.
 
 ```{r}
@@ -371,10 +371,9 @@ moe_check2 <- filter(vt_eldpov2, moemf > estmf)
 nrow(moe_check2) / nrow(vt_eldpov2)
 ```
 
-
 ## Quick visual exploration of ACS margins of error
-In Chapter 1, you learned how to create a dot plot of ACS income estimates. In this chapter, you've also learned about the importance of taking margins of error into account in ACS analyses. While margins of error are likely minimal for state-level estimates, they may be more significant for sub-state estimates, like counties. In this exercise, you'll learn how to visualize margins of error around estimates with ggplot2.
 
+In Chapter 1, you learned how to create a dot plot of ACS income estimates. In this chapter, you've also learned about the importance of taking margins of error into account in ACS analyses. While margins of error are likely minimal for state-level estimates, they may be more significant for sub-state estimates, like counties. In this exercise, you'll learn how to visualize margins of error around estimates with ggplot2.
 
 ```{r}
 # Request median household income data
@@ -389,6 +388,7 @@ ggplot(maine_inc, aes(x = estimate, y = NAME)) +
 ```
 
 ## Customizing a ggplot2 margin of error plot
+
 You've hopefully identified some problems with the chart you created in the previous exercise. As the counties are not ordered, patterns in the data are difficult for a viewer to parse. Specifically, margin of error plots are much more effective when dots are ordered as the ordering allows viewers to understand the uncertainty in estimate values relative to other estimates. Additionally, the lack of plot formatting makes it difficult for chart viewers to understand the chart's content. In this exercise, you'll clean up your ggplot2 code to create a much more visually appealing margin of error chart.
 
 ```{r}
@@ -408,10 +408,9 @@ ggplot(maine_inc2, aes(x = estimate, y = reorder(NAME, estimate))) +
   scale_x_continuous(labels = scales::dollar)
 ```
 
-
 ## Getting Census boundary files with tigris
-The US Census Bureau's TIGER/Line shapefiles include boundary files for the geography at which decennial Census and ACS data are aggregated. These geographies include legal entities that have legal standing in the U.S., such as states and counties, and statistical entities used for data tabulation such as Census tracts and block groups. In this exercise, you'll use the tigris package to acquire such boundary files for counties in Colorado and Census tracts for Colorado's Denver County, which covers the city of Denver.
 
+The US Census Bureau's TIGER/Line shapefiles include boundary files for the geography at which decennial Census and ACS data are aggregated. These geographies include legal entities that have legal standing in the U.S., such as states and counties, and statistical entities used for data tabulation such as Census tracts and block groups. In this exercise, you'll use the tigris package to acquire such boundary files for counties in Colorado and Census tracts for Colorado's Denver County, which covers the city of Denver.
 
 ```{r}
 # Get a counties dataset for Colorado and plot it
@@ -424,6 +423,7 @@ plot(denver_tracts)
 ```
 
 ## Getting geographic features with tigris
+
 In addition to enumeration units, the TIGER/Line database produced by the Census Bureau includes geographic features. These features consist of several datasets for use in thematic mapping and spatial analysis, such as transportation infrastructure and water features. In this exercise, you'll acquire and plot roads and water data with tigris.
 
 ```{r}
@@ -436,6 +436,7 @@ plot(nh_roads)
 ```
 
 ## Understanding the structure of tigris objects
+
 By default, tigris returns objects of class Spatial*DataFrame from the sp package. Objects of class Spatial* represent components of spatial data in different slots, which include descriptions of the object's geometry, attributes, and coordinate system. In this exercise, we'll briefly examine the structure of objects returned by tigris functions.
 
 ```{r}
@@ -449,8 +450,8 @@ head(co_counties)
 
 ```
 
-
 ## TIGER/Line and cartographic boundary files
+
 In addition to its TIGER/Line shapefiles, the US Census Bureau releases cartographic boundary shapefiles for enumeration units. TIGER/Line shapefiles correspond to legal boundaries of units, which can include water area and in turn, may not be preferable for thematic mapping. The Census Bureau's cartographic boundary shapefiles are clipped to the US shoreline and are generalized, which can make them superior for mapping projects. In this exercise, you'll compare the TIGER/Line and cartographic boundary representations of the US state of Michigan.
 
 ```{r}
@@ -465,8 +466,8 @@ plot(mi_tiger)
 plot(mi_cb, add = TRUE, border = "red")
 ```
 
-
 ## Getting data as simple features objects
+
 The sf package, which stands for simple features, promises to revolutionize the way that vector spatial data are handled within R. sf objects represent spatial data much like regular data frames, with a list-column that contains the geometry of the geographic dataset. tigris can return spatial data as simple features objects either by declaring class = "sf" within a function call or by setting as a global option. In this exercise, you'll get acquainted with simple features in tigris.
 
 ```{r}
@@ -481,8 +482,8 @@ head(colorado_sf)
 plot(colorado_sf$geometry)
 ```
 
-
 ## Working with historic shapefiles
+
 To ensure clean integration with the tidycensus package - which you'll learn about in the next chapter - tigris defaults to returning shapefiles that correspond to the year of the most recently-released ACS data. However, you may want boundary files for other years. tigris allows R users to obtain shapefiles for 1990, 2000, and 2010 through 2017, which represent many boundary changes over time. In this exercise, you'll use tigris to explore how Census tract boundaries have changed in Williamson County, Texas between 1990 and 2016.
 
 ```{r}
@@ -500,8 +501,8 @@ plot(williamson90$geometry)
 plot(williamson16$geometry)
 ```
 
-
 ## Combining datasets of the same tigris type
+
 Often, datasets from the US Census Bureau are available by state, which means they are available by state from tigris as well. In many instances, you'll want to combine datasets for multiple states. For example, an analysis of the Portland, Oregon metropolitan area would include areas in both Oregon and Washington north of the Columbia River; however, these areas are represented in different Census files. In this exercise, you'll learn how to combine datasets with the rbind_tigris() function.
 
 ```{r}
@@ -518,8 +519,8 @@ or_wa_tracts <- rbind_tigris(or_tracts, wa_tracts)
 plot(or_wa_tracts$geometry)
 ```
 
-
 ## Getting data for multiple states
+
 In the previous exercise, you learned how to combine datasets with the rbind_tigris() function. If you need data for more than two states, however, this process can get tedious. In this exercise, you'll learn how to generate a list of datasets for multiple states with the tidyverse map() function, and combine those datasets with rbind_tigris().
 
 ```{r}
@@ -535,10 +536,9 @@ ne_tracts <- map(new_england, function(x) {
 plot(ne_tracts$geometry)
 ```
 
-
 ## Joining data from an external data frame
-When working with geographic data in R, you'll commonly want to join attribute information from an external dataset to it for mapping and spatial analysis. The sf package enables the use of the tidyverse *_join() functions for simple features objects for this purpose. In this exercise, you'll learn how to join data to a spatial dataset of legislative boundaries for the Texas House of Representatives that you've obtained using tigris.
 
+When working with geographic data in R, you'll commonly want to join attribute information from an external dataset to it for mapping and spatial analysis. The sf package enables the use of the tidyverse \*\_join() functions for simple features objects for this purpose. In this exercise, you'll learn how to join data to a spatial dataset of legislative boundaries for the Texas House of Representatives that you've obtained using tigris.
 
 ```{r, eval=FALSE}
 # Get boundaries for Texas and set the house parameter
@@ -551,8 +551,8 @@ head(tx_joined)
 ```
 
 ## Plotting simple features with geom_sf()
-The newest version of ggplot2 includes a geom_sf() function to plot simple features objects natively. This allows you to make maps using familiar ggplot2 syntax! In this exercise, you'll walk through the process of creating a map with ggplot2 step-by-step.
 
+The newest version of ggplot2 includes a geom_sf() function to plot simple features objects natively. This allows you to make maps using familiar ggplot2 syntax! In this exercise, you'll walk through the process of creating a map with ggplot2 step-by-step.
 
 ```{r, eval=FALSE}
 # Plot the legislative district boundaries
@@ -569,9 +569,8 @@ ggplot(tx_joined, aes(fill = Party)) +
   scale_fill_manual(values = c("R" = "red", "D" = "blue"))
 ```
 
-
-
 ## Customizing geom_sf() plots
+
 As you've learned in previous chapters, it is a good idea to clean up and format your ggplot2 visualizations before sharing with others. In this exercise, you'll make some modifications to your map of Texas House districts such as removing the gridlines and adding an informative title.
 
 ```{r, eval=FALSE}
@@ -584,8 +583,8 @@ ggplot(tx_joined, aes(fill = Party)) +
   labs(title = "State House Districts in Texas")
 ```
 
-
 ## Getting simple feature geometry
+
 tidycensus can obtain simple feature geometry for many geographies by adding the argument geometry = TRUE. In this exercise, you'll obtain a dataset of median housing values for owner-occupied units by Census tract in Orange County, California with simple feature geometry included.
 
 ```{r}
@@ -603,8 +602,8 @@ orange_value <- get_acs(geography = "tract", state = "CA",
 plot(orange_value["estimate"])
 ```
 
-
 ## Joining data from tigris and tidycensus
+
 Geometry is currently supported in tidycensus for geographies in the core Census hierarchy - state, county, Census tract, block group, and block - as well as zip code tabulation areas. However, you may be interested in mapping data for other geographies. In this case, you can download the equivalent boundary file from the Census Bureau using the tigris package and join your demographic data to it for mapping.
 
 ```{r}
@@ -622,10 +621,9 @@ id_school_joined <- left_join(idaho_school, idaho_income, by = "GEOID")
 plot(id_school_joined["estimate"])
 ```
 
-
 ## Shifting Alaska and Hawaii geometry
-Analysts will commonly want to map data for the entire United States by state or county; however, this can be difficult by default as Alaska and Hawaii are distant from the continental United States. A common solution is to rescale and shift Alaska and Hawaii for mapping purposes, which is supported in tidycensus. You'll learn how to do this in this exercise.
 
+Analysts will commonly want to map data for the entire United States by state or county; however, this can be difficult by default as Alaska and Hawaii are distant from the continental United States. A common solution is to rescale and shift Alaska and Hawaii for mapping purposes, which is supported in tidycensus. You'll learn how to do this in this exercise.
 
 ```{r}
 # Get a dataset of median home values from the 1-year ACS
@@ -639,8 +637,8 @@ state_value <- get_acs(geography = "state",
 plot(state_value["estimate"])
 ```
 
-
 ## Making a choropleth map
+
 Choropleth maps, which visualize statistical variation through the shading of areas, are among the most popular ways to map demographic data. Census or ACS data acquired with tidycensus can be mapped in this way in ggplot2 with geom_sf using the estimate column as a fill aesthetic. In this exercise, you'll make a choropleth map with ggplot2 of median owner-occupied home values by Census tract for Marin County, California.
 
 ```{r, eval=FALSE}
@@ -650,10 +648,9 @@ ggplot(marin_value, aes(fill = estimate)) +
   geom_sf()
 ```
 
-
 ## Modifying map colors
-ggplot2 version 3.0 integrated the viridis color palettes, which are perceptually uniform and legible to colorblind individuals and in black and white. For these reasons, the viridis palettes have become very popular for data visualization, including for choropleth mapping. In this exercise, you'll learn how to use the viridis palettes for choropleth mapping in ggplot2.
 
+ggplot2 version 3.0 integrated the viridis color palettes, which are perceptually uniform and legible to colorblind individuals and in black and white. For these reasons, the viridis palettes have become very popular for data visualization, including for choropleth mapping. In this exercise, you'll learn how to use the viridis palettes for choropleth mapping in ggplot2.
 
 ```{r, eval=FALSE}
 # Set continuous viridis palettes for your map
@@ -663,10 +660,9 @@ ggplot(marin_value, aes(fill = estimate, color = estimate)) +
   scale_color_viridis_c()
 ```
 
-
 ## Customizing the map output
-Now that you've chosen an appropriate color palette for your choropleth map of median home values by Census tract in Marin County, you'll want to customize the output. In this exercise, you'll clean up some map elements and add some descriptive information to provide context to your map.
 
+Now that you've chosen an appropriate color palette for your choropleth map of median home values by Census tract in Marin County, you'll want to customize the output. In this exercise, you'll clean up some map elements and add some descriptive information to provide context to your map.
 
 ```{r, eval=FALSE}
 # Set the color guide to FALSE and add a subtitle and caption to your map
@@ -682,10 +678,9 @@ ggplot(marin_value, aes(fill = estimate, color = estimate)) +
        fill = "ACS estimate")
 ```
 
-
 ## Graduated symbol maps
-There are many other effective ways to map statistical data besides choropleth maps. One such example is the graduated symbol map, which represents statistical variation by differently-sized symbols. In this exercise, you'll learn how to use the st_centroid() tool in the sf package to create points at the center of each state to be used as inputs to a graduated symbol map in ggplot2.
 
+There are many other effective ways to map statistical data besides choropleth maps. One such example is the graduated symbol map, which represents statistical variation by differently-sized symbols. In this exercise, you'll learn how to use the st_centroid() tool in the sf package to create points at the center of each state to be used as inputs to a graduated symbol map in ggplot2.
 
 ```{r}
 library(sf)
@@ -701,8 +696,8 @@ ggplot() +
   scale_size_continuous(range = c(1, 20))
 ```
 
-
 ## Faceted maps with ggplot2
+
 One of the most powerful features of ggplot2 is its support for faceted plotting, in which multiple plots are generated for unique values of a column in the data. Faceted maps can be produced with geom_sf() in this way as well if tidycensus data are in tidy format. In this exercise, you'll produce faceted maps that show the racial and ethnic geography of Washington, DC from the 2010 decennial Census.
 
 ```{r, eval=FALSE}
@@ -717,6 +712,7 @@ ggplot(dc_race, aes(fill = percent, color = percent)) +
 ```
 
 ## Interactive visualization with mapview
+
 The mapview R package allows R users to interactively map spatial datasets in one line of R code. This makes it an essential tool for exploratory spatial data analysis in R. In this exercise, you'll learn how to quickly map tidycensus data interactively using mapview and your Orange County, California median housing values dataset.
 
 ```{r, eval=FALSE}
@@ -727,8 +723,8 @@ m <- mapview(orange_value,
 m@map
 ```
 
-
 ## Generating random dots with sf
+
 Dot-density maps are created by randomly placing dots within areas where each dot is proportional to a certain number of observations. In this exercise, you'll learn how to create dots in this way with the sf package using the st_sample() function. You will generate dots that are proportional to about 100 people in the decennial Census, and then you will group the dots to speed up plotting with ggplot2.
 
 ```{r, eval=FALSE}
@@ -745,10 +741,9 @@ dc_dots <- map(c("White", "Black", "Hispanic", "Asian"), function(group) {
   summarize()
 ```
 
-
 ## Obtaining data for cartography with tigris
-Before making your dot-density map of Washington, DC with ggplot2, it will be useful to acquire some ancillary cartographic data with the tigris package that will help map viewers understand what you've visualized. These datasets will include major roads in DC; area water features; and the boundary of the District of Columbia, which you'll use as a background in your map.
 
+Before making your dot-density map of Washington, DC with ggplot2, it will be useful to acquire some ancillary cartographic data with the tigris package that will help map viewers understand what you've visualized. These datasets will include major roads in DC; area water features; and the boundary of the District of Columbia, which you'll use as a background in your map.
 
 ```{r, eval=FALSE}
 # Filter the DC roads object for major roads only
@@ -762,9 +757,8 @@ dc_water <- area_water("DC", "District of Columbia")
 dc_boundary <- counties("DC", cb = TRUE)
 ```
 
-
-
 ## Making a dot-density map with ggplot2
+
 In your final exercise of this course, you are going to put together the datasets you've acquired and generated into a dot-density map with ggplot2. You'll plot your generated dots and ancillary datasets with geom_sf(), and add some informative map elements to create a cartographic product.
 
 ```{r, eval=FALSE}
@@ -782,4 +776,3 @@ ggplot() +
        fill = "", 
        caption = "1 dot = approximately 100 people.\nData acquired with the R tidycensus and tigris packages.")
 ```
-

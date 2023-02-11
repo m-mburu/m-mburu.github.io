@@ -1,0 +1,14 @@
+{
+  "hash": "c32946d904e7d236cd3545bb586ca371",
+  "result": {
+    "markdown": "---\ntitle: \"Articles\"\nlayout: page\nsubtitle: Stuffs I write about\ndesc: Stuffs I write about\n---\n\n    {% if paginator.page == 1 %}\n{% for post in site.posts limit: 2 %}\n<link rel=\"prerender\" href=\"{{ post.url | prepend: site.baseurl | prepend: site.url }}\">\n    {% endfor %}\n{% endif %}\n\n<ul class=\"post-list\">\n    {% for post in paginator.posts %}\n<li class=\"post\">\n    <a class=\"post-link\" href=\"{{ post.url | prepend: site.baseurl }}\">\n    <h4 class=\"post-title\">{{ post.title }}</h4>\n    <time class=\"post-date\" datetime=\"{{ post.date }}\">\n    {% assign d = post.date | date: \"%-d\" %}\n      {% assign m = post.date | date: \"%B\" %}\n{% case m %}\n{% when 'April' or 'May' or 'June' or 'July' %}{{ m }}\n{% when 'September' %}Sept.\n{% else %}{{ post.date | date: \"%b\" }}.\n{% endcase %}\n{% case d %}\n{% when '1' or '21' or '31' %}{{ d }}st{% when '2' or '22' %}{{ d }}nd{% when '3' or '23' %}{{ d }}rd{% else %}{{ d }}th{% endcase %},\n{{ post.date | date: \"%Y\" }}\n</time>\n    <p class=\"post-desc\">{% if post.desc %}{{ post.desc }}{% else %}{{ post.excerpt }}{% endif %}</p>\n    </a>\n    </li>\n    {% endfor %}\n</ul>\n    <!-- post-list -->\n    \n    <ol class=\"pager\">\n    {% if paginator.previous_page %}\n<li class=\"pager-prev\">\n    <a href=\"{{ paginator.previous_page_path }}\">Previous</a>\n    </li>\n    {% endif %}\n{% if paginator.next_page %}\n<li class=\"pager-next\">\n    <a href=\"{{ paginator.next_page_path }}\">Next</a>\n    </li>\n    {% endif %}\n</ol>",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

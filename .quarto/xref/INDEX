@@ -73,5 +73,105 @@
   },
   "posts/datacamp/tensorflow_R/tensorflow_R.Rmd": {
     "tensorflow_R.html": "3b760636"
+  },
+  "posts/datacamp/us_census/us_census.Rmd": {
+    "us_census.html": "59f3bd3b"
+  },
+  "posts/datacamp/scalable_data_R/scalable_data_r.Rmd": {
+    "scalable_data_r.html": "270f2f42"
+  },
+  "posts/datacamp/comm_tidyverse/rmarkdown_ex.Rmd": {
+    "rmarkdown_ex.html": "495e0267"
+  },
+  "posts/datacamp/comm_tidyverse/tidyverse.Rmd": {
+    "tidyverse.html": "d479e972"
+  },
+  "posts/old/index_old.Rmd": {
+    "index_old.html": "3c2b1ba8"
+  },
+  "posts/blogs_old.qmd": {
+    "blogs_old.html": "85d9adf4"
+  },
+  "posts/notes/iml/intro.Rmd": {
+    "intro.html": "6b8e5b8d"
+  },
+  "posts/kenya_population/household_assets_2019census.Rmd": {
+    "household_assets_2019census.html": "79dbfd77"
+  },
+  "posts/kenya_population/household_assets_2019census.qmd": {
+    "household_assets_2019census.html": "cdc61e8d",
+    "household_assets_2019census.tex": "f7e54213"
+  },
+  "posts/kenya_population/kenya_debt_and_dollar_price.Rmd": {
+    "kenya_debt_and_dollar_price.html": "2c01ee2f"
+  },
+  "posts/kenya_population/ea_poverty.Rmd": {
+    "ea_poverty.html": "d97585be"
+  },
+  "posts/kenya_population/inflation_kenya.Rmd": {
+    "inflation_kenya.html": "1feb4275"
+  },
+  "posts/kenya_population/kenya_maps.Rmd": {
+    "kenya_maps.html": "189dd5d6"
+  },
+  "posts/kenya_population/kenya_inflation.Rmd": {
+    "kenya_inflation.html": "3b7f0dcd"
+  },
+  "posts/water_pumps_tz/water_pumps.Rmd": {
+    "water_pumps.html": "b81d64dd"
+  },
+  "posts/water_pumps_tz/index.Rmd": {
+    "index.html": "4851935a"
+  },
+  "posts/kaggle/climate_change/scripts/world_temp.Rmd": {
+    "world_temp.html": "c8f350a8"
+  },
+  "posts/kaggle/malaysia_tourist/malaysia_tourist.Rmd": {
+    "malaysia_tourist.html": "88672f0c"
+  },
+  "posts/kaggle/heart_failure/heart_failure.Rmd": {
+    "heart_failure.html": "0e4680be"
+  },
+  "posts/kaggle/newyork_airbnb/newyork_airbnb.Rmd": {
+    "newyork_airbnb.html": "48ccae1c"
+  },
+  "posts/kaggle/mnist_digits/mnist.Rmd": {
+    "mnist.html": "3845170f"
+  },
+  "posts/kaggle/microsoft_malware_prediction/malware_prediction.Rmd": {
+    "malware_prediction.html": "23820fc5"
+  },
+  "posts/kaggle/who_stats/who_stats.Rmd": {
+    "who_stats.html": "f46a3799"
+  },
+  "posts/kaggle/heart_disease/heart_disease.Rmd": {
+    "heart_disease.html": "cb4c262e"
+  },
+  "posts/about.Rmd": {
+    "about.html": "7b0131d8"
+  },
+  "posts/shiny/index.Rmd": {
+    "index.html": "5d1165dd"
+  },
+  "posts/introduction-to-advanced-dimensionality-reduction/introduction_dimensionality_reduction.Rmd": {
+    "introduction_dimensionality_reduction.html": "9b959417"
+  },
+  "posts/introduction-to-advanced-dimensionality-reduction/clustering_fashion_mnist.Rmd": {
+    "clustering_fashion_mnist.html": "ff546dd1"
+  },
+  "posts/blog.Rmd": {
+    "blog.html": "ca22c367"
+  },
+  "posts/breast_cancer_prediction/cancer data.Rmd": {
+    "cancer data.html": "1e87d9e5"
+  },
+  "posts/breast_cancer_prediction/feature_selection.Rmd": {
+    "feature_selection.html": "5ef1dff3"
+  },
+  "posts/breast_cancer_prediction/cancer_data.Rmd": {
+    "cancer_data.html": "f77912d3"
+  },
+  "posts/breast_cancer_prediction/shap_vals.Rmd": {
+    "shap_vals.html": "6c5ea249"
   }
 }

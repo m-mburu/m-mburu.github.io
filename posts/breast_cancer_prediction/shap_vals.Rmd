@@ -16,13 +16,12 @@ output:
     toc_depth: '2'
 ---
 
-
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, 
+                      warning = FALSE, eval = FALSE)
 ```
 
-
-## Packages 
+## Packages
 
 ```{r}
 
@@ -41,12 +40,9 @@ cancer <- fread("data.csv")
 cancer[, V33 := NULL]
 ```
 
-
 ## Head
 
-A mini  example of calculating shap values in R. I used an open source data set from Kaggle. See more about [Wiscosin breast cancer data set](https://www.kaggle.com/uciml/breast-cancer-wisconsin-data). I use [IML package](https://github.com/christophM/iml) from R I prefer it since you can calculate from any model. At this time I have tested it using models from caret package but they have examples from mlr package and h20 packages. 
-
-
+A mini example of calculating shap values in R. I used an open source data set from Kaggle. See more about [Wiscosin breast cancer data set](https://www.kaggle.com/uciml/breast-cancer-wisconsin-data). I use [IML package](https://github.com/christophM/iml) from R I prefer it since you can calculate from any model. At this time I have tested it using models from caret package but they have examples from mlr package and h20 packages.
 
 ```{r}
 
@@ -78,10 +74,9 @@ head(cancer)  %>%
 
 ```
 
-
 ## Boxplots
 
-- I like this especially when you want to see if there is difference between groups when the indipedent var is numeric and outcome categorical.
+-   I like this especially when you want to see if there is difference between groups when the indipedent var is numeric and outcome categorical.
 
 ```{r, fig.width = 11, fig.height = 7}
 
@@ -93,9 +88,7 @@ ggplot(cancerm, aes(x = diagnosis, y = value))+
 
 ```
 
-
 ## Split test, train
-
 
 ```{r}
 n_row <- nrow(cancer)
@@ -106,9 +99,7 @@ test_data <- cancer
 test_pat_id <- pat_id[-train_ids]
 ```
 
-
-
-## Fit xgboost, random forest, 
+## Fit xgboost, random forest,
 
 ```{r}
 cv_fold <- createFolds(train_data$diagnosis, k = 10)
@@ -143,7 +134,6 @@ svm_grid <- expand.grid(C = c(0.5, 1, 10),
 
 ```
 
-
 ## Fit Random forest
 
 ```{r}
@@ -171,10 +161,12 @@ registerDoSEQ()
 
 rf
 ```
+
 ## Calculate Shap values
-- use the shapper package it uses python shap package so you must have python installed + python shap library
-- https://github.com/ModelOriented/shapper
-- install from cran
+
+-   use the shapper package it uses python shap package so you must have python installed + python shap library
+-   https://github.com/ModelOriented/shapper
+-   install from cran
 
 ```{r}
 
@@ -208,7 +200,6 @@ toc()
 shap_values <- rbindlist(shap_list)
 write.csv(shap_values, file ="shap_values3.csv", row.names = F )
 ```
-
 
 ## Shap plots
 
@@ -271,5 +262,3 @@ ggplot(shap_values, aes(feature, phi,  color = abs(phi)))+
 # 
 # model_list
 ```
-
-

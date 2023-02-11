@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE,
                       warning = FALSE)
 ```
 
-##
+## 
 
 ```{r}
 library(plotly)
@@ -34,7 +34,6 @@ usd_kes_hist <- fread("USD_KES Historical Data.csv")
 ```{r}
 usd_kes_hist[, Date :=  as.Date(Date, format = "%b %d,%Y")]
 ```
-
 
 ```{r, fig.width=7, fig.height=5}
 
@@ -73,7 +72,6 @@ dollar <- ggplot(usd_kes_hist,aes(Date, Price))+
 dollar
 ```
 
-
 ```{r}
 
 
@@ -83,7 +81,6 @@ kenya_debt[, Date := as.Date(paste(Year, Month, "01", sep = "-"), format = "%Y-%
 kenya_debt[, perc_external := round(`External Debt`/Total* 100, 1)]
 kenya_debt[, Total := Total/1000000]
 ```
-
 
 ```{r, fig.width=7, fig.height=5}
 x <- as.Date("2002-12-01")
@@ -129,8 +126,6 @@ debt <- ggplot(kenya_debt, aes(Date, Total)) +
 debt
 ```
 
-
-
 ```{r}
 my_breaks <- seq(15, 70, 5)
 external <- ggplot(kenya_debt, aes(Date, perc_external)) +
@@ -146,13 +141,9 @@ external <- ggplot(kenya_debt, aes(Date, perc_external)) +
 external
 ```
 
-
-
-
 ```{r}
 debt_data <- fread("poverty_data/IDS-DRSCountries_WLD_Data.csv")
 ```
-
 
 ```{r}
 nms_old <-debt_data[1,]  %>% as.character()
@@ -177,8 +168,6 @@ debt_data[, year := str_trim(year)]
 debt_data[, year := as.numeric(year)]
 debt_data <-  debt_data[!is.na(value)]
 ```
-
-
 
 ```{r, fig.width=9, fig.height=5}
 indicator_name <- c("Currency composition of PPG debt, U.S. dollars (%)",
@@ -220,7 +209,6 @@ for (i in 1:n) {
 my_plots
 ```
 
-
 ```{r}
 world_debt_data  <- fread("poverty_data/API_DT.TDS.DECT.EX.ZS_DS2_en_csv_v2_1865914.csv", 
                           skip = 4, header = T)
@@ -245,8 +233,6 @@ world_debt_data <- world_debt_data[!is.na(value)]
 head(world_debt_data[country_name == "Kenya"], 10) %>%
   datatable(options = list(scrollX= T))
 ```
-
-
 
 ```{r}
 ea_country <- c("Kenya", "Lower middle income" )
@@ -278,4 +264,3 @@ for (i in 1:n) {
 
 my_plots
 ```
-

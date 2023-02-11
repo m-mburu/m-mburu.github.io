@@ -12,6 +12,7 @@ output:
     theme: united
     highlight: pygments
 ---
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
@@ -37,7 +38,6 @@ airbnb_nyc <- fread("AB_NYC_2019.csv")
 head(airbnb_nyc) %>% 
     datatable(options = list(scrollX = TRUE))
 ```
-
 
 ## Neighbourhood Disitribution
 
@@ -67,7 +67,6 @@ airbnb_nyc[, .(freq =.N), by = .(neighbourhood_group, room_type)] %>%
     theme_fivethirtyeight() 
 ```
 
-
 ## Summary Stats for price based on location
 
 ```{r}
@@ -92,7 +91,6 @@ datatable(summary_function(by_col = "neighbourhood_group"))
 
 ## Summary Stats price based on room type
 
-
 ```{r}
 
 datatable(summary_function(by_col = "room_type"))
@@ -107,7 +105,6 @@ airbnb_nyc[, .(Median = median(price)),
   datatable()
 ```
 
-
 ## Get map using ggmap
 
 ```{r}
@@ -115,14 +112,12 @@ newyork_map <- get_map(c(left = min(airbnb_nyc$longitude) - .0001,
                          bottom = min(airbnb_nyc$latitude) - .0001,
                          right = max(airbnb_nyc$longitude) + .0001,
                          top = max(airbnb_nyc$latitude) + .0001),
-                       maptype = "watercolor", source = "osm")
+                       maptype = "watercolor", source = "stamen")
 
 
   
             
 ```
-
-
 
 ## Mapping function
 
@@ -153,9 +148,7 @@ map_plot <- function(df, color_col, continues_color_col = TRUE){
 }
 ```
 
-
 ## Newyork price map
-
 
 ```{r, fig.width=8, fig.height=8}
 
@@ -163,7 +156,6 @@ per95 <- airbnb_nyc[, quantile(price, 0.95)]
 map_plot(df = airbnb_nyc[price <=per95  ], 
          color_col = "price")  
 ```
-
 
 ## Categorise price variable
 
@@ -181,9 +173,8 @@ map_plot(df = airbnb_nyc,
 
 ## Reviews per month
 
-- We can use this as a proxy of host receiving a lot of guests
-- we could use this for instance to check if some neighborhoods are more popular
-
+-   We can use this as a proxy of host receiving a lot of guests
+-   we could use this for instance to check if some neighborhoods are more popular
 
 ```{r,  fig.width=8, fig.height=8}
 
@@ -194,7 +185,6 @@ map_plot(df = airbnb_nyc[reviews_per_month < per95_rev ],
          color_col = "reviews_per_month")  
 ```
 
-
 ## Dates
 
 ```{r}
@@ -202,6 +192,4 @@ airbnb_nyc[, last_review := ymd(last_review)]
 airbnb_nyc[, summary(last_review)]
 ```
 
-
-
-- Work in progress !
+-   Work in progress !

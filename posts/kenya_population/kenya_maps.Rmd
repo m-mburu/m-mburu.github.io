@@ -12,6 +12,7 @@ output:
     css: "style.csss"
     highlight: pygments
 ---
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
@@ -28,7 +29,6 @@ library(tmap)
 library(rKenyaCensus)
 ```
 
-
 ```{r}
 # kenya_5yr_births <- readGoogleSheet("https://docs.google.com/spreadsheets/d/e/2PACX-1vSf-yNXNk68cIOH0Rb6alaDk9SxKEMm3h6kb2p8jxT8oMdfj4OqUDbs2Ln9OOGGCI9V7SNiZJCDWm4H/pubhtml")
 # 
@@ -39,9 +39,6 @@ kenya_5yr_births = V4_T2.40
 setDT(kenya_5yr_births)
 ```
 
-
-
-
 ```{r}
 old_nms_births <- names(kenya_5yr_births)
 new_nms_births <- gsub("\\s", "_", old_nms_births) %>%
@@ -49,7 +46,6 @@ new_nms_births <- gsub("\\s", "_", old_nms_births) %>%
 
 setnames(kenya_5yr_births, old_nms_births, new_nms_births)
 ```
-
 
 ```{r}
 numerics_nms <- c("total", "notified", "not_notified",
@@ -59,7 +55,6 @@ kenya_5yr_births[, (numerics_nms) := lapply(.SD, function(x) gsub(",", "", x)), 
 kenya_5yr_births[, (numerics_nms) := lapply(.SD, as.numeric), .SDcols = numerics_nms]
 ```
 
-
 ```{r}
 kenya_counties <- st_read("County")
 
@@ -67,7 +62,6 @@ ggplot(kenya_counties)+
   geom_sf() +
   theme_void()
 ```
-
 
 ```{r}
 setnames(kenya_counties, "COUNTY", "county")
@@ -90,7 +84,6 @@ kenya_births_counties[, county := paste(county, " ", per_cent_in_health_facility
 kenya_births_counties <- st_set_geometry(kenya_births_counties, "geometry")
 ```
 
-
 ```{r, fig.width = 7, fig.height = 6 }
 
 map1 <- tm_shape(kenya_births_counties)+
@@ -109,7 +102,6 @@ tmap_leaflet(map1)
 kenyan_pop <- fread("distribution-of-population-by-age-and-sex-kenya-2019-census-volume-iii.csv")
 ```
 
-
 ```{r}
 numerics_nms <- c("Male", "Female", "Intersex")
 kenyan_pop[, (numerics_nms) := lapply(.SD, function(x) gsub(",", "", x)), .SDcols = numerics_nms]
@@ -120,7 +112,6 @@ kenyan_pop[, Age := gsub("Oct", "10", Age)]
 kenyan_pop[,Total:= Reduce(`+`, .SD),.SDcols= numerics_nms]
 ```
 
-
 ```{r}
 age_cat <- kenyan_pop[!grepl("-", Age)]
 
@@ -128,17 +119,14 @@ age_cat[is.na(age_cat)] <- NA
 #age_cat[,Total:= Reduce(`+`, .SD),.SDcols= numerics_nms]
 ```
 
-
 ```{r}
 age_cat_m <- melt(age_cat, id.vars = c("Age", "Total"), variable.name = "Sex")
 age_cat_m[, Perc := round(value/Total*100, 2)]
 ```
 
-
 ```{r}
 
 ```
-
 
 ```{r}
 library(ggthemes)
@@ -153,8 +141,6 @@ pop_plot <- ggplot(age_cat_m, aes(Age, Perc, group = Sex))+
 
 ggplotly(pop_plot)
 ```
-
-
 
 ```{r}
 
@@ -173,8 +159,6 @@ age_cat[, age_factor :=  cut(Age,
 age_cat_sum <- age_cat[, .(sum_total = sum(Total)), by = age_factor] %>%
   .[, Perc := round(sum_total/sum(sum_total)*100,2)]
 ```
-
-
 
 # Age Summary Stats
 
@@ -196,8 +180,6 @@ dt_age[, .(Mean = round(mean(Age),1),
 
 ```
 
-
-
 ```{r}
 library(scales)
 ggplot(dt_age, aes(Age)) +
@@ -212,8 +194,6 @@ ggplot(dt_age, aes(Age)) +
 
 #ggplotly(pop_plot2)
 ```
-
-
 
 ```{r}
 library(knitr)
@@ -235,15 +215,12 @@ set.seed(100)
 crops_m[sample(1:nrow(crops_m),20)] %>% datatable()
 ```
 
-
 ```{r}
 kenya_crops <-crops_m[county == "KENYA"]
 
 setorder(kenya_crops, -Perc)
 datatable(kenya_crops)
 ```
-
-
 
 ```{r}
 crops_bar <- ggplot(kenya_crops, aes(reorder(crops, Perc), Perc))+
@@ -257,8 +234,6 @@ crops_bar <- ggplot(kenya_crops, aes(reorder(crops, Perc), Perc))+
 
 ggplotly(crops_bar)
 ```
-
-
 
 ```{r}
 #crops_m[, county := tolower(county)]
@@ -291,7 +266,6 @@ pop_crops_counties <- crops_counties_dat %>%
 pop_crops_counties <- st_set_geometry(pop_crops_counties, "geometry")
 ```
 
-
 # Popular crop grown per county Kenya
 
 ```{r, first_map, fig.width = 6.3, fig.height = 5}
@@ -308,7 +282,6 @@ map2 <- tmap_leaflet(map2)
  
 map2
 ```
-
 
 ```{r}
 pop_crops_counties_not_maize <- crops_counties_dat %>%
@@ -336,8 +309,6 @@ map3 <- tm_shape(pop_crops_counties_not_maize)+
 tmap_leaflet(map3)
 ```
 
-
-
 ```{r}
 
 pop_crops_counties_not_mbp <- crops_counties_dat %>%
@@ -349,7 +320,6 @@ pop_crops_counties_not_mbp <- crops_counties_dat %>%
 
 pop_crops_counties_not_mbp <- st_set_geometry(pop_crops_counties_not_mbp, "geometry")
 ```
-
 
 # Popular crop grown per county Kenya apart from maize, beans or potatoes
 
@@ -366,44 +336,7 @@ map4 <- tm_shape(pop_crops_counties_not_mbp)+
 tmap_leaflet(map4)
 ```
 
-
-
-
 ```{r}
 kenya_subcounties_agri <- fread("distribution-of-households-practicing-agriculture-fishing-and-irrigation-by-county-and-sub-count.csv")
-```
-
-```{r}
-stunt_world <- raster::raster("stunt_post_means.TIF")
-```
-
-
-```{r}
-library(raster)
-library(sp)
-
-proj4string = as.character(projection(stunt_world))
-kenya_shapefile <- st_set_geometry(kenya_shapefile, "geometry")
-kenya_shapefile <- st_set_crs(kenya_shapefile, value = proj4string)
-kenya_sp <- as(kenya_shapefile, "Spatial") 
-```
-
-
-```{r}
-setDT(kenya_shapefile)
-kenya_shapefile[, stunt_prev := raster::extract(stunt_world, kenya_sp,
-                                               weights=FALSE, fun=mean,
-                                               na.rm= T)]
-kenya_shapefile[, value_var := paste(county, stunt_prev)]
-kenya_shapefile <- st_set_geometry(kenya_shapefile, "geometry")
-
-```
-
-
-
-```{r}
-ttm()
-tm_shape(kenya_shapefile)+
-  tm_polygons(col = "stunt_prev", id = "value_var" )
 ```
 
