@@ -3,33 +3,18 @@ project:
   output-dir: docs
 
 website:
-  title: "Data Science Projects"
-  site-url: https://m-mburu.github.io/
+  title: "Mburu Blog"
   navbar:
-    search: true
-    background: dark  
-    type: light
-    display: inline-block;
-    float: center;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-    text-color:  black
-    left:
-      - href: index.qmd
-        text: Home
-      - href: about.qmd
-        text: About
-      - href: blogs.qmd
-        text: Blog
-
+    right:
+      - about.qmd
+      - icon: github
+        href: https://github.com/m-mburu
+      - icon: twitter
+        href: https://twitter.com/mmburu_w
 format:
   html:
-    theme: lumen
+    theme: cosmo
     css: style.css
-    toc: true
 
 editor: visual
 

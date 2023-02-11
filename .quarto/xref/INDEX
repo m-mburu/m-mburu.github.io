@@ -1,68 +1,17 @@
 {
   "index.qmd": {
-    "index.html": "35033bc1"
+    "index.html": "6f6689be"
+  },
+  "posts/welcome/index.qmd": {
+    "index.html": "52852905"
+  },
+  "posts/post-with-code/index.qmd": {
+    "index.html": "3ce1b7d5"
   },
   "about.qmd": {
-    "about.html": "c36ee80b"
-  },
-  "myblog/loan_prediction/loan_prediction.Rmd": {
-    "loan_prediction.html": "60fdaf0f"
-  },
-  "myblog/loan_prediction/clustering_loans.Rmd": {
-    "clustering_loans.html": "dc7b9109"
-  },
-  "myblog/cv/cv_mburu.Rmd": {
-    "cv_mburu.html": "000f4f96"
-  },
-  "myblog/datacamp/regression_r/regression.Rmd": {
-    "regression.html": "1399c914"
-  },
-  "myblog/datacamp/regression_r/logistic_regression.Rmd": {
-    "logistic_regression.html": "abc25d3b"
-  },
-  "myblog/datacamp/anomaly_detection_R/anomaly_detection.Rmd": {
-    "anomaly_detection.html": "602e5ed1"
-  },
-  "myblog/datacamp/sampling_R/sampling_R.Rmd": {
-    "sampling_R.html": "2e0f4b4f"
-  },
-  "myblog/datacamp/tidymodels/tidymodels.Rmd": {
-    "tidymodels.html": "35c1a8ad"
-  },
-  "myblog/datacamp/efficient_R_code/efficient_R_code.Rmd": {
-    "efficient_R_code.html": "c9127cd2"
-  },
-  "blogs.qmd": {
-    "blogs.html": "7501fd62"
+    "about.html": "4d1c0814"
   },
   "myblog/breast_cancer_prediction/cancer_data.Rmd": {
-    "cancer_data.html": "b4bf962b"
-  },
-  "myblog/kenya_population/household_assets_2019census.Rmd": {
-    "household_assets_2019census.html": "e1ae6f30"
-  },
-  "myblog/datacamp/network-analysis-in-r/network_analysis_r.Rmd": {
-    "network_analysis_r.html": "5e801526"
-  },
-  "myblog/datacamp/ml_tree_methods_r/ml_tree_methods.Rmd": {
-    "ml_tree_methods.html": "1a6faf8e"
-  },
-  "myblog/datacamp/introduction_deeplearning/final miniproject.ipynb": {
-    "final miniproject.html": "f1f7c0a6"
-  },
-  "myblog/datacamp/introduction_deeplearning/introduction-to-deep-learning-in-python.ipynb": {
-    "introduction-to-deep-learning-in-python.html": "28038b09"
-  },
-  "myblog/datacamp/foundation_prob_R/eg.qmd": {
-    "eg.html": "8a8009f3"
-  },
-  "myblog/datacamp/Intro_Python_Data/Intro_datascience.ipynb": {
-    "Intro_datascience.html": "54f04d0a"
-  },
-  "myblog/kaggle/malaysia_tourist/malaysia_tourist.Rmd": {
-    "malaysia_tourist.html": "ac22fae3"
-  },
-  "myblog/association_analysis/association_analysis.Rmd": {
-    "association_analysis.html": "73f75293"
+    "cancer_data.html": "9746af2a"
   }
 }

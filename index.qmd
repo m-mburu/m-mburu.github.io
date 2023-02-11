@@ -1,9 +1,12 @@
 ---
-title: ""
-format: 
-    html:
-        css: index.css
+title: "blod_test"
+listing:
+  contents: docs
+  sort: "date desc"
+  type: default
+  categories: true
+  sort-ui: false
+  filter-ui: false
+page-layout: full
+title-block-banner: true
 ---
-
--   Data Science projects I have been working on 😊
--   Work in progress
