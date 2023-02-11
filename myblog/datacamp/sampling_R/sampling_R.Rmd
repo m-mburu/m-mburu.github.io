@@ -7,14 +7,15 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
-
 ## Reasons for sampling
-Sampling is an important technique in your statistical arsenal. It isn't always appropriate though—you need to know when to use it and when to work with the whole dataset.
 
-- Which of the following is not a good scenario to use sampling?
-- when data set is small
+Sampling is an important technique in your statistical arsenal. It isn't always appropriate though---you need to know when to use it and when to work with the whole dataset.
+
+-   Which of the following is not a good scenario to use sampling?
+-   when data set is small
 
 ## Simple sampling with dplyr
+
 Throughout this chapter you'll be exploring song data from Spotify. Each row of the dataset represents a song, and there are 41656 rows. Columns include the name of the song, the artists who performed it, the release year, and attributes of the song like its duration, tempo, and danceability. We'll start by looking at the durations.
 
 Your first task is to sample the song dataset and compare a calculation on the whole population and on a sample.
@@ -36,8 +37,8 @@ spotify_sample <- slice_sample(spotify_population, n = 10)
 kable(spotify_sample)
 ```
 
-
 ## Simple sampling with dplyr
+
 Throughout this chapter you'll be exploring song data from Spotify. Each row of the dataset represents a song, and there are 41656 rows. Columns include the name of the song, the artists who performed it, the release year, and attributes of the song like its duration, tempo, and danceability. We'll start by looking at the durations.
 
 Your first task is to sample the song dataset and compare a calculation on the whole population and on a sample.
@@ -58,8 +59,8 @@ mean_dur_pop
 mean_dur_samp
 ```
 
-
 ## Simple sampling with base-R
+
 While dplyr provides great tools for sampling data frames, if you want to work with vectors you can use base-R.
 
 Let's turn it up to eleven and look at the loudness property of each song.
@@ -82,21 +83,18 @@ sd_loudness_pop
 sd_loudness_samp
 ```
 
-
 ## Are findings from the sample generalizable?
-You just saw how convenience sampling—collecting data via the easiest method can result in samples that aren't representative of the whole population. Equivalently, this means findings from the sample are not generalizable to the whole population. Visualizing the distributions of the population and the sample can help determine whether or not the sample is representative of the population.
+
+You just saw how convenience sampling---collecting data via the easiest method can result in samples that aren't representative of the whole population. Equivalently, this means findings from the sample are not generalizable to the whole population. Visualizing the distributions of the population and the sample can help determine whether or not the sample is representative of the population.
 
 The Spotify dataset contains a column named acousticness, which is a confidence measure from zero to one of whether the track is acoustic, that is, it was made with instruments that aren't plugged in. Here, you'll look at acousticness in the total population of songs, and in a sample of those songs.
 
 spotify_population and spotify_mysterious_sample are available; dplyr and ggplot2 are loaded.
 
-
 ```{r}
 ggplot(spotify_population, aes(acousticness))+
     geom_histogram(binwidth = 0.01)
 ```
-
-
 
 ```{r}
 
@@ -106,6 +104,7 @@ ggplot(spotify_population, aes(duration_minutes))+
 ```
 
 ## Generating random numbers
+
 You've seen sample() and it's dplyr cousin, slice_sample() for generating pseudo-random numbers from a set of values. A related task is to generate random numbers that follow a statistical distribution, like the uniform distribution or the normal distribution.
 
 Each random number generation function has a name beginning with "r". It's first argument is the number of numbers to generate, but other arguments are distribution-specific. Free hint: Try args(runif) and args(rnorm) to see what arguments you need to pass to those functions.
@@ -132,12 +131,11 @@ ggplot(randoms, aes(normal)) +
     geom_histogram(binwidth = 0.5)
 ```
 
-
 ## Understanding random seeds
+
 While random numbers are important for many analyses, they create a problem: the results you get can vary slightly. This can cause awkward conversations with your boss when your script for calculating the sales forecast gives different answers each time.
 
-Setting the seed to R's random number generator helps avoid such problems by making the random number generation reproducible.
-- The values of x are different to those of y.
+Setting the seed to R's random number generator helps avoid such problems by making the random number generation reproducible. - The values of x are different to those of y.
 
 ```{r}
 set.seed(123)
@@ -147,7 +145,7 @@ x
 y
 ```
 
-- x and y have identical values.
+-   x and y have identical values.
 
 ```{r}
 set.seed(123)
@@ -158,8 +156,7 @@ x
 y
 ```
 
-
-- x and y have identical values.
+-   x and y have identical values.
 
 ```{r}
 set.seed(123)
@@ -169,4 +166,3 @@ y <- rnorm(10)
 x
 y
 ```
-

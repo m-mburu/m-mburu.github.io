@@ -150,6 +150,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <a class="nav-link" href="../../../about.html">
  <span class="menu-text">About</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blogs.html">
+ <span class="menu-text">Blog</span></a>
+  </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
@@ -271,8 +275,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tr class="odd">
 <td style="text-align: right;">350000</td>
 <td style="text-align: right;">650000</td>
-<td style="text-align: right;">479438.2</td>
-<td style="text-align: right;">80925.92</td>
+<td style="text-align: right;">479487.2</td>
+<td style="text-align: right;">81369.63</td>
 </tr>
 </tbody>
 </table>
@@ -293,8 +297,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tr class="odd">
 <td style="text-align: right;">350000</td>
 <td style="text-align: right;">650000</td>
-<td style="text-align: right;">478265.5</td>
-<td style="text-align: right;">81185.76</td>
+<td style="text-align: right;">478152</td>
+<td style="text-align: right;">80149.12</td>
 </tr>
 </tbody>
 </table>
@@ -337,23 +341,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">285035.0613</td>
-<td style="text-align: right;">7691.199132</td>
-<td style="text-align: right;">37.059899</td>
+<td style="text-align: right;">290030.7664</td>
+<td style="text-align: right;">7506.574708</td>
+<td style="text-align: right;">38.636899</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">home_age</td>
-<td style="text-align: right;">-1231.5792</td>
-<td style="text-align: right;">178.152470</td>
-<td style="text-align: right;">-6.913063</td>
+<td style="text-align: right;">-1481.2812</td>
+<td style="text-align: right;">174.052616</td>
+<td style="text-align: right;">-8.510537</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">sqft_living</td>
-<td style="text-align: right;">103.9248</td>
-<td style="text-align: right;">2.771416</td>
-<td style="text-align: right;">37.498823</td>
+<td style="text-align: right;">104.3071</td>
+<td style="text-align: right;">2.709358</td>
+<td style="text-align: right;">38.498842</td>
 <td style="text-align: right;">0</td>
 </tr>
 </tbody>
@@ -387,12 +391,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code># A tibble: 6 × 4
   selling_price home_age sqft_living   .pred
           &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;
-1        635000        4        3350 628257.
-2        380000       24        2130 476837.
-3        495000       21        1650 430648.
-4        355000       19        1430 410248.
-5        464950       19        2190 489230.
-6        475000        0        2300 524062.</code></pre>
+1        487000       10        2540 540158.
+2        495000       21        1650 431031.
+3        355000       19        1430 411046.
+4        495000        3        2140 508804.
+5        475000        0        2300 529937.
+6        485000        6        2440 535652.</code></pre>
 </div>
 </div>
 </section>
@@ -413,7 +417,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code># A tibble: 1 × 3
   .metric .estimator .estimate
   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
-1 rmse    standard      46214.</code></pre>
+1 rmse    standard      48218.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the R squared metric</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>home_test_results <span class="sc">%&gt;%</span> </span>
@@ -422,7 +426,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code># A tibble: 1 × 3
   .metric .estimator .estimate
   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
-1 rsq     standard       0.677</code></pre>
+1 rsq     standard       0.640</code></pre>
 </div>
 </div>
 </section>
@@ -468,12 +472,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code># A tibble: 6 × 5
   id                 .pred  .row selling_price .config             
   &lt;chr&gt;              &lt;dbl&gt; &lt;int&gt;         &lt;dbl&gt; &lt;chr&gt;               
-1 train/test split 696151.     4        635000 Preprocessor1_Model1
-2 train/test split 408483.     5        380000 Preprocessor1_Model1
-3 train/test split 445489.     6        495000 Preprocessor1_Model1
-4 train/test split 399760.     7        355000 Preprocessor1_Model1
-5 train/test split 474256.     8        464950 Preprocessor1_Model1
-6 train/test split 456075.    16        475000 Preprocessor1_Model1</code></pre>
+1 train/test split 529253.     1        487000 Preprocessor1_Model1
+2 train/test split 438744.     6        495000 Preprocessor1_Model1
+3 train/test split 400724.     7        355000 Preprocessor1_Model1
+4 train/test split 478150.    12        495000 Preprocessor1_Model1
+5 train/test split 460900.    16        475000 Preprocessor1_Model1
+6 train/test split 562563.    17        485000 Preprocessor1_Model1</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make an R squared plot using predictions_df</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(predictions_df, <span class="fu">aes</span>(<span class="at">x =</span> selling_price, <span class="at">y =</span> .pred)) <span class="sc">+</span> </span>
@@ -538,12 +542,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>logistic_fit <span class="sc">%&gt;%</span> <span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 5
-  term            estimate std.error statistic  p.value
-  &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-1 (Intercept)      2.46      0.590       4.17  3.02e- 5
-2 avg_call_mins   -0.0107    0.00129    -8.29  1.10e-16
-3 avg_intl_mins    0.0209    0.00307     6.82  9.07e-12
-4 monthly_charges -0.00144   0.00484    -0.298 7.65e- 1</code></pre>
+  term             estimate std.error statistic  p.value
+  &lt;chr&gt;               &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)      2.11       0.593      3.56   3.70e- 4
+2 avg_call_mins   -0.0110     0.00133   -8.29   1.14e-16
+3 avg_intl_mins    0.0234     0.00316    7.40   1.40e-13
+4 monthly_charges  0.000299   0.00477    0.0626 9.50e- 1</code></pre>
 </div>
 </div>
 </section>
@@ -574,12 +578,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code># A tibble: 6 × 4
   canceled_service .pred_class .pred_yes .pred_no
   &lt;fct&gt;            &lt;fct&gt;           &lt;dbl&gt;    &lt;dbl&gt;
-1 yes              no             0.364     0.636
-2 no               no             0.0166    0.983
-3 no               no             0.252     0.748
-4 yes              no             0.448     0.552
-5 no               no             0.209     0.791
-6 no               yes            0.585     0.415</code></pre>
+1 yes              yes             0.590    0.410
+2 yes              no              0.377    0.623
+3 no               no              0.201    0.799
+4 no               no              0.228    0.772
+5 yes              yes             0.797    0.203
+6 no               yes             0.612    0.388</code></pre>
 </div>
 </div>
 </section>
@@ -596,8 +600,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell-output cell-output-stdout">
 <pre><code>          Truth
 Prediction yes  no
-       yes  25  11
-       no   57 151</code></pre>
+       yes  35  22
+       no   47 140</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the accuracy</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(telecom_results, <span class="at">truth =</span> canceled_service,</span>
@@ -606,7 +610,7 @@ Prediction yes  no
 <pre><code># A tibble: 1 × 3
   .metric  .estimator .estimate
   &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;
-1 accuracy binary         0.721</code></pre>
+1 accuracy binary         0.717</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the sensitivity</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -616,7 +620,7 @@ Prediction yes  no
 <pre><code># A tibble: 1 × 3
   .metric .estimator .estimate
   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
-1 sens    binary         0.305</code></pre>
+1 sens    binary         0.427</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the specificity</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -626,7 +630,7 @@ Prediction yes  no
 <pre><code># A tibble: 1 × 3
   .metric .estimator .estimate
   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
-1 spec    binary         0.932</code></pre>
+1 spec    binary         0.864</code></pre>
 </div>
 </div>
 </section>
@@ -648,9 +652,9 @@ Prediction yes  no
 <pre><code># A tibble: 3 × 3
   .metric  .estimator .estimate
   &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;
-1 accuracy binary         0.721
-2 sens     binary         0.305
-3 spec     binary         0.932</code></pre>
+1 accuracy binary         0.717
+2 sens     binary         0.427
+3 spec     binary         0.864</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a confusion matrix</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">conf_mat</span>(telecom_results,</span>
@@ -662,19 +666,19 @@ Prediction yes  no
 <pre><code># A tibble: 13 × 3
    .metric              .estimator .estimate
    &lt;chr&gt;                &lt;chr&gt;          &lt;dbl&gt;
- 1 accuracy             binary         0.721
- 2 kap                  binary         0.275
- 3 sens                 binary         0.305
- 4 spec                 binary         0.932
- 5 ppv                  binary         0.694
- 6 npv                  binary         0.726
- 7 mcc                  binary         0.316
- 8 j_index              binary         0.237
- 9 bal_accuracy         binary         0.618
-10 detection_prevalence binary         0.148
-11 precision            binary         0.694
-12 recall               binary         0.305
-13 f_meas               binary         0.424</code></pre>
+ 1 accuracy             binary         0.717
+ 2 kap                  binary         0.315
+ 3 sens                 binary         0.427
+ 4 spec                 binary         0.864
+ 5 ppv                  binary         0.614
+ 6 npv                  binary         0.749
+ 7 mcc                  binary         0.325
+ 8 j_index              binary         0.291
+ 9 bal_accuracy         binary         0.646
+10 detection_prevalence binary         0.234
+11 precision            binary         0.614
+12 recall               binary         0.427
+13 f_meas               binary         0.504</code></pre>
 </div>
 </div>
 </section>
@@ -722,12 +726,12 @@ Prediction yes  no
 <pre><code># A tibble: 6 × 3
   .threshold specificity sensitivity
        &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
-1  -Inf          0             1    
-2     0.0109     0             1    
-3     0.0166     0             0.988
-4     0.0210     0.00617       0.988
-5     0.0371     0.0123        0.988
-6     0.0443     0.0185        0.988</code></pre>
+1  -Inf          0                 1
+2     0.0151     0                 1
+3     0.0176     0.00617           1
+4     0.0338     0.0123            1
+5     0.0397     0.0185            1
+6     0.0419     0.0247            1</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot ROC curve</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>threshold_df <span class="sc">%&gt;%</span> </span>
@@ -741,7 +745,7 @@ Prediction yes  no
 <pre><code># A tibble: 1 × 3
   .metric .estimator .estimate
   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
-1 roc_auc binary         0.751</code></pre>
+1 roc_auc binary         0.730</code></pre>
 </div>
 </div>
 <p>Streamlining the modeling process The last_fit() function is designed to streamline the modeling workflow in tidymodels. Instead of training your model on the training data and building a results tibble using the test data, last_fit() accomplishes this with one function.</p>
@@ -760,8 +764,8 @@ Prediction yes  no
 <pre><code># A tibble: 2 × 4
   .metric  .estimator .estimate .config             
   &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;               
-1 accuracy binary         0.721 Preprocessor1_Model1
-2 roc_auc  binary         0.751 Preprocessor1_Model1</code></pre>
+1 accuracy binary         0.717 Preprocessor1_Model1
+2 roc_auc  binary         0.730 Preprocessor1_Model1</code></pre>
 </div>
 </div>
 </section>
@@ -782,12 +786,12 @@ Prediction yes  no
 <pre><code># A tibble: 6 × 7
   id               .pred_yes .pred_no  .row .pred_class canceled_service .config
   &lt;chr&gt;                &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt; &lt;fct&gt;       &lt;fct&gt;            &lt;chr&gt;  
-1 train/test split    0.364     0.636     2 no          yes              Prepro…
-2 train/test split    0.0166    0.983    22 no          no               Prepro…
-3 train/test split    0.252     0.748    23 no          no               Prepro…
-4 train/test split    0.448     0.552    30 no          yes              Prepro…
-5 train/test split    0.209     0.791    33 no          no               Prepro…
-6 train/test split    0.585     0.415    43 yes         no               Prepro…</code></pre>
+1 train/test split     0.590    0.410     1 yes         yes              Prepro…
+2 train/test split     0.377    0.623     2 no          yes              Prepro…
+3 train/test split     0.201    0.799     5 no          no               Prepro…
+4 train/test split     0.228    0.772     6 no          no               Prepro…
+5 train/test split     0.797    0.203     7 yes         yes              Prepro…
+6 train/test split     0.612    0.388    18 yes         no               Prepro…</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Custom metrics function</span></span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>last_fit_metrics <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(accuracy, sens,</span>
@@ -802,10 +806,10 @@ Prediction yes  no
 <pre><code># A tibble: 4 × 3
   .metric  .estimator .estimate
   &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;
-1 accuracy binary         0.721
-2 sens     binary         0.305
-3 spec     binary         0.932
-4 roc_auc  binary         0.751</code></pre>
+1 accuracy binary         0.717
+2 sens     binary         0.427
+3 spec     binary         0.864
+4 roc_auc  binary         0.730</code></pre>
 </div>
 </div>
 </section>
@@ -827,8 +831,8 @@ Prediction yes  no
 <pre><code># A tibble: 2 × 4
   .metric  .estimator .estimate .config             
   &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;               
-1 accuracy binary         0.811 Preprocessor1_Model1
-2 roc_auc  binary         0.865 Preprocessor1_Model1</code></pre>
+1 accuracy binary         0.779 Preprocessor1_Model1
+2 roc_auc  binary         0.838 Preprocessor1_Model1</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect model predictions</span></span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>logistic_fit <span class="sc">%&gt;%</span> </span>

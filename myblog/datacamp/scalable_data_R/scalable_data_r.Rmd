@@ -10,12 +10,12 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
 ## How does processing time vary by data size?
+
 If you are processing all elements of two data sets, and one data set is bigger, then the bigger data set will take longer to process. However, it's important to realize that how much longer it takes is not always directly proportional to how much bigger it is. That is, if you have two data sets and one is two times the size of the other, it is not guaranteed that the larger one will take twice as long to process. It could take 1.5 times longer or even four times longer. It depends on which operations are used to process the data set.
 
 In this exercise, you'll use the microbenchmark package, which was covered in the Writing Efficient R Code course.
 
 Note: Numbers are specified using scientific notation
-
 
 ```{r}
 # Load the microbenchmark package
@@ -56,7 +56,6 @@ x <- read.big.matrix("mortgage-sample.csv", header = TRUE,
 dim(x)
 ```
 
-
 ## Attaching a big.matrix object
 
 Now that the big.matrix object is on the disk, we can use the information stored in the descriptor file to instantly make it available during an R session. This means that you don't have to reimport the data set, which takes more time for larger files. You can simply point the bigmemory package at the existing structures on the disk and begin accessing data without the wait.
@@ -71,4 +70,3 @@ dim(mort)
 # Look at the first 6 rows of mort
 head(mort)
 ```
-

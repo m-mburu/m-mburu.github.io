@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Mburu">
-<meta name="dcterms.date" content="2023-02-05">
+<meta name="dcterms.date" content="2023-02-11">
 
 <title>Data Science Projects - Anomaly Detection in R</title>
 <style>
@@ -163,6 +163,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <a class="nav-link" href="../../../about.html">
  <span class="menu-text">About</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../blogs.html">
+ <span class="menu-text">Blog</span></a>
+  </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
@@ -246,7 +250,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 5, 2023</p>
+      <p class="date">February 11, 2023</p>
     </div>
   </div>
   
@@ -273,8 +277,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(river) <span class="sc">%&gt;%</span> <span class="fu">data_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="htmlwidget-3557aee3b0f2cfb010ef" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3557aee3b0f2cfb010ef">{"x":{"style":"bootstrap4","filter":"none","vertical":false,"data":[[1.581,1.323,1.14,1.245,1.072,1.483],["January","February","March","April","May","June"],[1,2,3,4,5,6]],"container":"<table class=\"table table-bordered table-striped\">\n  <thead>\n    <tr>\n      <th>nitrate<\/th>\n      <th>months<\/th>\n      <th>index<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-center","targets":[1,2,3]},{"className":"dt-right","targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-faf230fcbebacaa78387" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-faf230fcbebacaa78387">{"x":{"style":"bootstrap4","filter":"none","vertical":false,"data":[[1.581,1.323,1.14,1.245,1.072,1.483],["January","February","March","April","May","June"],[1,2,3,4,5,6]],"container":"<table class=\"table table-bordered table-striped\">\n  <thead>\n    <tr>\n      <th>nitrate<\/th>\n      <th>months<\/th>\n      <th>index<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-center","targets":[1,2,3]},{"className":"dt-right","targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary statistics of river nitrate concentrations</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(river<span class="sc">$</span>nitrate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -534,8 +538,8 @@ $plot</code></pre>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>wine[<span class="fu">c</span>(<span class="dv">5</span>, row_idx), ] <span class="sc">%&gt;%</span> <span class="fu">data_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="htmlwidget-cc4231d90c097733270d" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-cc4231d90c097733270d">{"x":{"style":"bootstrap4","filter":"none","vertical":false,"data":[[3.19,3.19],[9.9,9.9]],"container":"<table class=\"table table-bordered table-striped\">\n  <thead>\n    <tr>\n      <th>pH<\/th>\n      <th>alcohol<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-center","targets":[1,2]},{"className":"dt-right","targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-303f9cd7dd57f4e28332" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-303f9cd7dd57f4e28332">{"x":{"style":"bootstrap4","filter":"none","vertical":false,"data":[[3.19,3.19],[9.9,9.9]],"container":"<table class=\"table table-bordered table-striped\">\n  <thead>\n    <tr>\n      <th>pH<\/th>\n      <th>alcohol<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-center","targets":[1,2]},{"className":"dt-right","targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>

@@ -14,4 +14,3 @@ library(tensorflow)
 msg = tf$constant('Hello, TensorFlow!')
 tf$print(msg)
 ```
-

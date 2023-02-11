@@ -7,7 +7,7 @@ website:
   site-url: https://m-mburu.github.io/
   navbar:
     search: true
-    background: dark 
+    background: light  
     type: dark
     display: inline-block;
     float: center;
@@ -27,6 +27,7 @@ website:
 format:
   html:
     theme: lumen
+    css: style.css
     toc: true
 
 editor: visual
