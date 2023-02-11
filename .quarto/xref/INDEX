@@ -13,5 +13,35 @@
   },
   "myblog/breast_cancer_prediction/cancer_data.Rmd": {
     "cancer_data.html": "9746af2a"
+  },
+  "posts/association_analysis/association_analysis.Rmd": {
+    "association_analysis.html": "a12caa73"
+  },
+  "posts/loan_prediction/loan_prediction.Rmd": {
+    "loan_prediction.html": "5c9872f9"
+  },
+  "posts/busara_task/busara data analysis.Rmd": {
+    "busara data analysis.html": "fc73ed5c"
+  },
+  "posts/loan_prediction/clustering_loans.Rmd": {
+    "clustering_loans.html": "554781bf"
+  },
+  "posts/cv/cv_mburu.Rmd": {
+    "cv_mburu.html": "923a42a4"
+  },
+  "posts/datacamp/regression_r/regression.Rmd": {
+    "regression.html": "42ead825"
+  },
+  "posts/datacamp/regression_r/logistic_regression.Rmd": {
+    "logistic_regression.html": "05625f45"
+  },
+  "posts/datacamp/anomaly_detection_R/anomaly_detection.Rmd": {
+    "anomaly_detection.html": "92b6872a"
+  },
+  "posts/datacamp/sampling_R/sampling_R.Rmd": {
+    "sampling_R.html": "949ab942"
+  },
+  "posts/datacamp/tidymodels/tidymodels.Rmd": {
+    "tidymodels.html": "af3c6578"
   }
 }

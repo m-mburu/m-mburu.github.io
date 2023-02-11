@@ -1,5 +1,5 @@
 ---
-title: "blod_test"
+title: ""
 listing:
   contents: docs
   sort: "date desc"

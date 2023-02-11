@@ -49,19 +49,19 @@ micro_train.csv
 micro_test.csv
 
 
-myblog/_site/files/kaggle/big5test/data
-myblog/_site/files/kaggle/mnist_digits/data
+posts/_site/files/kaggle/big5test/data
+posts/_site/files/kaggle/mnist_digits/data
 
-myblog/files/kaggle/big5test/data
-myblog/files/kaggle/mnist_digits/data
+posts/files/kaggle/big5test/data
+posts/files/kaggle/mnist_digits/data
 data-final.csv
 
 
-myblog/kaggle/mnist_digits/data
-myblog/_site/files/kaggle/mnist_digits/data/train.csv
+posts/kaggle/mnist_digits/data
+posts/_site/files/kaggle/mnist_digits/data/train.csv
 
-myblog/shiny/ihme_maln/rsconnect
+posts/shiny/ihme_maln/rsconnect
 
-myblog/kaggle/data/climate_changeGlobalLandTemperaturesByCity.csv
-myblog/kaggle/climate_change/
+posts/kaggle/data/climate_changeGlobalLandTemperaturesByCity.csv
+posts/kaggle/climate_change/
 /.quarto/
