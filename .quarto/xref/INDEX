@@ -173,5 +173,14 @@
   },
   "posts/breast_cancer_prediction/shap_vals.Rmd": {
     "shap_vals.html": "6c5ea249"
+  },
+  "posts/old_files/blogs_old.qmd": {
+    "blogs_old.html": "f7a0728d"
+  },
+  "posts/old_files/about.Rmd": {
+    "about.html": "40366b8e"
+  },
+  "posts/old_files/blog.Rmd": {
+    "blog.html": "5e6e878a"
   }
 }

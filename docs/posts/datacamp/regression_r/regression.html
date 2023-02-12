@@ -166,43 +166,41 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">Multiple Linear and Logistic Regression in R</h1>
-                      </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>Mburu </p>
-            </div>
-    </div>
-      
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">April 13, 2021</p>
-      </div>
-    </div>
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Multiple Linear and Logistic Regression in R</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Mburu </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 13, 2021</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
 
 <section id="fitting-a-parallel-slopes-model" class="level2">
 <h2 class="anchored" data-anchor-id="fitting-a-parallel-slopes-model">Fitting a parallel slopes model</h2>
@@ -451,21 +449,21 @@ lm(formula = total_pr ~ wheels + cond + noise, data = mario_kart_noisy)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
--10.7376  -3.0423  -0.8488   2.6825  14.3907 
+-11.2462  -3.1833  -0.7341   3.0070  13.8714 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  42.3864     1.0681  39.682  &lt; 2e-16 ***
-wheels        7.2062     0.5453  13.216  &lt; 2e-16 ***
-condused     -5.5855     0.9268  -6.027 1.46e-08 ***
-noise        -0.2190     0.3863  -0.567    0.572    
+(Intercept)  42.3869     1.0687   39.66  &lt; 2e-16 ***
+wheels        7.2352     0.5434   13.31  &lt; 2e-16 ***
+condused     -5.6058     0.9281   -6.04 1.37e-08 ***
+noise        -0.1997     0.4163   -0.48    0.632    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 4.899 on 137 degrees of freedom
+Residual standard error: 4.901 on 137 degrees of freedom
   (2 observations deleted due to missingness)
-Multiple R-squared:  0.7172,    Adjusted R-squared:  0.711 
-F-statistic: 115.8 on 3 and 137 DF,  p-value: &lt; 2.2e-16</code></pre>
+Multiple R-squared:  0.717, Adjusted R-squared:  0.7108 
+F-statistic: 115.7 on 3 and 137 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 </section>

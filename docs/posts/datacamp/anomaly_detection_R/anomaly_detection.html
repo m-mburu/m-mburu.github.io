@@ -176,43 +176,41 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">Anomaly Detection in R</h1>
-                      </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>Mburu </p>
-            </div>
-    </div>
-      
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">February 11, 2023</p>
-      </div>
-    </div>
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Anomaly Detection in R</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Mburu </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 11, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
 
 <section id="statistical-outlier-detection" class="level2">
 <h2 class="anchored" data-anchor-id="statistical-outlier-detection">Statistical outlier detection</h2>
@@ -231,8 +229,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(river) <span class="sc">%&gt;%</span> <span class="fu">data_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-1af6d3384ff5684381e7" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-1af6d3384ff5684381e7">{"x":{"style":"bootstrap4","filter":"none","vertical":false,"data":[[1.581,1.323,1.14,1.245,1.072,1.483],["January","February","March","April","May","June"],[1,2,3,4,5,6]],"container":"<table class=\"table table-bordered table-striped\">\n  <thead>\n    <tr>\n      <th>nitrate<\/th>\n      <th>months<\/th>\n      <th>index<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-center","targets":[1,2,3]},{"className":"dt-right","targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-f39c20eeaf3e48158944" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-f39c20eeaf3e48158944">{"x":{"style":"bootstrap4","filter":"none","vertical":false,"data":[[1.581,1.323,1.14,1.245,1.072,1.483],["January","February","March","April","May","June"],[1,2,3,4,5,6]],"container":"<table class=\"table table-bordered table-striped\">\n  <thead>\n    <tr>\n      <th>nitrate<\/th>\n      <th>months<\/th>\n      <th>index<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-center","targets":[1,2,3]},{"className":"dt-right","targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary statistics of river nitrate concentrations</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(river<span class="sc">$</span>nitrate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -492,8 +490,8 @@ $plot</code></pre>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>wine[<span class="fu">c</span>(<span class="dv">5</span>, row_idx), ] <span class="sc">%&gt;%</span> <span class="fu">data_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-623dc44d095dcd30b241" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-623dc44d095dcd30b241">{"x":{"style":"bootstrap4","filter":"none","vertical":false,"data":[[3.19,3.19],[9.9,9.9]],"container":"<table class=\"table table-bordered table-striped\">\n  <thead>\n    <tr>\n      <th>pH<\/th>\n      <th>alcohol<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-center","targets":[1,2]},{"className":"dt-right","targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-e2445da15b5f7b115670" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-e2445da15b5f7b115670">{"x":{"style":"bootstrap4","filter":"none","vertical":false,"data":[[3.19,3.19],[9.9,9.9]],"container":"<table class=\"table table-bordered table-striped\">\n  <thead>\n    <tr>\n      <th>pH<\/th>\n      <th>alcohol<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-center","targets":[1,2]},{"className":"dt-right","targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>

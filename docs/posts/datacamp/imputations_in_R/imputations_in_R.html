@@ -163,31 +163,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">Handling Missing Data with Imputations in R</h1>
-                      </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Handling Missing Data with Imputations in R</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
 
 <section id="the-problem-of-missing-data" class="level1">
 <h1>The problem of missing data</h1>
@@ -1380,7 +1378,7 @@ mean of x mean of y
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(imp_err)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     NRMSE        PFC 
-0.01928484 0.14432903 </code></pre>
+0.01937041 0.13344991 </code></pre>
 </div>
 </div>
 <p><strong><em>Note that missForest() outputs a list and you have to manually extract the imputed data - it’s a common mistake to overlook it when building a data processing pipeline. Also, take a look at the errors. Can you tell which variables have been imputed particularly well? Let’s look at it more closely in the next exercise!</em></strong></p>
@@ -1398,10 +1396,10 @@ mean of x mean of y
 <span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>per_variable_errors <span class="ot">&lt;-</span> imp_res<span class="sc">$</span>OOBerror</span>
 <span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(per_variable_errors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>        PFC         MSE         MSE         MSE         PFC         PFC 
-  0.3385827   0.0000000 998.4068755   0.0000000   0.0000000   0.1897163 
-        MSE         PFC 
-  0.0000000   0.0000000 </code></pre>
+<pre><code>         PFC          MSE          MSE          MSE          PFC          PFC 
+   0.3858268    0.0000000 1175.0908047    0.0000000    0.0000000    0.1702128 
+         MSE          PFC 
+   0.0000000    0.0000000 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename errors' columns to include variable names</span></span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(per_variable_errors) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="fu">names</span>(biopics), </span>
@@ -1412,9 +1410,9 @@ mean of x mean of y
 <span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(per_variable_errors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  country_PFC      year_MSE  earnings_MSE   sub_num_MSE  sub_type_PFC 
-    0.3385827     0.0000000   998.4068755     0.0000000     0.0000000 
+    0.3858268     0.0000000  1175.0908047     0.0000000     0.0000000 
  sub_race_PFC non_white_MSE   sub_sex_PFC 
-    0.1897163     0.0000000     0.0000000 </code></pre>
+    0.1702128     0.0000000     0.0000000 </code></pre>
 </div>
 </div>
 </section>
@@ -1430,7 +1428,7 @@ mean of x mean of y
 <span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(imp_res<span class="sc">$</span>OOBerror)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     NRMSE        PFC 
-0.02315201 0.20332849 </code></pre>
+0.02186585 0.21326797 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set number of trees to 50 and number of variables used for splitting to 6</span></span>
 <span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>imp_res <span class="ot">&lt;-</span> <span class="fu">missForest</span>(biopics, <span class="at">ntree =</span> <span class="dv">50</span>, <span class="at">mtry =</span> <span class="dv">6</span>)</span>
@@ -1439,7 +1437,7 @@ mean of x mean of y
 <span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(imp_res<span class="sc">$</span>OOBerror)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     NRMSE        PFC 
-0.02110847 0.14142165 </code></pre>
+0.01950811 0.12528271 </code></pre>
 </div>
 </div>
 <ul>
@@ -1492,8 +1490,8 @@ boot(data = biopics, statistic = calc_gender_coef, R = 50)
 
 
 Bootstrap Statistics :
-    original    bias    std. error
-t1*  2.64305 -1.859911    5.456893</code></pre>
+    original     bias    std. error
+t1* 2.448256 -0.8058013    3.705629</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(boot_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1511,7 +1509,7 @@ boot.ci(boot.out = boot_results, conf = 0.95, type = "norm")
 
 Intervals : 
 Level      Normal        
-95%   (-6.192, 15.198 )  
+95%   (-4.009, 10.517 )  
 Calculations and Intervals on Original Scale</code></pre>
 </div>
 </div>
@@ -1539,7 +1537,7 @@ boot(data = biopics, statistic = calc_gender_coef, R = 1000)
 
 Bootstrap Statistics :
     original     bias    std. error
-t1* 2.172231 -0.7234102    3.785335</code></pre>
+t1* 2.131614 -0.7586973    3.813445</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(boot_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1557,7 +1555,7 @@ boot.ci(boot.out = boot_results, conf = 0.95, type = "norm")
 
 Intervals : 
 Level      Normal        
-95%   (-4.523, 10.315 )  
+95%   (-4.584, 10.365 )  
 Calculations and Intervals on Original Scale</code></pre>
 </div>
 </div>

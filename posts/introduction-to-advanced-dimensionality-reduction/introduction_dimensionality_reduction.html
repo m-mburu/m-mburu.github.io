@@ -165,43 +165,41 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">Introduction to advanced dimensionality reduction</h1>
-                      </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>Mburu </p>
-            </div>
-    </div>
-      
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">April 8, 2020</p>
-      </div>
-    </div>
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Introduction to advanced dimensionality reduction</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Mburu </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 8, 2020</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
 
 <section id="exploring-mnist-dataset" class="level2">
 <h2 class="anchored" data-anchor-id="exploring-mnist-dataset">Exploring MNIST dataset</h2>
@@ -447,13 +445,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the obtained embedding coordinates</span></span>
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tsne_output<span class="sc">$</span>Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>          [,1]      [,2]       [,3]
-[1,]  2.797005  5.142908 -6.6520644
-[2,]  4.556940 10.472095 -5.6356933
-[3,]  6.395298 -7.396396  0.2339104
-[4,] -9.464386  9.943015 -4.1290475
-[5,]  2.835100 -6.763885  0.8818647
-[6,]  9.257222 -2.907011 -6.0542834</code></pre>
+<pre><code>           [,1]      [,2]       [,3]
+[1,]   1.038023  8.883482  3.1956836
+[2,]  -3.981232 12.725934  4.6647353
+[3,]   5.622174 -7.390086  0.7865127
+[4,] -14.627619  7.822032 -1.9929169
+[5,]   4.575360 -5.413038 -2.0521591
+[6,]  -1.311153 10.375891 -2.6254346</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store the first two coordinates and plot them </span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>tsne_plot <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">tsne_x =</span> tsne_output<span class="sc">$</span>Y[, <span class="dv">1</span>], <span class="at">tsne_y =</span> tsne_output<span class="sc">$</span>Y[, <span class="dv">2</span>], </span>
@@ -478,9 +476,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 14
  $ N                  : int 200
- $ Y                  : num [1:200, 1:3] 2.8 4.56 6.4 -9.46 2.84 ...
- $ costs              : num [1:200] 0.00342 0.00297 0.00055 0.00277 0.00223 ...
- $ itercosts          : num [1:20] 53.3 52.3 52.9 51.7 53 ...
+ $ Y                  : num [1:200, 1:3] 1.04 -3.98 5.62 -14.63 4.58 ...
+ $ costs              : num [1:200] 0.00353 0.0026 0.000592 0.002437 0.002035 ...
+ $ itercosts          : num [1:20] 52.9 54.2 54.7 53.1 52.3 ...
  $ origD              : int 50
  $ perplexity         : num 30
  $ theta              : num 0.5
@@ -496,10 +494,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show total costs after each 50th iteration</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>tsne_output<span class="sc">$</span>itercosts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 53.2567159 52.2915239 52.8661957 51.6591221 52.9516520  0.9307949
- [7]  0.6470520  0.5626513  0.5156980  0.5108396  0.5055191  0.4974795
-[13]  0.4942471  0.4922827  0.4931260  0.4904664  0.4914848  0.4898935
-[19]  0.4913327  0.4908019</code></pre>
+<pre><code> [1] 52.8873029 54.1847034 54.7334424 53.1061930 52.3335593  1.1216984
+ [7]  0.7348462  0.6175036  0.5546892  0.5328149  0.5245771  0.5205308
+[13]  0.5149761  0.5121356  0.5073641  0.5022083  0.4992460  0.4963463
+[19]  0.4976183  0.4976648</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the evolution of the KL divergence at each 50th iteration</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tsne_output<span class="sc">$</span>itercosts, <span class="at">type =</span> <span class="st">"l"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -511,9 +509,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 14
  $ N                  : int 200
- $ Y                  : num [1:200, 1:3] 2.8 4.56 6.4 -9.46 2.84 ...
- $ costs              : num [1:200] 0.00342 0.00297 0.00055 0.00277 0.00223 ...
- $ itercosts          : num [1:20] 53.3 52.3 52.9 51.7 53 ...
+ $ Y                  : num [1:200, 1:3] 1.04 -3.98 5.62 -14.63 4.58 ...
+ $ costs              : num [1:200] 0.00353 0.0026 0.000592 0.002437 0.002035 ...
+ $ itercosts          : num [1:20] 52.9 54.2 54.7 53.1 52.3 ...
  $ origD              : int 50
  $ perplexity         : num 30
  $ theta              : num 0.5
@@ -529,46 +527,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the K-L divergence of each record after the final iteration</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>tsne_output<span class="sc">$</span>costs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  [1]  0.0034174757  0.0029728581  0.0005504898  0.0027692258  0.0022288362
-  [6]  0.0057885138  0.0036343563  0.0013069847  0.0015557943  0.0019944906
- [11]  0.0024601940  0.0029579243  0.0026655458  0.0018782248  0.0043633200
- [16]  0.0009990607  0.0032647592  0.0025923357  0.0008498765  0.0022686889
- [21]  0.0017665547  0.0015116845  0.0031226883  0.0021650831  0.0024715843
- [26]  0.0025431443  0.0016450644  0.0021711457  0.0041928263  0.0009438300
- [31]  0.0050829387  0.0032062042  0.0035671215  0.0021694142  0.0020954372
- [36]  0.0033302921  0.0057613944  0.0026565644  0.0011248004  0.0039679638
- [41]  0.0029367949  0.0024785620  0.0024159892  0.0017942388  0.0022840477
- [46]  0.0037765342  0.0025203077  0.0051968590  0.0004972147  0.0044978331
- [51]  0.0020800592  0.0040475671  0.0015066205  0.0056465079  0.0016973046
- [56]  0.0054093156  0.0011852646  0.0058488410  0.0008691591  0.0013817153
- [61]  0.0033213517  0.0013516170  0.0011240949  0.0018977794  0.0022572910
- [66]  0.0010196905  0.0008412208  0.0006216288  0.0015772333  0.0011447258
- [71]  0.0027004229  0.0056891891  0.0006107877  0.0033526510  0.0012266942
- [76]  0.0026682752  0.0005598282  0.0020758530  0.0011308186  0.0012633827
- [81]  0.0027626258  0.0019415110  0.0033466082  0.0012637130  0.0046555588
- [86]  0.0016723685  0.0016770583  0.0034623779  0.0012029961  0.0035918725
- [91]  0.0044978676  0.0007241990  0.0037106577  0.0002940634  0.0077671012
- [96]  0.0030014218  0.0015530451  0.0008403763  0.0019963392  0.0020803698
-[101]  0.0015604525  0.0023659722  0.0015253896  0.0015649411  0.0015653190
-[106]  0.0024791352  0.0020028889  0.0026158041  0.0015421620  0.0010002653
-[111]  0.0012526674  0.0024896172  0.0020835220  0.0011423596  0.0032638947
-[116]  0.0032574106  0.0036779259  0.0031165055  0.0000668607  0.0042271907
-[121]  0.0027297369  0.0050504469  0.0005103500  0.0015037387  0.0040764548
-[126]  0.0023880081  0.0044988762  0.0020478148  0.0034122314  0.0020406245
-[131]  0.0083893037  0.0020684726  0.0026419824  0.0019747799  0.0008668788
-[136]  0.0025096476  0.0048179466  0.0015292831  0.0020501421  0.0028643908
-[141]  0.0013399658  0.0029231555  0.0024378603  0.0020372578  0.0016122528
-[146]  0.0052698817  0.0017881580  0.0008024673  0.0018592243  0.0021153887
-[151] -0.0001172438  0.0020217826  0.0024551064  0.0028175871  0.0046163864
-[156]  0.0030941460  0.0059331118  0.0028702886  0.0002709510  0.0008989285
-[161]  0.0017600385  0.0008235261  0.0028759197  0.0023707087  0.0018275774
-[166]  0.0018605250  0.0015037026  0.0017111415  0.0039444059  0.0015747368
-[171]  0.0008325786  0.0009607417  0.0031155447  0.0029885027  0.0037049660
-[176]  0.0049675154  0.0029984435  0.0032886225  0.0041335089  0.0023761950
-[181]  0.0013478639  0.0018146625  0.0026450723  0.0011213476  0.0021787760
-[186]  0.0012619862  0.0014239765  0.0030828049  0.0036936194  0.0016160208
-[191]  0.0035105621  0.0013495031  0.0026488494  0.0024515092  0.0022165538
-[196]  0.0005791620  0.0019845642  0.0020360660  0.0025363715  0.0013035413</code></pre>
+<pre><code>  [1]  3.530021e-03  2.599685e-03  5.924902e-04  2.436528e-03  2.034627e-03
+  [6]  6.001209e-03  3.135383e-03  1.568920e-03  1.944199e-03  2.070910e-03
+ [11]  2.267584e-03  2.932744e-03  2.595742e-03  1.143692e-03  4.422675e-03
+ [16]  1.569182e-03  3.260873e-03  2.561276e-03  8.300500e-04  2.321393e-03
+ [21]  1.401653e-03  2.074688e-03  2.898110e-03  2.139066e-03  2.776283e-03
+ [26]  2.718612e-03  1.811579e-03  3.366942e-03  4.228741e-03  7.617467e-04
+ [31]  4.929081e-03  2.755627e-03  3.917489e-03  2.120731e-03  2.152739e-03
+ [36]  3.839698e-03  5.996013e-03  2.839322e-03  9.818895e-04  3.954330e-03
+ [41]  3.011183e-03  3.250598e-03  2.369782e-03  1.321014e-03  2.132493e-03
+ [46]  3.431696e-03  2.396803e-03  4.577028e-03  9.539857e-04  4.481914e-03
+ [51]  2.030881e-03  3.759461e-03  1.504227e-03  5.372114e-03  2.683576e-03
+ [56]  6.285989e-03  8.652037e-04  3.984227e-03  5.389851e-04  1.221832e-03
+ [61]  3.795970e-03  2.868594e-03  8.824829e-04  2.270737e-03  2.714507e-03
+ [66]  1.105024e-03  8.634369e-04  9.262307e-04  1.972027e-03  8.505556e-04
+ [71]  2.536400e-03  6.879475e-03  7.218443e-04  3.354772e-03  9.316105e-04
+ [76]  3.082886e-03  3.346571e-04  2.308966e-03  1.113031e-03  1.168535e-03
+ [81]  3.060703e-03  1.568738e-03  2.717278e-03  1.185721e-03  5.398724e-03
+ [86]  2.297166e-03  1.230813e-03  2.954828e-03  9.584376e-04  3.609881e-03
+ [91]  3.839102e-03  7.871096e-04  3.643323e-03  4.105013e-05  6.230940e-03
+ [96]  2.515039e-03  1.373320e-03  1.368349e-03  1.748503e-03  1.602098e-03
+[101]  1.790355e-03  2.874360e-03  8.646812e-04  1.646978e-03  1.679530e-03
+[106]  1.994270e-03  1.722035e-03  2.818426e-03  1.242158e-03  7.290694e-04
+[111]  7.861890e-04  2.906854e-03  2.186637e-03  9.461195e-04  3.062573e-03
+[116]  2.257497e-03  3.393059e-03  3.152439e-03 -9.186159e-05  4.451588e-03
+[121]  2.652422e-03  4.955555e-03  7.148938e-04  1.144588e-03  3.484112e-03
+[126]  3.267149e-03  4.779442e-03  2.004987e-03  4.584098e-03  2.184703e-03
+[131]  8.406337e-03  3.202073e-03  3.358857e-03  1.646605e-03  1.201331e-03
+[136]  1.990919e-03  4.518819e-03  1.296389e-03  2.477119e-03  3.405090e-03
+[141]  1.630757e-03  2.358104e-03  2.704090e-03  2.123182e-03  1.464632e-03
+[146]  6.461852e-03  1.388184e-03  2.120510e-03  2.093230e-03  1.696249e-03
+[151] -5.540920e-05  2.788442e-03  2.491513e-03  2.332105e-03  5.614127e-03
+[156]  3.369839e-03  5.516909e-03  2.460858e-03  1.673737e-04  9.742207e-04
+[161]  1.679469e-03  4.872445e-04  2.702197e-03  2.517293e-03  2.169055e-03
+[166]  1.904703e-03  1.148796e-03  1.954435e-03  3.942924e-03  1.411802e-03
+[171]  8.772173e-04  9.290012e-04  1.582145e-03  3.036634e-03  4.338338e-03
+[176]  4.480464e-03  2.910440e-03  3.516309e-03  5.484183e-03  2.567592e-03
+[181]  1.569874e-03  1.436286e-03  2.978119e-03  1.432727e-03  2.146552e-03
+[186]  1.442720e-03  1.205103e-03  4.061972e-03  4.050638e-03  1.214163e-03
+[191]  4.770479e-03  1.731418e-03  2.464039e-03  3.151217e-03  2.123669e-03
+[196]  5.213217e-04  1.762533e-03  2.319270e-03  2.339778e-03  1.444065e-03</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the K-L divergence of each record after the final iteration</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tsne_output<span class="sc">$</span>costs, <span class="at">type =</span> <span class="st">"l"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1210,25 +1208,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Start a connection with the h2o cluster</span></span>
 <span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a><span class="fu">h2o.init</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-H2O is not running yet, starting it now...
-
-Note:  In case of errors look at the following log files:
-    /tmp/RtmpxtoQk8/file944d21a59e761/h2o_mburu_started_from_r.out
-    /tmp/RtmpxtoQk8/file944d2232141a5/h2o_mburu_started_from_r.err
-
-
-Starting H2O JVM and connecting: .. Connection successful!
+<pre><code> Connection successful!
 
 R is connected to the H2O cluster: 
-    H2O cluster uptime:         1 seconds 126 milliseconds 
+    H2O cluster uptime:         1 hours 11 minutes 
     H2O cluster timezone:       Africa/Nairobi 
     H2O data parsing timezone:  UTC 
     H2O cluster version:        3.38.0.1 
     H2O cluster version age:    4 months and 23 days !!! 
     H2O cluster name:           H2O_started_from_R_mburu_cvk380 
     H2O cluster total nodes:    1 
-    H2O cluster total memory:   3.40 GB 
+    H2O cluster total memory:   3.07 GB 
     H2O cluster total cores:    8 
     H2O cluster allowed cores:  8 
     H2O cluster healthy:        TRUE 
@@ -1258,7 +1248,7 @@ R is connected to the H2O cluster:
   |                                                                            
   |                                                                      |   0%
   |                                                                            
-  |=                                                                     |   1%
+  |=                                                                     |   2%
   |                                                                            
   |======================================================================| 100%</code></pre>
 </div>
@@ -1295,41 +1285,55 @@ R is connected to the H2O cluster:
   |                                                                            
   |===                                                                   |   4%
   |                                                                            
+  |====                                                                  |   5%
+  |                                                                            
   |=====                                                                 |   7%
   |                                                                            
   |======                                                                |   9%
   |                                                                            
-  |=======                                                               |  10%
+  |=======                                                               |  11%
   |                                                                            
-  |=========                                                             |  13%
+  |=========                                                             |  12%
   |                                                                            
-  |===========                                                           |  15%
+  |==========                                                            |  14%
+  |                                                                            
+  |===========                                                           |  16%
   |                                                                            
   |============                                                          |  17%
   |                                                                            
-  |==============                                                        |  20%
+  |=============                                                         |  19%
   |                                                                            
-  |================                                                      |  22%
+  |===============                                                       |  21%
   |                                                                            
-  |=================                                                     |  25%
+  |================                                                      |  23%
   |                                                                            
-  |===================                                                   |  27%
+  |=================                                                     |  24%
   |                                                                            
-  |====================                                                  |  29%
+  |==================                                                    |  26%
   |                                                                            
-  |======================                                                |  32%
+  |===================                                                   |  28%
   |                                                                            
-  |========================                                              |  34%
+  |=====================                                                 |  29%
+  |                                                                            
+  |======================                                                |  31%
+  |                                                                            
+  |=======================                                               |  33%
+  |                                                                            
+  |========================                                              |  35%
   |                                                                            
   |=========================                                             |  36%
   |                                                                            
-  |===========================                                           |  39%
+  |===========================                                           |  38%
+  |                                                                            
+  |============================                                          |  40%
   |                                                                            
   |=============================                                         |  41%
   |                                                                            
   |==============================                                        |  43%
   |                                                                            
-  |================================                                      |  46%
+  |===============================                                       |  45%
+  |                                                                            
+  |=================================                                     |  47%
   |                                                                            
   |==================================                                    |  48%
   |                                                                            
@@ -1427,9 +1431,9 @@ R is connected to the H2O cluster:
   |                                                                            
   |                                                                      |   0%
   |                                                                            
-  |====================                                                  |  28%
+  |=====================                                                 |  30%
   |                                                                            
-  |===============================================                       |  68%
+  |=================================================                     |  70%
   |                                                                            
   |======================================================================| 100%</code></pre>
 </div>
@@ -1446,22 +1450,24 @@ R is connected to the H2O cluster:
 <span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fashion_pred[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> reconstr_label     reconstr_pixel2      reconstr_pixel3     
- Min.   :-0.47771   Min.   :-0.0015096   Min.   :-0.0048449  
- 1st Qu.:-0.26505   1st Qu.:-0.0008691   1st Qu.:-0.0022916  
- Median :-0.09920   Median :-0.0003405   Median :-0.0003435  
- Mean   :-0.08239   Mean   :-0.0002889   Mean   :-0.0002108  
- 3rd Qu.: 0.10662   3rd Qu.: 0.0002168   3rd Qu.: 0.0018435  
- Max.   : 0.35054   Max.   : 0.0015996   Max.   : 0.0057716  
+ Min.   :-0.47950   Min.   :-0.0015568   Min.   :-0.0048536  
+ 1st Qu.:-0.26059   1st Qu.:-0.0008525   1st Qu.:-0.0022268  
+ Median :-0.07530   Median :-0.0002846   Median :-0.0003030  
+ Mean   :-0.06522   Mean   :-0.0002330   Mean   :-0.0001716  
+ 3rd Qu.: 0.12724   3rd Qu.: 0.0003203   3rd Qu.: 0.0018569  
+ Max.   : 0.39351   Max.   : 0.0018132   Max.   : 0.0058790  
  reconstr_pixel4      reconstr_pixel5     
- Min.   :-0.0058540   Min.   :-0.0034778  
- 1st Qu.:-0.0032125   1st Qu.:-0.0018475  
- Median :-0.0013600   Median : 0.0003356  
- Mean   :-0.0011934   Mean   : 0.0001850  
- 3rd Qu.: 0.0008461   3rd Qu.: 0.0019639  
- Max.   : 0.0058340   Max.   : 0.0044750  </code></pre>
+ Min.   :-0.0060428   Min.   :-0.0035266  
+ 1st Qu.:-0.0030836   1st Qu.:-0.0019180  
+ Median :-0.0011572   Median : 0.0003117  
+ Mean   :-0.0009483   Mean   : 0.0001418  
+ 3rd Qu.: 0.0012697   3rd Qu.: 0.0019282  
+ Max.   : 0.0066305   Max.   : 0.0044367  </code></pre>
 </div>
 </div>
-<p>##Training a random forest with original data</p>
+</section>
+<section id="training-a-random-forest-with-original-data" class="level2">
+<h2 class="anchored" data-anchor-id="training-a-random-forest-with-original-data">Training a random forest with original data</h2>
 <p>In this exercise, we are going to train a random forest using the original fashion MNIST dataset with 500 examples. This dataset is preloaded in the environment with the name fashion_mnist. We are going to train a random forest with 20 trees and we will look at the time it takes to compute the model and the out-of-bag error in the 20th tree. The randomForest package is loaded.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the starting timestamp</span></span>
@@ -1480,11 +1486,11 @@ R is connected to the H2O cluster:
 <span id="cb107-14"><a href="#cb107-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the error and the time</span></span>
 <span id="cb107-15"><a href="#cb107-15" aria-hidden="true" tabindex="-1"></a>rf_model<span class="sc">$</span>err.rate[<span class="dv">20</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2512513</code></pre>
+<pre><code>[1] 0.26</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a>time_end</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "0.641s elapsed (0.641s cpu)"</code></pre>
+<pre><code>[1] "0.634s elapsed (0.634s cpu)"</code></pre>
 </div>
 </div>
 </section>
@@ -1530,7 +1536,7 @@ R is connected to the H2O cluster:
   |                                                                            
   |===============                                                       |  21%
   |                                                                            
-  |================                                                      |  23%
+  |================                                                      |  22%
   |                                                                            
   |=================                                                     |  24%
   |                                                                            
@@ -1540,11 +1546,11 @@ R is connected to the H2O cluster:
   |                                                                            
   |====================                                                  |  29%
   |                                                                            
-  |=====================                                                 |  31%
+  |=====================                                                 |  30%
   |                                                                            
   |======================                                                |  32%
   |                                                                            
-  |========================                                              |  34%
+  |=======================                                               |  33%
   |                                                                            
   |=========================                                             |  35%
   |                                                                            
@@ -1558,7 +1564,7 @@ R is connected to the H2O cluster:
   |                                                                            
   |==============================                                        |  43%
   |                                                                            
-  |===============================                                       |  44%
+  |===============================                                       |  45%
   |                                                                            
   |================================                                      |  46%
   |                                                                            
@@ -1582,11 +1588,11 @@ R is connected to the H2O cluster:
 <span id="cb114-12"><a href="#cb114-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the error and the time</span></span>
 <span id="cb114-13"><a href="#cb114-13" aria-hidden="true" tabindex="-1"></a>rf_model<span class="sc">$</span>err.rate[<span class="dv">500</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.259</code></pre>
+<pre><code>[1] 0.252</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a>time_end</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "0.320s elapsed (0.315s cpu)"</code></pre>
+<pre><code>[1] "0.300s elapsed (0.300s cpu)"</code></pre>
 </div>
 </div>
 

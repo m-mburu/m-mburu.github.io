@@ -171,7 +171,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 
 
@@ -180,7 +180,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In this exercise, you’ll write code to do forward propagation (prediction) for your first neural network:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="introduction-to-deep-learning-in-python_files/figure-html/dc2aba55-1-1_4.png" class="img-fluid figure-img"></p>
+<p><img src="introduction-to-deep-learning-in-python_files/figure-html/f9921b71-1-1_4.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">1_4.png</figcaption><p></p>
 </figure>
 </div>
@@ -297,7 +297,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Assume the activation function at each node is the identity function. That is, each node’s output will be the same as its input. So the value of the bottom node in the first hidden layer is -1, and not 0, as it would be if the ReLU activation function was used.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="introduction-to-deep-learning-in-python_files/figure-html/f24e8550-1-ch1ex9.png" class="img-fluid figure-img"></p>
+<p><img src="introduction-to-deep-learning-in-python_files/figure-html/f33aa470-1-ch1ex9.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">ch1ex9.png</figcaption><p></p>
 </figure>
 </div>
@@ -307,7 +307,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="multi-layer-neural-networks">Multi-layer neural networks</h2>
 <p>In this exercise, you’ll write code to do forward propagation for a neural network with 2 hidden layers. Each hidden layer has two nodes. The input data has been preloaded as input_data. The nodes in the first hidden layer are called node_0_0 and node_0_1. Their weights are pre-loaded as weights[‘node_0_0’] and weights[‘node_0_1’] respectively.</p>
 <p>The nodes in the second hidden layer are called node_1_0 and node_1_1. Their weights are pre-loaded as weights[‘node_1_0’] and weights[‘node_1_1’] respectively.</p>
-<p>We then create a model output from the hidden nodes using weights pre-loaded as weights[‘output’]. <img src="introduction-to-deep-learning-in-python_files/figure-html/497a83f4-1-ch1ex10.png" class="img-fluid" alt="ch1ex10.png"></p>
+<p>We then create a model output from the hidden nodes using weights pre-loaded as weights[‘output’]. <img src="introduction-to-deep-learning-in-python_files/figure-html/70529779-1-ch1ex10.png" class="img-fluid" alt="ch1ex10.png"></p>
 <div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>weights <span class="op">=</span> {<span class="st">'node_0_0'</span>: np.array([<span class="dv">2</span>, <span class="dv">4</span>]),</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>           <span class="st">'node_0_1'</span>: np.array([ <span class="dv">4</span>, <span class="op">-</span><span class="dv">5</span>]),</span>
@@ -364,14 +364,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="calculating-model-errors" class="level2">
 <h2 class="anchored" data-anchor-id="calculating-model-errors">Calculating model errors</h2>
 <p>For the exercises in this chapter, you’ll continue working with the network to predict transactions for a bank.</p>
-<p>What is the error (predicted - actual) for the following network using the ReLU activation function when the input data is [3, 2] and the actual value of the target (what you are trying to predict) is 5? It may be helpful to get out a pen and piece of paper to calculate these values. <img src="introduction-to-deep-learning-in-python_files/figure-html/e31b28fe-1-ch2_ex2_3.png" class="img-fluid" alt="ch2_ex2_3.png"></p>
+<p>What is the error (predicted - actual) for the following network using the ReLU activation function when the input data is [3, 2] and the actual value of the target (what you are trying to predict) is 5? It may be helpful to get out a pen and piece of paper to calculate these values. <img src="introduction-to-deep-learning-in-python_files/figure-html/96516387-1-ch2_ex2_3.png" class="img-fluid" alt="ch2_ex2_3.png"></p>
 <ul>
 <li>The network generates a prediction of 16, which results in an error of 11.</li>
 <li>Increasing the weight to 2.01 would increase the resulting error from 9 to 9.08, making the predictions less accurate.</li>
 </ul>
 <p>Coding how weight changes affect accuracy Now you’ll get to change weights in a real network and see how they affect model accuracy!</p>
 <p>Have a look at the following neural network:</p>
-<p><img src="introduction-to-deep-learning-in-python_files/figure-html/f8e82779-1-ch2ex4.png" class="img-fluid" alt="ch2ex4.png"> Its weights have been pre-loaded as weights_0. Your task in this exercise is to update a single weight in weights_0 to create weights_1, which gives a perfect prediction (in which the predicted value is equal to target_actual: 3).</p>
+<p><img src="introduction-to-deep-learning-in-python_files/figure-html/a6e3ee09-1-ch2ex4.png" class="img-fluid" alt="ch2ex4.png"> Its weights have been pre-loaded as weights_0. Your task in this exercise is to update a single weight in weights_0 to create weights_1, which gives a perfect prediction (in which the predicted value is equal to target_actual: 3).</p>
 <p>Use a pen and paper if necessary to experiment with different combinations. You’ll use the predict_with_network() function, which takes an array of data as the first argument, and weights as the second argument.</p>
 <div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define predict_with_network()</span></span>
@@ -610,14 +610,14 @@ Mean squared error with weights_1: 99.890625</code></pre>
 <p>This network again uses the ReLU activation function, so the slope of the activation function is 1 for any node receiving a positive value as input. Assume the node being examined had a positive value (so the activation function’s slope is 1).</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="introduction-to-deep-learning-in-python_files/figure-html/4bef492b-1-ch2ex14_1.png" class="img-fluid figure-img"></p>
+<p><img src="introduction-to-deep-learning-in-python_files/figure-html/2c171328-1-ch2ex14_1.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">ch2ex14_1.png</figcaption><p></p>
 </figure>
 </div>
 <p>What is the slope needed to update the weight with the question mark?</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="introduction-to-deep-learning-in-python_files/figure-html/4bef492b-2-ch2ex14_2.png" class="img-fluid figure-img"></p>
+<p><img src="introduction-to-deep-learning-in-python_files/figure-html/2c171328-2-ch2ex14_2.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">ch2ex14_2.png</figcaption><p></p>
 </figure>
 </div>

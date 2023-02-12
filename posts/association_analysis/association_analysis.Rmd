@@ -4,7 +4,7 @@ author: "Mburu"
 date: "November 27, 2018"
 output:
      html_document
-categories: [news, code, analysis]
+categories: [code, analysis]
 ---
 
 ```{r setup, include=FALSE}
