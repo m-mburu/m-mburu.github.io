@@ -1,7 +1,7 @@
 ---
 title: ""
 listing:
-  contents: docs
+  contents: posts
   sort: "date desc"
   type: default
   categories: true

@@ -1378,7 +1378,7 @@ mean of x mean of y
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(imp_err)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     NRMSE        PFC 
-0.01937041 0.13344991 </code></pre>
+0.01745213 0.12773985 </code></pre>
 </div>
 </div>
 <p><strong><em>Note that missForest() outputs a list and you have to manually extract the imputed data - it’s a common mistake to overlook it when building a data processing pipeline. Also, take a look at the errors. Can you tell which variables have been imputed particularly well? Let’s look at it more closely in the next exercise!</em></strong></p>
@@ -1397,7 +1397,7 @@ mean of x mean of y
 <span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(per_variable_errors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         PFC          MSE          MSE          MSE          PFC          PFC 
-   0.3858268    0.0000000 1175.0908047    0.0000000    0.0000000    0.1702128 
+   0.3818898    0.0000000 1162.8846061    0.0000000    0.0000000    0.1790780 
          MSE          PFC 
    0.0000000    0.0000000 </code></pre>
 </div>
@@ -1410,9 +1410,9 @@ mean of x mean of y
 <span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(per_variable_errors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  country_PFC      year_MSE  earnings_MSE   sub_num_MSE  sub_type_PFC 
-    0.3858268     0.0000000  1175.0908047     0.0000000     0.0000000 
+    0.3818898     0.0000000  1162.8846061     0.0000000     0.0000000 
  sub_race_PFC non_white_MSE   sub_sex_PFC 
-    0.1702128     0.0000000     0.0000000 </code></pre>
+    0.1790780     0.0000000     0.0000000 </code></pre>
 </div>
 </div>
 </section>
@@ -1428,7 +1428,7 @@ mean of x mean of y
 <span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(imp_res<span class="sc">$</span>OOBerror)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     NRMSE        PFC 
-0.02186585 0.21326797 </code></pre>
+0.02462704 0.21627387 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set number of trees to 50 and number of variables used for splitting to 6</span></span>
 <span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>imp_res <span class="ot">&lt;-</span> <span class="fu">missForest</span>(biopics, <span class="at">ntree =</span> <span class="dv">50</span>, <span class="at">mtry =</span> <span class="dv">6</span>)</span>
@@ -1437,7 +1437,7 @@ mean of x mean of y
 <span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(imp_res<span class="sc">$</span>OOBerror)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     NRMSE        PFC 
-0.01950811 0.12528271 </code></pre>
+0.02039315 0.12592143 </code></pre>
 </div>
 </div>
 <ul>
@@ -1491,7 +1491,7 @@ boot(data = biopics, statistic = calc_gender_coef, R = 50)
 
 Bootstrap Statistics :
     original     bias    std. error
-t1* 2.448256 -0.8058013    3.705629</code></pre>
+t1* 2.259627 -0.6050632    3.865107</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(boot_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1509,7 +1509,7 @@ boot.ci(boot.out = boot_results, conf = 0.95, type = "norm")
 
 Intervals : 
 Level      Normal        
-95%   (-4.009, 10.517 )  
+95%   (-4.711, 10.440 )  
 Calculations and Intervals on Original Scale</code></pre>
 </div>
 </div>
@@ -1537,7 +1537,7 @@ boot(data = biopics, statistic = calc_gender_coef, R = 1000)
 
 Bootstrap Statistics :
     original     bias    std. error
-t1* 2.131614 -0.7586973    3.813445</code></pre>
+t1* 1.968578 -0.7306231    3.682093</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(boot_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1555,7 +1555,7 @@ boot.ci(boot.out = boot_results, conf = 0.95, type = "norm")
 
 Intervals : 
 Level      Normal        
-95%   (-4.584, 10.365 )  
+95%   (-4.518,  9.916 )  
 Calculations and Intervals on Original Scale</code></pre>
 </div>
 </div>
