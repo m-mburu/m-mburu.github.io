@@ -5,6 +5,12 @@ project:
 website:
   title: "Mburu Blog"
   navbar:
+    left:
+      - text: Home
+        href: index.qmd
+      - text: Data Camp Courses 
+        href: datacamp.qmd
+      
     right:
       - about.qmd
       - icon: github
@@ -13,7 +19,7 @@ website:
         href: https://twitter.com/mmburu_w
 format:
   html:
-    theme: cosmo
+    theme: lumen
     css: style.css
 
 editor: visual

@@ -11,6 +11,7 @@ output:
       smooth_scroll: false
     theme: united
     highlight: pygments
+categories: [code, analysis]
 ---
 
 ```{r setup, include=FALSE}

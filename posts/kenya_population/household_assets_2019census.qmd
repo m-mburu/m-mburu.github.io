@@ -13,6 +13,7 @@ format:
     #theme: united
     highlight: pygments
   pdf: default
+categories: [code, analysis]
 ---
 
 ```{r setup, include=FALSE}

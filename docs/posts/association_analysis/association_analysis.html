@@ -153,6 +153,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../datacamp.html">
+ <span class="menu-text">Data Camp Courses</span></a>
+  </li>  
+</ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="../../about.html">
@@ -244,8 +254,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dat[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(dat), <span class="dv">10</span>)]) <span class="sc">%&gt;%</span> <span class="fu">datatable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-e43a68b2b6fa4348fa6d" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-e43a68b2b6fa4348fa6d">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],["2017-03-14","2017-03-21","2017-02-24","2017-01-31","2017-03-07","2017-02-25"],["13:43:47","14:14:44","16:49:59","14:31:04","14:33:57","11:40:38"],[8138,8536,7133,5707,7764,7166],["Coffee","Cake","Alfajores","Coffee","Coffee","Pastry"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Date<\/th>\n      <th>Time<\/th>\n      <th>Transaction<\/th>\n      <th>Item<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":3},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-4ba2a4be94219cfd149f" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-4ba2a4be94219cfd149f">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],["2017-03-31","2016-12-23","2016-11-03","2016-11-17","2017-02-01","2016-12-19"],["11:29:57","10:42:14","10:39:12","17:16:52","08:37:55","12:55:47"],[9113,3714,371,1548,5718,3474],["Alfajores","Brownie","Coffee","Coffee","Bread","Bread"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Date<\/th>\n      <th>Time<\/th>\n      <th>Transaction<\/th>\n      <th>Item<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":3},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <section id="data-cleaning-and-exploratory-data-analysis" class="level2">
@@ -264,8 +274,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dat2[, <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, sample_cols), <span class="at">with =</span> F]) <span class="sc">%&gt;%</span> <span class="fu">datatable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-ec0e98984121a3c077d6" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-ec0e98984121a3c077d6">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],["2016-10-30","2016-10-30","2016-10-30","2016-10-30","2016-10-30","2016-10-30"],["09:58:11","10:05:34","10:07:57","10:08:41","10:13:03","10:16:55"],[1,2,3,4,5,6],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Date<\/th>\n      <th>Time<\/th>\n      <th>Transaction<\/th>\n      <th>Mortimer<\/th>\n      <th>Jammie Dodgers<\/th>\n      <th>Lemon and coconut<\/th>\n      <th>Pintxos<\/th>\n      <th>Salad<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[3,4,5,6,7,8]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-f02be4212031be9ef30a" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-f02be4212031be9ef30a">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],["2016-10-30","2016-10-30","2016-10-30","2016-10-30","2016-10-30","2016-10-30"],["09:58:11","10:05:34","10:07:57","10:08:41","10:13:03","10:16:55"],[1,2,3,4,5,6],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Date<\/th>\n      <th>Time<\/th>\n      <th>Transaction<\/th>\n      <th>Scone<\/th>\n      <th>Empanadas<\/th>\n      <th>Fairy Doors<\/th>\n      <th>Nomad bag<\/th>\n      <th>Chimichurri Oil<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[3,4,5,6,7,8]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
@@ -291,8 +301,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(sumStats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-21cf8a31ea34f67e05e4" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-21cf8a31ea34f67e05e4">{"x":{"filter":"none","vertical":false,"data":[["1"],[2],[1.13],[2],[1],[10],[1],[3]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Average<\/th>\n      <th>Stdev<\/th>\n      <th>Median<\/th>\n      <th>Minimum<\/th>\n      <th>Maximum<\/th>\n      <th>First_qurtile<\/th>\n      <th>Third_qurtile<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-d5cf2a44f5cd8434c9a8" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-d5cf2a44f5cd8434c9a8">{"x":{"filter":"none","vertical":false,"data":[["1"],[2],[1.13],[2],[1],[10],[1],[3]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Average<\/th>\n      <th>Stdev<\/th>\n      <th>Median<\/th>\n      <th>Minimum<\/th>\n      <th>Maximum<\/th>\n      <th>First_qurtile<\/th>\n      <th>Third_qurtile<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
@@ -308,8 +318,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(number)) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">10</span>) <span class="sc">%&gt;%</span> <span class="fu">datatable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-fa90e2f23960a8cfee8c" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-fa90e2f23960a8cfee8c">{"x":{"filter":"none","vertical":false,"data":[["Coffee","Bread","Tea","Cake","Pastry","Sandwich","Medialuna","Hot chocolate","Cookies","Brownie"],["Coffee","Bread","Tea","Cake","Pastry","Sandwich","Medialuna","Hot chocolate","Cookies","Brownie"],[4528,3097,1350,983,815,680,585,552,515,379],[47.84,32.72,14.26,10.39,8.61,7.18,6.18,5.83,5.44,4]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>item<\/th>\n      <th>number<\/th>\n      <th>Percentage<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-fd5c856d9c57835b83be" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-fd5c856d9c57835b83be">{"x":{"filter":"none","vertical":false,"data":[["Coffee","Bread","Tea","Cake","Pastry","Sandwich","Medialuna","Hot chocolate","Cookies","Brownie"],["Coffee","Bread","Tea","Cake","Pastry","Sandwich","Medialuna","Hot chocolate","Cookies","Brownie"],[4528,3097,1350,983,815,680,585,552,515,379],[47.84,32.72,14.26,10.39,8.61,7.18,6.18,5.83,5.44,4]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>item<\/th>\n      <th>number<\/th>\n      <th>Percentage<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>Since we have transformed the data in the wide format and every transaction is in it’s row we can visualize how the baskets look like. This is done by extracting the column names for the transactions where the value is 1. For each transaction, 1 represent that item being in that transaction.</p>
@@ -340,8 +350,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">datatable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-70cd107541616ce12acf" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-70cd107541616ce12acf">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],[2736,535,5684,5943,2692,3974],[2,1,2,1,1,1],["Bread , Coffee","Bread","Cookies , Farm House","Sandwich","Bread","Jam"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Transaction<\/th>\n      <th>number_items<\/th>\n      <th>items_bought<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-d154e08f9e46bdc14d6d" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-d154e08f9e46bdc14d6d">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],[2390,4998,2377,421,4449,303],[1,1,1,5,1,4],["Scandinavian","Cake","Tea","Alfajores , Bread , Brownie , Cookies , Juice","Coffee","Cookies , Juice , Soup , Tea"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Transaction<\/th>\n      <th>number_items<\/th>\n      <th>items_bought<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>A small example which I will work out manually to see what is the support for ({coffee, bread} –&gt; {jam}). Generally I want to see how many transactions contained these 3 items. 0.12% of the transactions contained {bread, coffee, jam}</p>

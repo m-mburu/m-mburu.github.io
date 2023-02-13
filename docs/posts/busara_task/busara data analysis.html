@@ -143,6 +143,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../datacamp.html">
+ <span class="menu-text">Data Camp Courses</span></a>
+  </li>  
+</ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="../../about.html">
@@ -1150,7 +1160,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="one-hot-encoding-for-categorical-variables-with-more-than-2-levels" class="level1">
 <h1><strong><em>One-Hot Encoding for categorical variables with more than 2 levels</em></strong></h1>
-<p>In this step variables with more than two categories are converted to dummies variables. The first column in each category is dropped as it’s linearly depedent with the second column.</p>
+<p>In this step variables with more than two categories are converted to dummies variables. The first column in each category is dropped as it’s linearly dependent with the second column.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>chars <span class="ot">&lt;-</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(borogoza[, <span class="sc">-</span><span class="dv">1</span>, <span class="at">with =</span> F], is.character)) </span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1188,7 +1198,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="fit-logistic-regression" class="level1">
 <h1><strong><em>Fit Logistic Regression</em></strong></h1>
-<p>Logistic regression was fit to predict the probability of someone defaulting. The advantages of logistic regression is interprettable, ie you can see the association between a predictor and response value, it also gives a probability. This is very improtant when you want to have your own cut off point eg you want to label someone as a defulter if you the predicted probability is more than 0.7. This increases precision but lowers recall. Using stepwise selection the model was used to select the variables that best predict loan deafult.</p>
+<p>Logistic regression was fit to predict the probability of someone defaulting. The advantages of logistic regression is interpret table, ie you can see the association between a predictor and response value, it also gives a probability. This is very important when you want to have your own cut off point eg you want to label someone as a defaulter if you the predicted probability is more than 0.7. This increases precision but lowers recall. Using step wise selection the model was used to select the variables that best predict loan default.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>fit_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(Target <span class="sc">~</span> Married <span class="sc">+</span> CoapplicantIncome <span class="sc">+</span> Loan_Amount_Term60 <span class="sc">+</span> </span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>    Loan_Amount_Term180 <span class="sc">+</span> Loan_Amount_Term300 <span class="sc">+</span> </span>
@@ -1305,7 +1315,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="confusion-matrix-logistic-regression" class="level1">
 <h1><strong><em>Confusion Matrix Logistic regression</em></strong></h1>
-<p>The confusion matrix evaluate correctly classified cases. A perfect fit will have all values in the main diagnol while the entries of lower/upper triangulars should be zeros. In this case we have 14 cases of false positives and 7 cases of false negatives the accuracy of the model is 0.82 with and f1 score of 0.87. F1 score is a very important evaluation metric where there is unbalanced classes.</p>
+<p>The confusion matrix evaluate correctly classified cases. A perfect fit will have all values in the main diagnose while the entries of lower/upper triangular should be zeros. In this case we have 14 cases of false positives and 7 cases of false negatives the accuracy of the model is 0.82 with and f1 score of 0.87. F1 score is a very important evaluation metric where there is unbalanced classes.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>pred_glm <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_glm,<span class="at">newdata =</span> test)</span>
@@ -1490,7 +1500,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="area-under-curve" class="level1">
 <h1><strong><em>Area under curve</em></strong></h1>
-<p>This is important as it will help you know if the sufferes from high false negatives or false positives. A value greater than 0.8 is normally desired in this case we achieve 0.74.</p>
+<p>This is important as it will help you know if the suffers from high false negatives or false positives. A value greater than 0.8 is normally desired in this case we achieve 0.74.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">roc</span>(<span class="fu">as.numeric</span>(test<span class="sc">$</span>Target), pred_glm, <span class="at">print.auc=</span>T, <span class="at">print.auc.y=</span><span class="fl">0.5</span>, <span class="at">levels =</span><span class="dv">0</span><span class="sc">:</span><span class="dv">1</span> ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1505,7 +1515,7 @@ Area under the curve: 0.7367</code></pre>
 </section>
 <section id="cross-validation-svm" class="level1">
 <h1><strong><em>Cross Validation SVM</em></strong></h1>
-<p>Next we fit Support vector machine model. We start by finding the best parameters using cross validation. We use 10 fold this where train set is randomly split into 10 sets. In each cases one of the 1 set is used as a valiadation/test set while the other 9 are used to train the model.</p>
+<p>Next we fit Support vector machine model. We start by finding the best parameters using cross validation. We use 10 fold this where train set is randomly split into 10 sets. In each cases one of the 1 set is used as a validation/test set while the other 9 are used to train the model.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(e1071)</span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>tune.out <span class="ot">=</span> <span class="fu">tune</span>(svm, <span class="fu">as.factor</span>(Target)<span class="sc">~</span>., <span class="at">data =</span> train, <span class="at">kernel =</span><span class="st">"radial"</span>, </span>
@@ -1749,7 +1759,7 @@ Area under the curve: 0.692</code></pre>
 </section>
 <section id="validation-curves" class="level1">
 <h1><strong><em>Validation Curves</em></strong></h1>
-<p>The two models almost give equal results based on accuracy, f1 score and area under the curve. In this section we will evaluate the models using learning curves to see if they suffer from high variance or bias. In this case the model sufferes from high bias. It’s evident that adding more data won’t solve accuracy problems. In this case additional features would help.</p>
+<p>The two models almost give equal results based on accuracy, f1 score and area under the curve. In this section we will evaluate the models using learning curves to see if they suffer from high variance or bias. In this case the model suffers from high bias. It’s evident that adding more data won’t solve accuracy problems. In this case additional features would help.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>sets <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">50</span>, <span class="at">to =</span> <span class="fu">nrow</span>(train), <span class="at">by =</span> <span class="dv">50</span>)</span>
 <span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>sets[<span class="fu">length</span>(sets)] <span class="ot">&lt;-</span><span class="fu">nrow</span>(train) </span>

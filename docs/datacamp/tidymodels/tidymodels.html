@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.313">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Mburu Blog - Modeling with tidymodels in R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../style.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Mburu Blog</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../datacamp.html">
+ <span class="menu-text">Data Camp Courses</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/m-mburu"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/mmburu_w"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Modeling with tidymodels in R</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="creating-training-and-test-datasets" class="level2">
+<h2 class="anchored" data-anchor-id="creating-training-and-test-datasets">Creating training and test datasets</h2>
+<p>The rsample package is designed to create training and test datasets. Creating a test dataset is important for estimating how a trained model will likely perform on new data. It also guards against overfitting, where a model memorizes patterns that exist only in the training data and performs poorly on new data.</p>
+<p>In this exercise, you will create training and test datasets from the home_sales data. This data contains information on homes sold in the Seattle, Washington area between 2015 and 2016.</p>
+<p>The outcome variable in this data is selling_price.</p>
+<p>The tidymodels package will be pre-loaded in every exercise in the course. The home_sales tibble has also been loaded for you.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="tidymodels_paks.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Tidy model packages</figcaption><p></p>
+</figure>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>home_sales <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"home_sales.rds"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data split object</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>home_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(home_sales, </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">prop =</span> <span class="fl">0.7</span>, </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                            <span class="at">strata =</span> selling_price)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the training data</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>home_training <span class="ot">&lt;-</span> home_split <span class="sc">%&gt;%</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">training</span>()</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the test data</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>home_test <span class="ot">&lt;-</span> home_split <span class="sc">%&gt;%</span> </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">testing</span>()</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Check number of rows in each dataset</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(home_training)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1042</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(home_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 450</code></pre>
+</div>
+</div>
+<p>Distribution of outcome variable values Stratifying by the outcome variable when generating training and test datasets ensures that the outcome variable values have a similar range in both datasets.</p>
+<p>Since the original data is split at random, stratification avoids placing all the expensive homes in home_sales into the test dataset, for example. In this case, your model would most likely perform poorly because it was trained on less expensive homes.</p>
+<p>In this exercise, you will calculate summary statistics for the selling_price variable in the training and test datasets. The home_training and home_test tibbles have been loaded from the previous exercise.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribution of selling_price in training data</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>summary_func <span class="ot">&lt;-</span> <span class="cf">function</span>(df){</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>      df <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">min_sell_price =</span> <span class="fu">min</span>(selling_price),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">max_sell_price =</span> <span class="fu">max</span>(selling_price),</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_sell_price =</span> <span class="fu">mean</span>(selling_price),</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">sd_sell_price =</span> <span class="fu">sd</span>(selling_price)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>home_training <span class="sc">%&gt;%</span> </span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summary_func</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: right;">min_sell_price</th>
+<th style="text-align: right;">max_sell_price</th>
+<th style="text-align: right;">mean_sell_price</th>
+<th style="text-align: right;">sd_sell_price</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">350000</td>
+<td style="text-align: right;">650000</td>
+<td style="text-align: right;">478986.2</td>
+<td style="text-align: right;">80915.09</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>home_test <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary_func</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: right;">min_sell_price</th>
+<th style="text-align: right;">max_sell_price</th>
+<th style="text-align: right;">mean_sell_price</th>
+<th style="text-align: right;">sd_sell_price</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">350000</td>
+<td style="text-align: right;">650000</td>
+<td style="text-align: right;">479312.1</td>
+<td style="text-align: right;">81216.26</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="fitting-a-linear-regression-model" class="level2">
+<h2 class="anchored" data-anchor-id="fitting-a-linear-regression-model">Fitting a linear regression model</h2>
+<p>The parsnip package provides a unified syntax for the model fitting process in R.</p>
+<p>With parsnip, it is easy to define models using the various packages, or engines, that exist in the R ecosystem.</p>
+<p>In this exercise, you will define a parsnip linear regression object and train your model to predict selling_price using home_age and sqft_living as predictor variables from the home_sales data.</p>
+<p>The home_training and home_test tibbles that you created in the previous lesson have been loaded into this session.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Specify a linear regression model, linear_model</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>linear_model <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Set the model engine</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">'lm'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Set the model mode</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">'regression'</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Train the model with the training data</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>lm_fit <span class="ot">&lt;-</span> linear_model <span class="sc">%&gt;%</span> </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(selling_price<span class="sc">~</span> home_age <span class="sc">+</span> sqft_living,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> home_training)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Print lm_fit to view model information</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(lm_fit) <span class="sc">%&gt;%</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">291856.6392</td>
+<td style="text-align: right;">7408.987519</td>
+<td style="text-align: right;">39.392243</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">home_age</td>
+<td style="text-align: right;">-1484.9767</td>
+<td style="text-align: right;">174.432209</td>
+<td style="text-align: right;">-8.513203</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sqft_living</td>
+<td style="text-align: right;">102.7973</td>
+<td style="text-align: right;">2.678621</td>
+<td style="text-align: right;">38.376944</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="predicting-home-selling-prices" class="level2">
+<h2 class="anchored" data-anchor-id="predicting-home-selling-prices">Predicting home selling prices</h2>
+<p>After fitting a model using the training data, the next step is to use it to make predictions on the test dataset. The test dataset acts as a new source of data for the model and will allow you to evaluate how well it performs.</p>
+<p>Before you can evaluate model performance, you must add your predictions to the test dataset.</p>
+<p>In this exercise, you will use your trained model, lm_fit, to predict selling_price in the home_test dataset.</p>
+<p>Your trained model, lm_fit, as well as the test dataset, home_test have been loaded into your session.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict selling_price</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>home_predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(lm_fit,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">new_data =</span> home_test)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># View predicted selling prices</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#home_predictions</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine test data with predictions</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>home_test_results <span class="ot">&lt;-</span> home_test <span class="sc">%&gt;%</span> </span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(selling_price, home_age, sqft_living) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(home_predictions)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># View results</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>home_test_results <span class="sc">%&gt;%</span> </span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  selling_price home_age sqft_living   .pred
+          &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;
+1        411000       18        1130 381288.
+2        635000        4        3350 630288.
+3        425000       11        1920 472893.
+4        525000       16        2100 483971.
+5        381000       25        1680 427432.
+6        540000       22        2220 487397.</code></pre>
+</div>
+</div>
+</section>
+<section id="model-performance-metrics" class="level2">
+<h2 class="anchored" data-anchor-id="model-performance-metrics">Model performance metrics</h2>
+<p>Evaluating model results is an important step in the modeling process. Model evaluation should be done on the test dataset in order to see how well a model will generalize to new datasets.</p>
+<p>In the previous exercise, you trained a linear regression model to predict selling_price using home_age and sqft_living as predictor variables. You then created the home_test_results tibble using your trained model on the home_test data.</p>
+<p>In this exercise, you will calculate the RMSE and R squared metrics using your results in home_test_results.</p>
+<p>The home_test_results tibble has been loaded into your session.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print home_test_results</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#home_test_results</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Caculate the RMSE metric</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>home_test_results <span class="sc">%&gt;%</span> </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rmse</span>(<span class="at">truth =</span> selling_price, <span class="at">estimate =</span>.pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 rmse    standard      48709.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the R squared metric</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>home_test_results <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rsq</span>(<span class="at">truth =</span> selling_price, <span class="at">estimate =</span>.pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 rsq     standard       0.640</code></pre>
+</div>
+</div>
+</section>
+<section id="r-squared-plot" class="level2">
+<h2 class="anchored" data-anchor-id="r-squared-plot">R squared plot</h2>
+<p>In the previous exercise, you got an R squared value of 0.651. The R squared metric ranges from 0 to 1, 0 being the worst and 1 the best.</p>
+<p>Calculating the R squared value is only the first step in studying your model’s predictions.</p>
+<p>Making an R squared plot is extremely important because it will uncover potential problems with your model, such as non-linear patterns or regions where your model is either over or under-predicting the outcome variable.</p>
+<p>In this exercise, you will create an R squared plot of your model’s performance.</p>
+<p>The home_test_results tibble has been loaded into your session.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an R squared plot of model performance</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(home_test_results, <span class="fu">aes</span>(<span class="at">x =</span> selling_price, <span class="at">y =</span> .pred)) <span class="sc">+</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">color =</span> <span class="st">'blue'</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_obs_pred</span>()  <span class="sc">+</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">'Actual Home Selling Price'</span>, <span class="at">y =</span> <span class="st">'Predicted Selling Price'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="tidymodels_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="complete-model-fitting-process-with-last_fit" class="level2">
+<h2 class="anchored" data-anchor-id="complete-model-fitting-process-with-last_fit">Complete model fitting process with last_fit()</h2>
+<p>In this exercise, you will train and evaluate the performance of a linear regression model that predicts selling_price using all the predictors available in the home_sales tibble.</p>
+<p>This exercise will give you a chance to perform the entire model fitting process with tidymodels, from defining your model object to evaluating its performance on the test data.</p>
+<p>Earlier in the chapter, you created an rsample object called home_split by passing the home_sales tibble into initial_split(). The home_split object contains the instructions for randomly splitting home_sales into training and test sets.</p>
+<p>The home_sales tibble, and home_split object have been loaded into this session.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a linear regression model</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>linear_model <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">'lm'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">'regression'</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Train linear_model with last_fit()</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>linear_fit <span class="ot">&lt;-</span> linear_model <span class="sc">%&gt;%</span> </span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">last_fit</span>(selling_price <span class="sc">~</span> ., <span class="at">split =</span> home_split)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect predictions and view results</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>predictions_df <span class="ot">&lt;-</span> linear_fit <span class="sc">%&gt;%</span> <span class="fu">collect_predictions</span>()</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>predictions_df <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+  id                 .pred  .row selling_price .config             
+  &lt;chr&gt;              &lt;dbl&gt; &lt;int&gt;         &lt;dbl&gt; &lt;chr&gt;               
+1 train/test split 398796.     3        411000 Preprocessor1_Model1
+2 train/test split 693533.     4        635000 Preprocessor1_Model1
+3 train/test split 439551.     9        425000 Preprocessor1_Model1
+4 train/test split 505907.    13        525000 Preprocessor1_Model1
+5 train/test split 392617.    18        381000 Preprocessor1_Model1
+6 train/test split 513498.    20        540000 Preprocessor1_Model1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make an R squared plot using predictions_df</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(predictions_df, <span class="fu">aes</span>(<span class="at">x =</span> selling_price, <span class="at">y =</span> .pred)) <span class="sc">+</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">color =</span> <span class="st">'blue'</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_obs_pred</span>() <span class="sc">+</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">'Actual Home Selling Price'</span>, <span class="at">y =</span> <span class="st">'Predicted Selling Price'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="tidymodels_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="data-resampling" class="level2">
+<h2 class="anchored" data-anchor-id="data-resampling">Data resampling</h2>
+<p>The first step in a machine learning project is to create training and test datasets for model fitting and evaluation. The test dataset provides an estimate of how your model will perform on new data and helps to guard against overfitting.</p>
+<p>You will be working with the telecom_df dataset which contains information on customers of a telecommunications company. The outcome variable is canceled_service and it records whether a customer canceled their contract with the company. The predictor variables contain information about customers’ cell phone and internet usage as well as their contract type and monthly charges.</p>
+<p>The telecom_df tibble has been loaded into your session.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>telecom_df <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"telecom_df.rds"</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create data split object</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>telecom_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(telecom_df, <span class="at">prop =</span> <span class="fl">0.75</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">strata =</span> canceled_service)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the training data</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>telecom_training <span class="ot">&lt;-</span> telecom_split <span class="sc">%&gt;%</span> </span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">training</span>()</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the test data</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>telecom_test <span class="ot">&lt;-</span> telecom_split <span class="sc">%&gt;%</span> </span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">testing</span>()</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the number of rows</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(telecom_training)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 731</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(telecom_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 244</code></pre>
+</div>
+</div>
+</section>
+<section id="fitting-a-logistic-regression-model" class="level2">
+<h2 class="anchored" data-anchor-id="fitting-a-logistic-regression-model">Fitting a logistic regression model</h2>
+<p>In addition to regression models, the parsnip package also provides a general interface to classification models in R.</p>
+<p>In this exercise, you will define a parsnip logistic regression object and train your model to predict canceled_service using avg_call_mins, avg_intl_mins, and monthly_charges as predictor variables from the telecom_df data.</p>
+<p>The telecom_training and telecom_test tibbles that you created in the previous lesson have been loaded into this session.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Specify a logistic regression model</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>logistic_model <span class="ot">&lt;-</span> <span class="fu">logistic_reg</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Set the engine</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">'glm'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Set the mode</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">'classification'</span>)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit to training data</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>logistic_fit <span class="ot">&lt;-</span> logistic_model <span class="sc">%&gt;%</span> </span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(canceled_service <span class="sc">~</span> avg_call_mins <span class="sc">+</span>avg_intl_mins<span class="sc">+</span>monthly_charges,</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> telecom_training)</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Print model fit object</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>logistic_fit <span class="sc">%&gt;%</span> <span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 5
+  term            estimate std.error statistic  p.value
+  &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)      1.87      0.581       3.22  1.28e- 3
+2 avg_call_mins   -0.0104    0.00130    -8.05  8.42e-16
+3 avg_intl_mins    0.0223    0.00311     7.18  6.94e-13
+4 monthly_charges  0.00231   0.00472     0.488 6.25e- 1</code></pre>
+</div>
+</div>
+</section>
+<section id="combining-test-dataset-results" class="level2">
+<h2 class="anchored" data-anchor-id="combining-test-dataset-results">Combining test dataset results</h2>
+<p>Evaluating your model’s performance on the test dataset gives insights into how well your model predicts on new data sources. These insights will help you communicate your model’s value in solving problems or improving decision making.</p>
+<p>Before you can calculate classification metrics such as sensitivity or specificity, you must create a results tibble with the required columns for yardstick metric functions.</p>
+<p>In this exercise, you will use your trained model to predict the outcome variable in the telecom_test dataset and combine it with the true outcome values in the canceled_service column.</p>
+<p>Your trained model, logistic_fit, and test dataset, telecom_test, have been loaded from the previous exercise.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict outcome categories</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>class_preds <span class="ot">&lt;-</span> <span class="fu">predict</span>(logistic_fit, <span class="at">new_data =</span> telecom_test,</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">type =</span> <span class="st">'class'</span>)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtain estimated probabilities for each outcome value</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>prob_preds <span class="ot">&lt;-</span> <span class="fu">predict</span>(logistic_fit, <span class="at">new_data =</span> telecom_test, </span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">type =</span> <span class="st">'prob'</span>)</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine test set results</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>telecom_results <span class="ot">&lt;-</span> telecom_test <span class="sc">%&gt;%</span> </span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(canceled_service) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(class_preds, prob_preds)</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="co"># View results tibble</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>telecom_results <span class="sc">%&gt;%</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  canceled_service .pred_class .pred_yes .pred_no
+  &lt;fct&gt;            &lt;fct&gt;           &lt;dbl&gt;    &lt;dbl&gt;
+1 yes              no              0.366    0.634
+2 yes              no              0.143    0.857
+3 no               no              0.225    0.775
+4 yes              yes             0.556    0.444
+5 no               no              0.383    0.617
+6 yes              no              0.363    0.637</code></pre>
+</div>
+</div>
+</section>
+<section id="evaluating-performance-with-yardstick" class="level2">
+<h2 class="anchored" data-anchor-id="evaluating-performance-with-yardstick">Evaluating performance with yardstick</h2>
+<p>In the previous exercise, you calculated classification metrics from a sample confusion matrix. The yardstick package was designed to automate this process.</p>
+<p>For classification models, yardstick functions require a tibble of model results as the first argument. This should include the actual outcome values, predicted outcome values, and estimated probabilities for each value of the outcome variable.</p>
+<p>In this exercise, you will use the results from your logistic regression model, telecom_results, to calculate performance metrics.</p>
+<p>The telecom_results tibble has been loaded into your session.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the confusion matrix</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">conf_mat</span>(telecom_results, <span class="at">truth =</span> canceled_service,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">estimate =</span> .pred_class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          Truth
+Prediction yes  no
+       yes  32  22
+       no   50 140</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the accuracy</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(telecom_results, <span class="at">truth =</span> canceled_service,</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">estimate =</span> .pred_class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .metric  .estimator .estimate
+  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;
+1 accuracy binary         0.705</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the sensitivity</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sens</span>(telecom_results, <span class="at">truth =</span> canceled_service,</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">estimate =</span> .pred_class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 sens    binary         0.390</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the specificity</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">spec</span>(telecom_results, <span class="at">truth =</span> canceled_service,</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">estimate =</span> .pred_class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 spec    binary         0.864</code></pre>
+</div>
+</div>
+</section>
+<section id="creating-custom-metric-sets" class="level2">
+<h2 class="anchored" data-anchor-id="creating-custom-metric-sets">Creating custom metric sets</h2>
+<p>The yardstick package also provides the ability to create custom sets of model metrics. In cases where the cost of obtaining false negative errors is different from the cost of false positive errors, it may be important to examine a specific set of performance metrics.</p>
+<p>Instead of calculating accuracy, sensitivity, and specificity separately, you can create your own metric function that calculates all three at the same time.</p>
+<p>In this exercise, you will use the results from your logistic regression model, telecom_results, to calculate a custom set of performance metrics. You will also use a confusion matrix to calculate all available binary classification metrics in tidymodelsall at once.</p>
+<p>The telecom_results tibble has been loaded into your session.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a custom metric function</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>telecom_metrics <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(accuracy, sens, spec)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate metrics using model results tibble</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="fu">telecom_metrics</span>(telecom_results, </span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">truth =</span> canceled_service,</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">estimate =</span> .pred_class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  .metric  .estimator .estimate
+  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;
+1 accuracy binary         0.705
+2 sens     binary         0.390
+3 spec     binary         0.864</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a confusion matrix</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">conf_mat</span>(telecom_results,</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">truth =</span> canceled_service,</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">estimate =</span> .pred_class) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Pass to the summary() function</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 13 × 3
+   .metric              .estimator .estimate
+   &lt;chr&gt;                &lt;chr&gt;          &lt;dbl&gt;
+ 1 accuracy             binary         0.705
+ 2 kap                  binary         0.278
+ 3 sens                 binary         0.390
+ 4 spec                 binary         0.864
+ 5 ppv                  binary         0.593
+ 6 npv                  binary         0.737
+ 7 mcc                  binary         0.290
+ 8 j_index              binary         0.254
+ 9 bal_accuracy         binary         0.627
+10 detection_prevalence binary         0.221
+11 precision            binary         0.593
+12 recall               binary         0.390
+13 f_meas               binary         0.471</code></pre>
+</div>
+</div>
+</section>
+<section id="plotting-the-confusion-matrix" class="level2">
+<h2 class="anchored" data-anchor-id="plotting-the-confusion-matrix">Plotting the confusion matrix</h2>
+<p>Calculating performance metrics with the yardstick package provides insight into how well a classification model is performing on the test dataset. Most yardstick functions return a single number that summarizes classification performance.</p>
+<p>Many times, it is helpful to create visualizations of the confusion matrix to more easily communicate your results.</p>
+<p>In this exercise, you will make a heat map and mosaic plot of the confusion matrix from your logistic regression model on the telecom_df dataset.</p>
+<p>Your model results tibble, telecom_results, has been loaded into your session.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a confusion matrix</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">conf_mat</span>(telecom_results,</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">truth =</span> canceled_service,</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">estimate =</span> .pred_class)  <span class="sc">%&gt;%</span> </span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create a heat map</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(<span class="at">type =</span> <span class="st">"heatmap"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="tidymodels_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">conf_mat</span>(telecom_results,</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">truth =</span> canceled_service,</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">estimate =</span> .pred_class)  <span class="sc">%&gt;%</span> </span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create a mosaic plot</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>(<span class="at">type =</span> <span class="st">"mosaic"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="tidymodels_files/figure-html/unnamed-chunk-13-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="roc-curves-and-area-under-the-roc-curve" class="level2">
+<h2 class="anchored" data-anchor-id="roc-curves-and-area-under-the-roc-curve">ROC curves and area under the ROC curve</h2>
+<p>ROC curves are used to visualize the performance of a classification model across a range of probability thresholds. An ROC curve with the majority of points near the upper left corner of the plot indicates that a classification model is able to correctly predict both the positive and negative outcomes correctly across a wide range of probability thresholds.</p>
+<p>The area under this curve provides a letter grade summary of model performance.</p>
+<p>In this exercise, you will create an ROC curve from your logistic regression model results and calculate the area under the ROC curve with yardstick.</p>
+<p>Your model results tibble, telecom_results has been loaded into your session.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate metrics across thresholds</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>threshold_df <span class="ot">&lt;-</span> telecom_results <span class="sc">%&gt;%</span> </span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_curve</span>(<span class="at">truth =</span> canceled_service, .pred_yes)</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="co"># View results</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>threshold_df <span class="sc">%&gt;%</span></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  .threshold specificity sensitivity
+       &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;
+1  -Inf          0                 1
+2     0.0175     0                 1
+3     0.0398     0.00617           1
+4     0.0415     0.0123            1
+5     0.0485     0.0185            1
+6     0.0525     0.0247            1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot ROC curve</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>threshold_df <span class="sc">%&gt;%</span> </span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="tidymodels_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate ROC AUC</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">roc_auc</span>(telecom_results, <span class="at">truth =</span> canceled_service, .pred_yes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  .metric .estimator .estimate
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 roc_auc binary         0.747</code></pre>
+</div>
+</div>
+<p>Streamlining the modeling process The last_fit() function is designed to streamline the modeling workflow in tidymodels. Instead of training your model on the training data and building a results tibble using the test data, last_fit() accomplishes this with one function.</p>
+<p>In this exercise, you will train the same logistic regression model as you fit in the previous exercises, except with the last_fit() function.</p>
+<p>Your data split object, telecom_split, and model specification, logistic_model, have been loaded into your session.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Train model with last_fit()</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>telecom_last_fit <span class="ot">&lt;-</span> logistic_model <span class="sc">%&gt;%</span> </span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">last_fit</span>(canceled_service <span class="sc">~</span> avg_call_mins <span class="sc">+</span>avg_intl_mins<span class="sc">+</span>monthly_charges,</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">split =</span> telecom_split)</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="co"># View test set metrics</span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>telecom_last_fit <span class="sc">%&gt;%</span> </span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  .metric  .estimator .estimate .config             
+  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;               
+1 accuracy binary         0.705 Preprocessor1_Model1
+2 roc_auc  binary         0.747 Preprocessor1_Model1</code></pre>
+</div>
+</div>
+</section>
+<section id="collecting-predictions-and-creating-custom-metrics" class="level2">
+<h2 class="anchored" data-anchor-id="collecting-predictions-and-creating-custom-metrics">Collecting predictions and creating custom metrics</h2>
+<p>Using the last_fit() modeling workflow also saves time in collecting model predictions. Instead of manually creating a tibble of model results, there are helper functions that extract this information automatically.</p>
+<p>In this exercise, you will use your trained model, telecom_last_fit, to create a tibble of model results on the test dataset as well as calculate custom performance metrics.</p>
+<p>You trained model, telecom_last_fit, has been loaded into this session.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect predictions</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>last_fit_results <span class="ot">&lt;-</span> telecom_last_fit <span class="sc">%&gt;%</span> </span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_predictions</span>()</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="co"># View results</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>last_fit_results <span class="sc">%&gt;%</span></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 7
+  id               .pred_yes .pred_no  .row .pred_class canceled_service .config
+  &lt;chr&gt;                &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt; &lt;fct&gt;       &lt;fct&gt;            &lt;chr&gt;  
+1 train/test split     0.366    0.634     2 no          yes              Prepro…
+2 train/test split     0.143    0.857     4 no          yes              Prepro…
+3 train/test split     0.225    0.775     6 no          no               Prepro…
+4 train/test split     0.556    0.444     9 yes         yes              Prepro…
+5 train/test split     0.383    0.617    13 no          no               Prepro…
+6 train/test split     0.363    0.637    17 no          yes              Prepro…</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Custom metrics function</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>last_fit_metrics <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(accuracy, sens,</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>                               spec, roc_auc)</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate metrics</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="fu">last_fit_metrics</span>(last_fit_results,</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">truth =</span> canceled_service,</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">estimate =</span> .pred_class,</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>                 .pred_yes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+  .metric  .estimator .estimate
+  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;
+1 accuracy binary         0.705
+2 sens     binary         0.390
+3 spec     binary         0.864
+4 roc_auc  binary         0.747</code></pre>
+</div>
+</div>
+</section>
+<section id="complete-modeling-workflow" class="level2">
+<h2 class="anchored" data-anchor-id="complete-modeling-workflow">Complete modeling workflow</h2>
+<p>In this exercise, you will use the last_fit() function to train a logistic regression model and evaluate its performance on the test data by assessing the ROC curve and the area under the ROC curve.</p>
+<p>Similar to previous exercises, you will predict canceled_service in the telecom_df data, but with an additional predictor variable to see if you can improve model performance.</p>
+<p>The telecom_df tibble, telecom_split, and logistic_model objects from the previous exercises have been loaded into your workspace. The telecom_split object contains the instructions for randomly splitting the telecom_df tibble into training and test sets. The logistic_model object is a parsnip specification of a logistic regression model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Train a logistic regression model</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>logistic_fit <span class="ot">&lt;-</span> logistic_model <span class="sc">%&gt;%</span> </span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">last_fit</span>(canceled_service <span class="sc">~</span> avg_call_mins <span class="sc">+</span> avg_intl_mins <span class="sc">+</span> monthly_charges <span class="sc">+</span> months_with_company, </span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">split =</span> telecom_split)</span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect metrics</span></span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>logistic_fit <span class="sc">%&gt;%</span> </span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  .metric  .estimator .estimate .config             
+  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;               
+1 accuracy binary         0.787 Preprocessor1_Model1
+2 roc_auc  binary         0.845 Preprocessor1_Model1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect model predictions</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>logistic_fit <span class="sc">%&gt;%</span> </span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_predictions</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot ROC curve</span></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">roc_curve</span>(<span class="at">truth =</span> canceled_service, .pred_yes) <span class="sc">%&gt;%</span> </span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="tidymodels_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

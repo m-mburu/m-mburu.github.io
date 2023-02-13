@@ -533,7 +533,7 @@ ggplot(borogoza_numm, aes(as.factor(Target), scale(value ))) +
 
 # ***One-Hot Encoding for categorical variables with more than 2 levels***
 
-In this step variables with more than two categories are converted to dummies variables. The first column in each category is dropped as it's linearly depedent with the second column.
+In this step variables with more than two categories are converted to dummies variables. The first column in each category is dropped as it's linearly dependent with the second column.
 
 ```{r}
 chars <- unlist(lapply(borogoza[, -1, with = F], is.character)) 
@@ -577,7 +577,7 @@ test <- borogoza_dummy[-train_sample,]
 
 # ***Fit Logistic Regression***
 
-Logistic regression was fit to predict the probability of someone defaulting. The advantages of logistic regression is interprettable, ie you can see the association between a predictor and response value, it also gives a probability. This is very improtant when you want to have your own cut off point eg you want to label someone as a defulter if you the predicted probability is more than 0.7. This increases precision but lowers recall. Using stepwise selection the model was used to select the variables that best predict loan deafult.
+Logistic regression was fit to predict the probability of someone defaulting. The advantages of logistic regression is interpret table, ie you can see the association between a predictor and response value, it also gives a probability. This is very important when you want to have your own cut off point eg you want to label someone as a defaulter if you the predicted probability is more than 0.7. This increases precision but lowers recall. Using step wise selection the model was used to select the variables that best predict loan default.
 
 ```{r}
 fit_glm <- glm(Target ~ Married + CoapplicantIncome + Loan_Amount_Term60 + 
@@ -604,7 +604,7 @@ The estimate column shows the log odds. Positive values means that the variable 
 
 # ***Confusion Matrix Logistic regression***
 
-The confusion matrix evaluate correctly classified cases. A perfect fit will have all values in the main diagnol while the entries of lower/upper triangulars should be zeros. In this case we have 14 cases of false positives and 7 cases of false negatives the accuracy of the model is 0.82 with and f1 score of 0.87. F1 score is a very important evaluation metric where there is unbalanced classes.
+The confusion matrix evaluate correctly classified cases. A perfect fit will have all values in the main diagnose while the entries of lower/upper triangular should be zeros. In this case we have 14 cases of false positives and 7 cases of false negatives the accuracy of the model is 0.82 with and f1 score of 0.87. F1 score is a very important evaluation metric where there is unbalanced classes.
 
 ```{r}
 library(caret)
@@ -632,7 +632,7 @@ table(test$Target, pred_glm) %>%
 
 # ***Area under curve***
 
-This is important as it will help you know if the sufferes from high false negatives or false positives. A value greater than 0.8 is normally desired in this case we achieve 0.74.
+This is important as it will help you know if the suffers from high false negatives or false positives. A value greater than 0.8 is normally desired in this case we achieve 0.74.
 
 ```{r}
 roc(as.numeric(test$Target), pred_glm, print.auc=T, print.auc.y=0.5, levels =0:1 ) 
@@ -640,7 +640,7 @@ roc(as.numeric(test$Target), pred_glm, print.auc=T, print.auc.y=0.5, levels =0:1
 
 # ***Cross Validation SVM***
 
-Next we fit Support vector machine model. We start by finding the best parameters using cross validation. We use 10 fold this where train set is randomly split into 10 sets. In each cases one of the 1 set is used as a valiadation/test set while the other 9 are used to train the model.
+Next we fit Support vector machine model. We start by finding the best parameters using cross validation. We use 10 fold this where train set is randomly split into 10 sets. In each cases one of the 1 set is used as a validation/test set while the other 9 are used to train the model.
 
 ```{r}
 library(e1071)
@@ -687,7 +687,7 @@ table(test$Target, pred_svm) %>%
 
 # ***Validation Curves***
 
-The two models almost give equal results based on accuracy, f1 score and area under the curve. In this section we will evaluate the models using learning curves to see if they suffer from high variance or bias. In this case the model sufferes from high bias. It's evident that adding more data won't solve accuracy problems. In this case additional features would help.
+The two models almost give equal results based on accuracy, f1 score and area under the curve. In this section we will evaluate the models using learning curves to see if they suffer from high variance or bias. In this case the model suffers from high bias. It's evident that adding more data won't solve accuracy problems. In this case additional features would help.
 
 ```{r, fig.width = 7.5, fig.height =  4.5}
 

@@ -182,5 +182,77 @@
   },
   "posts/old_files/blog.Rmd": {
     "blog.html": "5e6e878a"
+  },
+  "datacamp/regression_r/regression.Rmd": {
+    "regression.html": "62732642"
+  },
+  "datacamp/regression_r/logistic_regression.Rmd": {
+    "logistic_regression.html": "c1d69579"
+  },
+  "datacamp/anomaly_detection_R/anomaly_detection.Rmd": {
+    "anomaly_detection.html": "d706df4e"
+  },
+  "datacamp/sampling_R/sampling_R.Rmd": {
+    "sampling_R.html": "c81a1588"
+  },
+  "datacamp/tidymodels/tidymodels.Rmd": {
+    "tidymodels.html": "bb7f34c6"
+  },
+  "datacamp/efficient_R_code/efficient_R_code.Rmd": {
+    "efficient_R_code.html": "8b692743"
+  },
+  "datacamp/network-analysis-in-r/network_analysis_r.Rmd": {
+    "network_analysis_r.html": "3118b0fc"
+  },
+  "datacamp/ml_tree_methods_r/ml_tree_methods.Rmd": {
+    "ml_tree_methods.html": "9607cdd9"
+  },
+  "datacamp/introduction_deeplearning/final miniproject.ipynb": {
+    "final miniproject.html": "ae2a497b"
+  },
+  "datacamp/introduction_deeplearning/introduction-to-deep-learning-in-python.ipynb": {
+    "introduction-to-deep-learning-in-python.html": "93bdaee4"
+  },
+  "datacamp/foundation_prob_R/eg.qmd": {
+    "eg.html": "100bf9eb"
+  },
+  "datacamp/Intro_Python_Data/Intro_datascience.ipynb": {
+    "Intro_datascience.html": "82ff04ad"
+  },
+  "datacamp/imputations_in_R/imputations_in_R.Rmd": {
+    "imputations_in_R.html": "20663c0c"
+  },
+  "datacamp/functions_in_R/functions_R.Rmd": {
+    "functions_R.html": "1d50661f"
+  },
+  "datacamp/tensorflow_R/tensorflow_R.Rmd": {
+    "tensorflow_R.html": "c09636fd"
+  },
+  "datacamp/us_census/us_census.Rmd": {
+    "us_census.html": "7f08738c"
+  },
+  "datacamp/scalable_data_R/scalable_data_r.Rmd": {
+    "scalable_data_r.html": "28f3adea"
+  },
+  "datacamp/comm_tidyverse/rmarkdown_ex.Rmd": {
+    "rmarkdown_ex.html": "532bbadc"
+  },
+  "datacamp/comm_tidyverse/tidyverse.Rmd": {
+    "tidyverse.html": "8b79aee1"
+  },
+  "datacamp.qmd": {
+    "datacamp.html": "243a88bb"
+  },
+  "cv/cv_mburu.Rmd": {
+    "cv_mburu.html": "8da1c3fb"
+  },
+  "posts/kaggle/climate_change/scripts/kenyan_temp.Rmd": {
+    "kenyan_temp.html": "3300cbd1"
+  },
+  "notes/iml/intro.Rmd": {
+    "intro.html": "4b6bc571"
+  },
+  "notes/hdx_data/hdx_data.qmd": {
+    "hdx_data.html": "5f77f235"
   }
 }
