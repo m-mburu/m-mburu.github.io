@@ -3,8 +3,17 @@ project:
   output-dir: docs
 
 website:
-  title: "Mburu Blog"
+  title: "Mburu"
+  site-url: https://m-mburu.github.io/
+  favicon: "milkyway.jpeg"
+  page-navigation: true
+  reader-mode: true  
   navbar:
+    search: true
+    background: dark
+    collapse-below: lg
+    type: light 
+    alignment: center
     left:
       - text: Home
         href: index.qmd
