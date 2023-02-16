@@ -12,6 +12,10 @@ Text Domain: lyretail
 */
 
 /* Global */
+.topnav {
+  background-color: #333;
+  overflow: hidden;
+}
 
 body {
 	background-color: white;
