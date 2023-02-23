@@ -1,5 +1,5 @@
 ---
-title: "Network analysis in r"
+title: "Network analysis in R"
 author: "Mburu"
 date: "6/19/2020"
 output:
@@ -14,7 +14,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, eval = FALSE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, eval = TRUE)
 ```
 
 # Creating an igraph object
