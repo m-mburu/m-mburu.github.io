@@ -1,0 +1,30 @@
+---
+title: "Inflation Kenya"
+author: "Mburu"
+date: "7/7/2020"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+    theme: united
+    highlight: pygments
+    css: github.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+```{r}
+library(plotly)
+library(tidyverse)
+library(data.table)
+library(sf)
+library(DT)
+library(tmap)
+library(ggthemes)
+library(here)
+```

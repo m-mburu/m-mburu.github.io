@@ -1,0 +1,325 @@
+---
+title: "Tanzanian Water Pumps"
+author: "Mburu"
+date: "4/21/2020"
+output:
+  html_document:
+    theme: united
+    highlight: pygments
+    df_print: paged
+    toc: yes
+  prettydoc::html_pretty:
+    highlight: github
+    theme: leonids
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+```{r}
+
+library(tidyverse)
+library(data.table)
+library(knitr)
+library(broom)
+library(caret)
+library(kableExtra)
+library(ggthemes)
+library(DT)
+```
+
+## 
+
+```{r cars}
+
+train_y <- fread("0bf8bc6e-30d0-4c50-956a-603fc693d966.csv")
+train_x <-  fread("4910797b-ee55-40a7-8668-10efd5c1b960.csv")
+
+test <- fread("702ddfc5-68cd-4d1d-a0de-f5f566f76d91.csv")
+
+```
+
+## 
+
+```{r}
+train_data <- merge(train_y, train_x, by = "id")
+train_data[, set := "train"]
+
+test[, set := "test"]
+
+pump_data <- rbindlist(list(train_data, test), fill = T)
+
+```
+
+```{r}
+
+train_data[, .N, by = status_group] %>%
+    .[, Perc :=  round(N/sum(N) * 100, 2)] %>%
+    datatable()
+
+```
+
+```{r}
+pump_data[amount_tsh != 0, .(Mean = mean(amount_tsh),
+               Median = median(amount_tsh),
+               Min = min(amount_tsh),
+               Max = max(amount_tsh),
+               First_qurtile = quantile(amount_tsh, .25),
+               Third_qurtile = quantile(amount_tsh, .75)),
+           by = status_group] %>%
+  datatable()
+```
+
+```{r}
+col_class <- sapply(train_data, class)
+char_cols <- names(col_class[col_class == "character"])
+
+char_cols <- char_cols[char_cols != "date_recorded"]
+char_cols
+```
+
+## A lazy way of collapsing columns, Please DO NOT do it,
+
+-   It's best to go through all columns one by one to see how well lumping together will be beneficial
+
+```{r}
+
+
+factor_cols <- pump_data[, ..char_cols]
+factor_cols[, (char_cols) := lapply(.SD, str_to_lower), .SDcols = char_cols]
+factor_cols[, (char_cols) := lapply(.SD,  fct_lump_n, n = 20), .SDcols = char_cols]
+#factor_cols[, (char_cols) := lapply(.SD,  fct_lump_n, n = 5), .SDcols = char_cols]
+factor_cols[factor_cols == ""] = NA
+factor_cols[factor_cols == "0"] = NA
+factor_cols[, (char_cols) :=lapply(.SD, fct_explicit_na, na_level = "missing"), .SDcols = char_cols]
+```
+
+```{r}
+chars_dat <- melt(factor_cols, id.vars = "status_group")
+
+chars_dat[, .(freq = .N), by = .(variable, value)] %>%
+  .[, perc := round(freq/sum(freq) * 100), by = .(variable)] %>%
+    datatable()
+```
+
+```{r}
+
+factor_cols[set == "train", .N, by = .(funder,status_group)] %>%
+    .[, perc := round(N/sum(N) * 100, 2), by = .(funder)] %>%
+    
+     ggplot(aes(funder, perc, fill = status_group)) +
+     geom_bar(stat = "identity") +
+     # geom_text(aes(funder, perc, label = paste0(perc, "%"),
+     #               vjust = .05, hjust = .5),
+     #           size = 3, position = position_stack(vjust = 0.5))+
+     theme_hc()+
+    labs(title = "Percentage loans_")+
+     scale_fill_economist(name = "")+
+    theme(legend.position = "bottom",
+          axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
+
+```
+
+```{r}
+factor_cols[set == "train", .N, by = .(water_quality,status_group)] %>%
+    .[, perc := round(N/sum(N) * 100, 2), by = .(water_quality)] %>%
+    
+     ggplot(aes(water_quality, perc, fill = status_group)) +
+     geom_bar(stat = "identity") +
+     geom_text(aes(water_quality, perc, label = paste(perc, "%"),
+                   vjust = .05, hjust = .5),
+               size = 3, position = position_stack(vjust = 0.5))+
+     theme_hc()+
+    labs(title = "")+
+     scale_fill_economist(name = "")+
+    theme(legend.position = "bottom")
+```
+
+```{r}
+
+factor_cols[set == "train", .N, by = .(installer,status_group)] %>%
+    .[, perc := round(N/sum(N) * 100, 2), by = .(installer)] %>%
+    
+     ggplot(aes(installer, perc, fill = status_group)) +
+     geom_bar(stat = "identity") +
+     theme_hc()+
+    labs(title = "")+
+     scale_fill_economist(name = "")+
+    theme(legend.position = "bottom",
+          axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
+```
+
+```{r}
+pump_data[construction_year == 0, construction_year := NA]
+summary(pump_data$construction_year)
+
+pump_data[, construction_year2  := cut(construction_year, breaks = c(1959, 1988, 2000, 2008, 2013))]
+pump_data[, construction_year2 := fct_explicit_na(construction_year2, na_level = "unknown")]
+summary(pump_data$construction_year2)
+```
+
+```{r}
+
+# train_set <- pump_data[set == "train",
+#                        .(status_group, go_funded, water_quality,
+#                          quantity,  construction_year2,
+#                          management_group, go_installer,
+#                          waterpoint_type_group1, longitude, latitude, basin,
+#                          management_group1)]
+
+#is there biase in recording
+del_cols <- c( "recorded_by")
+data_clean <- cbind(pump_data[, .(construction_year2, latitude, longitude)], factor_cols)
+
+train_set <- data_clean[set == "train"]
+train_set[, set := NULL]
+char_cols2 <- char_cols[!char_cols %in% c("status_group" )]
+train_set_dmmy <- dummies::dummy.data.frame(train_set, names = char_cols2) %>% setDT()
+train_set_dmmy[, status_group := factor(status_group,
+                                   levels = c("functional", "functional needs repair", "non functional"),
+                                   labels  = c("functional", "functional_needs_repair", "non_functional"))]
+```
+
+```{r}
+set.seed(100)
+#train_set <- train_set[status_group %in% c("functional", "functional_needs_repair") ]
+train_ind <- sample(1:nrow(train_set_dmmy), round(0.7 * nrow(train_set)))
+train_set_dmmy[, status_group := factor(status_group)]
+
+train_set1 <- train_set_dmmy[train_ind,]
+set.seed(100)
+cv_fold <- createFolds(train_set1$status_group, k = 3)
+
+```
+
+```{r}
+library(caretEnsemble)
+
+train_ctrl <- trainControl(method = "cv",
+                        number = 3,
+                        summaryFunction = multiClassSummary,
+                        classProbs = TRUE,
+                        allowParallel=T,
+                        index = cv_fold,
+                        verboseIter = TRUE,
+                        returnResamp = "all", 
+                        savePredictions = "final", 
+                        search = "grid")
+
+
+xgb_grid <-  expand.grid(nrounds = c(50,100),
+                        eta = 0.06,
+                        max_depth =c(10, 50),
+                        gamma = 6,
+                        colsample_bytree = 0.8,
+                        min_child_weight =0.8,
+                        subsample =  .8)
+
+
+
+ranger_grid <- expand.grid(splitrule = "extratrees",
+                        mtry = c(20, 50, 100),
+                        min.node.size = 1)
+
+
+glmnet_grid <- expand.grid(alpha = c(0, 1),
+                           lambda = seq(0.0001, 1, length = 3))
+
+```
+
+```{r}
+
+set.seed(100)
+
+library(tictoc)
+
+tic()
+
+model_list <- caretList(
+   status_group~.,
+    data=train_set1,
+    trControl=train_ctrl,
+    tuneList = list(caretModelSpec(method="xgbTree", tuneGrid= xgb_grid),
+                    caretModelSpec(method="ranger", tuneGrid= ranger_grid),
+                    caretModelSpec(method="glmnet", tuneGrid= glmnet_grid)
+                    
+                    )
+)
+
+toc()
+
+```
+
+```{r}
+model_list
+```
+
+```{r}
+
+test_own <- train_set_dmmy[-train_ind]
+
+
+accuracy <- c()
+for (i in 1:length(model_list)) {
+    
+    rf <- model_list[[i]]
+    
+    pred <- predict(rf,  newdata = test_own)
+    
+    
+   #auc[i] <-  caret::(pred, test_own$status_group)
+   accuracy[i] <-  round(Metrics::accuracy(pred, test_own$status_group) * 100, 2)
+   
+   
+    
+}
+
+
+pred_df <- data.frame(models = names(model_list), accuracy)
+
+DT::datatable(pred_df)
+```
+
+```{r}
+resamples_models <- resamples(model_list)
+
+dotplot(resamples_models, metric = "AUC")
+
+
+
+```
+
+```{r}
+# Alternatively, you can put in dense matrix, i.e. basic R-matrix
+# library(lightgbm)
+# 
+# train_x <- as.matrix(train_set1[, !status_group])
+# train_y <- train_set1$status_group
+# 
+# 
+# params = list('task'= 'train',
+#     'boosting_type'= 'gbdt',
+#     'objective'= 'multiclass',
+#     'num_class'=3,
+#     'metric'= 'multi_logloss',
+#     'learning_rate'= 0.002296,
+#     'max_depth'= 7,
+#     'num_leaves'= 17,
+#     'feature_fraction'= 0.4,
+#     'bagging_fraction'= 0.6,
+#     'bagging_freq'= 17)
+# 
+# train_lgb = lgb.Dataset(data = train_x , label = train_y, params = params)
+# 
+# print("Training lightgbm with Matrix")
+# 
+# bst <- lightgbm(
+#     data = train_lgb
+#     , num_leaves = 4L
+#     , learning_rate = 1.0
+#     , nrounds = 2L
+#     , objective = "multiclass"
+# )
+```

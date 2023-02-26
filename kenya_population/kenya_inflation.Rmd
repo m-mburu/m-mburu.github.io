@@ -1,0 +1,73 @@
+---
+title: "Kenya Inflation"
+author: "Mburu"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: yes
+    toc_depth: 3
+    theme: lumen
+    highlight: pygments
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+
+library(plotly)
+library(tidyverse)
+library(here)
+library(data.table)
+library(sf)
+library(DT)
+library(tmap)
+library(ggthemes)
+```
+
+### 
+
+```{r}
+inflation_rates <- fread(here("kenya_debt/Inflation Rates.csv"))
+source(".Rprofile")
+inflation_rates <- nms_clean(inflation_rates)
+inflation_rates[, date := ymd(paste(year, month, "01", sep = "-"))]
+setnames(inflation_rates, 
+         "12_month_inflation", 
+         "twelve_month_inflation")
+```
+
+```{r}
+ggplot(inflation_rates, aes(date, twelve_month_inflation))+
+  geom_line()
+```
+
+```{r}
+exports <- fread(here("kenya_debt/Principal Exports Volume, Value and Unit Prices (Ksh Million).csv"))
+exports_m <- melt(exports,
+                  id.vars = c("Year", "Month"),
+                  variable.factor = F)
+
+exports_m[, type := fcase(str_detect(variable, "^Volume"), "Volume",
+                          str_detect(variable, "^Value"), "Income",
+                           str_detect(variable, "^Average"), "price_per_tonne",
+                          default = "na")]
+exports_m[, variable := tolower(variable)]
+exports_m[, crop := fcase(str_detect(variable, "coffee"), "Coffee",
+                          str_detect(variable, "tea"), "Tea",
+                           str_detect(variable, "horticulture"), "Horticulture",
+                          default = "na")]
+exports_mw <- dcast(Year+ Month + crop ~ type, 
+                    value.var = "value", 
+                    data = exports_m,
+                    fun.aggregate = NULL)
+```
+
+```{r}
+exports_mw[, date := ymd(paste(Year, Month, "01", sep = "-"))]
+ggplot(exports_mw, aes(date, Income, color = crop))+
+  geom_line()
+
+ggplot(exports_mw, aes(date, price_per_tonne, color = crop))+
+  geom_line()
+ggplot(exports_mw, aes(date, Volume, color = crop))+
+  geom_line()
+```

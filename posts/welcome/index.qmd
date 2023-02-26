@@ -1,0 +1,12 @@
+---
+title: "Welcome To My Blog"
+author: "Mburu"
+date: "2023-02-08"
+categories: [news]
+---
+
+
+![](thumbnail.jpg)
+
+
+Okay I'm excited to finally sit down and work on my blog!. I hope to continually add interesting. 

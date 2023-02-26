@@ -1,0 +1,14 @@
+{
+  "hash": "deb7b220a03155a3aa4cbcbab02ea11c",
+  "result": {
+    "markdown": "---\ntitle: \"Blog\"\n---\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

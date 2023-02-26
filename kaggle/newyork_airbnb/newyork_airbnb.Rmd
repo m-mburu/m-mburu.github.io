@@ -1,0 +1,196 @@
+---
+title: "New york Airbnb"
+author: "Mburu"
+date: "7/17/2020"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+    theme: united
+    highlight: pygments
+categories: [code, analysis]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+## Packages used
+
+```{r cars}
+library(tidyverse)
+library(data.table)
+library(DT)
+library(ggthemes)
+library(leaflet)
+library(ggmap)
+library(plotly)
+library(lubridate)
+```
+
+## First few variables
+
+```{r}
+airbnb_nyc <- fread("AB_NYC_2019.csv")
+
+head(airbnb_nyc) %>% 
+    datatable(options = list(scrollX = TRUE))
+```
+
+## Neighbourhood Disitribution
+
+```{r, fig.width=8, fig.height=4}
+p1 <- airbnb_nyc[, .(freq = .N), by =  neighbourhood_group] %>%
+    .[, perc := round(freq/sum(freq) *100, 2)] %>%
+    ggplot(aes(neighbourhood_group, perc))+
+    geom_bar(stat = "identity", width = 0.5, fill ="slategray2"  ) +
+    geom_text(aes(neighbourhood_group, perc, label = paste0(perc, "%")),
+              position = position_dodge(width = 0.5),
+              vjust = 0.07)+
+    theme_fivethirtyeight() 
+p1
+```
+
+## Popular room types in neighbourhoods Disitribution
+
+```{r}
+airbnb_nyc[, .(freq =.N), by = .(neighbourhood_group, room_type)] %>%
+  .[, perc := round(freq/sum(freq) *100, 2), by = neighbourhood_group] %>%
+  ggplot(aes(neighbourhood_group, perc, fill = room_type))+
+  geom_bar(stat = "identity", width = 0.5 ) +
+    geom_text(aes(neighbourhood_group, perc, label = paste0(perc, "%")),
+              position = position_stack(vjust = 0.5),
+              vjust = 0.07)+
+  scale_fill_viridis_d(name = "")+
+    theme_fivethirtyeight() 
+```
+
+## Summary Stats for price based on location
+
+```{r}
+airbnb_nyc[, price := as.double(price)]
+
+summary_function <- function(by_col){
+    
+    summary_stats <- airbnb_nyc[!is.na(price)&price !=0, 
+                            .(Mean = round(mean(price), 2), 
+                              Median = median(price),
+                              First_quartile = quantile(price, .25),
+                              Third_quartile = quantile(price, .75),
+                              Min = min(price),
+                              Max = max(price)),
+                            by = by_col]
+    return(summary_stats)
+}
+
+
+datatable(summary_function(by_col = "neighbourhood_group"))
+```
+
+## Summary Stats price based on room type
+
+```{r}
+
+datatable(summary_function(by_col = "room_type"))
+```
+
+## Median price roomtype in different neighbourhoods
+
+```{r}
+airbnb_nyc[, .(Median = median(price)), 
+           by = .(neighbourhood_group, room_type)] %>%
+  dcast(neighbourhood_group ~room_type, value.var = "Median") %>%
+  datatable()
+```
+
+## Get map using ggmap
+
+```{r}
+newyork_map <- get_map(c(left = min(airbnb_nyc$longitude) - .0001,
+                         bottom = min(airbnb_nyc$latitude) - .0001,
+                         right = max(airbnb_nyc$longitude) + .0001,
+                         top = max(airbnb_nyc$latitude) + .0001),
+                       maptype = "watercolor", source = "stamen")
+
+
+  
+            
+```
+
+## Mapping function
+
+```{r}
+
+map_plot <- function(df, color_col, continues_color_col = TRUE){
+  
+  if(continues_color_col) {
+    
+    scale_fill <- scale_color_viridis_c()
+    
+    } else{
+      
+      scale_fill <- scale_color_viridis_d()
+      
+    }
+    
+    
+  ggmap(newyork_map) +
+    geom_point(data =df, 
+               aes_string("longitude", "latitude",
+                          color = color_col), size = 1)+
+    theme(legend.position = "bottom")+
+                           
+    scale_fill
+  
+  
+}
+```
+
+## Newyork price map
+
+```{r, fig.width=8, fig.height=8}
+
+per95 <- airbnb_nyc[, quantile(price, 0.95)]
+map_plot(df = airbnb_nyc[price <=per95  ], 
+         color_col = "price")  
+```
+
+## Categorise price variable
+
+```{r, fig.width=8, fig.height=8}
+breaks <-  quantile(airbnb_nyc$price, seq(0, 1, by = .1))
+
+airbnb_nyc[, price_factor := cut(price, breaks = breaks,
+                                 include.lowest = TRUE)]
+
+map_plot(df = airbnb_nyc, 
+         color_col = "price_factor",
+         continues_color_col = FALSE)  
+
+```
+
+## Reviews per month
+
+-   We can use this as a proxy of host receiving a lot of guests
+-   we could use this for instance to check if some neighborhoods are more popular
+
+```{r,  fig.width=8, fig.height=8}
+
+per95_rev <- airbnb_nyc[!is.na(last_review) & !is.na(reviews_per_month),
+                        quantile(reviews_per_month, 0.95)]
+
+map_plot(df = airbnb_nyc[reviews_per_month < per95_rev ], 
+         color_col = "reviews_per_month")  
+```
+
+## Dates
+
+```{r}
+airbnb_nyc[, last_review := ymd(last_review)]
+airbnb_nyc[, summary(last_review)]
+```
+
+-   Work in progress !

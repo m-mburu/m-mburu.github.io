@@ -1,0 +1,183 @@
+---
+title: "Heart Failure Prediction"
+date: "July 11, 2021"
+output:
+  html_document:
+    toc: yes
+    toc_depth: 3
+    toc_float:
+      collapsed: no
+      smooth_scroll: no
+    theme: lumen
+    highlight: pygments
+  html_notebook:
+    toc: yes
+    toc_depth: '2'
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE,
+                      message = FALSE)
+
+```
+
+```{r}
+library(tidyverse)
+library(data.table)
+library(xgboost)
+library(knitr)
+library(broom)
+library(caret)
+library(e1071)
+library(kableExtra)
+library(ggthemes)
+library(DT)
+library(here)
+```
+
+```{r}
+
+heart_failure<- fread("data/heart_failure_clinical_records_dataset.csv")
+nms <- names(heart_failure)  
+nms_new <- nms %>% tolower()
+setnames(heart_failure, nms, nms_new)
+
+datatable(heart_failure, 
+          options = list(scrollX = T) )
+```
+
+
+```{r}
+heart_failure[, death_char := factor(death_event,
+                                     levels = c(0, 1), 
+                                     labels = c("Alive", "Death"))]
+
+
+deaths_tab <- heart_failure[, .(freq = .N),
+       by = death_char] %>% 
+    .[, perc := round(100 * freq/sum(freq), 2)] 
+
+deaths_tab[, bar_text := paste0("N = ",freq, ", ", perc, "%")]
+#datatable(deaths_tab)
+
+```
+
+
+```{r, fig.width=6, fig.height=5}
+ggplot(deaths_tab, aes(death_char, perc))+
+    geom_bar(stat = "identity", width = 0.5)+
+    geom_text(aes(death_char, perc, label = bar_text),
+              position = position_dodge(width = 0.5),
+              vjust = 0.05)
+```
+
+
+```{r}
+find_factors <- function(x){
+    y = unique(x)
+    len_x = length(y)
+    val = len_x < 4
+    return(val)
+}
+nms_dt <- sapply(heart_failure, find_factors)
+nms_factors_all <- nms_dt[nms_dt == T] %>% names()
+nms_factors <- nms_factors_all[!nms_factors_all %in% c("death_event")]
+
+dt_factors <- heart_failure[, ..nms_factors]
+datatable(dt_factors[1:10], 
+          options = list(scrollX = T) )
+```
+
+
+```{r}
+dt_factors_m <- melt(dt_factors, 
+                     id.vars = "death_char",
+                     variable.factor = F)
+
+datatable(dt_factors_m[1:10], 
+          options = list(scrollX = T) )
+```
+
+
+```{r}
+summary_factors <- dt_factors_m[, .(freq = .N), 
+             by = c( "variable", "death_char", "value")] %>%
+    .[, perc := round(100 * freq/sum(freq), 2),
+      by = c( "variable","value")] 
+```
+
+
+```{r, fig.height=7, fig.width=10}
+summary_factors[, value := as.factor(value)]
+ggplot(summary_factors, aes(value, perc, fill = death_char))+
+    geom_bar(stat = "identity")+
+    geom_text(aes(value, perc, label = perc),
+              position = position_stack(vjust = .5))+
+    facet_wrap(~variable)
+```
+
+```{r}
+nms_numeric <- nms_dt[nms_dt == FALSE] %>% names()
+
+heart_failure[, (nms_numeric) := lapply(.SD, 
+                                        function(x)scales::rescale(x) ),
+              .SDcols = nms_numeric]
+```
+
+```{r}
+nms_numeric2 <- c("death_char", nms_numeric)
+dt_num <- heart_failure[, ..nms_numeric2]
+dt_num_m <- melt(dt_num, id.vars = "death_char")
+
+```
+
+```{r}
+ggplot(dt_num_m, aes(death_char, value))+
+  geom_violin()+
+  facet_wrap(~variable)
+```
+
+
+```{r}
+nms <- c("death_event", "time")
+cv_fold <- createFolds(heart_failure$death_char, k = 10)
+
+heart_failure[, (nms) := NULL]
+xgb_ctrl <- trainControl(method = "cv",
+                        number = 10,
+                        summaryFunction = twoClassSummary,
+                        classProbs = TRUE,
+                        allowParallel=T,
+                        index = cv_fold,
+                        verboseIter = FALSE,
+                        savePredictions = TRUE,
+                        search = "grid")
+
+xgb_grid <- expand.grid(nrounds = c(10, 50, 100),
+                        eta = seq(0.06, .2, length.out = 3),
+                        max_depth = c(50, 80),
+                        gamma = c(0,.01, 0.1),
+                        colsample_bytree = c(0.6, 0.7,0.8),
+                        min_child_weight = 1,
+                        subsample =  .7
+                        
+    )
+
+xgb_model <-train(death_char~.,
+                 data=heart_failure,
+                 method="xgbTree",
+                 trControl= xgb_ctrl,
+                 tuneGrid=xgb_grid,
+                 verbose=T,
+                 metric="ROC",
+                 nthread =4
+                     
+    )
+
+xgb_model
+```
+

@@ -1,0 +1,285 @@
+---
+title: "Multiple Linear and Logistic Regression in R"
+author: "Mburu"
+date: "4/13/2021"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+    theme: united
+    highlight: pygments
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+## Fitting a parallel slopes model
+
+We use the lm() function to fit linear models to data. In this case, we want to understand how the price of MarioKart games sold at auction varies as a function of not only the number of wheels included in the package, but also whether the item is new or used. Obviously, it is expected that you might have to pay a premium to buy these new. But how much is that premium? Can we estimate its value after controlling for the number of wheels?
+
+We will fit a parallel slopes model using lm(). In addition to the data argument, lm() needs to know which variables you want to include in your regression model, and how you want to include them. It accomplishes this using a formula argument. A simple linear regression formula looks like y \~ x, where y is the name of the response variable, and x is the name of the explanatory variable. Here, we will simply extend this formula to include multiple explanatory variables. A parallel slopes model has the form y \~ x + z, where z is a categorical explanatory variable, and x is a numerical explanatory variable.
+
+The output from lm() is a model object, which when printed, will show the fitted coefficients.
+
+```{r}
+
+library(tidyverse)
+library(data.table)
+library(openintro)
+library(broom)
+library(pander)
+data( mariokart, package = "openintro")
+mario_kart <- mariokart
+
+mario_kart <- mario_kart %>% mutate(total_pr := ifelse(total_pr > 100, NA, total_pr))
+# Explore the data
+glimpse(mario_kart)
+
+# fit parallel slopes
+
+mod_mario <- lm(total_pr ~ wheels + cond, data = mario_kart)
+```
+
+## Reasoning about two intercepts
+
+The mario_kart data contains several other variables. The totalPr, startPr, and shipPr variables are numeric, while the cond and stockPhoto variables are categorical.
+
+Which formula will result in a parallel slopes model?
+
+-   totalPr \~ shipPr + stockPhoto
+
+## Using geom_line() and augment()
+
+Parallel slopes models are so-named because we can visualize these models in the data space as not one line, but two parallel lines. To do this, we'll draw two things:
+
+a scatterplot showing the data, with color separating the points into groups a line for each value of the categorical variable Our plotting strategy is to compute the fitted values, plot these, and connect the points to form a line. The augment() function from the broom package provides an easy way to add the fitted values to our data frame, and the geom_line() function can then use that data frame to plot the points and connect them.
+
+Note that this approach has the added benefit of automatically coloring the lines appropriately to match the data.
+
+You already know how to use ggplot() and geom_point() to make the scatterplot. The only twist is that now you'll pass your augment()-ed model as the data argument in your ggplot() call. When you add your geom_line(), instead of letting the y aesthetic inherit its values from the ggplot() call, you can set it to the .fitted column of the augment()-ed model. This has the advantage of automatically coloring the lines for you.
+
+```{r}
+
+# Augment the model
+augmented_mod <- augment(mod_mario)
+glimpse(augmented_mod)
+
+# scatterplot, with color
+data_space <- ggplot(augmented_mod, aes(x = wheels, y = total_pr , color = cond )) + 
+  geom_point()
+  
+# single call to geom_line()
+data_space + 
+  geom_line(aes(y = .fitted))
+```
+
+## Intercept interpretation
+
+Recall that the cond variable is either new or used. Here are the fitted coefficients from your model:
+
+Call: lm(formula = totalPr \~ wheels + cond, data = mario_kart)
+
+Coefficients: (Intercept) wheels condused\
+42.370 7.233 -5.585\
+Choose the correct interpretation of the coefficient on condused:
+
+-   The expected price of a used MarioKart is \$5.58 less than that of a new one with the same number of wheels.
+
+-   For each additional wheel, the expected price of a MarioKart increases by \$7.23 regardless of whether it is new or used.
+
+Syntax from math The babies data set contains observations about the birthweight and other characteristics of children born in the San Francisco Bay area from 1960--1967.
+
+We would like to build a model for birthweight as a function of the mother's age and whether this child was her first (parity == 0). Use the mathematical specification below to code the model in R.
+
+$$birthweight = \beta_0 + \beta_1 * age  + \beta_2 * parity + \epsilon$$
+
+```{r}
+
+data( babies, package = "openintro")
+
+mod <- lm(bwt~ age+parity, data = babies)
+
+tidy(mod) %>% pander()
+```
+
+## Syntax from plot
+
+This time, we'd like to build a model for birthweight as a function of the length of gestation and the mother's smoking status. Use the plot to inform your model specification.
+
+```{r}
+
+ggplot(babies, aes(gestation, bwt, color = factor(smoke)))+
+    geom_point()
+
+mod <- lm(bwt~ gestation + smoke, data = babies)
+
+tidy(mod) %>% pander()
+```
+
+R-squared vs. adjusted R-squared Two common measures of how well a model fits to data are $$R^2$$ (the coefficient of determination) and the adjusted $$R^2$$ . The former measures the percentage of the variability in the response variable that is explained by the model. To compute this, we define
+
+$$R^2 = 1 - \frac{sse}{sst} $$ where SSE and SST are the sum of the squared residuals, and the total sum of the squares, respectively. One issue with this measure is that the can only decrease as new variable are added to the model, while the SST depends only on the response variable and therefore is not affected by changes to the model. This means that you can increase $$R^2$$ by adding any additional variable to your model---even random noise.
+
+The adjusted $$R^2$$ includes a term that penalizes a model for each additional explanatory variable (where is the number of explanatory variables). We can see both measures in the output of the summary() function on our model object.
+
+```{r}
+# R^2 and adjusted R^2
+summary(mod_mario)
+
+# add random noise
+mario_kart_noisy <- mario_kart %>% 
+mutate(noise = rnorm(n = nrow(mario_kart)))
+  
+# compute new model
+mod2_mario2 <- lm(total_pr ~ wheels + cond+noise, data = mario_kart_noisy)
+
+# new R^2 and adjusted R^2
+summary(mod2_mario2)
+```
+
+## Prediction
+
+Once we have fit a regression model, we can use it to make predictions for unseen observations or retrieve the fitted values. Here, we explore two methods for doing the latter.
+
+A traditional way to return the fitted values (i.e. the y 's) is to run the predict() function on the model object. This will return a vector of the fitted values. Note that predict() will take an optional newdata argument that will allow you to make predictions for observations that are not in the original data.
+
+A newer alternative is the augment() function from the broom package, which returns a data.frame with the response varible (), the relevant explanatory variables (the 's), the fitted value ( ) and some information about the residuals (). augment() will also take a newdata argument that allows you to make predictions.
+
+```{r}
+# return a vector
+library(knitr)
+
+predict(mod_mario)
+
+# return a data frame
+
+augment(mod_mario)%>% head() %>% kable()
+```
+
+## Thought experiments
+
+Suppose that after going apple picking you have 12 apples left over. You decide to conduct an experiment to investigate how quickly they will rot under certain conditions. You place six apples in a cool spot in your basement, and leave the other six on the window sill in the kitchen. Every week, you estimate the percentage of the surface area of the apple that is rotten or moldy.
+
+Consider the following models:
+
+$$rot = \beta_0 + \beta_1 *t + \beta_2 * temp + \epsilon $$
+
+and
+
+$$rot = \beta_0 + \beta_1 *t + \beta_2 * temp + \beta_2 * temp *t +  \epsilon $$
+
+-   The rate at which apples rot will vary based on the temperature.
+
+## Fitting a model with interaction
+
+Including an interaction term in a model is easy---we just have to tell lm() that we want to include that new variable. An expression of the form
+
+    lm(y ~ x + z + x:z, data = mydata)
+
+will do the trick. The use of the colon (:) here means that the interaction between and will be a third term in the model.
+
+```{r}
+# include interaction
+
+mod <- lm(total_pr ~cond + duration + cond:duration, data = mario_kart)
+
+tidy(mod) %>% pander()
+
+```
+
+## Visualizing interaction models
+
+Interaction allows the slope of the regression line in each group to vary. In this case, this means that the relationship between the final price and the length of the auction is moderated by the condition of each item.
+
+Interaction models are easy to visualize in the data space with ggplot2 because they have the same coefficients as if the models were fit independently to each group defined by the level of the categorical variable. In this case, new and used MarioKarts each get their own regression line. To see this, we can set an aesthetic (e.g. color) to the categorical variable, and then add a geom_smooth() layer to overlay the regression line for each color.
+
+```{r}
+# interaction plot
+ggplot(mario_kart, aes(duration, total_pr, color = cond)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = 0)
+```
+
+## Consequences of Simpson's paradox
+
+In the simple linear regression model for average SAT score, (total) as a function of average teacher salary (salary), the fitted coefficient was -5.02 points per thousand dollars. This suggests that for every additional thousand dollars of salary for teachers in a particular state, the expected SAT score for a student from that state is about 5 points lower.
+
+In the model that includes the percentage of students taking the SAT, the coefficient on salary becomes 1.84 points per thousand dollars. Choose the correct interpretation of this slope coefficient.
+
+-   For every additional thousand dollars of salary for teachers in a particular state, the expected SAT score for a student from that state is about 2 points higher, after controlling for the percentage of students taking the SAT.
+
+## Simpson's paradox in action
+
+A mild version of Simpson's paradox can be observed in the MarioKart auction data. Consider the relationship between the final auction price and the length of the auction. It seems reasonable to assume that longer auctions would result in higher prices, since---other things being equal---a longer auction gives more bidders more time to see the auction and bid on the item.
+
+However, a simple linear regression model reveals the opposite: longer auctions are associated with lower final prices. The problem is that all other things are not equal. In this case, the new MarioKarts---which people pay a premium for---were mostly sold in one-day auctions, while a plurality of the used MarioKarts were sold in the standard seven-day auctions.
+
+Our simple linear regression model is misleading, in that it suggests a negative relationship between final auction price and duration. However, for the used MarioKarts, the relationship is positive.
+
+```{r}
+slr <- ggplot(mario_kart, aes(y = total_pr, x = duration)) + 
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE)
+
+# model with one slope
+mod <- lm(total_pr ~ duration, data = mario_kart)
+
+# plot with two slopes
+slr + aes(color = cond)
+```
+
+## Fitting a MLR model
+
+In terms of the R code, fitting a multiple linear regression model is easy: simply add variables to the model formula you specify in the lm() command.
+
+In a parallel slopes model, we had two explanatory variables: one was numeric and one was categorical. Here, we will allow both explanatory variables to be numeric.
+
+```{r}
+# Fit the model using duration and startPr
+
+mod <- lm(total_pr~ start_pr + duration, data = mario_kart)
+
+tidy(mod) %>% pander()
+```
+
+## Tiling the plane
+
+One method for visualizing a multiple linear regression model is to create a heatmap of the fitted values in the plane defined by the two explanatory variables. This heatmap will illustrate how the model output changes over different combinations of the explanatory variables.
+
+This is a multistep process:
+
+First, create a grid of the possible pairs of values of the explanatory variables. The grid should be over the actual range of the data present in each variable. We've done this for you and stored the result as a data frame called grid. Use augment() with the newdata argument to find the 's corresponding to the values in grid. Add these to the data_space plot by using the fill aesthetic and geom_tile().
+
+```{r, eval=FALSE}
+# add predictions to grid
+price_hats <- augment(mod, newdata = grid)
+
+# tile the plane
+data_space + 
+  geom_tile(data = price_hats, aes(fill = .fitted), alpha = 0.5)
+```
+
+## Models in 3D
+
+An alternative way to visualize a multiple regression model with two numeric explanatory variables is as a plane in three dimensions. This is possible in R using the plotly package.
+
+We have created three objects that you will need:
+
+x: a vector of unique values of duration y: a vector of unique values of startPr plane: a matrix of the fitted values across all combinations of x and y Much like ggplot(), the plot_ly() function will allow you to create a plot object with variables mapped to x, y, and z aesthetics. The add_markers() function is similar to geom_point() in that it allows you to add points to your 3D plot.
+
+Note that plot_ly uses the pipe (%\>%) operator to chain commands together.
+
+```{r, eval=FALSE}
+
+# draw the 3D scatterplot
+p <- plot_ly(data = mario_kart, z = ~totalPr, x = ~duration, y = ~startPr, opacity = 0.6) %>%
+  add_markers() 
+  
+# draw the plane
+p %>%
+  add_surface(x = ~x, y = ~y, z = ~plane, showscale = FALSE)
+```

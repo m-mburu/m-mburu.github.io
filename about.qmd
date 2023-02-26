@@ -1,0 +1,18 @@
+---
+title: "About"
+image: milkyway.jpeg
+about:
+  template: jolla
+  links:
+    - icon: twitter
+      text: Twitter
+      href: https://twitter.com/mmburu_w
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/mmburu/
+    - icon: github
+      text: Github
+      href:  https://github.com/m-mburu
+---
+
+About this blog

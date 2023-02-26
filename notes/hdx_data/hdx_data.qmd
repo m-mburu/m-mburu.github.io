@@ -1,0 +1,27 @@
+---
+title: "World Bank kenya data"
+author: "Mburu"
+date: "`r Sys.Date()`"
+---
+
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE, 
+                      message = FALSE, 
+                      warning = FALSE)
+
+```
+
+
+```{r, eval=FALSE}
+library(rhdx)
+library(tidyverse)
+library(data.table)
+set_rhdx_config(hdx_site = "prod")
+kenya_growth <- search_datasets("Kenya - Economy and Growth", rows = 1) %>%
+    nth(1) %>%
+  get_resource(1) %>%
+  read_resource(filename = "world-bank-economy-and-growth-indicators-for-kenya.csv", hxl = TRUE)
+
+```

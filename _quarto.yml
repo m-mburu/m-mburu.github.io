@@ -1,0 +1,35 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Personal Blog"
+  site-url: https://m-mburu.github.io/
+  favicon: "milkyway.jpeg"
+  page-navigation: true
+  reader-mode: true  
+  navbar:
+    search: true
+    background: grey
+    collapse-below: lg
+    type: overlay 
+    alignment: center
+    left:
+      - text: Home
+        href: index.qmd
+      - text: Data Camp Courses 
+        href: datacamp.qmd
+      
+    right:
+      - about.qmd
+      - icon: github
+        href: https://github.com/m-mburu
+      - icon: twitter
+        href: https://twitter.com/mmburu_w
+format:
+  html:
+    theme: lumen
+    css: style.css
+
+editor: visual
+

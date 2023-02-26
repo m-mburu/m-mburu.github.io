@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Mburu - Census data in r with tidycensus</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../milkyway.jpeg" rel="icon" type="image/jpeg">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../style.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Mburu</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../datacamp.html">
+ <span class="menu-text">Data Camp Courses</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/m-mburu"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/mmburu_w"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-reader-toggle nav-link" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Census data in r with tidycensus</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="obtain-and-set-your-census-api-key" class="level2">
+<h2 class="anchored" data-anchor-id="obtain-and-set-your-census-api-key">Obtain and set your Census API key</h2>
+<p>tidycensus is an R package designed to return data from the US Census Bureau ready for use within the Tidyverse.</p>
+<p>To acquire data from the US Census Bureau using the tidycensus R package, you must first acquire and set a Census API key. After obtaining your key, you can install it for future use with the census_api_key() function in tidycensus.</p>
+<p>This exercise uses a fake API key for purposes of illustration.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the tidycensus package into your R session</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidycensus)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tigris)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Define your Census API key and set it with census_api_key()</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>api_key <span class="ot">&lt;-</span> <span class="fu">Sys.getenv</span>(<span class="st">"CENSUS_API_KEY"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">census_api_key</span>(api_key)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>##Setting a cache directory Spatial data from the US Census Bureau can get very big - sometimes hundreds of megabytes in size. By default, tigris functions download data from the US Census Bureau’s website - but this can get tiresome if downloading the same large datasets over and over. To resolve this, tigris includes an option to cache downloaded data on a user’s computer for future use, meaning that files only have to be downloaded from the Census website once. In this exercise, you’ll get acquainted with the caching functionality in tigris.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the cache directory</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tigris_cache_dir</span>(<span class="fu">here</span>(<span class="st">"tigris_cache"</span>))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the tigris_use_cache option</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">tigris_use_cache =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Check to see that you've modified the option correctly</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">getOption</span>(<span class="st">"tigris_use_cache"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+</section>
+<section id="getting-census-data-with-tidycensus" class="level2">
+<h2 class="anchored" data-anchor-id="getting-census-data-with-tidycensus">Getting Census data with tidycensus</h2>
+<p>In this exercise, you will load and inspect data from the 2010 US Census and 2012-2016 American Community Survey. The core functions of get_decennial() and get_acs() in tidycensus are used to obtain data from these sources; the 2010 Census and 2012-2016 ACS are the defaults for these functions, respectively.</p>
+<p>By inspecting the data, you’ll get a sense of differences between decennial US Census data and data from the ACS, which is based on a sample and subject to a margin of error. Whereas get_decennial() returns a data value for each row, get_acs() returns estimate and moe columns representing the ACS estimate and margin of error.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtain and view state populations from the 2010 US Census</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>state_pop <span class="ot">&lt;-</span> <span class="fu">get_decennial</span>(<span class="at">geography =</span> <span class="st">"state"</span>, </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">variables =</span> <span class="st">"P001001"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(state_pop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  GEOID NAME       variable    value
+  &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;       &lt;dbl&gt;
+1 01    Alabama    P001001   4779736
+2 02    Alaska     P001001    710231
+3 04    Arizona    P001001   6392017
+4 05    Arkansas   P001001   2915918
+5 06    California P001001  37253956
+6 22    Louisiana  P001001   4533372</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtain and view state median household income from the 2012-2016 American Community Survey</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>state_income <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(<span class="at">geography =</span> <span class="st">"state"</span>, </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">variables =</span> <span class="st">"B19013_001"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(state_income)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+  GEOID NAME       variable   estimate   moe
+  &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;         &lt;dbl&gt; &lt;dbl&gt;
+1 01    Alabama    B19013_001    54943   377
+2 02    Alaska     B19013_001    80287  1113
+3 04    Arizona    B19013_001    65913   387
+4 05    Arkansas   B19013_001    52123   458
+5 06    California B19013_001    84097   236
+6 08    Colorado   B19013_001    80184   450</code></pre>
+</div>
+</div>
+</section>
+<section id="understanding-tidycensus-options" class="level2">
+<h2 class="anchored" data-anchor-id="understanding-tidycensus-options">Understanding tidycensus options</h2>
+<p>As discussed in this lesson, Census data comprise thousands of variables available across dozens of geographies! Most of these geography-variable combinations are accessible with tidycensus; however, it helps to understand the package options.</p>
+<p>Some data, like Census tracts, are only available by state, and users might want to subset by county; tidycensus facilitates this with state and county parameters when appropriate. Additionally, tidycensus includes the Census variable ID in the variable column; however, a user might want to supply her own variable name, which can be accomplished with a named vector.</p>
+<p>You’ll be using the Census variable B19013_001 here, which refers to median household income.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get an ACS dataset for Census tracts in Texas by setting the state</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>tx_income <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(<span class="at">geography =</span> <span class="st">"tract"</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">variables =</span> <span class="st">"B19013_001"</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">state =</span> <span class="st">"TX"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect the dataset</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tx_income)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+  GEOID       NAME                                         varia…¹ estim…²   moe
+  &lt;chr&gt;       &lt;chr&gt;                                        &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;
+1 48001950100 Census Tract 9501, Anderson County, Texas    B19013…   61325  9171
+2 48001950401 Census Tract 9504.01, Anderson County, Texas B19013…   92813 45136
+3 48001950402 Census Tract 9504.02, Anderson County, Texas B19013…      NA    NA
+4 48001950500 Census Tract 9505, Anderson County, Texas    B19013…   41713  6650
+5 48001950600 Census Tract 9506, Anderson County, Texas    B19013…   32552 12274
+6 48001950700 Census Tract 9507, Anderson County, Texas    B19013…   35811  5573
+# … with abbreviated variable names ¹​variable, ²​estimate</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get an ACS dataset for Census tracts in Travis County, TX</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>travis_income <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(<span class="at">geography =</span> <span class="st">"tract"</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">variables =</span> <span class="st">"B19013_001"</span>, </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">state =</span> <span class="st">"TX"</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">county =</span> <span class="st">"Travis"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect the dataset</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(travis_income)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+  GEOID       NAME                                    variable   estimate   moe
+  &lt;chr&gt;       &lt;chr&gt;                                   &lt;chr&gt;         &lt;dbl&gt; &lt;dbl&gt;
+1 48453000101 Census Tract 1.01, Travis County, Texas B19013_001   121964 31935
+2 48453000102 Census Tract 1.02, Travis County, Texas B19013_001   201417 26672
+3 48453000203 Census Tract 2.03, Travis County, Texas B19013_001    81994 14344
+4 48453000204 Census Tract 2.04, Travis County, Texas B19013_001    93219 26118
+5 48453000205 Census Tract 2.05, Travis County, Texas B19013_001    75000 24198
+6 48453000206 Census Tract 2.06, Travis County, Texas B19013_001    88342 10549</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Supply custom variable names</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>travis_income2 <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(<span class="at">geography =</span> <span class="st">"tract"</span>, </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">variables =</span> <span class="fu">c</span>(<span class="at">hhincome =</span> <span class="st">"B19013_001"</span>), </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">state =</span> <span class="st">"TX"</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>                          <span class="at">county =</span> <span class="st">"Travis"</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect the dataset</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(travis_income2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+  GEOID       NAME                                    variable estimate   moe
+  &lt;chr&gt;       &lt;chr&gt;                                   &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt;
+1 48453000101 Census Tract 1.01, Travis County, Texas hhincome   121964 31935
+2 48453000102 Census Tract 1.02, Travis County, Texas hhincome   201417 26672
+3 48453000203 Census Tract 2.03, Travis County, Texas hhincome    81994 14344
+4 48453000204 Census Tract 2.04, Travis County, Texas hhincome    93219 26118
+5 48453000205 Census Tract 2.05, Travis County, Texas hhincome    75000 24198
+6 48453000206 Census Tract 2.06, Travis County, Texas hhincome    88342 10549</code></pre>
+</div>
+</div>
+</section>
+<section id="tidy-and-wide-data-in-tidycensus" class="level2">
+<h2 class="anchored" data-anchor-id="tidy-and-wide-data-in-tidycensus">Tidy and wide data in tidycensus</h2>
+<p>By default, tidycensus functions return tidy data frames, in which each row represents a unique unit-variable combination. However, at times it is useful to have each Census variable in its own column for some methods of visualization and analysis. To accomplish this, you can set output = “wide” in your calls to get_acs() or get_decennial(), which will place estimates/values and margins of error in their own columns.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Return county data in wide format</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>or_wide <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(<span class="at">geography =</span> <span class="st">"county"</span>, </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">state =</span> <span class="st">"OR"</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">variables =</span> <span class="fu">c</span>(<span class="at">hhincome =</span> <span class="st">"B19013_001"</span>, </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">medage =</span> <span class="st">"B01002_001"</span>), </span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">output =</span> <span class="st">"wide"</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare output to the tidy format from previous exercises</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(or_wide)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 6
+  GEOID NAME                     hhincomeE hhincomeM medageE medageM
+  &lt;chr&gt; &lt;chr&gt;                        &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 41001 Baker County, Oregon         46922      3271    47.7     0.9
+2 41003 Benton County, Oregon        68732      2689    33.3     0.3
+3 41005 Clackamas County, Oregon     88517      1424    41.6     0.2
+4 41007 Clatsop County, Oregon       61846      2651    44.5     0.4
+5 41009 Columbia County, Oregon      73909      3517    43.3     0.4
+6 41011 Coos County, Oregon          52548      3145    48.4     0.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a scatterplot</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(or_wide<span class="sc">$</span>hhincomeE, or_wide<span class="sc">$</span>medageE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="us_census_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="4200"></p>
+</div>
+</div>
+</section>
+<section id="loading-variables-in-tidycensus" class="level2">
+<h2 class="anchored" data-anchor-id="loading-variables-in-tidycensus">Loading variables in tidycensus</h2>
+<p>There are hundreds of thousands of variables in the decennial Census and American Community Survey samples, which can make it difficult to know which variable codes to use! tidycensus aims to make this easier with the load_variables() function, which obtains a dataset of variables from a specified sample and loads it into R as a browsable data frame.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load variables from the 2012-2016 ACS</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>v16 <span class="ot">&lt;-</span> <span class="fu">load_variables</span>(<span class="at">year =</span> <span class="dv">2016</span>,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">dataset =</span> <span class="st">"acs5"</span>,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">cache =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Get variables from the ACS Data Profile</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>v16p <span class="ot">&lt;-</span> <span class="fu">load_variables</span>(<span class="at">year =</span> <span class="dv">2016</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">dataset =</span> <span class="st">"acs5/profile"</span>,</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">cache =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Set year and dataset to get variables from the 2000 Census SF3</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>v00 <span class="ot">&lt;-</span> <span class="fu">load_variables</span>(<span class="at">year =</span> <span class="dv">2000</span>,</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>                      <span class="at">dataset =</span> <span class="st">"sf3"</span>,</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>                      <span class="at">cache =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="exploring-variables-with-tidyverse-tools" class="level2">
+<h2 class="anchored" data-anchor-id="exploring-variables-with-tidyverse-tools">Exploring variables with tidyverse tools</h2>
+<p>Once loaded, your dataset of Census or ACS variables might contain thousands of rows. In RStudio, it is recommended to use the View() function to interactively search for these variables. Outside of RStudio, these datasets can be browsed using tidyverse filtering tools.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for table B19001</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(v16, <span class="fu">str_detect</span>(name, <span class="st">"B19001"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 170 × 4
+   name        label                               concept               geogr…¹
+   &lt;chr&gt;       &lt;chr&gt;                               &lt;chr&gt;                 &lt;chr&gt;  
+ 1 B19001A_001 Estimate!!Total                     HOUSEHOLD INCOME IN … tract  
+ 2 B19001A_002 Estimate!!Total!!Less than $10,000  HOUSEHOLD INCOME IN … tract  
+ 3 B19001A_003 Estimate!!Total!!$10,000 to $14,999 HOUSEHOLD INCOME IN … tract  
+ 4 B19001A_004 Estimate!!Total!!$15,000 to $19,999 HOUSEHOLD INCOME IN … tract  
+ 5 B19001A_005 Estimate!!Total!!$20,000 to $24,999 HOUSEHOLD INCOME IN … tract  
+ 6 B19001A_006 Estimate!!Total!!$25,000 to $29,999 HOUSEHOLD INCOME IN … tract  
+ 7 B19001A_007 Estimate!!Total!!$30,000 to $34,999 HOUSEHOLD INCOME IN … tract  
+ 8 B19001A_008 Estimate!!Total!!$35,000 to $39,999 HOUSEHOLD INCOME IN … tract  
+ 9 B19001A_009 Estimate!!Total!!$40,000 to $44,999 HOUSEHOLD INCOME IN … tract  
+10 B19001A_010 Estimate!!Total!!$45,000 to $49,999 HOUSEHOLD INCOME IN … tract  
+# … with 160 more rows, and abbreviated variable name ¹​geography</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use public transportation to search for related variables</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(v16p, <span class="fu">str_detect</span>(label, <span class="fu">fixed</span>(<span class="st">"public transportation"</span>, </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                                <span class="at">ignore_case =</span> <span class="cn">TRUE</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  name       label                                                       concept
+  &lt;chr&gt;      &lt;chr&gt;                                                       &lt;chr&gt;  
+1 DP03_0021  Estimate!!COMMUTING TO WORK!!Workers 16 years and over!!Pu… SELECT…
+2 DP03_0021P Percent!!COMMUTING TO WORK!!Workers 16 years and over!!Pub… SELECT…</code></pre>
+</div>
+</div>
+</section>
+<section id="comparing-geographies-with-ggplot2-visualizations" class="level2">
+<h2 class="anchored" data-anchor-id="comparing-geographies-with-ggplot2-visualizations">Comparing geographies with ggplot2 visualizations</h2>
+<p>When exploring Census or ACS data, you’ll often want to know how data varies among different geographic units. For example - which US states have higher - or lower - median household incomes? This can be accomplished through visualization using dot plots, which are particularly effective for showing ranks visually. In this exercise, you’ll use the popular ggplot2 data visualization package to accomplish this.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Access the 1-year ACS  with the survey parameter</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>ne_income <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(<span class="at">geography =</span> <span class="st">"state"</span>,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">variables =</span> <span class="st">"B19013_001"</span>, </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">survey =</span> <span class="st">"acs1"</span>, </span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">state =</span> <span class="fu">c</span>(<span class="st">"ME"</span>, <span class="st">"NH"</span>, <span class="st">"VT"</span>, <span class="st">"MA"</span>, </span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"RI"</span>, <span class="st">"CT"</span>, <span class="st">"NY"</span>))</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a dot plot</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Reorder the states in descending order of estimates</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ne_income, <span class="fu">aes</span>(<span class="at">x =</span> estimate, <span class="at">y =</span> <span class="fu">reorder</span>(NAME, estimate))) <span class="sc">+</span> </span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="us_census_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="4200"></p>
+</div>
+</div>
+</section>
+<section id="customizing-ggplot2-visualizations-of-acs-data" class="level2">
+<h2 class="anchored" data-anchor-id="customizing-ggplot2-visualizations-of-acs-data">Customizing ggplot2 visualizations of ACS data</h2>
+<p>While the ggplot2 defaults are excellent for exploratory visualization of data, you’ll likely want to customize your charts before sharing them with others. In this exercise, you’ll customize your tidycensus dot plot by modifying the chart colors, tick labels, and axis labels. You’ll also learn how to format labels using the scales package, as label formatters can be imported using the :: syntax.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set dot color and size</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>g_color <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ne_income, <span class="fu">aes</span>(<span class="at">x =</span> estimate, <span class="at">y =</span> <span class="fu">reorder</span>(NAME, estimate))) <span class="sc">+</span> </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"navy"</span>, <span class="at">size =</span> <span class="dv">4</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Format the x-axis labels</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>g_scale <span class="ot">&lt;-</span> g_color <span class="sc">+</span> </span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>dollar) <span class="sc">+</span> </span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) </span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Label your x-axis, y-axis, and title your chart</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>g_label <span class="ot">&lt;-</span> g_scale <span class="sc">+</span> </span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span><span class="st">"2016 ACS estimate"</span>, </span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">""</span>, </span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Median household income by state"</span>)</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>g_label</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="us_census_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="4800"></p>
+</div>
+</div>
+</section>
+<section id="download-and-view-a-table-of-data-from-the-acs" class="level2">
+<h2 class="anchored" data-anchor-id="download-and-view-a-table-of-data-from-the-acs">Download and view a table of data from the ACS</h2>
+<p>Variables in the decennial Census and American Community Survey are organized into tables, within which they share a common prefix. Commonly, analysts will want to work with all variables in a given table, as these variables might represent different aspects of a common characteristic (such as race or income levels). To request data for an entire table in tidycensus, users can specify a table argument with the table prefix, and optionally cache a dataset of table codes to speed up table searching in future requests. In this exercise, you’ll acquire a table of variables representing different income bands, then filter out the denominator rows.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Download table "B19001"</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>wa_income <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(<span class="at">geography =</span> <span class="st">"county"</span>, </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">state =</span> <span class="st">"WA"</span>, </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">table =</span> <span class="st">"B19001"</span>)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Check out the first few rows of wa_income</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(wa_income)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+  GEOID NAME                     variable   estimate   moe
+  &lt;chr&gt; &lt;chr&gt;                    &lt;chr&gt;         &lt;dbl&gt; &lt;dbl&gt;
+1 53001 Adams County, Washington B19001_001     6158   123
+2 53001 Adams County, Washington B19001_002      474   171
+3 53001 Adams County, Washington B19001_003      255   107
+4 53001 Adams County, Washington B19001_004      204    90
+5 53001 Adams County, Washington B19001_005      393   134
+6 53001 Adams County, Washington B19001_006      358   159</code></pre>
+</div>
+</div>
+</section>
+<section id="get-a-summary-variable-and-calculate-percentages" class="level2">
+<h2 class="anchored" data-anchor-id="get-a-summary-variable-and-calculate-percentages">Get a summary variable and calculate percentages</h2>
+<p>Many variables in the Census and American Community Survey are represented as counts or estimated counts. While count data is useful for some applications, it is often good practice to normalize count data by its denominator to convert it to a proportion or percentage to make clearer comparisons. This is facilitated in tidycensus with the summary_var argument, which allows users to request that a variable is given its own column in a tidy Census dataset. This value can then be used as the denominator for subsequent calculations of percentages.</p>
+<p>Summary question: When the summary_var parameter is requested in get_acs(), what information is returned by the function?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign Census variables vector to race_vars </span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>race_vars <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">White =</span> <span class="st">"B03002_003"</span>, <span class="at">Black =</span> <span class="st">"B03002_004"</span>, <span class="at">Native =</span> <span class="st">"B03002_005"</span>, </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">Asian =</span> <span class="st">"B03002_006"</span>, <span class="at">HIPI =</span> <span class="st">"B03002_007"</span>, <span class="at">Hispanic =</span> <span class="st">"B03002_012"</span>)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Request a summary variable from the ACS</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>ca_race <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(<span class="at">geography =</span> <span class="st">"county"</span>, </span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">state =</span> <span class="st">"CA"</span>,</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>                   <span class="at">variables =</span> race_vars, </span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>                   <span class="at">summary_var =</span> <span class="st">"B03002_001"</span>)</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate a new percentage column and check the result</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>ca_race_pct <span class="ot">&lt;-</span> ca_race <span class="sc">%&gt;%</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pct =</span> <span class="dv">100</span> <span class="sc">*</span> (estimate <span class="sc">/</span> summary_est))</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ca_race_pct)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 8
+  GEOID NAME                       variable estim…¹   moe summa…² summa…³    pct
+  &lt;chr&gt; &lt;chr&gt;                      &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+1 06001 Alameda County, California White     499730   988 1673133      NA 29.9  
+2 06001 Alameda County, California Black     166017  1837 1673133      NA  9.92 
+3 06001 Alameda County, California Native      5248   318 1673133      NA  0.314
+4 06001 Alameda County, California Asian     524980  2437 1673133      NA 31.4  
+5 06001 Alameda County, California HIPI       12699   566 1673133      NA  0.759
+6 06001 Alameda County, California Hispanic  374542    NA 1673133      NA 22.4  
+# … with abbreviated variable names ¹​estimate, ²​summary_est, ³​summary_moe</code></pre>
+</div>
+</div>
+</section>
+<section id="finding-the-largest-group-by-county" class="level2">
+<h2 class="anchored" data-anchor-id="finding-the-largest-group-by-county">Finding the largest group by county</h2>
+<p>tidyverse data wrangling tools in packages like dplyr and purrr are extremely powerful for exploring Census data. tidycensus is specifically designed with data exploration within the tidyverse in mind. For example, users might be interested in finding out the largest racial/ethnic group within each county for a given state. This can be accomplished using dplyr grouping capabilities, which allow users to identify the largest ACS group estimate and filter to retain the rows that match that group.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Group the dataset and filter the estimate</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>ca_largest <span class="ot">&lt;-</span> ca_race <span class="sc">%&gt;%</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(GEOID) <span class="sc">%&gt;%</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(estimate <span class="sc">==</span> <span class="fu">max</span>(estimate)) </span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ca_largest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 7
+# Groups:   GEOID [6]
+  GEOID NAME                         variable estimate   moe summary_est summa…¹
+  &lt;chr&gt; &lt;chr&gt;                        &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;
+1 06001 Alameda County, California   Asian      524980  2437     1673133      NA
+2 06003 Alpine County, California    White         730   153        1344     228
+3 06005 Amador County, California    White       30081   412       40095      NA
+4 06007 Butte County, California     White      153153   300      217884      NA
+5 06009 Calaveras County, California White       35925   129       45349      NA
+6 06011 Colusa County, California    Hispanic    13177    NA       21780      NA
+# … with abbreviated variable name ¹​summary_moe</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Group the dataset and get a breakdown of the results</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>ca_largest <span class="sc">%&gt;%</span> </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(variable) <span class="sc">%&gt;%</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  variable     n
+  &lt;chr&gt;    &lt;int&gt;
+1 Asian        2
+2 Hispanic    16
+3 White       40</code></pre>
+</div>
+</div>
+</section>
+<section id="recoding-variables-and-calculating-group-sums" class="level2">
+<h2 class="anchored" data-anchor-id="recoding-variables-and-calculating-group-sums">Recoding variables and calculating group sums</h2>
+<p>dplyr, one of the core packages within the tidyverse, includes numerous functions for data wrangling. This functionality allows users to recode datasets, define groups within those datasets, and perform calculations over those groups. Such operations commonly take place within a pipe, denoted with the %&gt;% operator.</p>
+<p>In this exercise, you’ll work with ACS data in just such a tidyverse workflow. You’ll be identifying median household income variables in ACS table B19001 that are below $35,000; between $35,000 and $75,000; and above $75,000. You’ll then tabulate the number of households that fall into each group for counties in Washington.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use a tidy workflow to wrangle ACS data</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>wa_grouped <span class="ot">&lt;-</span> wa_income <span class="sc">%&gt;%</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(variable <span class="sc">!=</span> <span class="st">"B19001_001"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">incgroup =</span> <span class="fu">case_when</span>(</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    variable <span class="sc">&lt;</span> <span class="st">"B19001_008"</span> <span class="sc">~</span> <span class="st">"below35k"</span>, </span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    variable <span class="sc">&lt;</span> <span class="st">"B19001_013"</span> <span class="sc">~</span> <span class="st">"35kto75k"</span>, </span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"above75k"</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(NAME, incgroup) <span class="sc">%&gt;%</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">group_est =</span> <span class="fu">sum</span>(estimate))</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>wa_grouped</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 117 × 3
+# Groups:   NAME [39]
+   NAME                      incgroup group_est
+   &lt;chr&gt;                     &lt;chr&gt;        &lt;dbl&gt;
+ 1 Adams County, Washington  35kto75k      2156
+ 2 Adams County, Washington  above75k      2094
+ 3 Adams County, Washington  below35k      1908
+ 4 Asotin County, Washington 35kto75k      3215
+ 5 Asotin County, Washington above75k      3537
+ 6 Asotin County, Washington below35k      2535
+ 7 Benton County, Washington 35kto75k     21285
+ 8 Benton County, Washington above75k     37911
+ 9 Benton County, Washington below35k     15094
+10 Chelan County, Washington 35kto75k      9163
+# … with 107 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="comparing-acs-estimates-for-multiple-years" class="level2">
+<h2 class="anchored" data-anchor-id="comparing-acs-estimates-for-multiple-years">Comparing ACS estimates for multiple years</h2>
+<p>The American Community Survey is updated every year, which allows researchers to use ACS datasets to study demographic changes over time.</p>
+<p>In this exercise, you’ll learn how to use the tidyverse function map_df() to work with multi-year ACS data. map_df() helps analysts iterate through a sequence of values, compute a process for each of those values, then combine the results into a single data frame. You’ll be using map_df() in this way with ACS data, as you iterate through a vector of years, retrieve ACS data for each year, and combine the results. This will allow you to view how ACS estimates have changed over time.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Map through ACS1 estimates to see how they change through the years</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>mi_cities <span class="ot">&lt;-</span> <span class="fu">map_df</span>(<span class="dv">2012</span><span class="sc">:</span><span class="dv">2016</span>, <span class="cf">function</span>(x) {</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_acs</span>(<span class="at">geography =</span> <span class="st">"place"</span>, </span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">variables =</span> <span class="fu">c</span>(<span class="at">totalpop =</span> <span class="st">"B01003_001"</span>), </span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">state =</span> <span class="st">"MI"</span>, </span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">survey =</span> <span class="st">"acs1"</span>, </span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">year =</span> x) <span class="sc">%&gt;%</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">year =</span> x)</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>mi_cities <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(NAME, year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 80 × 6
+   GEOID   NAME                     variable estimate   moe  year
+   &lt;chr&gt;   &lt;chr&gt;                    &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
+ 1 2603000 Ann Arbor city, Michigan totalpop   116128    35  2012
+ 2 2603000 Ann Arbor city, Michigan totalpop   117034    43  2013
+ 3 2603000 Ann Arbor city, Michigan totalpop   117759    44  2014
+ 4 2603000 Ann Arbor city, Michigan totalpop   117070    33  2015
+ 5 2603000 Ann Arbor city, Michigan totalpop   120777    33  2016
+ 6 2621000 Dearborn city, Michigan  totalpop    96470    28  2012
+ 7 2621000 Dearborn city, Michigan  totalpop    95888    35  2013
+ 8 2621000 Dearborn city, Michigan  totalpop    95546    48  2014
+ 9 2621000 Dearborn city, Michigan  totalpop    95180    40  2015
+10 2621000 Dearborn city, Michigan  totalpop    94430    52  2016
+# … with 70 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="inspecting-margins-of-error" class="level2">
+<h2 class="anchored" data-anchor-id="inspecting-margins-of-error">Inspecting margins of error</h2>
+<p>ACS data are distinct from decennial Census data in that they represent estimates with an associated margin of error. ACS margins of error by default represent a 90 percent confidence level around an estimate, which means that we are 90 percent sure that the true value falls within a range of the reported estimate plus or minus the reported margin of error.</p>
+<p>In this exercise, you’ll get some experience working with data that has high margins of error relative to their estimates. We’ll use the example of poverty for the population aged 75 and above for Census tracts in Vermont.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get data on elderly poverty by Census tract in Vermont</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>vt_eldpov <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(<span class="at">geography =</span> <span class="st">"tract"</span>, </span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">variables =</span> <span class="fu">c</span>(<span class="at">eldpovm =</span> <span class="st">"B17001_016"</span>, </span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">eldpovf =</span> <span class="st">"B17001_030"</span>), </span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">state =</span> <span class="st">"VT"</span>)</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>vt_eldpov</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 386 × 5
+   GEOID       NAME                                       variable estim…¹   moe
+   &lt;chr&gt;       &lt;chr&gt;                                      &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt;
+ 1 50001960100 Census Tract 9601, Addison County, Vermont eldpovm        2     5
+ 2 50001960100 Census Tract 9601, Addison County, Vermont eldpovf        8     7
+ 3 50001960200 Census Tract 9602, Addison County, Vermont eldpovm        4     6
+ 4 50001960200 Census Tract 9602, Addison County, Vermont eldpovf        0    10
+ 5 50001960300 Census Tract 9603, Addison County, Vermont eldpovm        0    10
+ 6 50001960300 Census Tract 9603, Addison County, Vermont eldpovf        7     9
+ 7 50001960400 Census Tract 9604, Addison County, Vermont eldpovm        7    10
+ 8 50001960400 Census Tract 9604, Addison County, Vermont eldpovf       15    11
+ 9 50001960500 Census Tract 9605, Addison County, Vermont eldpovm        6    10
+10 50001960500 Census Tract 9605, Addison County, Vermont eldpovf       14    16
+# … with 376 more rows, and abbreviated variable name ¹​estimate</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify rows with greater margins of error than their estimates</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>moe_check <span class="ot">&lt;-</span> <span class="fu">filter</span>(vt_eldpov, moe <span class="sc">&gt;</span> estimate)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check proportion of rows where the margin of error exceeds the estimate</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(moe_check) <span class="sc">/</span> <span class="fu">nrow</span>(vt_eldpov)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.7927461</code></pre>
+</div>
+</div>
+</section>
+<section id="using-margin-of-error-functions-in-tidycensus" class="level2">
+<h2 class="anchored" data-anchor-id="using-margin-of-error-functions-in-tidycensus">Using margin of error functions in tidycensus</h2>
+<p>While the Census Bureau API and tidycensus return pre-computed margins of error for you, you may want to derive new estimates from downloaded ACS data and in turn understand the margins of error around these derived estimates. tidycensus includes four functions (listed below) to help you with these tasks, each of which incorporates the recommended formulas from the US Census Bureau.</p>
+<p>moe_sum() moe_product() moe_ratio() moe_prop()</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate a margin of error for a sum</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">moe_sum</span>(<span class="at">moe =</span> <span class="fu">c</span>(<span class="dv">55</span>, <span class="dv">33</span>, <span class="dv">44</span>, <span class="dv">12</span>, <span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 78.80355</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate a margin of error for a product</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">moe_product</span>(<span class="at">est1 =</span> <span class="dv">55</span>,</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">est2 =</span> <span class="dv">33</span>,</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">moe1 =</span> <span class="dv">12</span>,</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">moe2 =</span> <span class="dv">9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 633.9093</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate a margin of error for a ratio</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">moe_ratio</span>(<span class="at">num =</span> <span class="dv">1000</span>,</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">denom =</span> <span class="dv">950</span>,</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">moe_num =</span> <span class="dv">200</span>,</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">moe_denom =</span> <span class="dv">177</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.287724</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate a margin of error for a proportion</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">moe_prop</span>(<span class="at">num =</span> <span class="dv">374</span>,</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">denom =</span> <span class="dv">1200</span>,</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">moe_num =</span> <span class="dv">122</span>,</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">moe_denom =</span> <span class="dv">333</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.05344178</code></pre>
+</div>
+</div>
+</section>
+<section id="calculating-group-wise-margins-of-error" class="level2">
+<h2 class="anchored" data-anchor-id="calculating-group-wise-margins-of-error">Calculating group-wise margins of error</h2>
+<p>One way to reduce margins of error in an ACS analysis is to combine estimates when appropriate. This can be accomplished using tidyverse group-wise data analysis tools. In this exercise, you’ll combine estimates for male and female elderly poverty in Vermont, and use the moe_sum() function as part of this group-wise analysis. While you may lose some detail with this type of approach, your estimates will be more reliable relative to their margins of error than before you combined them.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Group the dataset and calculate a derived margin of error</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>vt_eldpov2 <span class="ot">&lt;-</span> vt_eldpov <span class="sc">%&gt;%</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(GEOID) <span class="sc">%&gt;%</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">estmf =</span> <span class="fu">sum</span>(estimate), </span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">moemf =</span> <span class="fu">moe_sum</span>(<span class="at">moe =</span> moe, <span class="at">estimate =</span> estimate)</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter rows where newly-derived margin of error exceeds newly-derived estimate</span></span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>moe_check2 <span class="ot">&lt;-</span> <span class="fu">filter</span>(vt_eldpov2, moemf <span class="sc">&gt;</span> estmf)</span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Check proportion of rows where margin of error exceeds estimate</span></span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(moe_check2) <span class="sc">/</span> <span class="fu">nrow</span>(vt_eldpov2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.626943</code></pre>
+</div>
+</div>
+</section>
+<section id="quick-visual-exploration-of-acs-margins-of-error" class="level2">
+<h2 class="anchored" data-anchor-id="quick-visual-exploration-of-acs-margins-of-error">Quick visual exploration of ACS margins of error</h2>
+<p>In Chapter 1, you learned how to create a dot plot of ACS income estimates. In this chapter, you’ve also learned about the importance of taking margins of error into account in ACS analyses. While margins of error are likely minimal for state-level estimates, they may be more significant for sub-state estimates, like counties. In this exercise, you’ll learn how to visualize margins of error around estimates with ggplot2.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Request median household income data</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>maine_inc <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(<span class="at">geography =</span> <span class="st">"county"</span>, </span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">variables =</span> <span class="fu">c</span>(<span class="at">hhincome =</span> <span class="st">"B19013_001"</span>), </span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">state =</span> <span class="st">"ME"</span>) </span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate horizontal error bars with dots</span></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(maine_inc, <span class="fu">aes</span>(<span class="at">x =</span> estimate, <span class="at">y =</span> NAME)) <span class="sc">+</span> </span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbarh</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> estimate <span class="sc">-</span> moe, <span class="at">xmax =</span> estimate <span class="sc">+</span> moe)) <span class="sc">+</span> </span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="us_census_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="4200"></p>
+</div>
+</div>
+</section>
+<section id="customizing-a-ggplot2-margin-of-error-plot" class="level2">
+<h2 class="anchored" data-anchor-id="customizing-a-ggplot2-margin-of-error-plot">Customizing a ggplot2 margin of error plot</h2>
+<p>You’ve hopefully identified some problems with the chart you created in the previous exercise. As the counties are not ordered, patterns in the data are difficult for a viewer to parse. Specifically, margin of error plots are much more effective when dots are ordered as the ordering allows viewers to understand the uncertainty in estimate values relative to other estimates. Additionally, the lack of plot formatting makes it difficult for chart viewers to understand the chart’s content. In this exercise, you’ll clean up your ggplot2 code to create a much more visually appealing margin of error chart.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove unnecessary content from the county's name</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>maine_inc2 <span class="ot">&lt;-</span> maine_inc <span class="sc">%&gt;%</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">NAME =</span> <span class="fu">str_replace</span>(NAME, <span class="st">" County, Maine"</span>, <span class="st">""</span>))</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Build a margin of error plot incorporating your modifications</span></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(maine_inc2, <span class="fu">aes</span>(<span class="at">x =</span> estimate, <span class="at">y =</span> <span class="fu">reorder</span>(NAME, estimate))) <span class="sc">+</span> </span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbarh</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> estimate <span class="sc">-</span> moe, <span class="at">xmax =</span> estimate <span class="sc">+</span> moe)) <span class="sc">+</span> </span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">"darkgreen"</span>) <span class="sc">+</span> </span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_grey</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span> </span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Median household income"</span>, </span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Counties in Maine"</span>, </span>
+<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"ACS estimate (bars represent margins of error)"</span>, </span>
+<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">""</span>) <span class="sc">+</span> </span>
+<span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>dollar)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="us_census_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="4200"></p>
+</div>
+</div>
+</section>
+<section id="getting-census-boundary-files-with-tigris" class="level2">
+<h2 class="anchored" data-anchor-id="getting-census-boundary-files-with-tigris">Getting Census boundary files with tigris</h2>
+<p>The US Census Bureau’s TIGER/Line shapefiles include boundary files for the geography at which decennial Census and ACS data are aggregated. These geographies include legal entities that have legal standing in the U.S., such as states and counties, and statistical entities used for data tabulation such as Census tracts and block groups. In this exercise, you’ll use the tigris package to acquire such boundary files for counties in Colorado and Census tracts for Colorado’s Denver County, which covers the city of Denver.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get a counties dataset for Colorado and plot it</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>co_counties <span class="ot">&lt;-</span> <span class="fu">counties</span>(<span class="at">state =</span> <span class="st">"CO"</span>)</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(co_counties)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="us_census_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="4200"></p>
+</div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get a Census tracts dataset for Denver County, Colorado and plot it</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>denver_tracts <span class="ot">&lt;-</span> <span class="fu">tracts</span>(<span class="at">state =</span> <span class="st">"CO"</span>, <span class="at">county =</span> <span class="st">"Denver"</span>)</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(denver_tracts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="us_census_files/figure-html/unnamed-chunk-20-2.png" class="img-fluid" width="4200"></p>
+</div>
+</div>
+</section>
+<section id="getting-geographic-features-with-tigris" class="level2">
+<h2 class="anchored" data-anchor-id="getting-geographic-features-with-tigris">Getting geographic features with tigris</h2>
+<p>In addition to enumeration units, the TIGER/Line database produced by the Census Bureau includes geographic features. These features consist of several datasets for use in thematic mapping and spatial analysis, such as transportation infrastructure and water features. In this exercise, you’ll acquire and plot roads and water data with tigris.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot area water features for Lane County, Oregon</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>lane_water <span class="ot">&lt;-</span> <span class="fu">area_water</span>(<span class="at">state =</span> <span class="st">"OR"</span>, <span class="at">county =</span> <span class="st">"Lane"</span>)</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lane_water)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="us_census_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="4200"></p>
+</div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot primary &amp; secondary roads for the state of New Hampshire</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>nh_roads <span class="ot">&lt;-</span> <span class="fu">primary_secondary_roads</span>(<span class="at">state =</span> <span class="st">"NH"</span>)</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nh_roads)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="us_census_files/figure-html/unnamed-chunk-21-2.png" class="img-fluid" width="4200"></p>
+</div>
+</div>
+</section>
+<section id="understanding-the-structure-of-tigris-objects" class="level2">
+<h2 class="anchored" data-anchor-id="understanding-the-structure-of-tigris-objects">Understanding the structure of tigris objects</h2>
+<p>By default, tigris returns objects of class Spatial<em>DataFrame from the sp package. Objects of class Spatial</em> represent components of spatial data in different slots, which include descriptions of the object’s geometry, attributes, and coordinate system. In this exercise, we’ll briefly examine the structure of objects returned by tigris functions.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the class of the data</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(co_counties)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "sf"         "data.frame"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a look at the information in the data slot</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(co_counties)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 6 features and 17 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -108.3811 ymin: 36.99961 xmax: -102.0448 ymax: 41.0026
+Geodetic CRS:  NAD83
+    STATEFP COUNTYFP COUNTYNS GEOID     NAME        NAMELSAD LSAD CLASSFP MTFCC
+23       08      109 00198170 08109 Saguache Saguache County   06      H1 G4020
+107      08      115 00198173 08115 Sedgwick Sedgwick County   06      H1 G4020
+124      08      017 00198124 08017 Cheyenne Cheyenne County   06      H1 G4020
+163      08      027 00198129 08027   Custer   Custer County   06      H1 G4020
+200      08      067 00198148 08067 La Plata La Plata County   06      H1 G4020
+228      08      111 00198171 08111 San Juan San Juan County   06      H1 G4020
+    CSAFP CBSAFP METDIVFP FUNCSTAT      ALAND   AWATER    INTPTLAT     INTPTLON
+23   &lt;NA&gt;   &lt;NA&gt;     &lt;NA&gt;        A 8206547699  4454510 +38.0316514 -106.2346662
+107  &lt;NA&gt;   &lt;NA&gt;     &lt;NA&gt;        A 1419419015  3530746 +40.8715679 -102.3553579
+124  &lt;NA&gt;   &lt;NA&gt;     &lt;NA&gt;        A 4605713960  8166129 +38.8356456 -102.6017914
+163  &lt;NA&gt;   &lt;NA&gt;     &lt;NA&gt;        A 1913031975  3364150 +38.1019955 -105.3735123
+200  &lt;NA&gt;  20420     &lt;NA&gt;        A 4376255277 25642579 +37.2873673 -107.8397178
+228  &lt;NA&gt;   &lt;NA&gt;     &lt;NA&gt;        A 1003660672  2035929 +37.7810492 -107.6702567
+                          geometry
+23  MULTIPOLYGON (((-105.8093 3...
+107 MULTIPOLYGON (((-102.2091 4...
+124 MULTIPOLYGON (((-102.547 38...
+163 MULTIPOLYGON (((-105.7969 3...
+200 MULTIPOLYGON (((-107.7124 3...
+228 MULTIPOLYGON (((-107.9751 3...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the coordinate system of the data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="tigerline-and-cartographic-boundary-files" class="level2">
+<h2 class="anchored" data-anchor-id="tigerline-and-cartographic-boundary-files">TIGER/Line and cartographic boundary files</h2>
+<p>In addition to its TIGER/Line shapefiles, the US Census Bureau releases cartographic boundary shapefiles for enumeration units. TIGER/Line shapefiles correspond to legal boundaries of units, which can include water area and in turn, may not be preferable for thematic mapping. The Census Bureau’s cartographic boundary shapefiles are clipped to the US shoreline and are generalized, which can make them superior for mapping projects. In this exercise, you’ll compare the TIGER/Line and cartographic boundary representations of the US state of Michigan.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get a counties dataset for Michigan</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>mi_tiger <span class="ot">&lt;-</span> <span class="fu">counties</span>(<span class="st">"MI"</span>)</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the equivalent cartographic boundary shapefile</span></span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>mi_cb <span class="ot">&lt;-</span> <span class="fu">counties</span>(<span class="st">"MI"</span>, <span class="at">cb =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Overlay the two on a plot to make a comparison</span></span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mi_tiger)</span>
+<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mi_cb, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">border =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="us_census_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="4200"></p>
+</div>
+</div>
+</section>
+<section id="getting-data-as-simple-features-objects" class="level2">
+<h2 class="anchored" data-anchor-id="getting-data-as-simple-features-objects">Getting data as simple features objects</h2>
+<p>The sf package, which stands for simple features, promises to revolutionize the way that vector spatial data are handled within R. sf objects represent spatial data much like regular data frames, with a list-column that contains the geometry of the geographic dataset. tigris can return spatial data as simple features objects either by declaring class = “sf” within a function call or by setting as a global option. In this exercise, you’ll get acquainted with simple features in tigris.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get data from tigris as simple features</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">tigris_class =</span> <span class="st">"sf"</span>)</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Get countries from Colorado and view the first few rows</span></span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>colorado_sf <span class="ot">&lt;-</span> <span class="fu">counties</span>(<span class="st">"CO"</span>)</span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(colorado_sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 6 features and 17 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -108.3811 ymin: 36.99961 xmax: -102.0448 ymax: 41.0026
+Geodetic CRS:  NAD83
+    STATEFP COUNTYFP COUNTYNS GEOID     NAME        NAMELSAD LSAD CLASSFP MTFCC
+23       08      109 00198170 08109 Saguache Saguache County   06      H1 G4020
+107      08      115 00198173 08115 Sedgwick Sedgwick County   06      H1 G4020
+124      08      017 00198124 08017 Cheyenne Cheyenne County   06      H1 G4020
+163      08      027 00198129 08027   Custer   Custer County   06      H1 G4020
+200      08      067 00198148 08067 La Plata La Plata County   06      H1 G4020
+228      08      111 00198171 08111 San Juan San Juan County   06      H1 G4020
+    CSAFP CBSAFP METDIVFP FUNCSTAT      ALAND   AWATER    INTPTLAT     INTPTLON
+23   &lt;NA&gt;   &lt;NA&gt;     &lt;NA&gt;        A 8206547699  4454510 +38.0316514 -106.2346662
+107  &lt;NA&gt;   &lt;NA&gt;     &lt;NA&gt;        A 1419419015  3530746 +40.8715679 -102.3553579
+124  &lt;NA&gt;   &lt;NA&gt;     &lt;NA&gt;        A 4605713960  8166129 +38.8356456 -102.6017914
+163  &lt;NA&gt;   &lt;NA&gt;     &lt;NA&gt;        A 1913031975  3364150 +38.1019955 -105.3735123
+200  &lt;NA&gt;  20420     &lt;NA&gt;        A 4376255277 25642579 +37.2873673 -107.8397178
+228  &lt;NA&gt;   &lt;NA&gt;     &lt;NA&gt;        A 1003660672  2035929 +37.7810492 -107.6702567
+                          geometry
+23  MULTIPOLYGON (((-105.8093 3...
+107 MULTIPOLYGON (((-102.2091 4...
+124 MULTIPOLYGON (((-102.547 38...
+163 MULTIPOLYGON (((-105.7969 3...
+200 MULTIPOLYGON (((-107.7124 3...
+228 MULTIPOLYGON (((-107.9751 3...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot its geometry column</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(colorado_sf<span class="sc">$</span>geometry)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="us_census_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="4200"></p>
+</div>
+</div>
+</section>
+<section id="working-with-historic-shapefiles" class="level2">
+<h2 class="anchored" data-anchor-id="working-with-historic-shapefiles">Working with historic shapefiles</h2>
+<p>To ensure clean integration with the tidycensus package - which you’ll learn about in the next chapter - tigris defaults to returning shapefiles that correspond to the year of the most recently-released ACS data. However, you may want boundary files for other years. tigris allows R users to obtain shapefiles for 1990, 2000, and 2010 through 2017, which represent many boundary changes over time. In this exercise, you’ll use tigris to explore how Census tract boundaries have changed in Williamson County, Texas between 1990 and 2016.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get a historic Census tract shapefile from 1990 for Williamson County, Texas</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>williamson90 <span class="ot">&lt;-</span> <span class="fu">tracts</span>(<span class="at">state =</span> <span class="st">"TX"</span>, <span class="at">county =</span> <span class="st">"Williamson"</span>, </span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">cb =</span> <span class="cn">TRUE</span>, <span class="at">year =</span> <span class="dv">1990</span>)</span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare with a current dataset for 2016</span></span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a>williamson16 <span class="ot">&lt;-</span> <span class="fu">tracts</span>(<span class="at">state =</span> <span class="st">"TX"</span>, <span class="at">county =</span> <span class="st">"Williamson"</span>, </span>
+<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">cb =</span> <span class="cn">TRUE</span>, <span class="at">year =</span> <span class="dv">2016</span>)</span>
+<span id="cb65-8"><a href="#cb65-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-9"><a href="#cb65-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the geometry to compare the results                       </span></span>
+<span id="cb65-10"><a href="#cb65-10" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb65-11"><a href="#cb65-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(williamson90<span class="sc">$</span>geometry)</span>
+<span id="cb65-12"><a href="#cb65-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(williamson16<span class="sc">$</span>geometry)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="us_census_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="4200"></p>
+</div>
+</div>
+</section>
+<section id="combining-datasets-of-the-same-tigris-type" class="level2">
+<h2 class="anchored" data-anchor-id="combining-datasets-of-the-same-tigris-type">Combining datasets of the same tigris type</h2>
+<p>Often, datasets from the US Census Bureau are available by state, which means they are available by state from tigris as well. In many instances, you’ll want to combine datasets for multiple states. For example, an analysis of the Portland, Oregon metropolitan area would include areas in both Oregon and Washington north of the Columbia River; however, these areas are represented in different Census files. In this exercise, you’ll learn how to combine datasets with the rbind_tigris() function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get Census tract boundaries for Oregon and Washington</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>or_tracts <span class="ot">&lt;-</span> <span class="fu">tracts</span>(<span class="st">"OR"</span>, <span class="at">cb =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>wa_tracts <span class="ot">&lt;-</span> <span class="fu">tracts</span>(<span class="st">"WA"</span>, <span class="at">cb =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the tigris attributes of each object</span></span>
+<span id="cb66-6"><a href="#cb66-6" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(or_tracts, <span class="st">"tigris"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "tract"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(wa_tracts, <span class="st">"tigris"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "tract"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine the datasets then plot the result</span></span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>or_wa_tracts <span class="ot">&lt;-</span> <span class="fu">rbind_tigris</span>(or_tracts, wa_tracts)</span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(or_wa_tracts<span class="sc">$</span>geometry)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="us_census_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="4200"></p>
+</div>
+</div>
+</section>
+<section id="getting-data-for-multiple-states" class="level2">
+<h2 class="anchored" data-anchor-id="getting-data-for-multiple-states">Getting data for multiple states</h2>
+<p>In the previous exercise, you learned how to combine datasets with the rbind_tigris() function. If you need data for more than two states, however, this process can get tedious. In this exercise, you’ll learn how to generate a list of datasets for multiple states with the tidyverse map() function, and combine those datasets with rbind_tigris().</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a vector of state codes and assign to new_england</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>new_england <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"ME"</span>, <span class="st">"NH"</span>, <span class="st">"VT"</span>, <span class="st">"MA"</span>)</span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Iterate through the states and request tract data for state</span></span>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a>ne_tracts <span class="ot">&lt;-</span> <span class="fu">map</span>(new_england, <span class="cf">function</span>(x) {</span>
+<span id="cb71-6"><a href="#cb71-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tracts</span>(<span class="at">state =</span> x, <span class="at">cb =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb71-7"><a href="#cb71-7" aria-hidden="true" tabindex="-1"></a>}) <span class="sc">%&gt;%</span></span>
+<span id="cb71-8"><a href="#cb71-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rbind_tigris</span>()</span>
+<span id="cb71-9"><a href="#cb71-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-10"><a href="#cb71-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ne_tracts<span class="sc">$</span>geometry)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="us_census_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="4200"></p>
+</div>
+</div>
+</section>
+<section id="joining-data-from-an-external-data-frame" class="level2">
+<h2 class="anchored" data-anchor-id="joining-data-from-an-external-data-frame">Joining data from an external data frame</h2>
+<p>When working with geographic data in R, you’ll commonly want to join attribute information from an external dataset to it for mapping and spatial analysis. The sf package enables the use of the tidyverse *_join() functions for simple features objects for this purpose. In this exercise, you’ll learn how to join data to a spatial dataset of legislative boundaries for the Texas House of Representatives that you’ve obtained using tigris.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get boundaries for Texas and set the house parameter</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>tx_house <span class="ot">&lt;-</span> <span class="fu">state_legislative_districts</span>(<span class="at">state =</span> <span class="st">"TX"</span>, <span class="at">house =</span> <span class="st">"lower"</span>, <span class="at">cb =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge data on legislators to their corresponding boundaries</span></span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a>tx_joined <span class="ot">&lt;-</span> <span class="fu">left_join</span>(tx_house, tx_members, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"NAME"</span> <span class="ot">=</span> <span class="st">"District"</span>))</span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-7"><a href="#cb72-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tx_joined)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="plotting-simple-features-with-geom_sf" class="level2">
+<h2 class="anchored" data-anchor-id="plotting-simple-features-with-geom_sf">Plotting simple features with geom_sf()</h2>
+<p>The newest version of ggplot2 includes a geom_sf() function to plot simple features objects natively. This allows you to make maps using familiar ggplot2 syntax! In this exercise, you’ll walk through the process of creating a map with ggplot2 step-by-step.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the legislative district boundaries</span></span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tx_joined) <span class="sc">+</span> </span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>()</span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Set fill aesthetic to map areas represented by Republicans and Democrats</span></span>
+<span id="cb73-6"><a href="#cb73-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tx_joined, <span class="fu">aes</span>(<span class="at">fill =</span> Party)) <span class="sc">+</span> </span>
+<span id="cb73-7"><a href="#cb73-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>()</span>
+<span id="cb73-8"><a href="#cb73-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-9"><a href="#cb73-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Set values so that Republican areas are red and Democratic areas are blue</span></span>
+<span id="cb73-10"><a href="#cb73-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tx_joined, <span class="fu">aes</span>(<span class="at">fill =</span> Party)) <span class="sc">+</span> </span>
+<span id="cb73-11"><a href="#cb73-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>() <span class="sc">+</span> </span>
+<span id="cb73-12"><a href="#cb73-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"R"</span> <span class="ot">=</span> <span class="st">"red"</span>, <span class="st">"D"</span> <span class="ot">=</span> <span class="st">"blue"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="customizing-geom_sf-plots" class="level2">
+<h2 class="anchored" data-anchor-id="customizing-geom_sf-plots">Customizing geom_sf() plots</h2>
+<p>As you’ve learned in previous chapters, it is a good idea to clean up and format your ggplot2 visualizations before sharing with others. In this exercise, you’ll make some modifications to your map of Texas House districts such as removing the gridlines and adding an informative title.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw a ggplot without gridlines and with an informative title</span></span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tx_joined, <span class="fu">aes</span>(<span class="at">fill =</span> Party)) <span class="sc">+</span> </span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>() <span class="sc">+</span> </span>
+<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">crs =</span> <span class="dv">3083</span>, <span class="at">datum =</span> <span class="cn">NA</span>) <span class="sc">+</span> </span>
+<span id="cb74-5"><a href="#cb74-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"R"</span> <span class="ot">=</span> <span class="st">"red"</span>, <span class="st">"D"</span> <span class="ot">=</span> <span class="st">"blue"</span>)) <span class="sc">+</span> </span>
+<span id="cb74-6"><a href="#cb74-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">16</span>) <span class="sc">+</span> </span>
+<span id="cb74-7"><a href="#cb74-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"State House Districts in Texas"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="getting-simple-feature-geometry" class="level2">
+<h2 class="anchored" data-anchor-id="getting-simple-feature-geometry">Getting simple feature geometry</h2>
+<p>tidycensus can obtain simple feature geometry for many geographies by adding the argument geometry = TRUE. In this exercise, you’ll obtain a dataset of median housing values for owner-occupied units by Census tract in Orange County, California with simple feature geometry included.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidycensus)</span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Get dataset with geometry set to TRUE</span></span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a>orange_value <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(<span class="at">geography =</span> <span class="st">"tract"</span>, <span class="at">state =</span> <span class="st">"CA"</span>, </span>
+<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">county =</span> <span class="st">"Orange"</span>, </span>
+<span id="cb75-8"><a href="#cb75-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">variables =</span> <span class="st">"B25077_001"</span>, </span>
+<span id="cb75-9"><a href="#cb75-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">geometry =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb75-10"><a href="#cb75-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-11"><a href="#cb75-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the estimate to view a map of the data</span></span>
+<span id="cb75-12"><a href="#cb75-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(orange_value[<span class="st">"estimate"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="us_census_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid" width="4200"></p>
+</div>
+</div>
+</section>
+<section id="joining-data-from-tigris-and-tidycensus" class="level2">
+<h2 class="anchored" data-anchor-id="joining-data-from-tigris-and-tidycensus">Joining data from tigris and tidycensus</h2>
+<p>Geometry is currently supported in tidycensus for geographies in the core Census hierarchy - state, county, Census tract, block group, and block - as well as zip code tabulation areas. However, you may be interested in mapping data for other geographies. In this case, you can download the equivalent boundary file from the Census Bureau using the tigris package and join your demographic data to it for mapping.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get an income dataset for Idaho by school district</span></span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>idaho_income <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(<span class="at">geography =</span> <span class="st">"school district (unified)"</span>, </span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">variables =</span> <span class="st">"B19013_001"</span>, </span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">state =</span> <span class="st">"ID"</span>)</span>
+<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Get a school district dataset for Idaho</span></span>
+<span id="cb76-7"><a href="#cb76-7" aria-hidden="true" tabindex="-1"></a>idaho_school <span class="ot">&lt;-</span> <span class="fu">school_districts</span>(<span class="at">state =</span> <span class="st">"ID"</span>, <span class="at">type =</span> <span class="st">"unified"</span>, <span class="at">class =</span> <span class="st">"sf"</span>)</span>
+<span id="cb76-8"><a href="#cb76-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-9"><a href="#cb76-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Join the income dataset to the boundaries dataset</span></span>
+<span id="cb76-10"><a href="#cb76-10" aria-hidden="true" tabindex="-1"></a>id_school_joined <span class="ot">&lt;-</span> <span class="fu">left_join</span>(idaho_school, idaho_income, <span class="at">by =</span> <span class="st">"GEOID"</span>)</span>
+<span id="cb76-11"><a href="#cb76-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-12"><a href="#cb76-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(id_school_joined[<span class="st">"estimate"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="us_census_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" width="4200"></p>
+</div>
+</div>
+</section>
+<section id="shifting-alaska-and-hawaii-geometry" class="level2">
+<h2 class="anchored" data-anchor-id="shifting-alaska-and-hawaii-geometry">Shifting Alaska and Hawaii geometry</h2>
+<p>Analysts will commonly want to map data for the entire United States by state or county; however, this can be difficult by default as Alaska and Hawaii are distant from the continental United States. A common solution is to rescale and shift Alaska and Hawaii for mapping purposes, which is supported in tidycensus. You’ll learn how to do this in this exercise.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get a dataset of median home values from the 1-year ACS</span></span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>state_value <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(<span class="at">geography =</span> <span class="st">"state"</span>, </span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">variables =</span> <span class="st">"B25077_001"</span>, </span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">survey =</span> <span class="st">"acs1"</span>, </span>
+<span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">geometry =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb77-6"><a href="#cb77-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">shift_geo =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb77-7"><a href="#cb77-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-8"><a href="#cb77-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the dataset to view the shifted geometry</span></span>
+<span id="cb77-9"><a href="#cb77-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(state_value[<span class="st">"estimate"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="us_census_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid" width="4200"></p>
+</div>
+</div>
+</section>
+<section id="making-a-choropleth-map" class="level2">
+<h2 class="anchored" data-anchor-id="making-a-choropleth-map">Making a choropleth map</h2>
+<p>Choropleth maps, which visualize statistical variation through the shading of areas, are among the most popular ways to map demographic data. Census or ACS data acquired with tidycensus can be mapped in this way in ggplot2 with geom_sf using the estimate column as a fill aesthetic. In this exercise, you’ll make a choropleth map with ggplot2 of median owner-occupied home values by Census tract for Marin County, California.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a choropleth map with ggplot</span></span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(marin_value, <span class="fu">aes</span>(<span class="at">fill =</span> estimate)) <span class="sc">+</span> </span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="modifying-map-colors" class="level2">
+<h2 class="anchored" data-anchor-id="modifying-map-colors">Modifying map colors</h2>
+<p>ggplot2 version 3.0 integrated the viridis color palettes, which are perceptually uniform and legible to colorblind individuals and in black and white. For these reasons, the viridis palettes have become very popular for data visualization, including for choropleth mapping. In this exercise, you’ll learn how to use the viridis palettes for choropleth mapping in ggplot2.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set continuous viridis palettes for your map</span></span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(marin_value, <span class="fu">aes</span>(<span class="at">fill =</span> estimate, <span class="at">color =</span> estimate)) <span class="sc">+</span> </span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>() <span class="sc">+</span> </span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>() <span class="sc">+</span>  </span>
+<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="customizing-the-map-output" class="level2">
+<h2 class="anchored" data-anchor-id="customizing-the-map-output">Customizing the map output</h2>
+<p>Now that you’ve chosen an appropriate color palette for your choropleth map of median home values by Census tract in Marin County, you’ll want to customize the output. In this exercise, you’ll clean up some map elements and add some descriptive information to provide context to your map.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the color guide to FALSE and add a subtitle and caption to your map</span></span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(marin_value, <span class="fu">aes</span>(<span class="at">fill =</span> estimate, <span class="at">color =</span> estimate)) <span class="sc">+</span> </span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>() <span class="sc">+</span> </span>
+<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">labels =</span> scales<span class="sc">::</span>dollar) <span class="sc">+</span>  </span>
+<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>(<span class="at">guide =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb80-6"><a href="#cb80-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb80-7"><a href="#cb80-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">crs =</span> <span class="dv">26911</span>, <span class="at">datum =</span> <span class="cn">NA</span>) <span class="sc">+</span> </span>
+<span id="cb80-8"><a href="#cb80-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Median owner-occupied housing value by Census tract"</span>, </span>
+<span id="cb80-9"><a href="#cb80-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Marin County, California"</span>, </span>
+<span id="cb80-10"><a href="#cb80-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Data source: 2012-2016 ACS.</span><span class="sc">\n</span><span class="st">Data acquired with the R tidycensus package."</span>, </span>
+<span id="cb80-11"><a href="#cb80-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"ACS estimate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="graduated-symbol-maps" class="level2">
+<h2 class="anchored" data-anchor-id="graduated-symbol-maps">Graduated symbol maps</h2>
+<p>There are many other effective ways to map statistical data besides choropleth maps. One such example is the graduated symbol map, which represents statistical variation by differently-sized symbols. In this exercise, you’ll learn how to use the st_centroid() tool in the sf package to create points at the center of each state to be used as inputs to a graduated symbol map in ggplot2.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate point centers</span></span>
+<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a>centers <span class="ot">&lt;-</span> <span class="fu">st_centroid</span>(state_value)</span>
+<span id="cb81-5"><a href="#cb81-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-6"><a href="#cb81-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Set size parameter and the size range</span></span>
+<span id="cb81-7"><a href="#cb81-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb81-8"><a href="#cb81-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> state_value, <span class="at">fill =</span> <span class="st">"white"</span>) <span class="sc">+</span> </span>
+<span id="cb81-9"><a href="#cb81-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> centers, <span class="fu">aes</span>(<span class="at">size =</span> estimate), <span class="at">shape =</span> <span class="dv">21</span>, </span>
+<span id="cb81-10"><a href="#cb81-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">show.legend =</span> <span class="st">"point"</span>) <span class="sc">+</span> </span>
+<span id="cb81-11"><a href="#cb81-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size_continuous</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">20</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="us_census_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid" width="4200"></p>
+</div>
+</div>
+</section>
+<section id="faceted-maps-with-ggplot2" class="level2">
+<h2 class="anchored" data-anchor-id="faceted-maps-with-ggplot2">Faceted maps with ggplot2</h2>
+<p>One of the most powerful features of ggplot2 is its support for faceted plotting, in which multiple plots are generated for unique values of a column in the data. Faceted maps can be produced with geom_sf() in this way as well if tidycensus data are in tidy format. In this exercise, you’ll produce faceted maps that show the racial and ethnic geography of Washington, DC from the 2010 decennial Census.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the first few rows of the loaded dataset dc_race</span></span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dc_race)</span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove the gridlines and generate faceted maps</span></span>
+<span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dc_race, <span class="fu">aes</span>(<span class="at">fill =</span> percent, <span class="at">color =</span> percent)) <span class="sc">+</span> </span>
+<span id="cb82-6"><a href="#cb82-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>() <span class="sc">+</span> </span>
+<span id="cb82-7"><a href="#cb82-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">datum =</span> <span class="cn">NA</span>) <span class="sc">+</span> </span>
+<span id="cb82-8"><a href="#cb82-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="interactive-visualization-with-mapview" class="level2">
+<h2 class="anchored" data-anchor-id="interactive-visualization-with-mapview">Interactive visualization with mapview</h2>
+<p>The mapview R package allows R users to interactively map spatial datasets in one line of R code. This makes it an essential tool for exploratory spatial data analysis in R. In this exercise, you’ll learn how to quickly map tidycensus data interactively using mapview and your Orange County, California median housing values dataset.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a legend to your map</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">mapview</span>(orange_value, </span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">zcol =</span> <span class="st">"estimate"</span>, </span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">legend =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a>m<span class="sc">@</span>map</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="generating-random-dots-with-sf" class="level2">
+<h2 class="anchored" data-anchor-id="generating-random-dots-with-sf">Generating random dots with sf</h2>
+<p>Dot-density maps are created by randomly placing dots within areas where each dot is proportional to a certain number of observations. In this exercise, you’ll learn how to create dots in this way with the sf package using the st_sample() function. You will generate dots that are proportional to about 100 people in the decennial Census, and then you will group the dots to speed up plotting with ggplot2.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate dots, create a group column, and group by group column</span></span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>dc_dots <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="fu">c</span>(<span class="st">"White"</span>, <span class="st">"Black"</span>, <span class="st">"Hispanic"</span>, <span class="st">"Asian"</span>), <span class="cf">function</span>(group) {</span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>  dc_race <span class="sc">%&gt;%</span></span>
+<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(variable <span class="sc">==</span> group) <span class="sc">%&gt;%</span></span>
+<span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_sample</span>(., <span class="at">size =</span> .<span class="sc">$</span>value <span class="sc">/</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb84-6"><a href="#cb84-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_sf</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb84-7"><a href="#cb84-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(<span class="at">group =</span> group) </span>
+<span id="cb84-8"><a href="#cb84-8" aria-hidden="true" tabindex="-1"></a>}) <span class="sc">%&gt;%</span></span>
+<span id="cb84-9"><a href="#cb84-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reduce</span>(rbind) <span class="sc">%&gt;%</span></span>
+<span id="cb84-10"><a href="#cb84-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group) <span class="sc">%&gt;%</span></span>
+<span id="cb84-11"><a href="#cb84-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="obtaining-data-for-cartography-with-tigris" class="level2">
+<h2 class="anchored" data-anchor-id="obtaining-data-for-cartography-with-tigris">Obtaining data for cartography with tigris</h2>
+<p>Before making your dot-density map of Washington, DC with ggplot2, it will be useful to acquire some ancillary cartographic data with the tigris package that will help map viewers understand what you’ve visualized. These datasets will include major roads in DC; area water features; and the boundary of the District of Columbia, which you’ll use as a background in your map.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the DC roads object for major roads only</span></span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>dc_roads <span class="ot">&lt;-</span> <span class="fu">roads</span>(<span class="st">"DC"</span>, <span class="st">"District of Columbia"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(RTTYP <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"I"</span>, <span class="st">"S"</span>, <span class="st">"U"</span>))</span>
+<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-5"><a href="#cb85-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Get an area water dataset for DC</span></span>
+<span id="cb85-6"><a href="#cb85-6" aria-hidden="true" tabindex="-1"></a>dc_water <span class="ot">&lt;-</span> <span class="fu">area_water</span>(<span class="st">"DC"</span>, <span class="st">"District of Columbia"</span>)</span>
+<span id="cb85-7"><a href="#cb85-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-8"><a href="#cb85-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the boundary of DC</span></span>
+<span id="cb85-9"><a href="#cb85-9" aria-hidden="true" tabindex="-1"></a>dc_boundary <span class="ot">&lt;-</span> <span class="fu">counties</span>(<span class="st">"DC"</span>, <span class="at">cb =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="making-a-dot-density-map-with-ggplot2" class="level2">
+<h2 class="anchored" data-anchor-id="making-a-dot-density-map-with-ggplot2">Making a dot-density map with ggplot2</h2>
+<p>In your final exercise of this course, you are going to put together the datasets you’ve acquired and generated into a dot-density map with ggplot2. You’ll plot your generated dots and ancillary datasets with geom_sf(), and add some informative map elements to create a cartographic product.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot your datasets and give your map an informative caption</span></span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> dc_boundary, <span class="at">color =</span> <span class="cn">NA</span>, <span class="at">fill =</span> <span class="st">"white"</span>) <span class="sc">+</span> </span>
+<span id="cb86-4"><a href="#cb86-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> dc_dots, <span class="fu">aes</span>(<span class="at">color =</span> group, <span class="at">fill =</span> group), <span class="at">size =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
+<span id="cb86-5"><a href="#cb86-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> dc_roads, <span class="at">color =</span> <span class="st">"lightblue"</span>, <span class="at">fill =</span> <span class="st">"lightblue"</span>) <span class="sc">+</span> </span>
+<span id="cb86-6"><a href="#cb86-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> dc_water, <span class="at">color =</span> <span class="st">"grey"</span>) <span class="sc">+</span> </span>
+<span id="cb86-7"><a href="#cb86-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">crs =</span> <span class="dv">26918</span>, <span class="at">datum =</span> <span class="cn">NA</span>) <span class="sc">+</span> </span>
+<span id="cb86-8"><a href="#cb86-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>, <span class="at">guide =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb86-9"><a href="#cb86-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
+<span id="cb86-10"><a href="#cb86-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"The racial geography of Washington, DC"</span>, </span>
+<span id="cb86-11"><a href="#cb86-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"2010 decennial U.S. Census"</span>, </span>
+<span id="cb86-12"><a href="#cb86-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">""</span>, </span>
+<span id="cb86-13"><a href="#cb86-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"1 dot = approximately 100 people.</span><span class="sc">\n</span><span class="st">Data acquired with the R tidycensus and tigris packages."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

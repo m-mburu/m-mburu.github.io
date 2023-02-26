@@ -1,0 +1,74 @@
+# History files
+.Rhistory
+.Rapp.history
+
+# Session Data files
+.RData
+
+# User-specific files
+.Ruserdata
+
+# Example code in package build process
+*-Ex.R
+
+# Output files from R CMD build
+/*.tar.gz
+
+# Output files from R CMD check
+/*.Rcheck/
+
+# RStudio files
+.Rproj.user
+
+# produced vignettes
+vignettes/*.html
+vignettes/*.pdf
+
+# OAuth2 token, see https://github.com/hadley/httr/releases/tag/v0.3
+.httr-oauth
+
+# knitr and R markdown default cache directories
+*_cache/
+/cache/
+
+# Temporary files created by R markdown
+*.utf8.md
+*.knit.md
+
+# R Environment Variables
+.Renviron
+
+# large files
+*.sav
+*.tif
+
+*.zip
+# large file 2
+fashion-mnist_train.csv
+micro_train.csv
+micro_test.csv
+
+
+posts/_site/files/kaggle/big5test/data
+posts/_site/files/kaggle/mnist_digits/data
+
+kaggle/big5test/data
+kaggle/mnist_digits/data
+data-final.csv
+
+
+kaggle/mnist_digits/data
+
+posts/shiny/ihme_maln/rsconnect
+
+kaggle/data/climate_changeGlobalLandTemperaturesByCity.csv
+
+climate_changeGlobalLandTemperaturesByCity.csv
+
+kaggle/climate_change/data/GlobalLandTemperaturesByCity.csv
+kaggle/climate_change/data/Land_and_Ocean_LatLong1.nc
+kaggle/climate_change/data/Land_and_Ocean_LatLong1.nc
+kaggle/climate_change/data/GlobalLandTemperaturesByCity.csv
+kaggle/climate_change/data/
+kaggle/climate_change/
+/.quarto/
