@@ -324,7 +324,7 @@ wbmod <- survreg(Surv(time, cens) ~ horTh, data = GBSG2)
 # Retrieve survival curve from model
 surv <- seq(.99, .01, by = -.01)
 t_yes <- predict(wbmod, type = "quantile", p = 1 - surv,
-  newdata = data.frame(horTh = "yes"))
+                 newdata = data.frame(horTh = "yes"))
 
 # Take a look at survival curve
 str(t_yes)
@@ -351,14 +351,14 @@ wbmod <- survreg(Surv(time, cens) ~horTh  + tsize, data = GBSG2)
 
 # Imaginary patients
 newdat <- expand.grid(
-  horTh = levels(GBSG2$horTh),
-  tsize = quantile(GBSG2$tsize, probs = c(.25, 0.5, 0.75)))
+    horTh = levels(GBSG2$horTh),
+    tsize = quantile(GBSG2$tsize, probs = c(.25, 0.5, 0.75)))
 data_table(newdat)
 
 # Compute survival curves
 surv <- seq(.99, .01, by = -.01)
 t <- predict(wbmod, type = "quantile", p = 1 - surv,
-  newdata = newdat)
+             newdata = newdat)
 
 # How many rows and columns does t have?
 dim(t)
@@ -371,7 +371,7 @@ In this exercise we will reproduce the example from the video following the step
 ```{r}
 # Use cbind() to combine the information in newdat with t
 surv_wbmod_wide <- cbind(newdat, t)
-  
+
 # Use melt() to bring the data.frame to long format
 library(reshape2)
 surv_wbmod <- melt(surv_wbmod_wide, 
@@ -387,7 +387,215 @@ surv_wbmod[, c("upper", "lower", "std.err", "strata")] <- NA
 
 # Plot the survival curves
 ggsurvplot_df(surv_wbmod, surv.geom = geom_line,
-  linetype = "horTh", color = "tsize", legend.title = NULL)
+              linetype = "horTh", color = "tsize", legend.title = NULL)
 
+```
+
+
+### Computing a Weibull and a log-normal model
+In this exercise, we want to compute a Weibull model and a log-normal model for the GBSG2 data. You will see that the process of computing the survival curve is the same. In the upcoming exercise, we will compare the results from the two models and see the differences.
+
+The survival, survminer, and reshape2 packages and the GBSG2 data are loaded for you in this exercise.
+
+- Compute the Weibull model
+- Compute the log-normal model
+- The Weibull distribution is the the default for survreg(). To compute a log-normal model you need to adjust the distribution argument.
+
+- Define the new dataset as a data.frame with the two levels of hormonal Therapy.
+- Use predict() to compute the survival functions.
+
+```{r}
+# Weibull model
+wbmod <- survreg(Surv(time, cens) ~ horTh, 
+                 data = GBSG2)
+
+# Log-Normal model
+lnmod <- survreg(Surv(time, cens) ~ horTh, 
+                 data = GBSG2, dist= "lognormal")
+
+# Newdata
+newdat <- data.frame(horTh = levels(GBSG2$horTh))
+
+# Surv
+surv <- seq(.99, .01, by = -.01)
+
+# Survival curve from Weibull model and log-normal model
+wbt <- predict(wbmod, type= "quantile", p = 1- surv, newdata = newdat)
+lnt <- predict(lnmod, type = "quantile", p = 1 - surv, newdata = newdat)
+surv_wide <- cbind(newdat, wbt) %>%
+    mutate(dist = "weibull") %>%
+    bind_rows(
+        cbind(newdat, lnt) %>%
+            mutate(dist = "lognormal")  
+    )
+```
+
+### Comparing Weibull and Log-Normal Model I
+
+In this exercise, we want to add the correct survival probabilities to a data frame. This data frame will be used to plot the survival curves. surv_wide is a wide data frame containing hormonal therapy information and the survival curves for the Weibull and log-normal models.
+
+```{r}
+# Melt the data.frame into long format.
+surv_long <- melt(surv_wide, id.vars = c("horTh", "dist"), 
+                  variable = "surv_id", value.name = "time")
+
+# Add column for the survival probabilities
+surv_long$surv <- surv[as.numeric(surv_long$surv_id)]
+
+# Add columns upper, lower, std.err, and strata contianing NA values
+surv_long[, c("upper", "lower", "std.err", "strata")] <- NA
+```
+
+#### Comparing Weibull and Log-Normal Model II
+
+In this exercise, we want to compare the survival curves estimated by a Weibull model and by a log-normal model for the GBSG2 data. This exercise shows how the estimates change if you use a different distribution.
+
+The survival, survminer, and reshape2 packages and the GBSG2 data are loaded for you in this exercise.
+
+```{r}
+# Plot the survival curves
+ggsurvplot_df(surv_long, surv.geom = geom_line,
+              linetype ="horTh" , color = "dist", legend.title = NULL)
+```
+
+## The Cox model
+
+### Computing a Cox model
+We have a dataset of lung cancer patients. We want to know if their performance score (variable performance) is associated with their survival time. The performance score measures how well a patient can perform usual daily activities (bad=0, good=100).
+
+The survival package and the dat dataset are already loaded for you.
+
+- Compute a Cox model for the lung cancer data dat using coxph() to estimate the effect of the performance score (variable performance) on the survival of lung cancer patients.
+- Use the coef() function to show the model coefficient.
+
+```{r}
+# Compute Cox model
+load("dat_cox.rda")
+cxmod <- coxph(Surv(time, status) ~ performance, data = dat_cox)
+
+# Show model coefficient
+library(broom)
+tidy(cxmod) %>% data_table()
+```
+
+
+### Computing the survival curve from a Cox model
+
+In this exercise, we will reproduce the example from the video following the steps:
+
+Compute Cox model
+Decide on "imaginary patients"
+Compute survival curves
+Create data.frame with survival curve information
+Plot
+We will focus now on the first three steps in this exercise and do the next two steps in the upcoming exercise.
+
+The survival and survminer packages and the GBSG2 data are loaded for you in this exercise.
+
+- Compute the Cox model for the GBSG2 data with covariates horTh and tsize.
+- Decide on "imaginary patients": the two levels of horTh and the 25%, 50%, and 75% quantile.
+- Add rownames letters "a" - "f" to the imaginary patients data.frame.
+
+```{r}
+# Cox model
+cxmod <- coxph(Surv(time, cens) ~ horTh + tsize, data = GBSG2)
+
+# Imaginary patients
+newdat <- expand.grid(
+  horTh = levels(GBSG2$horTh),
+  tsize = quantile(GBSG2$tsize, probs = c(0.25, 0.5, 0.75)))
+
+rownames(newdat) <- letters[1:6]
+
+# Compute survival curves
+cxsf <- survfit(cxmod, 
+                data = GBSG2, 
+                newdata = newdat, 
+                conf.type = "none")
+
+# Look at first 6 rows of cxsf$surv and time points
+head(cxsf$surv)
+head(cxsf$time)
+```
+
+### Visualizing Cox 
+
+```{r}
+# Compute data.frame needed for plotting
+surv_cxmod0 <- surv_summary(cxsf)
+
+# Look at the first few lines
+head(surv_cxmod0) %>% data_table()
+
+# Get a character vector of patient letters (patient IDs)
+pid <- as.character(surv_cxmod0$strata)
+
+# Multiple of the rows in newdat so that it fits with surv_cxmod0
+m_newdat <- newdat[pid, ]
+
+# Add patient info to data.frame
+surv_cxmod <- cbind(surv_cxmod0, m_newdat)
+head(surv_cxmod) %>% data_table()
+```
+
+#### Plot
+
+```{r}
+# Plot
+ggsurvplot_df(surv_cxmod, linetype = "horTh", color = "tsize",
+  legend.title = NULL, censor = FALSE)
+```
+
+### Capstone: The Cox model
+
+To conclude the course, let's take a look back at the lung cancer dataset we utilized briefly in these last 2 chapters. To recap, this dataset contains information on the survival of patients with advanced lung cancer from the North Central Cancer Treatment Group. The event is stored in the status variable, which has a value of 2 if an individual did not survive. The performance score (variable performance) measures how well a patient can perform usual daily activities (bad=0, good=100), rated by a physician. We want to know the association between specific performance scores and survival time.
+
+```{r}
+# Compute Cox model and survival curves
+lung <-  dat_cox
+cxmod <- coxph(Surv(time, status) ~ performance, data = lung)
+new_lung <- data.frame(performance = c(60, 70, 80, 90))
+cxsf <- survfit(cxmod, data = lung, newdata = new_lung, conf.type = "none")
+
+# Use the summary of cxsf to take a vector of patient IDs
+surv_cxmod0 <- surv_summary(cxsf)
+pid <- as.character(surv_cxmod0$strata)
+
+# Duplicate rows in newdat to fit with surv_cxmod0 and add them in
+m_newdat <- new_lung[pid, , drop = FALSE]
+surv_cxmod <- cbind(surv_cxmod0, m_newdat)
+
+# Plot
+ggsurvplot_df(surv_cxmod, 
+              color = "performance", 
+              legend.title = NULL,
+              censor = FALSE)
+```
+
+### Capstone: Comparing survival curves
+
+We saw from the last exercise that performance scores do have an effect on the survival probability. Now, let's take a look at the survival curve of all individuals using the Kaplan-Meier estimate and compare it to the curve of a Cox model that takes performance into account. Note that for Cox models, you can just enter the survfit() output into ggsurvplot() instead of creating the needed data frame yourself and plugging it into ggsurvplot_df().
+
+
+```{r}
+# Compute Kaplan-Meier curve
+km <- survfit(Surv(time, status) ~ 1, data = lung)
+
+# Compute Cox model
+cxmod <- coxph(Surv(time, status) ~ performance, 
+               data = lung)
+
+# Compute Cox model survival curves
+new_lung <- data.frame(performance = c(60, 70, 80, 90))
+
+cxsf <- survfit(cxmod, data = lung,
+                newdata = new_lung, 
+                conf.type = "none")
+
+# Plot Kaplan-Meier curve
+ggsurvplot(km, conf.int = FALSE)
+
+# Plot Cox model survival curves
+ggsurvplot(cxsf, censor = FALSE)
 ```
 

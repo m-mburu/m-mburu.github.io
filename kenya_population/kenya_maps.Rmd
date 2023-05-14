@@ -339,4 +339,3 @@ tmap_leaflet(map4)
 ```{r}
 kenya_subcounties_agri <- fread("distribution-of-households-practicing-agriculture-fishing-and-irrigation-by-county-and-sub-count.csv")
 ```
-

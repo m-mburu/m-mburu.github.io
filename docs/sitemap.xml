@@ -46,7 +46,7 @@
   </url>
   <url>
     <loc>https://m-mburu.github.io/datacamp.html</loc>
-    <lastmod>2023-02-26T12:42:42.840Z</lastmod>
+    <lastmod>2023-05-14T09:17:15.330Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/kaggle/heart_disease/heart_disease.html</loc>
@@ -90,7 +90,7 @@
   </url>
   <url>
     <loc>https://m-mburu.github.io/kenya_population/kenya_maps.html</loc>
-    <lastmod>2023-02-26T11:36:59.450Z</lastmod>
+    <lastmod>2023-03-01T03:01:31.850Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/kenya_population/inflation_kenya.html</loc>
@@ -102,7 +102,7 @@
   </url>
   <url>
     <loc>https://m-mburu.github.io/kenya_population/kenya_inflation.html</loc>
-    <lastmod>2023-02-26T11:37:00.470Z</lastmod>
+    <lastmod>2023-03-01T03:01:47.970Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/water_pumps_tz/water_pumps.html</loc>
@@ -110,11 +110,11 @@
   </url>
   <url>
     <loc>https://m-mburu.github.io/posts/breast_cancer_prediction/cancer_data.html</loc>
-    <lastmod>2023-02-26T12:13:01.230Z</lastmod>
+    <lastmod>2023-03-01T05:38:06.730Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/index.html</loc>
-    <lastmod>2023-02-26T12:41:49.600Z</lastmod>
+    <lastmod>2023-03-01T05:38:17.340Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/posts/association_analysis/association_analysis.html</loc>
@@ -130,6 +130,10 @@
   </url>
   <url>
     <loc>https://m-mburu.github.io/datacamp/imputations_in_R/imputations_in_R.html</loc>
-    <lastmod>2023-02-26T12:42:49.990Z</lastmod>
+    <lastmod>2023-03-01T03:03:41.500Z</lastmod>
+  </url>
+  <url>
+    <loc>https://m-mburu.github.io/datacamp/survival_analysis_R/survival_analysis_R.html</loc>
+    <lastmod>2023-05-14T09:17:14.980Z</lastmod>
   </url>
 </urlset>

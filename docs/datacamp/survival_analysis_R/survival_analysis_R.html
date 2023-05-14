@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2023-05-13">
+
+<title>Personal Blog - Survival Analysis R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../milkyway.jpeg" rel="icon" type="image/jpeg">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+<script src="../../site_libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="../../site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="../../site_libs/datatables-binding-0.27/datatables.js"></script>
+<script src="../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<link href="../../site_libs/dt-core-bootstrap4-1.12.1/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+<link href="../../site_libs/dt-core-bootstrap4-1.12.1/css/dataTables.bootstrap4.extra.css" rel="stylesheet">
+<script src="../../site_libs/dt-core-bootstrap4-1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="../../site_libs/dt-core-bootstrap4-1.12.1/js/dataTables.bootstrap4.min.js"></script>
+<link href="../../site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="../../site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+
+
+<link rel="stylesheet" href="../../style.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Personal Blog</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../datacamp.html">
+ <span class="menu-text">Data Camp Courses</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/m-mburu"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/mmburu_w"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-reader-toggle nav-link" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Survival Analysis R</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">May 13, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="what-is-survival-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-survival-analysis">What is Survival Analysis?</h2>
+<section id="introducing-the-gbsg2-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="introducing-the-gbsg2-dataset">Introducing the GBSG2 dataset</h3>
+<p>In this course, we will frequently use the GBSG2 dataset. This dataset contains information on breast cancer patients and their survival. In this exercise, we will take a first look at it in R.</p>
+<p>The TH.data package is loaded for you in this exercise.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check out the help page for this dataset</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(GBSG2, <span class="at">package =</span> <span class="st">"TH.data"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the data</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(GBSG2, <span class="at">package =</span> <span class="st">"TH.data"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the summary of the dataset</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(GBSG2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> horTh          age        menostat       tsize        tgrade   
+ no :440   Min.   :21.00   Pre :290   Min.   :  3.00   I  : 81  
+ yes:246   1st Qu.:46.00   Post:396   1st Qu.: 20.00   II :444  
+           Median :53.00              Median : 25.00   III:161  
+           Mean   :53.05              Mean   : 29.33            
+           3rd Qu.:61.00              3rd Qu.: 35.00            
+           Max.   :80.00              Max.   :120.00            
+     pnodes         progrec           estrec             time       
+ Min.   : 1.00   Min.   :   0.0   Min.   :   0.00   Min.   :   8.0  
+ 1st Qu.: 1.00   1st Qu.:   7.0   1st Qu.:   8.00   1st Qu.: 567.8  
+ Median : 3.00   Median :  32.5   Median :  36.00   Median :1084.0  
+ Mean   : 5.01   Mean   : 110.0   Mean   :  96.25   Mean   :1124.5  
+ 3rd Qu.: 7.00   3rd Qu.: 131.8   3rd Qu.: 114.00   3rd Qu.:1684.8  
+ Max.   :51.00   Max.   :2380.0   Max.   :1144.00   Max.   :2659.0  
+      cens       
+ Min.   :0.0000  
+ 1st Qu.:0.0000  
+ Median :0.0000  
+ Mean   :0.4359  
+ 3rd Qu.:1.0000  
+ Max.   :1.0000  </code></pre>
+</div>
+</div>
+</section>
+<section id="digging-into-the-gbsg2-dataset-1" class="level3">
+<h3 class="anchored" data-anchor-id="digging-into-the-gbsg2-dataset-1">Digging into the GBSG2 dataset 1</h3>
+<p>In the previous exercise, we learned about the GBSG2 dataset. Let’s dig a bit deeper into it to understand the variables we will use in the following.</p>
+<p>The cens variable contains values that indicate whether or not a person in the study has died. In this exercise, you’ll explore these censored values.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count censored and uncensored data</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>num_cens <span class="ot">&lt;-</span> <span class="fu">table</span>(GBSG2<span class="sc">$</span>cens)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>num_cens</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  0   1 
+387 299 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create barplot of censored and uncensored data</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(num_cens)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="survival_analysis_R_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="using-the-surv-function-for-gbsg2" class="level3">
+<h3 class="anchored" data-anchor-id="using-the-surv-function-for-gbsg2">Using the Surv() function for GBSG2</h3>
+<p>In the video, we learned about the Surv() function, which generates a Surv object. Let’s look a little deeper into what a Surv object actually is. We will use the GBSG2 data again.</p>
+<p>The survival package and GBSG2 data are loaded for you in this exercise.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Surv-Object</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>sobj <span class="ot">&lt;-</span> <span class="fu">Surv</span>( GBSG2<span class="sc">$</span>time, GBSG2<span class="sc">$</span>cens)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at 10 first elements</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>sobj[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 1814  2018   712  1807   772   448  2172+ 2161+  471  2014+</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at summary</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sobj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      time            status      
+ Min.   :   8.0   Min.   :0.0000  
+ 1st Qu.: 567.8   1st Qu.:0.0000  
+ Median :1084.0   Median :0.0000  
+ Mean   :1124.5   Mean   :0.4359  
+ 3rd Qu.:1684.8   3rd Qu.:1.0000  
+ Max.   :2659.0   Max.   :1.0000  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at structure</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sobj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> 'Surv' num [1:686, 1:2] 1814  2018   712  1807   772   448  2172+ 2161+  471  2014+ ...
+ - attr(*, "dimnames")=List of 2
+  ..$ : NULL
+  ..$ : chr [1:2] "time" "status"
+ - attr(*, "type")= chr "right"</code></pre>
+</div>
+</div>
+</section>
+<section id="the-unempdur-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="the-unempdur-dataset">The UnempDur dataset</h3>
+<p>The UnempDur dataset contains information on how long people stay unemployed. In this case, the event (finding a job) is something positive. This information is stored in the censor1 variable, which has a value of 1 if an individual was re-employed at a full-time job. The spell variable indicates the length of time an individual was unemployed in number of two-week intervals.</p>
+<p>In this exercise, you’ll explore these censored values and create a Surv object, just as you did in the previous exercises with the GBSG2 dataset.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the UnempDur data</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(UnempDur, <span class="at">package =</span> <span class="st">"Ecdat"</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Count censored and uncensored data</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>cens_employ_ft <span class="ot">&lt;-</span> <span class="fu">table</span>(UnempDur<span class="sc">$</span>censor1)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>cens_employ_ft</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   0    1 
+2270 1073 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create barplot of censored and uncensored data</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(cens_employ_ft)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="survival_analysis_R_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Surv-Object</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>sobj <span class="ot">&lt;-</span> <span class="fu">Surv</span>(UnempDur<span class="sc">$</span>spell, UnempDur<span class="sc">$</span>censor1)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at 10 first elements</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sobj, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]  5  13  21   3   9+ 11+  1+  3   7   5+</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="estimation-of-survival-curves" class="level2">
+<h2 class="anchored" data-anchor-id="estimation-of-survival-curves">Estimation of survival curves</h2>
+<section id="first-kaplan-meier-estimate" class="level3">
+<h3 class="anchored" data-anchor-id="first-kaplan-meier-estimate">First Kaplan-Meier estimate</h3>
+<p>In this exercise, we will use the same data shown in the video. We will take a look at the survfit() function and the object it generates. This exercise will help you explore the survfit object.</p>
+<section id="kaplan-meier-estimate-calculation" class="level4">
+<h4 class="anchored" data-anchor-id="kaplan-meier-estimate-calculation">Kaplan-Meier estimate Calculation</h4>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="kap.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Kaplan-Meier estimate Calculation</figcaption><p></p>
+</figure>
+</div>
+<p>The survival package is loaded for you in this exercise.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create time and event data</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>time <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">4</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>event <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute Kaplan-Meier estimate</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>km <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, event) <span class="sc">~</span> <span class="dv">1</span>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>km</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call: survfit(formula = Surv(time, event) ~ 1)
+
+     n events median 0.95LCL 0.95UCL
+[1,] 5      3    4.5       4      NA</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a look at the structure</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(km)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 16
+ $ n        : int 5
+ $ time     : num [1:4] 2 4 5 6
+ $ n.risk   : num [1:4] 5 4 2 1
+ $ n.event  : num [1:4] 0 2 1 0
+ $ n.censor : num [1:4] 1 0 0 1
+ $ surv     : num [1:4] 1 0.5 0.25 0.25
+ $ std.err  : num [1:4] 0 0.5 0.866 0.866
+ $ cumhaz   : num [1:4] 0 0.5 1 1
+ $ std.chaz : num [1:4] 0 0.354 0.612 0.612
+ $ type     : chr "right"
+ $ logse    : logi TRUE
+ $ conf.int : num 0.95
+ $ conf.type: chr "log"
+ $ lower    : num [1:4] 1 0.1877 0.0458 0.0458
+ $ upper    : num [1:4] 1 1 1 1
+ $ call     : language survfit(formula = Surv(time, event) ~ 1)
+ - attr(*, "class")= chr "survfit"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create data.frame</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">time =</span> km<span class="sc">$</span>time, <span class="at">n.risk =</span> km<span class="sc">$</span>n.risk, <span class="at">n.event =</span> km<span class="sc">$</span>n.event,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">n.censor =</span> km<span class="sc">$</span>n.censor, <span class="at">surv =</span> km<span class="sc">$</span>surv) <span class="sc">%&gt;%</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-e205f6d60567eefa12d5" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-e205f6d60567eefa12d5">{"x":{"style":"bootstrap4","filter":"none","vertical":false,"data":[[2,4,5,6],[5,4,2,1],[0,2,1,0],[1,0,0,1],[1,0.5,0.25,0.25]],"container":"<table class=\"table table-bordered table-striped\">\n  <thead>\n    <tr>\n      <th>time<\/th>\n      <th>n.risk<\/th>\n      <th>n.event<\/th>\n      <th>n.censor<\/th>\n      <th>surv<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-center","targets":[0,1,2,3,4]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+</section>
+<section id="exercise-ignoring-censoring" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-ignoring-censoring">Exercise ignoring censoring</h3>
+<p>You throw a party and at 1 a.m. guests suddenly start dancing. You are curious to analyze how long your guests will dance for and start collecting data. The problem is that you get tired and go to bed after a while.</p>
+<p>You obtain the following right censored dancing times data given in dancedat:</p>
+<p>name is the name of your friend. time is the right-censored dancing time. obs_end indicates if you observed the end of your friends dance (1) or if you went to sleep before they stopped dancing (0). You start analyzing the data in the morning, but you are tired and, at first, ignore the fact that you have censored observations. Then you remember this course on DataCamp and do it correctly.</p>
+<p>The survival package is loaded for you in this exercise.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create dancedat data</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>dancedat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="fu">c</span>(<span class="st">"Chris"</span>, <span class="st">"Martin"</span>, <span class="st">"Conny"</span>, <span class="st">"Desi"</span>, <span class="st">"Reni"</span>, <span class="st">"Phil"</span>, </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Flo"</span>, <span class="st">"Andrea"</span>, <span class="st">"Isaac"</span>, <span class="st">"Dayra"</span>, <span class="st">"Caspar"</span>),</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">time =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">2</span>, <span class="dv">14</span>, <span class="dv">22</span>, <span class="dv">3</span>, <span class="dv">7</span>, <span class="dv">4</span>, <span class="dv">15</span>, <span class="dv">25</span>, <span class="dv">17</span>, <span class="dv">12</span>),</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">obs_end =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimate the survivor function pretending that all censored observations are actual observations.</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>km_wrong <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> dancedat)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimate the survivor function from this dataset via kaplan-meier.</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>km <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, obs_end) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> dancedat)</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the two and compare</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot_combine</span>(<span class="fu">list</span>(<span class="at">correct =</span> km, </span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>                        <span class="at">wrong =</span> km_wrong))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="survival_analysis_R_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="estimating-and-visualizing-a-survival-curve" class="level3">
+<h3 class="anchored" data-anchor-id="estimating-and-visualizing-a-survival-curve">Estimating and visualizing a survival curve</h3>
+<p>Let’s take a look at the survival of breast cancer patients.</p>
+<p>In this exercise, we work with the GBSG2 dataset again.</p>
+<p>The survival and survminer packages and the GBSG2 data are loaded for you in this exercise.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Kaplan-Meier estimate</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>km <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, cens)<span class="sc">~</span><span class="dv">1</span>, <span class="at">data =</span> GBSG2)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plot of the Kaplan-Meier estimate</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(km)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="survival_analysis_R_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add the risk table to plot</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(km, <span class="at">risk.table =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="survival_analysis_R_files/figure-html/unnamed-chunk-7-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add a line showing the median survival time</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(km, <span class="at">risk.table =</span> <span class="cn">TRUE</span>, <span class="at">surv.median.line =</span> <span class="st">"hv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="survival_analysis_R_files/figure-html/unnamed-chunk-7-3.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="estimating-median-survival-from-a-weibull-model" class="level3">
+<h3 class="anchored" data-anchor-id="estimating-median-survival-from-a-weibull-model">Estimating median survival from a Weibull model</h3>
+<p>We can now estimate the survival of the breast cancer patients in the GBSG2 data using a Weibull model (function survreg()). Remember, the Weibull model estimates a smooth survival function instead of a step function, which is what the Kaplan-Meier method estimates.</p>
+<p>The predict() function with type = “quantile” allows us to compute the quantiles of the distribution function. We will use this to compute the median survival.</p>
+<p>The survival package and the GBSG2 data are loaded for you in this exercise.</p>
+<ul>
+<li>Estimate a Weibull model for the breast cancer patients.</li>
+<li>Compute the median survival from this model using the predict() function with type = “quantile”</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Weibull model</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>wb <span class="ot">&lt;-</span> <span class="fu">survreg</span>(<span class="fu">Surv</span>(time, cens) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> GBSG2)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the median survival from the model</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(wb, <span class="at">type =</span> <span class="st">"quantile"</span>, <span class="at">p =</span> <span class="fl">0.5</span>, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      1 
+1693.93 </code></pre>
+</div>
+</div>
+<p>Survival curve quantiles from a Weibull model We can now estimate the survival of the breast cancer patients in the GBSG2 data using a Weibull model.</p>
+<p>The predict() function with type = “quantile” allows us to compute the quantiles of the distribution function. As we learned in this course so far, the survival function is 1 - the distribution function ( S = 1 -D), so we can easily compute the quantiles of the survival function using the predict() function.</p>
+<p>The survival package and GBSG2 data are loaded for you in this exercise.</p>
+<ul>
+<li>Estimate a Weibull model for the breast cancer patients.</li>
+<li>Get the time point at which the probability of surviving longer than that time point is 70 Percent (using the predict() function with type = “quantile”).</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Weibull model</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>wb <span class="ot">&lt;-</span> <span class="fu">survreg</span>(<span class="fu">Surv</span>(time, cens) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> GBSG2)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 70 Percent of patients survive beyond time point...</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(wb, <span class="at">type =</span> <span class="st">"quantile"</span>, <span class="at">p =</span> <span class="dv">1</span><span class="fl">-.7</span>, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       1 
+1004.524 </code></pre>
+</div>
+</div>
+</section>
+<section id="estimating-the-survival-curve-with-survreg" class="level3">
+<h3 class="anchored" data-anchor-id="estimating-the-survival-curve-with-survreg">Estimating the survival curve with survreg()</h3>
+<p>We can now estimate the survival of the breast cancer patients in the GBSG2 data using a Weibull model.</p>
+<p>The Weibull distribution has two parameters, which determine the form of the survival curve.</p>
+<p>The survival package and the GBSG2 data are loaded for you in this exercise.</p>
+<ul>
+<li>Estimate a Weibull model for the breast cancer patients.</li>
+<li>Compute the estimated survival curve from the model using the predict() function with type = “quantile”.</li>
+<li>Create a data.frame with the time points and corresponding survival probabilities.</li>
+<li>Look at the first few lines of the result using the function head().</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Weibull model</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>wb <span class="ot">&lt;-</span> <span class="fu">survreg</span>(<span class="fu">Surv</span>(time, cens) <span class="sc">~</span> <span class="dv">1</span>, GBSG2)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieve survival curve from model probabilities </span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>surv <span class="ot">&lt;-</span> <span class="fu">seq</span>(.<span class="dv">99</span>, .<span class="dv">01</span>, <span class="at">by =</span> <span class="sc">-</span>.<span class="dv">01</span>)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Get time for each probability</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">predict</span>(wb, <span class="at">type =</span> <span class="st">"quantile"</span>, <span class="at">p =</span> <span class="dv">1</span> <span class="sc">-</span> surv, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="dv">1</span>))</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create data frame with the information</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>surv_wb <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">time =</span> t, <span class="at">surv =</span> surv)</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at first few lines of the result</span></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(surv_wb ) <span class="sc">%&gt;%</span></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-52a565d59b84360f6a37" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-52a565d59b84360f6a37">{"x":{"style":"bootstrap4","filter":"none","vertical":false,"data":[[60.6559959615341,105.039201564521,145.072282786521,182.643014328585,218.571491663456,253.31248594881],[0.99,0.98,0.97,0.96,0.95,0.94]],"container":"<table class=\"table table-bordered table-striped\">\n  <thead>\n    <tr>\n      <th>time<\/th>\n      <th>surv<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-center","targets":[0,1]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="comparing-weibull-model-and-kaplan-meier-estimate" class="level3">
+<h3 class="anchored" data-anchor-id="comparing-weibull-model-and-kaplan-meier-estimate">Comparing Weibull model and Kaplan-Meier estimate</h3>
+<p>Let’s plot the survival curve we get from the Weibull model for the GBSG2 data!</p>
+<p>The survival and survminer packages and the GBSG2 data are loaded for you in this exercise.</p>
+<ul>
+<li>Compute the Weibull model for the GBSG2 data.</li>
+<li>Compute the survival curve from the model.</li>
+<li>Plot the survival curves you get from the two estimates.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Weibull model</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>wb <span class="ot">&lt;-</span> <span class="fu">survreg</span>(<span class="fu">Surv</span>(time, cens) <span class="sc">~</span> <span class="dv">1</span>, GBSG2)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieve survival curve from model</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>surv <span class="ot">&lt;-</span> <span class="fu">seq</span>(.<span class="dv">99</span>, .<span class="dv">01</span>, <span class="at">by =</span> <span class="sc">-</span>.<span class="dv">01</span>)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Get time for each probability</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">predict</span>(wb, <span class="at">type =</span> <span class="st">"quantile"</span>, <span class="at">p =</span> <span class="dv">1</span><span class="sc">-</span>surv, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="dv">1</span>))</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create data frame with the information needed for ggsurvplot_df</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>surv_wb <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">time =</span> t, </span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>                      <span class="at">surv =</span> surv, </span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>                      <span class="at">upper =</span> <span class="cn">NA</span>, </span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>                      <span class="at">lower =</span> <span class="cn">NA</span>, </span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>                      <span class="at">std.err =</span> <span class="cn">NA</span>)</span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot_df</span>(<span class="at">fit =</span> surv_wb, </span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>              <span class="at">surv.geom =</span> geom_line)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="survival_analysis_R_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="the-weibull-model" class="level2">
+<h2 class="anchored" data-anchor-id="the-weibull-model">The Weibull model</h2>
+<section id="interpreting-coefficients" class="level3">
+<h3 class="anchored" data-anchor-id="interpreting-coefficients">Interpreting coefficients</h3>
+<p>We have a dataset of lung cancer patients. In this exercise, we want to know if the sex of the patients is associated with their survival time.</p>
+<p>The survival package and the dataset are already loaded for you.</p>
+<ul>
+<li>Use the survreg() function to estimate a Weibull model.</li>
+<li>Women survive longer from</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the data set</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"dat.rda"</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   228 obs. of  3 variables:
+ $ time  : num  306 455 1010 210 883 ...
+ $ status: num  2 2 1 2 2 1 2 2 2 2 ...
+ $ sex   : Factor w/ 2 levels "male","female": 1 1 1 1 1 1 2 2 1 1 ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimate a Weibull model</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>wbmod <span class="ot">&lt;-</span> <span class="fu">survreg</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> sex, <span class="at">data =</span> dat)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(wbmod) <span class="sc">%&gt;%</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-e3d07858bc02119d8d29" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-e3d07858bc02119d8d29">{"x":{"style":"bootstrap4","filter":"none","vertical":false,"data":[["(Intercept)","sexfemale","Log(scale)"],[5.88416175818309,0.395578007452023,-0.280920962012943],[0.0719652434247734,0.127649144077929,0.0619184107658105],[81.7639387871162,3.09894759036164,-4.53695368693246],[0,0.00194209371757051,5.70726336860494e-06]],"container":"<table class=\"table table-bordered table-striped\">\n  <thead>\n    <tr>\n      <th>term<\/th>\n      <th>estimate<\/th>\n      <th>std.error<\/th>\n      <th>statistic<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-center","targets":[0,1,2,3,4]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="compute-weibull-model" class="level3">
+<h3 class="anchored" data-anchor-id="compute-weibull-model">Compute Weibull model</h3>
+<p>For a Weibull model with covariates, we can compute the survival curve just as we did for the Weibull model without covariates. The only thing we need to do is specify the covariate values for a given survival curve in the predict() function. This can be done with the argument newdata.</p>
+<ul>
+<li>Compute a Weibull model for the GBSG2 dataset with covariate horTh to analyze the effect of hormonal therapy on the survival of patients.</li>
+<li>Compute the survival curve for patients who receive hormonal therapy.</li>
+<li>Take a look at the survival curve with str().</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Weibull model</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>wbmod <span class="ot">&lt;-</span> <span class="fu">survreg</span>(<span class="fu">Surv</span>(time, cens) <span class="sc">~</span> horTh, <span class="at">data =</span> GBSG2)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieve survival curve from model</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>surv <span class="ot">&lt;-</span> <span class="fu">seq</span>(.<span class="dv">99</span>, .<span class="dv">01</span>, <span class="at">by =</span> <span class="sc">-</span>.<span class="dv">01</span>)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>t_yes <span class="ot">&lt;-</span> <span class="fu">predict</span>(wbmod, <span class="at">type =</span> <span class="st">"quantile"</span>, <span class="at">p =</span> <span class="dv">1</span> <span class="sc">-</span> surv,</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">horTh =</span> <span class="st">"yes"</span>))</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a look at survival curve</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(t_yes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> num [1:99] 76.4 131.4 180.9 227.2 271.4 ...</code></pre>
+</div>
+</div>
+<p>Computing a Weibull model and the survival curves In this exercise we will reproduce the example from the video using the following steps:</p>
+<ul>
+<li>Compute Weibull model</li>
+<li>Decide on “imaginary patients”</li>
+<li>Compute survival curves</li>
+<li>Create data.frame with survival curve information</li>
+<li>Plot In this exercise, we will focus on the first three steps. The next exercise will cover the remaining steps.</li>
+</ul>
+<p>The survival, survminer, and reshape2 packages and the GBSG2 data are loaded for you in this exercise.</p>
+<ul>
+<li>Compute the Weibull model for the GBSG2 data with covariates horTh and tsize.</li>
+<li>Decide on “imaginary patients”: the two levels of horTh and the 25%, 50%, and 75% quantiles of tsize.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Weibull model</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>wbmod <span class="ot">&lt;-</span> <span class="fu">survreg</span>(<span class="fu">Surv</span>(time, cens) <span class="sc">~</span>horTh  <span class="sc">+</span> tsize, <span class="at">data =</span> GBSG2)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Imaginary patients</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>newdat <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">horTh =</span> <span class="fu">levels</span>(GBSG2<span class="sc">$</span>horTh),</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">tsize =</span> <span class="fu">quantile</span>(GBSG2<span class="sc">$</span>tsize, <span class="at">probs =</span> <span class="fu">c</span>(.<span class="dv">25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>)))</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="fu">data_table</span>(newdat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-f02b0eedeab42a20070d" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-f02b0eedeab42a20070d">{"x":{"style":"bootstrap4","filter":"none","vertical":false,"data":[["no","yes","no","yes","no","yes"],[20,20,25,25,35,35]],"container":"<table class=\"table table-bordered table-striped\">\n  <thead>\n    <tr>\n      <th>horTh<\/th>\n      <th>tsize<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-center","targets":[0,1]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute survival curves</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>surv <span class="ot">&lt;-</span> <span class="fu">seq</span>(.<span class="dv">99</span>, .<span class="dv">01</span>, <span class="at">by =</span> <span class="sc">-</span>.<span class="dv">01</span>)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">predict</span>(wbmod, <span class="at">type =</span> <span class="st">"quantile"</span>, <span class="at">p =</span> <span class="dv">1</span> <span class="sc">-</span> surv,</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">newdata =</span> newdat)</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="co"># How many rows and columns does t have?</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(t)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  6 99</code></pre>
+</div>
+</div>
+</section>
+<section id="visualising-a-weibull-model" class="level3">
+<h3 class="anchored" data-anchor-id="visualising-a-weibull-model">Visualising a Weibull model</h3>
+<p>In this exercise we will reproduce the example from the video following the steps:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use cbind() to combine the information in newdat with t</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>surv_wbmod_wide <span class="ot">&lt;-</span> <span class="fu">cbind</span>(newdat, t)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Use melt() to bring the data.frame to long format</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>surv_wbmod <span class="ot">&lt;-</span> <span class="fu">melt</span>(surv_wbmod_wide, </span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">id.vars =</span> <span class="fu">c</span>(<span class="st">"horTh"</span>, <span class="st">"tsize"</span>), </span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>                   <span class="at">variable.name =</span> <span class="st">"surv_id"</span>, </span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>                   <span class="at">value.name =</span> <span class="st">"time"</span>)</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Use surv_wbmod$surv_id to add the correct survival probabilities surv</span></span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>surv_wbmod<span class="sc">$</span>surv <span class="ot">&lt;-</span> surv[<span class="fu">as.numeric</span>(surv_wbmod<span class="sc">$</span>surv_id)]</span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Add columns upper, lower, std.err, and strata to the data.frame</span></span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>surv_wbmod[, <span class="fu">c</span>(<span class="st">"upper"</span>, <span class="st">"lower"</span>, <span class="st">"std.err"</span>, <span class="st">"strata"</span>)] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the survival curves</span></span>
+<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot_df</span>(surv_wbmod, <span class="at">surv.geom =</span> geom_line,</span>
+<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>              <span class="at">linetype =</span> <span class="st">"horTh"</span>, <span class="at">color =</span> <span class="st">"tsize"</span>, <span class="at">legend.title =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="survival_analysis_R_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="computing-a-weibull-and-a-log-normal-model" class="level3">
+<h3 class="anchored" data-anchor-id="computing-a-weibull-and-a-log-normal-model">Computing a Weibull and a log-normal model</h3>
+<p>In this exercise, we want to compute a Weibull model and a log-normal model for the GBSG2 data. You will see that the process of computing the survival curve is the same. In the upcoming exercise, we will compare the results from the two models and see the differences.</p>
+<p>The survival, survminer, and reshape2 packages and the GBSG2 data are loaded for you in this exercise.</p>
+<ul>
+<li><p>Compute the Weibull model</p></li>
+<li><p>Compute the log-normal model</p></li>
+<li><p>The Weibull distribution is the the default for survreg(). To compute a log-normal model you need to adjust the distribution argument.</p></li>
+<li><p>Define the new dataset as a data.frame with the two levels of hormonal Therapy.</p></li>
+<li><p>Use predict() to compute the survival functions.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Weibull model</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>wbmod <span class="ot">&lt;-</span> <span class="fu">survreg</span>(<span class="fu">Surv</span>(time, cens) <span class="sc">~</span> horTh, </span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> GBSG2)</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Log-Normal model</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>lnmod <span class="ot">&lt;-</span> <span class="fu">survreg</span>(<span class="fu">Surv</span>(time, cens) <span class="sc">~</span> horTh, </span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> GBSG2, <span class="at">dist=</span> <span class="st">"lognormal"</span>)</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Newdata</span></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>newdat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">horTh =</span> <span class="fu">levels</span>(GBSG2<span class="sc">$</span>horTh))</span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Surv</span></span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>surv <span class="ot">&lt;-</span> <span class="fu">seq</span>(.<span class="dv">99</span>, .<span class="dv">01</span>, <span class="at">by =</span> <span class="sc">-</span>.<span class="dv">01</span>)</span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Survival curve from Weibull model and log-normal model</span></span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>wbt <span class="ot">&lt;-</span> <span class="fu">predict</span>(wbmod, <span class="at">type=</span> <span class="st">"quantile"</span>, <span class="at">p =</span> <span class="dv">1</span><span class="sc">-</span> surv, <span class="at">newdata =</span> newdat)</span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>lnt <span class="ot">&lt;-</span> <span class="fu">predict</span>(lnmod, <span class="at">type =</span> <span class="st">"quantile"</span>, <span class="at">p =</span> <span class="dv">1</span> <span class="sc">-</span> surv, <span class="at">newdata =</span> newdat)</span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>surv_wide <span class="ot">&lt;-</span> <span class="fu">cbind</span>(newdat, wbt) <span class="sc">%&gt;%</span></span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">dist =</span> <span class="st">"weibull"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bind_rows</span>(</span>
+<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cbind</span>(newdat, lnt) <span class="sc">%&gt;%</span></span>
+<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a>            <span class="fu">mutate</span>(<span class="at">dist =</span> <span class="st">"lognormal"</span>)  </span>
+<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="comparing-weibull-and-log-normal-model-i" class="level3">
+<h3 class="anchored" data-anchor-id="comparing-weibull-and-log-normal-model-i">Comparing Weibull and Log-Normal Model I</h3>
+<p>In this exercise, we want to add the correct survival probabilities to a data frame. This data frame will be used to plot the survival curves. surv_wide is a wide data frame containing hormonal therapy information and the survival curves for the Weibull and log-normal models.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Melt the data.frame into long format.</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>surv_long <span class="ot">&lt;-</span> <span class="fu">melt</span>(surv_wide, <span class="at">id.vars =</span> <span class="fu">c</span>(<span class="st">"horTh"</span>, <span class="st">"dist"</span>), </span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">variable =</span> <span class="st">"surv_id"</span>, <span class="at">value.name =</span> <span class="st">"time"</span>)</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Add column for the survival probabilities</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>surv_long<span class="sc">$</span>surv <span class="ot">&lt;-</span> surv[<span class="fu">as.numeric</span>(surv_long<span class="sc">$</span>surv_id)]</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Add columns upper, lower, std.err, and strata contianing NA values</span></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>surv_long[, <span class="fu">c</span>(<span class="st">"upper"</span>, <span class="st">"lower"</span>, <span class="st">"std.err"</span>, <span class="st">"strata"</span>)] <span class="ot">&lt;-</span> <span class="cn">NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="comparing-weibull-and-log-normal-model-ii" class="level4">
+<h4 class="anchored" data-anchor-id="comparing-weibull-and-log-normal-model-ii">Comparing Weibull and Log-Normal Model II</h4>
+<p>In this exercise, we want to compare the survival curves estimated by a Weibull model and by a log-normal model for the GBSG2 data. This exercise shows how the estimates change if you use a different distribution.</p>
+<p>The survival, survminer, and reshape2 packages and the GBSG2 data are loaded for you in this exercise.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the survival curves</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot_df</span>(surv_long, <span class="at">surv.geom =</span> geom_line,</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">linetype =</span><span class="st">"horTh"</span> , <span class="at">color =</span> <span class="st">"dist"</span>, <span class="at">legend.title =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="survival_analysis_R_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="the-cox-model" class="level2">
+<h2 class="anchored" data-anchor-id="the-cox-model">The Cox model</h2>
+<section id="computing-a-cox-model" class="level3">
+<h3 class="anchored" data-anchor-id="computing-a-cox-model">Computing a Cox model</h3>
+<p>We have a dataset of lung cancer patients. We want to know if their performance score (variable performance) is associated with their survival time. The performance score measures how well a patient can perform usual daily activities (bad=0, good=100).</p>
+<p>The survival package and the dat dataset are already loaded for you.</p>
+<ul>
+<li>Compute a Cox model for the lung cancer data dat using coxph() to estimate the effect of the performance score (variable performance) on the survival of lung cancer patients.</li>
+<li>Use the coef() function to show the model coefficient.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute Cox model</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"dat_cox.rda"</span>)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>cxmod <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> performance, <span class="at">data =</span> dat_cox)</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Show model coefficient</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(cxmod) <span class="sc">%&gt;%</span> <span class="fu">data_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-cedd582b2f0d90fa2d65" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-cedd582b2f0d90fa2d65">{"x":{"style":"bootstrap4","filter":"none","vertical":false,"data":[["performance"],[-0.016448211623307],[0.00585395817106536],[-2.80975899428295],[0.00495786105896389]],"container":"<table class=\"table table-bordered table-striped\">\n  <thead>\n    <tr>\n      <th>term<\/th>\n      <th>estimate<\/th>\n      <th>std.error<\/th>\n      <th>statistic<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-center","targets":[0,1,2,3,4]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="computing-the-survival-curve-from-a-cox-model" class="level3">
+<h3 class="anchored" data-anchor-id="computing-the-survival-curve-from-a-cox-model">Computing the survival curve from a Cox model</h3>
+<p>In this exercise, we will reproduce the example from the video following the steps:</p>
+<p>Compute Cox model Decide on “imaginary patients” Compute survival curves Create data.frame with survival curve information Plot We will focus now on the first three steps in this exercise and do the next two steps in the upcoming exercise.</p>
+<p>The survival and survminer packages and the GBSG2 data are loaded for you in this exercise.</p>
+<ul>
+<li>Compute the Cox model for the GBSG2 data with covariates horTh and tsize.</li>
+<li>Decide on “imaginary patients”: the two levels of horTh and the 25%, 50%, and 75% quantile.</li>
+<li>Add rownames letters “a” - “f” to the imaginary patients data.frame.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox model</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>cxmod <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(time, cens) <span class="sc">~</span> horTh <span class="sc">+</span> tsize, <span class="at">data =</span> GBSG2)</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Imaginary patients</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>newdat <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">horTh =</span> <span class="fu">levels</span>(GBSG2<span class="sc">$</span>horTh),</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">tsize =</span> <span class="fu">quantile</span>(GBSG2<span class="sc">$</span>tsize, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>)))</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(newdat) <span class="ot">&lt;-</span> letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute survival curves</span></span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>cxsf <span class="ot">&lt;-</span> <span class="fu">survfit</span>(cxmod, </span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> GBSG2, </span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>                <span class="at">newdata =</span> newdat, </span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a>                <span class="at">conf.type =</span> <span class="st">"none"</span>)</span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at first 6 rows of cxsf$surv and time points</span></span>
+<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cxsf<span class="sc">$</span>surv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     a b c d e f
+[1,] 1 1 1 1 1 1
+[2,] 1 1 1 1 1 1
+[3,] 1 1 1 1 1 1
+[4,] 1 1 1 1 1 1
+[5,] 1 1 1 1 1 1
+[6,] 1 1 1 1 1 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cxsf<span class="sc">$</span>time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  8 15 16 17 18 29</code></pre>
+</div>
+</div>
+</section>
+<section id="visualizing-cox" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-cox">Visualizing Cox</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute data.frame needed for plotting</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>surv_cxmod0 <span class="ot">&lt;-</span> <span class="fu">surv_summary</span>(cxsf)</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the first few lines</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(surv_cxmod0) <span class="sc">%&gt;%</span> <span class="fu">data_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-f272add9a286ef8b615f" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-f272add9a286ef8b615f">{"x":{"style":"bootstrap4","filter":"none","vertical":false,"data":[[8,15,16,17,18,29],[686,685,684,683,681,680],[0,0,0,0,0,0],[1,1,1,2,1,1],[1,1,1,1,1,1],[0,0,0,0,0,0],[null,null,null,null,null,null],[null,null,null,null,null,null],["a","a","a","a","a","a"]],"container":"<table class=\"table table-bordered table-striped\">\n  <thead>\n    <tr>\n      <th>time<\/th>\n      <th>n.risk<\/th>\n      <th>n.event<\/th>\n      <th>n.censor<\/th>\n      <th>surv<\/th>\n      <th>std.err<\/th>\n      <th>upper<\/th>\n      <th>lower<\/th>\n      <th>strata<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-center","targets":[0,1,2,3,4,5,6,7,8]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get a character vector of patient letters (patient IDs)</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>pid <span class="ot">&lt;-</span> <span class="fu">as.character</span>(surv_cxmod0<span class="sc">$</span>strata)</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiple of the rows in newdat so that it fits with surv_cxmod0</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>m_newdat <span class="ot">&lt;-</span> newdat[pid, ]</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Add patient info to data.frame</span></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>surv_cxmod <span class="ot">&lt;-</span> <span class="fu">cbind</span>(surv_cxmod0, m_newdat)</span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(surv_cxmod) <span class="sc">%&gt;%</span> <span class="fu">data_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-a9b28a7ce9f22ff90ccb" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-a9b28a7ce9f22ff90ccb">{"x":{"style":"bootstrap4","filter":"none","vertical":false,"data":[[8,15,16,17,18,29],[686,685,684,683,681,680],[0,0,0,0,0,0],[1,1,1,2,1,1],[1,1,1,1,1,1],[0,0,0,0,0,0],[null,null,null,null,null,null],[null,null,null,null,null,null],["a","a","a","a","a","a"],["no","no","no","no","no","no"],[20,20,20,20,20,20]],"container":"<table class=\"table table-bordered table-striped\">\n  <thead>\n    <tr>\n      <th>time<\/th>\n      <th>n.risk<\/th>\n      <th>n.event<\/th>\n      <th>n.censor<\/th>\n      <th>surv<\/th>\n      <th>std.err<\/th>\n      <th>upper<\/th>\n      <th>lower<\/th>\n      <th>strata<\/th>\n      <th>horTh<\/th>\n      <th>tsize<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-center","targets":[0,1,2,3,4,5,6,7,8,9,10]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<section id="plot" class="level4">
+<h4 class="anchored" data-anchor-id="plot">Plot</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot_df</span>(surv_cxmod, <span class="at">linetype =</span> <span class="st">"horTh"</span>, <span class="at">color =</span> <span class="st">"tsize"</span>,</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">legend.title =</span> <span class="cn">NULL</span>, <span class="at">censor =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="survival_analysis_R_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="capstone-the-cox-model" class="level3">
+<h3 class="anchored" data-anchor-id="capstone-the-cox-model">Capstone: The Cox model</h3>
+<p>To conclude the course, let’s take a look back at the lung cancer dataset we utilized briefly in these last 2 chapters. To recap, this dataset contains information on the survival of patients with advanced lung cancer from the North Central Cancer Treatment Group. The event is stored in the status variable, which has a value of 2 if an individual did not survive. The performance score (variable performance) measures how well a patient can perform usual daily activities (bad=0, good=100), rated by a physician. We want to know the association between specific performance scores and survival time.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute Cox model and survival curves</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>lung <span class="ot">&lt;-</span>  dat_cox</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>cxmod <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> performance, <span class="at">data =</span> lung)</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>new_lung <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">performance =</span> <span class="fu">c</span>(<span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>, <span class="dv">90</span>))</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>cxsf <span class="ot">&lt;-</span> <span class="fu">survfit</span>(cxmod, <span class="at">data =</span> lung, <span class="at">newdata =</span> new_lung, <span class="at">conf.type =</span> <span class="st">"none"</span>)</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the summary of cxsf to take a vector of patient IDs</span></span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>surv_cxmod0 <span class="ot">&lt;-</span> <span class="fu">surv_summary</span>(cxsf)</span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>pid <span class="ot">&lt;-</span> <span class="fu">as.character</span>(surv_cxmod0<span class="sc">$</span>strata)</span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Duplicate rows in newdat to fit with surv_cxmod0 and add them in</span></span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a>m_newdat <span class="ot">&lt;-</span> new_lung[pid, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a>surv_cxmod <span class="ot">&lt;-</span> <span class="fu">cbind</span>(surv_cxmod0, m_newdat)</span>
+<span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-15"><a href="#cb52-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb52-16"><a href="#cb52-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot_df</span>(surv_cxmod, </span>
+<span id="cb52-17"><a href="#cb52-17" aria-hidden="true" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">"performance"</span>, </span>
+<span id="cb52-18"><a href="#cb52-18" aria-hidden="true" tabindex="-1"></a>              <span class="at">legend.title =</span> <span class="cn">NULL</span>,</span>
+<span id="cb52-19"><a href="#cb52-19" aria-hidden="true" tabindex="-1"></a>              <span class="at">censor =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="survival_analysis_R_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="capstone-comparing-survival-curves" class="level3">
+<h3 class="anchored" data-anchor-id="capstone-comparing-survival-curves">Capstone: Comparing survival curves</h3>
+<p>We saw from the last exercise that performance scores do have an effect on the survival probability. Now, let’s take a look at the survival curve of all individuals using the Kaplan-Meier estimate and compare it to the curve of a Cox model that takes performance into account. Note that for Cox models, you can just enter the survfit() output into ggsurvplot() instead of creating the needed data frame yourself and plugging it into ggsurvplot_df().</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute Kaplan-Meier curve</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>km <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> lung)</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute Cox model</span></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>cxmod <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> performance, </span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> lung)</span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute Cox model survival curves</span></span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>new_lung <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">performance =</span> <span class="fu">c</span>(<span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>, <span class="dv">90</span>))</span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>cxsf <span class="ot">&lt;-</span> <span class="fu">survfit</span>(cxmod, <span class="at">data =</span> lung,</span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">newdata =</span> new_lung, </span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a>                <span class="at">conf.type =</span> <span class="st">"none"</span>)</span>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Kaplan-Meier curve</span></span>
+<span id="cb53-16"><a href="#cb53-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(km, <span class="at">conf.int =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="survival_analysis_R_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Cox model survival curves</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(cxsf, <span class="at">censor =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="survival_analysis_R_files/figure-html/unnamed-chunk-24-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

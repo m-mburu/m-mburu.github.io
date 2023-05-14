@@ -39,6 +39,10 @@ Text Domain: lyretail
   color: white;
 }
 
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  color: #fff;
+  background-color: #ff7518;
+}
 
 body {
 	background-color: white;
