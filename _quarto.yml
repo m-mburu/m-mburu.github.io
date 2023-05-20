@@ -10,7 +10,7 @@ website:
   reader-mode: true  
   navbar:
     search: true
-    background: grey
+    background: dark
     collapse-below: lg
     type: overlay 
     alignment: center

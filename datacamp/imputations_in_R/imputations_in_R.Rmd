@@ -5,8 +5,6 @@ output:
   html_document:
     theme: lumen
     highlight: pygments
-  github_document: default
-  pdf_document: default
 ---
 
 # The problem of missing data

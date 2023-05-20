@@ -1,6 +1,10 @@
 ---
 title: "Supervised Learning in R: Classification"
-output: github_document
+date: "23/02/2023"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
 ---
 
 ```{r setup, include=FALSE}

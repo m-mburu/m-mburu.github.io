@@ -1,8 +1,8 @@
 ---
 title: "Communicating with Data in the Tidyverse"
 author: "Mburu"
-date: "8/11/2021"
-output: github_document
+date: "2021-11-08"
+output: html_document
 ---
 
 ```{r setup, include=FALSE}

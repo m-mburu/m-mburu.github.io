@@ -1,6 +1,9 @@
 ---
 title: "Sampling in R"
-output: github_document
+date: "2022-09-09"
+output: 
+  html_document:
+    theme: lumen
 ---
 
 ```{r setup, include=FALSE}

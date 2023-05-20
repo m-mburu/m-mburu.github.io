@@ -9,7 +9,6 @@ output:
     toc_float:
       collapsed: no
       smooth_scroll: no
-    css: style.css
     highlight: pygments
 ---
 
@@ -18,7 +17,8 @@ knitr::opts_chunk$set(echo = TRUE,
                       warning = FALSE, 
                       message = FALSE,
                       fig.height=4, fig.width=6,
-                      dpi = 300)
+                      dpi = 300,
+                      eval = FALSE)
 
 
 
@@ -543,7 +543,9 @@ The table() function tallies the number of occurrences of combinations of values
 
 table(currency, country)
 
-        country
+```         
+    country
+```
 
 currency UK USA \$ 0 1 £ 1 0 the rows are indexed by currency because this appears first in the table() function.
 

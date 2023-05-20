@@ -5,11 +5,11 @@ date: "4/13/2021"
 output:
   html_document:
     toc: true
-    toc_depth: 2
+    toc_depth: 3
     toc_float:
       collapsed: false
       smooth_scroll: true
-    theme: united
+    theme: lumen
     highlight: pygments
 ---
 
@@ -178,7 +178,9 @@ $$rot = \beta_0 + \beta_1 *t + \beta_2 * temp + \beta_2 * temp *t +  \epsilon $$
 
 Including an interaction term in a model is easy---we just have to tell lm() that we want to include that new variable. An expression of the form
 
-    lm(y ~ x + z + x:z, data = mydata)
+```         
+lm(y ~ x + z + x:z, data = mydata)
+```
 
 will do the trick. The use of the colon (:) here means that the interaction between and will be a third term in the model.
 

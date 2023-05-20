@@ -1,6 +1,9 @@
 ---
 title: "Census data in r with tidycensus"
-output: github_document
+date: "2022-02-23"
+output:
+  html_document:
+      theme: lumen
 ---
 
 ```{r setup, include=FALSE}

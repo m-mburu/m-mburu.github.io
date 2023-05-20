@@ -1,6 +1,12 @@
 ---
 title: "Functions in R"
-output: github_document
+date: "2013-12-10"
+output:
+  html_document:
+    toc: yes
+    toc_depth: 3
+    theme: lumen
+    highlight: pygments
 ---
 
 ```{r setup, include=FALSE}
@@ -213,7 +219,7 @@ cut_by_quantile(
 
 ## Categorical defaults
 
-When cutting up a numeric vector, you need to worry about what happens if a value lands exactly on a boundary. You can either put this value into a category of the lower interval or the higher interval. That is, you can choose your intervals to include values at the top boundary but not the bottom (in mathematical terminology, "open on the left, closed on the right", or (lo, hi\]). Or you can choose the opposite ("closed on the left, open on the right", or \[lo, hi)). cut_by_quantile() should allow these two choices.
+When cutting up a numeric vector, you need to worry about what happens if a value lands exactly on a boundary. You can either put this value into a category of the lower interval or the higher interval. That is, you can choose your intervals to include values at the top boundary but not the bottom (in mathematical terminology, "open on the left, closed on the right", or (lo, hi]). Or you can choose the opposite ("closed on the left, open on the right", or [lo, hi)). cut_by_quantile() should allow these two choices.
 
 The pattern for categorical defaults is:
 

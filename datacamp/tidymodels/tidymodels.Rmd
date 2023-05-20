@@ -1,8 +1,15 @@
 ---
 title: "Modeling with tidymodels in R"
-output: 
-    github_document:
-        df_print: kable
+date: "12/10/2021"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+    theme: lumen
+    highlight: pygments
 ---
 
 ```{r setup, include=FALSE}

@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2013-12-10">
 
-<title>Mburu - Functions in R</title>
+<title>Personal Blog - Functions in R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -135,7 +136,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">Mburu</span>
+    <span class="navbar-title">Personal Blog</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -198,6 +199,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">December 10, 2013</p>
+    </div>
+  </div>
   
     
   </div>
@@ -321,7 +328,7 @@ FIN MAR NGR POR TTO UAE IOC
 <div class="cell-output cell-output-stdout">
 <pre><code>.
  head  tail 
-0.487 0.513 </code></pre>
+0.498 0.502 </code></pre>
 </div>
 </div>
 </section>
@@ -341,7 +348,7 @@ FIN MAR NGR POR TTO UAE IOC
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate 10 coin tosses</span></span>
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="fu">toss_coin</span>(<span class="dv">10</span>,<span class="at">p_head=</span>.<span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "head" "tail" "head" "head" "head" "head" "head" "head" "head" "head"</code></pre>
+<pre><code> [1] "head" "head" "head" "head" "tail" "head" "head" "head" "head" "head"</code></pre>
 </div>
 </div>
 </section>
@@ -982,7 +989,7 @@ model : List of 31
  $ R                : num [1:7, 1:7] -18.6 0 0 0 0 ...
  $ rank             : int 7
  $ qr               :List of 5
- $ family           :List of 11
+ $ family           :List of 12
  $ linear.predictors: Named num [1:346] 8.67 8.67 16.33 -2.18 7.95 ...
  $ deviance         : num 636485
  $ aic              : num 3599
@@ -1013,7 +1020,7 @@ pipeable_plot : function (data, formula)
 plt_dist_vs_speed : 'data.frame':   50 obs. of  2 variables:
  $ speed: num  4 4 7 7 8 9 10 10 10 11 ...
  $ dist : num  2 10 4 22 16 10 18 26 34 17 ...
-rsa_env : &lt;environment: 0x5634ec0cc430&gt; 
+rsa_env : &lt;environment: 0x563c83247418&gt; 
 rsa_lst : List of 3
  $ capitals      : chr [1:2] "J Burg" "Capetown"
  $ national_parks: chr [1:2] "Krug" "Iddo"
