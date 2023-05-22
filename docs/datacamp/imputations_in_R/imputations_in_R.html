@@ -123,12 +123,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
+<style>html{ scroll-behavior: smooth; }</style>
 
 
 <link rel="stylesheet" href="../../style.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -185,7 +186,89 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-problem-of-missing-data" id="toc-the-problem-of-missing-data" class="nav-link active" data-scroll-target="#the-problem-of-missing-data">The problem of missing data</a>
+  <ul class="collapse">
+  <li><a href="#linear-regression-with-incomplete-data" id="toc-linear-regression-with-incomplete-data" class="nav-link" data-scroll-target="#linear-regression-with-incomplete-data">Linear regression with incomplete data</a>
+  <ul class="collapse">
+  <li><a href="#print-first-10-observations" id="toc-print-first-10-observations" class="nav-link" data-scroll-target="#print-first-10-observations">Print first 10 observations</a></li>
+  <li><a href="#get-the-number-of-missing-values-per-variable" id="toc-get-the-number-of-missing-values-per-variable" class="nav-link" data-scroll-target="#get-the-number-of-missing-values-per-variable">Get the number of missing values per variable</a></li>
+  <li><a href="#fit-linear-regression-to-predict-earnings" id="toc-fit-linear-regression-to-predict-earnings" class="nav-link" data-scroll-target="#fit-linear-regression-to-predict-earnings">Fit linear regression to predict earnings</a></li>
+  <li><a href="#analyzing-regression-output" id="toc-analyzing-regression-output" class="nav-link" data-scroll-target="#analyzing-regression-output">Analyzing regression output</a></li>
+  </ul></li>
+  <li><a href="#comparing-models" id="toc-comparing-models" class="nav-link" data-scroll-target="#comparing-models">Comparing models</a>
+  <ul class="collapse">
+  <li><a href="#fit-linear-regression-to-predict-earnings-1" id="toc-fit-linear-regression-to-predict-earnings-1" class="nav-link" data-scroll-target="#fit-linear-regression-to-predict-earnings-1">Fit linear regression to predict earnings</a></li>
+  </ul></li>
+  <li><a href="#recognizing-missing-data-mechanisms" id="toc-recognizing-missing-data-mechanisms" class="nav-link" data-scroll-target="#recognizing-missing-data-mechanisms">Recognizing missing data mechanisms</a></li>
+  <li><a href="#aggregation-plot" id="toc-aggregation-plot" class="nav-link" data-scroll-target="#aggregation-plot">Aggregation plot</a></li>
+  <li><a href="#spine-plot" id="toc-spine-plot" class="nav-link" data-scroll-target="#spine-plot">Spine plot</a>
+  <ul class="collapse">
+  <li><a href="#based-on-the-spine-plot-you-have-just-created-which-of-the-following-statements-is-false" id="toc-based-on-the-spine-plot-you-have-just-created-which-of-the-following-statements-is-false" class="nav-link" data-scroll-target="#based-on-the-spine-plot-you-have-just-created-which-of-the-following-statements-is-false">Based on the spine plot you have just created, which of the following statements is false?</a></li>
+  </ul></li>
+  <li><a href="#mosaic-plot" id="toc-mosaic-plot" class="nav-link" data-scroll-target="#mosaic-plot">Mosaic plot</a></li>
+  </ul></li>
+  <li><a href="#donor-based-imputation" id="toc-donor-based-imputation" class="nav-link" data-scroll-target="#donor-based-imputation">Donor-based imputation</a>
+  <ul class="collapse">
+  <li><a href="#smelling-the-danger-of-mean-imputation" id="toc-smelling-the-danger-of-mean-imputation" class="nav-link" data-scroll-target="#smelling-the-danger-of-mean-imputation">Smelling the danger of mean imputation</a>
+  <ul class="collapse">
+  <li><a href="#print-first-10-observations-1" id="toc-print-first-10-observations-1" class="nav-link" data-scroll-target="#print-first-10-observations-1">Print first 10 observations</a></li>
+  <li><a href="#get-the-number-of-missing-values-per-column" id="toc-get-the-number-of-missing-values-per-column" class="nav-link" data-scroll-target="#get-the-number-of-missing-values-per-column">Get the number of missing values per column</a></li>
+  <li><a href="#calculate-the-number-of-missing-values-in-air_temp-per-year" id="toc-calculate-the-number-of-missing-values-in-air_temp-per-year" class="nav-link" data-scroll-target="#calculate-the-number-of-missing-values-in-air_temp-per-year">Calculate the number of missing values in air_temp per year</a></li>
+  </ul></li>
+  <li><a href="#mean-imputing-the-temperature" id="toc-mean-imputing-the-temperature" class="nav-link" data-scroll-target="#mean-imputing-the-temperature">Mean-imputing the temperature</a>
+  <ul class="collapse">
+  <li><a href="#assessing-imputation-quality-with-margin-plot" id="toc-assessing-imputation-quality-with-margin-plot" class="nav-link" data-scroll-target="#assessing-imputation-quality-with-margin-plot">Assessing imputation quality with margin plot</a></li>
+  <li><a href="#the-problem-of-mean-imputation" id="toc-the-problem-of-mean-imputation" class="nav-link" data-scroll-target="#the-problem-of-mean-imputation">The problem of mean imputation</a></li>
+  <li><a href="#vanilla-hot-deck" id="toc-vanilla-hot-deck" class="nav-link" data-scroll-target="#vanilla-hot-deck">Vanilla hot-deck</a></li>
+  <li><a href="#hot-deck-tricks-tips-i-imputing-within-domains" id="toc-hot-deck-tricks-tips-i-imputing-within-domains" class="nav-link" data-scroll-target="#hot-deck-tricks-tips-i-imputing-within-domains">Hot-deck tricks &amp; tips I: imputing within domains</a></li>
+  <li><a href="#hot-deck-tricks-tips-ii-sorting-by-correlated-variables" id="toc-hot-deck-tricks-tips-ii-sorting-by-correlated-variables" class="nav-link" data-scroll-target="#hot-deck-tricks-tips-ii-sorting-by-correlated-variables">Hot-deck tricks &amp; tips II: sorting by correlated variables</a></li>
+  <li><a href="#just-a-little-experiment" id="toc-just-a-little-experiment" class="nav-link" data-scroll-target="#just-a-little-experiment">Just a little experiment</a></li>
+  <li><a href="#choosing-the-number-of-neighbors" id="toc-choosing-the-number-of-neighbors" class="nav-link" data-scroll-target="#choosing-the-number-of-neighbors">Choosing the number of neighbors</a></li>
+  </ul></li>
+  <li><a href="#knn-tricks-tips-i-weighting-donors" id="toc-knn-tricks-tips-i-weighting-donors" class="nav-link" data-scroll-target="#knn-tricks-tips-i-weighting-donors">kNN tricks &amp; tips I: weighting donors</a></li>
+  <li><a href="#knn-tricks-tips-ii-sorting-variables" id="toc-knn-tricks-tips-ii-sorting-variables" class="nav-link" data-scroll-target="#knn-tricks-tips-ii-sorting-variables">kNN tricks &amp; tips II: sorting variables</a></li>
+  </ul></li>
+  <li><a href="#model-based-imputation" id="toc-model-based-imputation" class="nav-link" data-scroll-target="#model-based-imputation">Model-based imputation</a>
+  <ul class="collapse">
+  <li><a href="#linear-regression-imputation" id="toc-linear-regression-imputation" class="nav-link" data-scroll-target="#linear-regression-imputation">Linear regression imputation</a></li>
+  <li><a href="#initializing-missing-values-iterating-over-variables" id="toc-initializing-missing-values-iterating-over-variables" class="nav-link" data-scroll-target="#initializing-missing-values-iterating-over-variables">Initializing missing values &amp; iterating over variables</a></li>
+  <li><a href="#detecting-convergence" id="toc-detecting-convergence" class="nav-link" data-scroll-target="#detecting-convergence">Detecting convergence</a></li>
+  <li><a href="#logistic-regression-imputation" id="toc-logistic-regression-imputation" class="nav-link" data-scroll-target="#logistic-regression-imputation">Logistic regression imputation</a></li>
+  <li><a href="#drawing-from-conditional-distribution" id="toc-drawing-from-conditional-distribution" class="nav-link" data-scroll-target="#drawing-from-conditional-distribution">Drawing from conditional distribution</a></li>
+  <li><a href="#model-based-imputation-with-multiple-variable-types" id="toc-model-based-imputation-with-multiple-variable-types" class="nav-link" data-scroll-target="#model-based-imputation-with-multiple-variable-types">Model-based imputation with multiple variable types</a></li>
+  <li><a href="#imputing-with-random-forests" id="toc-imputing-with-random-forests" class="nav-link" data-scroll-target="#imputing-with-random-forests">Imputing with random forests</a></li>
+  <li><a href="#variable-wise-imputation-errors" id="toc-variable-wise-imputation-errors" class="nav-link" data-scroll-target="#variable-wise-imputation-errors">Variable-wise imputation errors</a></li>
+  <li><a href="#speed-accuracy-trade-off" id="toc-speed-accuracy-trade-off" class="nav-link" data-scroll-target="#speed-accuracy-trade-off">Speed-accuracy trade-off</a></li>
+  </ul></li>
+  <li><a href="#uncertainty-from-imputation" id="toc-uncertainty-from-imputation" class="nav-link" data-scroll-target="#uncertainty-from-imputation">Uncertainty from imputation</a>
+  <ul class="collapse">
+  <li><a href="#wrapping-imputation-modeling-in-a-function" id="toc-wrapping-imputation-modeling-in-a-function" class="nav-link" data-scroll-target="#wrapping-imputation-modeling-in-a-function">Wrapping imputation &amp; modeling in a function</a></li>
+  <li><a href="#running-the-bootstrap" id="toc-running-the-bootstrap" class="nav-link" data-scroll-target="#running-the-bootstrap">Running the bootstrap</a>
+  <ul class="collapse">
+  <li><a href="#bootstrapping-confidence-intervals" id="toc-bootstrapping-confidence-intervals" class="nav-link" data-scroll-target="#bootstrapping-confidence-intervals">Bootstrapping confidence intervals</a></li>
+  </ul></li>
+  <li><a href="#the-mice-flow-mice---with---pool" id="toc-the-mice-flow-mice---with---pool" class="nav-link" data-scroll-target="#the-mice-flow-mice---with---pool">The mice flow: mice - with - pool</a></li>
+  <li><a href="#choosing-default-models" id="toc-choosing-default-models" class="nav-link" data-scroll-target="#choosing-default-models">Choosing default models</a></li>
+  <li><a href="#using-predictor-matrix" id="toc-using-predictor-matrix" class="nav-link" data-scroll-target="#using-predictor-matrix">Using predictor matrix</a></li>
+  <li><a href="#analyzing-missing-data-patterns" id="toc-analyzing-missing-data-patterns" class="nav-link" data-scroll-target="#analyzing-missing-data-patterns">Analyzing missing data patterns</a>
+  <ul class="collapse">
+  <li><a href="#question" id="toc-question" class="nav-link" data-scroll-target="#question">Question</a></li>
+  <li><a href="#question-1" id="toc-question-1" class="nav-link" data-scroll-target="#question-1">Question</a></li>
+  </ul></li>
+  <li><a href="#imputing-and-inspecting-outcomes" id="toc-imputing-and-inspecting-outcomes" class="nav-link" data-scroll-target="#imputing-and-inspecting-outcomes">Imputing and inspecting outcomes</a></li>
+  <li><a href="#inference-with-imputed-data" id="toc-inference-with-imputed-data" class="nav-link" data-scroll-target="#inference-with-imputed-data">Inference with imputed data</a>
+  <ul class="collapse">
+  <li><a href="#question-2" id="toc-question-2" class="nav-link" data-scroll-target="#question-2">Question</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -1403,7 +1486,7 @@ mean of x mean of y
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(imp_err)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     NRMSE        PFC 
-0.01998844 0.13974633 </code></pre>
+0.01900541 0.14506548 </code></pre>
 </div>
 </div>
 <p><strong><em>Note that missForest() outputs a list and you have to manually extract the imputed data - it’s a common mistake to overlook it when building a data processing pipeline. Also, take a look at the errors. Can you tell which variables have been imputed particularly well? Let’s look at it more closely in the next exercise!</em></strong></p>
@@ -1422,7 +1505,7 @@ mean of x mean of y
 <span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(per_variable_errors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         PFC          MSE          MSE          MSE          PFC          PFC 
-   0.4055118    0.0000000 1197.8942712    0.0000000    0.0000000    0.1790780 
+   0.3779528    0.0000000 1140.0608613    0.0000000    0.0000000    0.1808511 
          MSE          PFC 
    0.0000000    0.0000000 </code></pre>
 </div>
@@ -1435,9 +1518,9 @@ mean of x mean of y
 <span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(per_variable_errors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  country_PFC      year_MSE  earnings_MSE   sub_num_MSE  sub_type_PFC 
-    0.4055118     0.0000000  1197.8942712     0.0000000     0.0000000 
+    0.3779528     0.0000000  1140.0608613     0.0000000     0.0000000 
  sub_race_PFC non_white_MSE   sub_sex_PFC 
-    0.1790780     0.0000000     0.0000000 </code></pre>
+    0.1808511     0.0000000     0.0000000 </code></pre>
 </div>
 </div>
 </section>
@@ -1453,7 +1536,7 @@ mean of x mean of y
 <span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(imp_res<span class="sc">$</span>OOBerror)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     NRMSE        PFC 
-0.02482253 0.20551884 </code></pre>
+0.02470357 0.20708241 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set number of trees to 50 and number of variables used for splitting to 6</span></span>
 <span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>imp_res <span class="ot">&lt;-</span> <span class="fu">missForest</span>(biopics, <span class="at">ntree =</span> <span class="dv">50</span>, <span class="at">mtry =</span> <span class="dv">6</span>)</span>
@@ -1461,8 +1544,8 @@ mean of x mean of y
 <span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the resulting imputation errors</span></span>
 <span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(imp_res<span class="sc">$</span>OOBerror)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>    NRMSE       PFC 
-0.0201222 0.1349298 </code></pre>
+<pre><code>     NRMSE        PFC 
+0.02024884 0.12773985 </code></pre>
 </div>
 </div>
 <ul>
@@ -1516,7 +1599,7 @@ boot(data = biopics, statistic = calc_gender_coef, R = 50)
 
 Bootstrap Statistics :
     original    bias    std. error
-t1* 2.739932 -1.054403    3.095199</code></pre>
+t1* 2.513701 -1.212152    3.372918</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(boot_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1534,7 +1617,7 @@ boot.ci(boot.out = boot_results, conf = 0.95, type = "norm")
 
 Intervals : 
 Level      Normal        
-95%   (-2.272,  9.861 )  
+95%   (-2.885, 10.337 )  
 Calculations and Intervals on Original Scale</code></pre>
 </div>
 </div>
@@ -1562,7 +1645,7 @@ boot(data = biopics, statistic = calc_gender_coef, R = 1000)
 
 Bootstrap Statistics :
     original     bias    std. error
-t1*   2.2499 -0.8902783    3.646474</code></pre>
+t1*  1.80782 -0.1648429    3.509105</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(boot_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1580,7 +1663,7 @@ boot.ci(boot.out = boot_results, conf = 0.95, type = "norm")
 
 Intervals : 
 Level      Normal        
-95%   (-4.007, 10.287 )  
+95%   (-4.905,  8.850 )  
 Calculations and Intervals on Original Scale</code></pre>
 </div>
 </div>
@@ -2220,4 +2303,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

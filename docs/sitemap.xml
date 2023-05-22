@@ -2,126 +2,122 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://m-mburu.github.io/index.html</loc>
-    <lastmod>2023-05-20T18:36:38.340Z</lastmod>
+    <lastmod>2023-05-22T15:48:05.000Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/datacamp/regression_r/regression.html</loc>
-    <lastmod>2023-05-20T16:56:25.530Z</lastmod>
+    <lastmod>2023-05-22T15:47:31.530Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/datacamp/scalable_data_R/scalable_data_r.html</loc>
-    <lastmod>2023-05-20T16:56:25.870Z</lastmod>
+    <lastmod>2023-05-22T15:47:31.890Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/datacamp/tidymodels/tidymodels.html</loc>
-    <lastmod>2023-05-20T16:56:26.430Z</lastmod>
+    <lastmod>2023-05-22T15:47:32.410Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/datacamp/us_census/us_census.html</loc>
-    <lastmod>2023-05-20T16:56:28.810Z</lastmod>
+    <lastmod>2023-05-22T15:47:34.880Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/datacamp/sampling_R/sampling_R.html</loc>
-    <lastmod>2023-05-20T16:56:29.290Z</lastmod>
+    <lastmod>2023-05-22T15:47:35.560Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/datacamp/introduction-to-advanced-dimensionality-reduction/introduction_dimensionality_reduction.html</loc>
-    <lastmod>2023-05-20T16:56:30.390Z</lastmod>
+    <lastmod>2023-05-22T15:47:36.610Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/datacamp/survival_analysis_R/survival_analysis_R.html</loc>
-    <lastmod>2023-05-20T17:09:22.540Z</lastmod>
+    <lastmod>2023-05-22T15:47:37.490Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/notes/iml/intro.html</loc>
-    <lastmod>2023-05-20T16:56:32.160Z</lastmod>
+    <lastmod>2023-05-22T15:47:37.950Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/notes/hdx_data/hdx_data.html</loc>
-    <lastmod>2023-05-20T16:56:32.500Z</lastmod>
+    <lastmod>2023-05-22T15:47:38.260Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/notes/busara_task/busara data analysis.html</loc>
-    <lastmod>2023-05-20T16:56:33.090Z</lastmod>
+    <lastmod>2023-05-22T15:47:38.840Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/datacamp.html</loc>
-    <lastmod>2023-05-20T18:35:52.830Z</lastmod>
+    <lastmod>2023-05-22T15:47:39.150Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/kaggle/heart_disease/heart_disease.html</loc>
-    <lastmod>2023-05-20T16:56:33.840Z</lastmod>
+    <lastmod>2023-05-22T15:47:39.620Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/kaggle/heart_failure/heart_failure.html</loc>
-    <lastmod>2023-05-20T16:56:34.620Z</lastmod>
+    <lastmod>2023-05-22T15:47:40.450Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/kaggle/malaysia_tourist/malaysia_tourist.html</loc>
-    <lastmod>2023-05-20T16:56:34.940Z</lastmod>
+    <lastmod>2023-05-22T15:47:40.820Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/kaggle/microsoft_malware_prediction/malware_prediction.html</loc>
-    <lastmod>2023-05-20T16:56:35.270Z</lastmod>
+    <lastmod>2023-05-22T15:47:41.210Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/kaggle/mnist_digits/mnist.html</loc>
-    <lastmod>2023-05-20T16:56:35.630Z</lastmod>
+    <lastmod>2023-05-22T15:47:41.600Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/kaggle/newyork_airbnb/newyork_airbnb.html</loc>
-    <lastmod>2023-05-20T16:56:37.230Z</lastmod>
+    <lastmod>2023-05-22T15:47:42.390Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/kaggle/who_stats/who_stats.html</loc>
-    <lastmod>2023-05-20T16:56:37.570Z</lastmod>
+    <lastmod>2023-05-22T15:47:42.750Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/kenya_population/ea_poverty.html</loc>
-    <lastmod>2023-05-20T16:56:37.970Z</lastmod>
+    <lastmod>2023-05-22T15:47:43.170Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/kenya_population/kenya_debt_and_dollar_price.html</loc>
-    <lastmod>2023-05-20T16:56:38.430Z</lastmod>
+    <lastmod>2023-05-22T15:47:43.590Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/kenya_population/kenya_maps.html</loc>
-    <lastmod>2023-05-20T16:56:42.510Z</lastmod>
+    <lastmod>2023-05-22T15:47:47.970Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/kenya_population/inflation_kenya.html</loc>
-    <lastmod>2023-05-20T16:56:43.010Z</lastmod>
+    <lastmod>2023-05-22T15:47:48.310Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/kenya_population/household_assets_2019census.html</loc>
-    <lastmod>2023-05-20T16:56:43.760Z</lastmod>
+    <lastmod>2023-05-22T15:47:48.740Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/kenya_population/kenya_inflation.html</loc>
-    <lastmod>2023-05-20T16:56:44.360Z</lastmod>
+    <lastmod>2023-05-22T15:47:49.090Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/water_pumps_tz/water_pumps.html</loc>
-    <lastmod>2023-05-20T16:56:45.170Z</lastmod>
+    <lastmod>2023-05-22T15:47:49.520Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/introduction_deeplearning/final miniproject.html</loc>
-    <lastmod>2023-05-20T16:56:45.490Z</lastmod>
+    <lastmod>2023-05-22T15:47:49.840Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/introduction_deeplearning/introduction-to-deep-learning-in-python.html</loc>
-    <lastmod>2023-05-20T16:56:46.010Z</lastmod>
+    <lastmod>2023-05-22T15:47:50.340Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/Intro_Python_Data/Intro_datascience.html</loc>
-    <lastmod>2023-05-20T16:56:46.240Z</lastmod>
+    <lastmod>2023-05-22T15:47:50.540Z</lastmod>
   </url>
   <url>
-    <loc>https://m-mburu.github.io/about.html</loc>
-    <lastmod>2023-05-20T18:26:28.020Z</lastmod>
-  </url>
-  <url>
-    <loc>https://m-mburu.github.io/posts/welcome/index.html</loc>
-    <lastmod>2023-05-20T18:35:34.830Z</lastmod>
+    <loc>https://m-mburu.github.io/datacamp/introduction_statistics_R/introduction_stats.html</loc>
+    <lastmod>2023-05-22T15:49:05.630Z</lastmod>
   </url>
 </urlset>

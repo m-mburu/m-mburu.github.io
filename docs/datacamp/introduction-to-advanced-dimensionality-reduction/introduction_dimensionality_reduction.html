@@ -124,12 +124,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
+<style>html{ scroll-behavior: smooth; }</style>
 
 
 <link rel="stylesheet" href="../../style.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -186,7 +187,50 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#exploring-mnist-dataset" id="toc-exploring-mnist-dataset" class="nav-link active" data-scroll-target="#exploring-mnist-dataset">Exploring MNIST dataset</a></li>
+  <li><a href="#digits-features" id="toc-digits-features" class="nav-link" data-scroll-target="#digits-features">Digits features</a></li>
+  <li><a href="#euclidean-distance" id="toc-euclidean-distance" class="nav-link" data-scroll-target="#euclidean-distance">Euclidean distance</a></li>
+  <li><a href="#minkowsky-distance" id="toc-minkowsky-distance" class="nav-link" data-scroll-target="#minkowsky-distance">Minkowsky distance</a></li>
+  <li><a href="#kl-divergence" id="toc-kl-divergence" class="nav-link" data-scroll-target="#kl-divergence">KL divergence</a></li>
+  <li><a href="#generating-pca-from-mnist-sample" id="toc-generating-pca-from-mnist-sample" class="nav-link" data-scroll-target="#generating-pca-from-mnist-sample">Generating PCA from MNIST sample</a></li>
+  <li><a href="#t-sne-output-from-mnist-sample" id="toc-t-sne-output-from-mnist-sample" class="nav-link" data-scroll-target="#t-sne-output-from-mnist-sample">t-SNE output from MNIST sample</a></li>
+  <li><a href="#computing-t-sne" id="toc-computing-t-sne" class="nav-link" data-scroll-target="#computing-t-sne">Computing t-SNE</a></li>
+  <li><a href="#understanding-t-sne-output" id="toc-understanding-t-sne-output" class="nav-link" data-scroll-target="#understanding-t-sne-output">Understanding t-SNE output</a></li>
+  <li><a href="#reproducing-results" id="toc-reproducing-results" class="nav-link" data-scroll-target="#reproducing-results">Reproducing results</a></li>
+  <li><a href="#optimal-number-of-iterations" id="toc-optimal-number-of-iterations" class="nav-link" data-scroll-target="#optimal-number-of-iterations">Optimal number of iterations</a></li>
+  <li><a href="#perplexity-of-mnist-sample" id="toc-perplexity-of-mnist-sample" class="nav-link" data-scroll-target="#perplexity-of-mnist-sample">Perplexity of MNIST sample</a></li>
+  <li><a href="#perplexity-of-bigger-mnist-dataset" id="toc-perplexity-of-bigger-mnist-dataset" class="nav-link" data-scroll-target="#perplexity-of-bigger-mnist-dataset">Perplexity of bigger MNIST dataset</a></li>
+  <li><a href="#plotting-spatial-distribution-of-true-classes" id="toc-plotting-spatial-distribution-of-true-classes" class="nav-link" data-scroll-target="#plotting-spatial-distribution-of-true-classes">Plotting spatial distribution of true classes</a></li>
+  <li><a href="#computing-the-centroids-of-each-class" id="toc-computing-the-centroids-of-each-class" class="nav-link" data-scroll-target="#computing-the-centroids-of-each-class">Computing the centroids of each class</a></li>
+  <li><a href="#computing-similarities-of-digits-1-and-0" id="toc-computing-similarities-of-digits-1-and-0" class="nav-link" data-scroll-target="#computing-similarities-of-digits-1-and-0">Computing similarities of digits 1 and 0</a></li>
+  <li><a href="#plotting-similarities-of-digits-1-and-0" id="toc-plotting-similarities-of-digits-1-and-0" class="nav-link" data-scroll-target="#plotting-similarities-of-digits-1-and-0">Plotting similarities of digits 1 and 0</a></li>
+  <li><a href="#exploring-credit-card-fraud-dataset" id="toc-exploring-credit-card-fraud-dataset" class="nav-link" data-scroll-target="#exploring-credit-card-fraud-dataset">Exploring credit card fraud dataset</a></li>
+  <li><a href="#generating-training-and-test-sets" id="toc-generating-training-and-test-sets" class="nav-link" data-scroll-target="#generating-training-and-test-sets">Generating training and test sets</a></li>
+  <li><a href="#training-a-random-forest-with-original-features" id="toc-training-a-random-forest-with-original-features" class="nav-link" data-scroll-target="#training-a-random-forest-with-original-features">Training a random forest with original features</a></li>
+  <li><a href="#computing-and-visualising-the-t-sne-embedding" id="toc-computing-and-visualising-the-t-sne-embedding" class="nav-link" data-scroll-target="#computing-and-visualising-the-t-sne-embedding">Computing and visualising the t-SNE embedding</a></li>
+  <li><a href="#training-a-random-forest-with-embedding-features" id="toc-training-a-random-forest-with-embedding-features" class="nav-link" data-scroll-target="#training-a-random-forest-with-embedding-features">Training a random forest with embedding features</a></li>
+  <li><a href="#predicting-data-using-original-features" id="toc-predicting-data-using-original-features" class="nav-link" data-scroll-target="#predicting-data-using-original-features">Predicting data using original features</a></li>
+  <li><a href="#predicting-data-using-embedding-random-forest" id="toc-predicting-data-using-embedding-random-forest" class="nav-link" data-scroll-target="#predicting-data-using-embedding-random-forest">Predicting data using embedding random forest</a></li>
+  <li><a href="#exploring-neural-network-layer-output" id="toc-exploring-neural-network-layer-output" class="nav-link" data-scroll-target="#exploring-neural-network-layer-output">Exploring neural network layer output</a></li>
+  <li><a href="#using-t-sne-to-visualise-a-neural-network-layer" id="toc-using-t-sne-to-visualise-a-neural-network-layer" class="nav-link" data-scroll-target="#using-t-sne-to-visualise-a-neural-network-layer">Using t-SNE to visualise a neural network layer</a></li>
+  <li><a href="#using-t-sne-to-visualise-a-neural-network-layer-1" id="toc-using-t-sne-to-visualise-a-neural-network-layer-1" class="nav-link" data-scroll-target="#using-t-sne-to-visualise-a-neural-network-layer-1">Using t-SNE to visualise a neural network layer</a></li>
+  <li><a href="#exploring-fashion-mnist" id="toc-exploring-fashion-mnist" class="nav-link" data-scroll-target="#exploring-fashion-mnist">Exploring fashion MNIST</a></li>
+  <li><a href="#visualizing-fashion-mnist" id="toc-visualizing-fashion-mnist" class="nav-link" data-scroll-target="#visualizing-fashion-mnist">Visualizing fashion MNIST</a></li>
+  <li><a href="#reducing-data-with-glrm" id="toc-reducing-data-with-glrm" class="nav-link" data-scroll-target="#reducing-data-with-glrm">Reducing data with GLRM</a></li>
+  <li><a href="#improving-model-convergence" id="toc-improving-model-convergence" class="nav-link" data-scroll-target="#improving-model-convergence">Improving model convergence</a></li>
+  <li><a href="#visualizing-the-output-of-glrm" id="toc-visualizing-the-output-of-glrm" class="nav-link" data-scroll-target="#visualizing-the-output-of-glrm">Visualizing the output of GLRM</a></li>
+  <li><a href="#visualizing-the-prototypes" id="toc-visualizing-the-prototypes" class="nav-link" data-scroll-target="#visualizing-the-prototypes">Visualizing the prototypes</a></li>
+  <li><a href="#imputing-missing-data" id="toc-imputing-missing-data" class="nav-link" data-scroll-target="#imputing-missing-data">Imputing missing data</a></li>
+  <li><a href="#training-a-random-forest-with-original-data" id="toc-training-a-random-forest-with-original-data" class="nav-link" data-scroll-target="#training-a-random-forest-with-original-data">Training a random forest with original data</a></li>
+  <li><a href="#training-a-random-forest-with-compressed-data" id="toc-training-a-random-forest-with-compressed-data" class="nav-link" data-scroll-target="#training-a-random-forest-with-compressed-data">Training a random forest with compressed data</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -1787,4 +1831,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

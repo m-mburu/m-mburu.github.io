@@ -30,6 +30,10 @@ format:
   html:
     theme: lumen
     css: style.css
+    toc: true
+    smooth-scroll: true
+
+
 
 editor: visual
 

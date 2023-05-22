@@ -123,12 +123,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
+<style>html{ scroll-behavior: smooth; }</style>
 
 
 <link rel="stylesheet" href="../../style.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -185,7 +186,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#calling-functions" id="toc-calling-functions" class="nav-link active" data-scroll-target="#calling-functions">Calling functions</a></li>
+  <li><a href="#your-first-function-tossing-a-coin" id="toc-your-first-function-tossing-a-coin" class="nav-link" data-scroll-target="#your-first-function-tossing-a-coin">Your first function: tossing a coin</a></li>
+  <li><a href="#inputs-to-functions" id="toc-inputs-to-functions" class="nav-link" data-scroll-target="#inputs-to-functions">Inputs to functions</a></li>
+  <li><a href="#multiple-inputs-to-functions" id="toc-multiple-inputs-to-functions" class="nav-link" data-scroll-target="#multiple-inputs-to-functions">Multiple inputs to functions</a></li>
+  <li><a href="#data-or-detail" id="toc-data-or-detail" class="nav-link" data-scroll-target="#data-or-detail">Data or detail?</a></li>
+  <li><a href="#renaming-glm" id="toc-renaming-glm" class="nav-link" data-scroll-target="#renaming-glm">Renaming GLM</a></li>
+  <li><a href="#numeric-defaults" id="toc-numeric-defaults" class="nav-link" data-scroll-target="#numeric-defaults">Numeric defaults</a></li>
+  <li><a href="#logical-defaults" id="toc-logical-defaults" class="nav-link" data-scroll-target="#logical-defaults">Logical defaults</a></li>
+  <li><a href="#null-defaults" id="toc-null-defaults" class="nav-link" data-scroll-target="#null-defaults">NULL defaults</a></li>
+  <li><a href="#categorical-defaults" id="toc-categorical-defaults" class="nav-link" data-scroll-target="#categorical-defaults">Categorical defaults</a></li>
+  <li><a href="#harmonic-mean" id="toc-harmonic-mean" class="nav-link" data-scroll-target="#harmonic-mean">Harmonic mean</a></li>
+  <li><a href="#dealing-with-missing-values" id="toc-dealing-with-missing-values" class="nav-link" data-scroll-target="#dealing-with-missing-values">Dealing with missing values</a></li>
+  <li><a href="#passing-arguments-with" id="toc-passing-arguments-with" class="nav-link" data-scroll-target="#passing-arguments-with">Passing arguments with …</a></li>
+  <li><a href="#throwing-errors-with-bad-arguments" id="toc-throwing-errors-with-bad-arguments" class="nav-link" data-scroll-target="#throwing-errors-with-bad-arguments">Throwing errors with bad arguments</a></li>
+  <li><a href="#custom-error-logic" id="toc-custom-error-logic" class="nav-link" data-scroll-target="#custom-error-logic">Custom error logic</a></li>
+  <li><a href="#fixing-function-arguments" id="toc-fixing-function-arguments" class="nav-link" data-scroll-target="#fixing-function-arguments">Fixing function arguments</a></li>
+  <li><a href="#returning-early" id="toc-returning-early" class="nav-link" data-scroll-target="#returning-early">Returning early</a></li>
+  <li><a href="#returning-invisibly" id="toc-returning-invisibly" class="nav-link" data-scroll-target="#returning-invisibly">Returning invisibly</a></li>
+  <li><a href="#returning-many-things" id="toc-returning-many-things" class="nav-link" data-scroll-target="#returning-many-things">Returning many things</a></li>
+  <li><a href="#returning-metadata" id="toc-returning-metadata" class="nav-link" data-scroll-target="#returning-metadata">Returning metadata</a></li>
+  <li><a href="#creating-and-exploring-environments" id="toc-creating-and-exploring-environments" class="nav-link" data-scroll-target="#creating-and-exploring-environments">Creating and exploring environments</a></li>
+  <li><a href="#converting-areas-to-metric-1" id="toc-converting-areas-to-metric-1" class="nav-link" data-scroll-target="#converting-areas-to-metric-1">Converting areas to metric 1</a></li>
+  <li><a href="#converting-areas-to-metric-2" id="toc-converting-areas-to-metric-2" class="nav-link" data-scroll-target="#converting-areas-to-metric-2">Converting areas to metric 2</a></li>
+  <li><a href="#converting-yields-to-metric" id="toc-converting-yields-to-metric" class="nav-link" data-scroll-target="#converting-yields-to-metric">Converting yields to metric</a></li>
+  <li><a href="#applying-the-unit-conversion" id="toc-applying-the-unit-conversion" class="nav-link" data-scroll-target="#applying-the-unit-conversion">Applying the unit conversion</a></li>
+  <li><a href="#plotting-yields-over-time" id="toc-plotting-yields-over-time" class="nav-link" data-scroll-target="#plotting-yields-over-time">Plotting yields over time</a></li>
+  <li><a href="#a-nation-divided" id="toc-a-nation-divided" class="nav-link" data-scroll-target="#a-nation-divided">A nation divided</a></li>
+  <li><a href="#plotting-yields-over-time-by-region" id="toc-plotting-yields-over-time-by-region" class="nav-link" data-scroll-target="#plotting-yields-over-time-by-region">Plotting yields over time by region</a></li>
+  <li><a href="#running-a-model" id="toc-running-a-model" class="nav-link" data-scroll-target="#running-a-model">Running a model</a></li>
+  <li><a href="#making-yield-predictions" id="toc-making-yield-predictions" class="nav-link" data-scroll-target="#making-yield-predictions">Making yield predictions</a></li>
+  <li><a href="#do-it-all-over-again" id="toc-do-it-all-over-again" class="nav-link" data-scroll-target="#do-it-all-over-again">Do it all over again</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -308,7 +347,7 @@ FIN MAR NGR POR TTO UAE IOC
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Call your function</span></span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">toss_coin</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "head"</code></pre>
+<pre><code>[1] "tail"</code></pre>
 </div>
 </div>
 </section>
@@ -327,8 +366,8 @@ FIN MAR NGR POR TTO UAE IOC
 <span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="fu">toss_coin</span>(<span class="dv">1000</span>) <span class="sc">%&gt;%</span> <span class="fu">table</span>() <span class="sc">%&gt;%</span> <span class="fu">prop.table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>.
- head  tail 
-0.498 0.502 </code></pre>
+head tail 
+0.49 0.51 </code></pre>
 </div>
 </div>
 </section>
@@ -348,7 +387,7 @@ FIN MAR NGR POR TTO UAE IOC
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate 10 coin tosses</span></span>
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="fu">toss_coin</span>(<span class="dv">10</span>,<span class="at">p_head=</span>.<span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "head" "head" "head" "head" "tail" "head" "head" "head" "head" "head"</code></pre>
+<pre><code> [1] "tail" "head" "head" "tail" "head" "head" "head" "tail" "head" "head"</code></pre>
 </div>
 </div>
 </section>
@@ -1020,7 +1059,7 @@ pipeable_plot : function (data, formula)
 plt_dist_vs_speed : 'data.frame':   50 obs. of  2 variables:
  $ speed: num  4 4 7 7 8 9 10 10 10 11 ...
  $ dist : num  2 10 4 22 16 10 18 26 34 17 ...
-rsa_env : &lt;environment: 0x563c83247418&gt; 
+rsa_env : &lt;environment: 0x55e3db0a0db0&gt; 
 rsa_lst : List of 3
  $ capitals      : chr [1:2] "J Burg" "Capetown"
  $ national_parks: chr [1:2] "Krug" "Iddo"
@@ -1521,4 +1560,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

@@ -122,6 +122,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
+<style>html{ scroll-behavior: smooth; }</style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
@@ -130,7 +131,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <link rel="stylesheet" href="../style.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -187,7 +188,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#coding-the-forward-propagation-algorithm" id="toc-coding-the-forward-propagation-algorithm" class="nav-link active" data-scroll-target="#coding-the-forward-propagation-algorithm">Coding the forward propagation algorithm</a>
+  <ul class="collapse">
+  <li><a href="#the-rectified-linear-activation-function" id="toc-the-rectified-linear-activation-function" class="nav-link" data-scroll-target="#the-rectified-linear-activation-function">The Rectified Linear Activation Function</a></li>
+  <li><a href="#applying-the-network-to-many-observationsrows-of-data" id="toc-applying-the-network-to-many-observationsrows-of-data" class="nav-link" data-scroll-target="#applying-the-network-to-many-observationsrows-of-data">Applying the network to many observations/rows of data</a></li>
+  <li><a href="#forward-propagation-in-a-deeper-network" id="toc-forward-propagation-in-a-deeper-network" class="nav-link" data-scroll-target="#forward-propagation-in-a-deeper-network">Forward propagation in a deeper network</a></li>
+  <li><a href="#multi-layer-neural-networks" id="toc-multi-layer-neural-networks" class="nav-link" data-scroll-target="#multi-layer-neural-networks">Multi-layer neural networks</a></li>
+  <li><a href="#representations-are-learned" id="toc-representations-are-learned" class="nav-link" data-scroll-target="#representations-are-learned">Representations are learned</a></li>
+  <li><a href="#levels-of-representation" id="toc-levels-of-representation" class="nav-link" data-scroll-target="#levels-of-representation">Levels of representation</a></li>
+  <li><a href="#calculating-model-errors" id="toc-calculating-model-errors" class="nav-link" data-scroll-target="#calculating-model-errors">Calculating model errors</a></li>
+  <li><a href="#scaling-up-to-multiple-data-points" id="toc-scaling-up-to-multiple-data-points" class="nav-link" data-scroll-target="#scaling-up-to-multiple-data-points">Scaling up to multiple data points</a></li>
+  <li><a href="#calculating-slopes" id="toc-calculating-slopes" class="nav-link" data-scroll-target="#calculating-slopes">Calculating slopes</a></li>
+  <li><a href="#improving-model-weights" id="toc-improving-model-weights" class="nav-link" data-scroll-target="#improving-model-weights">Improving model weights</a></li>
+  <li><a href="#making-multiple-updates-to-weights" id="toc-making-multiple-updates-to-weights" class="nav-link" data-scroll-target="#making-multiple-updates-to-weights">Making multiple updates to weights</a></li>
+  <li><a href="#thinking-about-backward-propagation" id="toc-thinking-about-backward-propagation" class="nav-link" data-scroll-target="#thinking-about-backward-propagation">Thinking about backward propagation</a></li>
+  <li><a href="#a-round-of-backpropagation" id="toc-a-round-of-backpropagation" class="nav-link" data-scroll-target="#a-round-of-backpropagation">A round of backpropagation</a></li>
+  <li><a href="#understanding-your-data" id="toc-understanding-your-data" class="nav-link" data-scroll-target="#understanding-your-data">Understanding your data</a></li>
+  <li><a href="#specifying-a-model" id="toc-specifying-a-model" class="nav-link" data-scroll-target="#specifying-a-model">Specifying a model</a></li>
+  <li><a href="#compiling-the-model" id="toc-compiling-the-model" class="nav-link" data-scroll-target="#compiling-the-model">Compiling the model</a></li>
+  <li><a href="#fitting-the-model" id="toc-fitting-the-model" class="nav-link" data-scroll-target="#fitting-the-model">Fitting the model</a></li>
+  <li><a href="#understanding-your-classification-data" id="toc-understanding-your-classification-data" class="nav-link" data-scroll-target="#understanding-your-classification-data">Understanding your classification data</a></li>
+  <li><a href="#last-steps-in-classification-models" id="toc-last-steps-in-classification-models" class="nav-link" data-scroll-target="#last-steps-in-classification-models">Last steps in classification models</a></li>
+  <li><a href="#making-predictions" id="toc-making-predictions" class="nav-link" data-scroll-target="#making-predictions">Making predictions</a></li>
+  <li><a href="#diagnosing-optimization-problems" id="toc-diagnosing-optimization-problems" class="nav-link" data-scroll-target="#diagnosing-optimization-problems">Diagnosing optimization problems</a></li>
+  <li><a href="#changing-optimization-parameters" id="toc-changing-optimization-parameters" class="nav-link" data-scroll-target="#changing-optimization-parameters">Changing optimization parameters</a></li>
+  <li><a href="#evaluating-model-accuracy-on-validation-dataset" id="toc-evaluating-model-accuracy-on-validation-dataset" class="nav-link" data-scroll-target="#evaluating-model-accuracy-on-validation-dataset">Evaluating model accuracy on validation dataset</a></li>
+  <li><a href="#early-stopping-optimizing-the-optimization" id="toc-early-stopping-optimizing-the-optimization" class="nav-link" data-scroll-target="#early-stopping-optimizing-the-optimization">Early stopping: Optimizing the optimization</a></li>
+  <li><a href="#experimenting-with-wider-networks" id="toc-experimenting-with-wider-networks" class="nav-link" data-scroll-target="#experimenting-with-wider-networks">Experimenting with wider networks</a></li>
+  <li><a href="#adding-layers-to-a-network" id="toc-adding-layers-to-a-network" class="nav-link" data-scroll-target="#adding-layers-to-a-network">Adding layers to a network</a></li>
+  <li><a href="#experimenting-with-model-structures" id="toc-experimenting-with-model-structures" class="nav-link" data-scroll-target="#experimenting-with-model-structures">Experimenting with model structures</a></li>
+  <li><a href="#building-your-own-digit-recognition-model" id="toc-building-your-own-digit-recognition-model" class="nav-link" data-scroll-target="#building-your-own-digit-recognition-model">Building your own digit recognition model</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -198,7 +237,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In this exercise, you’ll write code to do forward propagation (prediction) for your first neural network:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="introduction-to-deep-learning-in-python_files/figure-html/6e01fa8d-1-1_4.png" class="img-fluid figure-img"></p>
+<p><img src="introduction-to-deep-learning-in-python_files/figure-html/1d8d417d-1-1_4.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">1_4.png</figcaption><p></p>
 </figure>
 </div>
@@ -315,7 +354,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Assume the activation function at each node is the identity function. That is, each node’s output will be the same as its input. So the value of the bottom node in the first hidden layer is -1, and not 0, as it would be if the ReLU activation function was used.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="introduction-to-deep-learning-in-python_files/figure-html/96ae1b89-1-ch1ex9.png" class="img-fluid figure-img"></p>
+<p><img src="introduction-to-deep-learning-in-python_files/figure-html/77a11520-1-ch1ex9.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">ch1ex9.png</figcaption><p></p>
 </figure>
 </div>
@@ -325,7 +364,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="multi-layer-neural-networks">Multi-layer neural networks</h2>
 <p>In this exercise, you’ll write code to do forward propagation for a neural network with 2 hidden layers. Each hidden layer has two nodes. The input data has been preloaded as input_data. The nodes in the first hidden layer are called node_0_0 and node_0_1. Their weights are pre-loaded as weights[‘node_0_0’] and weights[‘node_0_1’] respectively.</p>
 <p>The nodes in the second hidden layer are called node_1_0 and node_1_1. Their weights are pre-loaded as weights[‘node_1_0’] and weights[‘node_1_1’] respectively.</p>
-<p>We then create a model output from the hidden nodes using weights pre-loaded as weights[‘output’]. <img src="introduction-to-deep-learning-in-python_files/figure-html/9dc3cad9-1-ch1ex10.png" class="img-fluid" alt="ch1ex10.png"></p>
+<p>We then create a model output from the hidden nodes using weights pre-loaded as weights[‘output’]. <img src="introduction-to-deep-learning-in-python_files/figure-html/0a2e065c-1-ch1ex10.png" class="img-fluid" alt="ch1ex10.png"></p>
 <div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>weights <span class="op">=</span> {<span class="st">'node_0_0'</span>: np.array([<span class="dv">2</span>, <span class="dv">4</span>]),</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>           <span class="st">'node_0_1'</span>: np.array([ <span class="dv">4</span>, <span class="op">-</span><span class="dv">5</span>]),</span>
@@ -382,14 +421,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="calculating-model-errors" class="level2">
 <h2 class="anchored" data-anchor-id="calculating-model-errors">Calculating model errors</h2>
 <p>For the exercises in this chapter, you’ll continue working with the network to predict transactions for a bank.</p>
-<p>What is the error (predicted - actual) for the following network using the ReLU activation function when the input data is [3, 2] and the actual value of the target (what you are trying to predict) is 5? It may be helpful to get out a pen and piece of paper to calculate these values. <img src="introduction-to-deep-learning-in-python_files/figure-html/5f707f0a-1-ch2_ex2_3.png" class="img-fluid" alt="ch2_ex2_3.png"></p>
+<p>What is the error (predicted - actual) for the following network using the ReLU activation function when the input data is [3, 2] and the actual value of the target (what you are trying to predict) is 5? It may be helpful to get out a pen and piece of paper to calculate these values. <img src="introduction-to-deep-learning-in-python_files/figure-html/52d19c8e-1-ch2_ex2_3.png" class="img-fluid" alt="ch2_ex2_3.png"></p>
 <ul>
 <li>The network generates a prediction of 16, which results in an error of 11.</li>
 <li>Increasing the weight to 2.01 would increase the resulting error from 9 to 9.08, making the predictions less accurate.</li>
 </ul>
 <p>Coding how weight changes affect accuracy Now you’ll get to change weights in a real network and see how they affect model accuracy!</p>
 <p>Have a look at the following neural network:</p>
-<p><img src="introduction-to-deep-learning-in-python_files/figure-html/5fbc70d1-1-ch2ex4.png" class="img-fluid" alt="ch2ex4.png"> Its weights have been pre-loaded as weights_0. Your task in this exercise is to update a single weight in weights_0 to create weights_1, which gives a perfect prediction (in which the predicted value is equal to target_actual: 3).</p>
+<p><img src="introduction-to-deep-learning-in-python_files/figure-html/820d985a-1-ch2ex4.png" class="img-fluid" alt="ch2ex4.png"> Its weights have been pre-loaded as weights_0. Your task in this exercise is to update a single weight in weights_0 to create weights_1, which gives a perfect prediction (in which the predicted value is equal to target_actual: 3).</p>
 <p>Use a pen and paper if necessary to experiment with different combinations. You’ll use the predict_with_network() function, which takes an array of data as the first argument, and weights as the second argument.</p>
 <div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define predict_with_network()</span></span>
@@ -628,14 +667,14 @@ Mean squared error with weights_1: 99.890625</code></pre>
 <p>This network again uses the ReLU activation function, so the slope of the activation function is 1 for any node receiving a positive value as input. Assume the node being examined had a positive value (so the activation function’s slope is 1).</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="introduction-to-deep-learning-in-python_files/figure-html/9c2211b5-1-ch2ex14_1.png" class="img-fluid figure-img"></p>
+<p><img src="introduction-to-deep-learning-in-python_files/figure-html/50cbcf7b-1-ch2ex14_1.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">ch2ex14_1.png</figcaption><p></p>
 </figure>
 </div>
 <p>What is the slope needed to update the weight with the question mark?</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="introduction-to-deep-learning-in-python_files/figure-html/9c2211b5-2-ch2ex14_2.png" class="img-fluid figure-img"></p>
+<p><img src="introduction-to-deep-learning-in-python_files/figure-html/50cbcf7b-2-ch2ex14_2.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">ch2ex14_2.png</figcaption><p></p>
 </figure>
 </div>
@@ -1929,4 +1968,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

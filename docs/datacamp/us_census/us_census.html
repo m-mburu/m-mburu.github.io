@@ -123,12 +123,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
+<style>html{ scroll-behavior: smooth; }</style>
 
 
 <link rel="stylesheet" href="../../style.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -185,7 +186,55 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#obtain-and-set-your-census-api-key" id="toc-obtain-and-set-your-census-api-key" class="nav-link active" data-scroll-target="#obtain-and-set-your-census-api-key">Obtain and set your Census API key</a></li>
+  <li><a href="#getting-census-data-with-tidycensus" id="toc-getting-census-data-with-tidycensus" class="nav-link" data-scroll-target="#getting-census-data-with-tidycensus">Getting Census data with tidycensus</a></li>
+  <li><a href="#understanding-tidycensus-options" id="toc-understanding-tidycensus-options" class="nav-link" data-scroll-target="#understanding-tidycensus-options">Understanding tidycensus options</a></li>
+  <li><a href="#tidy-and-wide-data-in-tidycensus" id="toc-tidy-and-wide-data-in-tidycensus" class="nav-link" data-scroll-target="#tidy-and-wide-data-in-tidycensus">Tidy and wide data in tidycensus</a></li>
+  <li><a href="#loading-variables-in-tidycensus" id="toc-loading-variables-in-tidycensus" class="nav-link" data-scroll-target="#loading-variables-in-tidycensus">Loading variables in tidycensus</a></li>
+  <li><a href="#exploring-variables-with-tidyverse-tools" id="toc-exploring-variables-with-tidyverse-tools" class="nav-link" data-scroll-target="#exploring-variables-with-tidyverse-tools">Exploring variables with tidyverse tools</a></li>
+  <li><a href="#comparing-geographies-with-ggplot2-visualizations" id="toc-comparing-geographies-with-ggplot2-visualizations" class="nav-link" data-scroll-target="#comparing-geographies-with-ggplot2-visualizations">Comparing geographies with ggplot2 visualizations</a></li>
+  <li><a href="#customizing-ggplot2-visualizations-of-acs-data" id="toc-customizing-ggplot2-visualizations-of-acs-data" class="nav-link" data-scroll-target="#customizing-ggplot2-visualizations-of-acs-data">Customizing ggplot2 visualizations of ACS data</a></li>
+  <li><a href="#download-and-view-a-table-of-data-from-the-acs" id="toc-download-and-view-a-table-of-data-from-the-acs" class="nav-link" data-scroll-target="#download-and-view-a-table-of-data-from-the-acs">Download and view a table of data from the ACS</a></li>
+  <li><a href="#get-a-summary-variable-and-calculate-percentages" id="toc-get-a-summary-variable-and-calculate-percentages" class="nav-link" data-scroll-target="#get-a-summary-variable-and-calculate-percentages">Get a summary variable and calculate percentages</a></li>
+  <li><a href="#finding-the-largest-group-by-county" id="toc-finding-the-largest-group-by-county" class="nav-link" data-scroll-target="#finding-the-largest-group-by-county">Finding the largest group by county</a></li>
+  <li><a href="#recoding-variables-and-calculating-group-sums" id="toc-recoding-variables-and-calculating-group-sums" class="nav-link" data-scroll-target="#recoding-variables-and-calculating-group-sums">Recoding variables and calculating group sums</a></li>
+  <li><a href="#comparing-acs-estimates-for-multiple-years" id="toc-comparing-acs-estimates-for-multiple-years" class="nav-link" data-scroll-target="#comparing-acs-estimates-for-multiple-years">Comparing ACS estimates for multiple years</a></li>
+  <li><a href="#inspecting-margins-of-error" id="toc-inspecting-margins-of-error" class="nav-link" data-scroll-target="#inspecting-margins-of-error">Inspecting margins of error</a></li>
+  <li><a href="#using-margin-of-error-functions-in-tidycensus" id="toc-using-margin-of-error-functions-in-tidycensus" class="nav-link" data-scroll-target="#using-margin-of-error-functions-in-tidycensus">Using margin of error functions in tidycensus</a></li>
+  <li><a href="#calculating-group-wise-margins-of-error" id="toc-calculating-group-wise-margins-of-error" class="nav-link" data-scroll-target="#calculating-group-wise-margins-of-error">Calculating group-wise margins of error</a></li>
+  <li><a href="#quick-visual-exploration-of-acs-margins-of-error" id="toc-quick-visual-exploration-of-acs-margins-of-error" class="nav-link" data-scroll-target="#quick-visual-exploration-of-acs-margins-of-error">Quick visual exploration of ACS margins of error</a></li>
+  <li><a href="#customizing-a-ggplot2-margin-of-error-plot" id="toc-customizing-a-ggplot2-margin-of-error-plot" class="nav-link" data-scroll-target="#customizing-a-ggplot2-margin-of-error-plot">Customizing a ggplot2 margin of error plot</a></li>
+  <li><a href="#getting-census-boundary-files-with-tigris" id="toc-getting-census-boundary-files-with-tigris" class="nav-link" data-scroll-target="#getting-census-boundary-files-with-tigris">Getting Census boundary files with tigris</a></li>
+  <li><a href="#getting-geographic-features-with-tigris" id="toc-getting-geographic-features-with-tigris" class="nav-link" data-scroll-target="#getting-geographic-features-with-tigris">Getting geographic features with tigris</a></li>
+  <li><a href="#understanding-the-structure-of-tigris-objects" id="toc-understanding-the-structure-of-tigris-objects" class="nav-link" data-scroll-target="#understanding-the-structure-of-tigris-objects">Understanding the structure of tigris objects</a></li>
+  <li><a href="#tigerline-and-cartographic-boundary-files" id="toc-tigerline-and-cartographic-boundary-files" class="nav-link" data-scroll-target="#tigerline-and-cartographic-boundary-files">TIGER/Line and cartographic boundary files</a></li>
+  <li><a href="#getting-data-as-simple-features-objects" id="toc-getting-data-as-simple-features-objects" class="nav-link" data-scroll-target="#getting-data-as-simple-features-objects">Getting data as simple features objects</a></li>
+  <li><a href="#working-with-historic-shapefiles" id="toc-working-with-historic-shapefiles" class="nav-link" data-scroll-target="#working-with-historic-shapefiles">Working with historic shapefiles</a></li>
+  <li><a href="#combining-datasets-of-the-same-tigris-type" id="toc-combining-datasets-of-the-same-tigris-type" class="nav-link" data-scroll-target="#combining-datasets-of-the-same-tigris-type">Combining datasets of the same tigris type</a></li>
+  <li><a href="#getting-data-for-multiple-states" id="toc-getting-data-for-multiple-states" class="nav-link" data-scroll-target="#getting-data-for-multiple-states">Getting data for multiple states</a></li>
+  <li><a href="#joining-data-from-an-external-data-frame" id="toc-joining-data-from-an-external-data-frame" class="nav-link" data-scroll-target="#joining-data-from-an-external-data-frame">Joining data from an external data frame</a></li>
+  <li><a href="#plotting-simple-features-with-geom_sf" id="toc-plotting-simple-features-with-geom_sf" class="nav-link" data-scroll-target="#plotting-simple-features-with-geom_sf">Plotting simple features with geom_sf()</a></li>
+  <li><a href="#customizing-geom_sf-plots" id="toc-customizing-geom_sf-plots" class="nav-link" data-scroll-target="#customizing-geom_sf-plots">Customizing geom_sf() plots</a></li>
+  <li><a href="#getting-simple-feature-geometry" id="toc-getting-simple-feature-geometry" class="nav-link" data-scroll-target="#getting-simple-feature-geometry">Getting simple feature geometry</a></li>
+  <li><a href="#joining-data-from-tigris-and-tidycensus" id="toc-joining-data-from-tigris-and-tidycensus" class="nav-link" data-scroll-target="#joining-data-from-tigris-and-tidycensus">Joining data from tigris and tidycensus</a></li>
+  <li><a href="#shifting-alaska-and-hawaii-geometry" id="toc-shifting-alaska-and-hawaii-geometry" class="nav-link" data-scroll-target="#shifting-alaska-and-hawaii-geometry">Shifting Alaska and Hawaii geometry</a></li>
+  <li><a href="#making-a-choropleth-map" id="toc-making-a-choropleth-map" class="nav-link" data-scroll-target="#making-a-choropleth-map">Making a choropleth map</a></li>
+  <li><a href="#modifying-map-colors" id="toc-modifying-map-colors" class="nav-link" data-scroll-target="#modifying-map-colors">Modifying map colors</a></li>
+  <li><a href="#customizing-the-map-output" id="toc-customizing-the-map-output" class="nav-link" data-scroll-target="#customizing-the-map-output">Customizing the map output</a></li>
+  <li><a href="#graduated-symbol-maps" id="toc-graduated-symbol-maps" class="nav-link" data-scroll-target="#graduated-symbol-maps">Graduated symbol maps</a></li>
+  <li><a href="#faceted-maps-with-ggplot2" id="toc-faceted-maps-with-ggplot2" class="nav-link" data-scroll-target="#faceted-maps-with-ggplot2">Faceted maps with ggplot2</a></li>
+  <li><a href="#interactive-visualization-with-mapview" id="toc-interactive-visualization-with-mapview" class="nav-link" data-scroll-target="#interactive-visualization-with-mapview">Interactive visualization with mapview</a></li>
+  <li><a href="#generating-random-dots-with-sf" id="toc-generating-random-dots-with-sf" class="nav-link" data-scroll-target="#generating-random-dots-with-sf">Generating random dots with sf</a></li>
+  <li><a href="#obtaining-data-for-cartography-with-tigris" id="toc-obtaining-data-for-cartography-with-tigris" class="nav-link" data-scroll-target="#obtaining-data-for-cartography-with-tigris">Obtaining data for cartography with tigris</a></li>
+  <li><a href="#making-a-dot-density-map-with-ggplot2" id="toc-making-a-dot-density-map-with-ggplot2" class="nav-link" data-scroll-target="#making-a-dot-density-map-with-ggplot2">Making a dot-density map with ggplot2</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -5128,4 +5177,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

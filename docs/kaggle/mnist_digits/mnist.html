@@ -124,12 +124,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
+<style>html{ scroll-behavior: smooth; }</style>
 
 
 <link rel="stylesheet" href="../../style.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -186,7 +187,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#mnist-digits" id="toc-mnist-digits" class="nav-link active" data-scroll-target="#mnist-digits">MNIST Digits</a>
+  <ul class="collapse">
+  <li><a href="#read-data-and-load-libraries" id="toc-read-data-and-load-libraries" class="nav-link" data-scroll-target="#read-data-and-load-libraries">Read data and Load libraries</a></li>
+  <li><a href="#frequency-of-digits" id="toc-frequency-of-digits" class="nav-link" data-scroll-target="#frequency-of-digits">Frequency of digits</a></li>
+  <li><a href="#randomly-sample-12-digits" id="toc-randomly-sample-12-digits" class="nav-link" data-scroll-target="#randomly-sample-12-digits">Randomly sample 12 digits</a></li>
+  <li><a href="#plot-the-12-digits" id="toc-plot-the-12-digits" class="nav-link" data-scroll-target="#plot-the-12-digits">Plot the 12 digits</a></li>
+  <li><a href="#prepare-data-for-model-fitting" id="toc-prepare-data-for-model-fitting" class="nav-link" data-scroll-target="#prepare-data-for-model-fitting">Prepare data for model fitting</a></li>
+  <li><a href="#construct-model-layers" id="toc-construct-model-layers" class="nav-link" data-scroll-target="#construct-model-layers">Construct model layers</a></li>
+  <li><a href="#compile-model" id="toc-compile-model" class="nav-link" data-scroll-target="#compile-model">Compile model</a></li>
+  <li><a href="#fit-model" id="toc-fit-model" class="nav-link" data-scroll-target="#fit-model">Fit model</a></li>
+  <li><a href="#own-test" id="toc-own-test" class="nav-link" data-scroll-target="#own-test">Own test</a>
+  <ul class="collapse">
+  <li><a href="#save-predictions" id="toc-save-predictions" class="nav-link" data-scroll-target="#save-predictions">Save predictions</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#compare-between-tsne-amd-glmr" id="toc-compare-between-tsne-amd-glmr" class="nav-link" data-scroll-target="#compare-between-tsne-amd-glmr">Compare between tsne amd glmr</a>
+  <ul class="collapse">
+  <li><a href="#tsne" id="toc-tsne" class="nav-link" data-scroll-target="#tsne">TSNE</a></li>
+  <li><a href="#plot-tsne-group-means" id="toc-plot-tsne-group-means" class="nav-link" data-scroll-target="#plot-tsne-group-means">Plot tsne group means</a></li>
+  <li><a href="#kmeans-to-see-if-tsne-and-kmeans-agree" id="toc-kmeans-to-see-if-tsne-and-kmeans-agree" class="nav-link" data-scroll-target="#kmeans-to-see-if-tsne-and-kmeans-agree">Kmeans to see if tsne and kmeans agree</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -609,4 +638,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

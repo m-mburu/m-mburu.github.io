@@ -124,12 +124,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
+<style>html{ scroll-behavior: smooth; }</style>
 
 
 <link rel="stylesheet" href="../../style.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -186,7 +187,57 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#statistical-outlier-detection" id="toc-statistical-outlier-detection" class="nav-link active" data-scroll-target="#statistical-outlier-detection">Statistical outlier detection</a>
+  <ul class="collapse">
+  <li><a href="#exploring-the-river-nitrate-data" id="toc-exploring-the-river-nitrate-data" class="nav-link" data-scroll-target="#exploring-the-river-nitrate-data">Exploring the river nitrate data</a></li>
+  <li><a href="#visual-check-of-normality" id="toc-visual-check-of-normality" class="nav-link" data-scroll-target="#visual-check-of-normality">Visual check of normality</a></li>
+  <li><a href="#grubbs-test" id="toc-grubbs-test" class="nav-link" data-scroll-target="#grubbs-test">Grubbs’ test</a></li>
+  <li><a href="#hunting-multiple-outliers-using-grubbs-test" id="toc-hunting-multiple-outliers-using-grubbs-test" class="nav-link" data-scroll-target="#hunting-multiple-outliers-using-grubbs-test">Hunting multiple outliers using Grubbs’ test</a></li>
+  <li><a href="#visual-assessment-of-seasonality" id="toc-visual-assessment-of-seasonality" class="nav-link" data-scroll-target="#visual-assessment-of-seasonality">Visual assessment of seasonality</a></li>
+  <li><a href="#seasonal-hybrid-esd-algorithm" id="toc-seasonal-hybrid-esd-algorithm" class="nav-link" data-scroll-target="#seasonal-hybrid-esd-algorithm">Seasonal Hybrid ESD algorithm</a></li>
+  <li><a href="#interpreting-seasonal-hybrid-esd-output" id="toc-interpreting-seasonal-hybrid-esd-output" class="nav-link" data-scroll-target="#interpreting-seasonal-hybrid-esd-output">Interpreting Seasonal-Hybrid ESD output</a></li>
+  </ul></li>
+  <li><a href="#distance-and-density-based-anomaly-detection" id="toc-distance-and-density-based-anomaly-detection" class="nav-link" data-scroll-target="#distance-and-density-based-anomaly-detection">Distance and density based anomaly detection</a>
+  <ul class="collapse">
+  <li><a href="#exploring-wine" id="toc-exploring-wine" class="nav-link" data-scroll-target="#exploring-wine">Exploring wine</a></li>
+  <li><a href="#knn-distance-matrix" id="toc-knn-distance-matrix" class="nav-link" data-scroll-target="#knn-distance-matrix">kNN distance matrix</a></li>
+  <li><a href="#knn-distance-score" id="toc-knn-distance-score" class="nav-link" data-scroll-target="#knn-distance-score">kNN distance score</a></li>
+  <li><a href="#standardizing-features" id="toc-standardizing-features" class="nav-link" data-scroll-target="#standardizing-features">Standardizing features</a></li>
+  <li><a href="#appending-the-knn-score" id="toc-appending-the-knn-score" class="nav-link" data-scroll-target="#appending-the-knn-score">Appending the kNN score</a></li>
+  <li><a href="#visualizing-knn-distance-score" id="toc-visualizing-knn-distance-score" class="nav-link" data-scroll-target="#visualizing-knn-distance-score">Visualizing kNN distance score</a></li>
+  <li><a href="#lof-calculation" id="toc-lof-calculation" class="nav-link" data-scroll-target="#lof-calculation">LOF calculation</a></li>
+  <li><a href="#lof-visualization" id="toc-lof-visualization" class="nav-link" data-scroll-target="#lof-visualization">LOF visualization</a></li>
+  <li><a href="#lof-vs-knn" id="toc-lof-vs-knn" class="nav-link" data-scroll-target="#lof-vs-knn">LOF vs kNN</a></li>
+  </ul></li>
+  <li><a href="#isolation-forest" id="toc-isolation-forest" class="nav-link" data-scroll-target="#isolation-forest">Isolation forest</a>
+  <ul class="collapse">
+  <li><a href="#fit-and-predict-with-an-isolation-tree" id="toc-fit-and-predict-with-an-isolation-tree" class="nav-link" data-scroll-target="#fit-and-predict-with-an-isolation-tree">Fit and predict with an isolation tree</a></li>
+  <li><a href="#fit-an-isolation-forest" id="toc-fit-an-isolation-forest" class="nav-link" data-scroll-target="#fit-an-isolation-forest">Fit an isolation forest</a></li>
+  <li><a href="#checking-convergence" id="toc-checking-convergence" class="nav-link" data-scroll-target="#checking-convergence">Checking convergence</a></li>
+  <li><a href="#a-grid-of-points" id="toc-a-grid-of-points" class="nav-link" data-scroll-target="#a-grid-of-points">A grid of points</a></li>
+  <li><a href="#prediction-over-a-grid" id="toc-prediction-over-a-grid" class="nav-link" data-scroll-target="#prediction-over-a-grid">Prediction over a grid</a></li>
+  <li><a href="#anomaly-contours" id="toc-anomaly-contours" class="nav-link" data-scroll-target="#anomaly-contours">Anomaly contours</a></li>
+  </ul></li>
+  <li><a href="#comparing-performance" id="toc-comparing-performance" class="nav-link" data-scroll-target="#comparing-performance">Comparing performance</a>
+  <ul class="collapse">
+  <li><a href="#thyroid-data" id="toc-thyroid-data" class="nav-link" data-scroll-target="#thyroid-data">Thyroid data</a></li>
+  <li><a href="#visualizing-thyroid-disease" id="toc-visualizing-thyroid-disease" class="nav-link" data-scroll-target="#visualizing-thyroid-disease">Visualizing thyroid disease</a></li>
+  <li><a href="#anomaly-score" id="toc-anomaly-score" class="nav-link" data-scroll-target="#anomaly-score">Anomaly score</a></li>
+  <li><a href="#binarized-scores" id="toc-binarized-scores" class="nav-link" data-scroll-target="#binarized-scores">Binarized scores</a></li>
+  <li><a href="#cross-tabulate-binary-scores" id="toc-cross-tabulate-binary-scores" class="nav-link" data-scroll-target="#cross-tabulate-binary-scores">Cross-tabulate binary scores</a></li>
+  <li><a href="#thyroid-precision-and-recall" id="toc-thyroid-precision-and-recall" class="nav-link" data-scroll-target="#thyroid-precision-and-recall">Thyroid precision and recall</a></li>
+  <li><a href="#converting-character-to-factor" id="toc-converting-character-to-factor" class="nav-link" data-scroll-target="#converting-character-to-factor">Converting character to factor</a></li>
+  <li><a href="#isolation-forest-with-factors" id="toc-isolation-forest-with-factors" class="nav-link" data-scroll-target="#isolation-forest-with-factors">Isolation forest with factors</a></li>
+  <li><a href="#lof-with-factors" id="toc-lof-with-factors" class="nav-link" data-scroll-target="#lof-with-factors">LOF with factors</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -916,4 +967,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

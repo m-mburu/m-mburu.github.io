@@ -123,12 +123,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
+<style>html{ scroll-behavior: smooth; }</style>
 
 
 <link rel="stylesheet" href="../../style.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -185,7 +186,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#creating-training-and-test-datasets" id="toc-creating-training-and-test-datasets" class="nav-link active" data-scroll-target="#creating-training-and-test-datasets">Creating training and test datasets</a></li>
+  <li><a href="#fitting-a-linear-regression-model" id="toc-fitting-a-linear-regression-model" class="nav-link" data-scroll-target="#fitting-a-linear-regression-model">Fitting a linear regression model</a></li>
+  <li><a href="#predicting-home-selling-prices" id="toc-predicting-home-selling-prices" class="nav-link" data-scroll-target="#predicting-home-selling-prices">Predicting home selling prices</a></li>
+  <li><a href="#model-performance-metrics" id="toc-model-performance-metrics" class="nav-link" data-scroll-target="#model-performance-metrics">Model performance metrics</a></li>
+  <li><a href="#r-squared-plot" id="toc-r-squared-plot" class="nav-link" data-scroll-target="#r-squared-plot">R squared plot</a></li>
+  <li><a href="#complete-model-fitting-process-with-last_fit" id="toc-complete-model-fitting-process-with-last_fit" class="nav-link" data-scroll-target="#complete-model-fitting-process-with-last_fit">Complete model fitting process with last_fit()</a></li>
+  <li><a href="#data-resampling" id="toc-data-resampling" class="nav-link" data-scroll-target="#data-resampling">Data resampling</a></li>
+  <li><a href="#fitting-a-logistic-regression-model" id="toc-fitting-a-logistic-regression-model" class="nav-link" data-scroll-target="#fitting-a-logistic-regression-model">Fitting a logistic regression model</a></li>
+  <li><a href="#combining-test-dataset-results" id="toc-combining-test-dataset-results" class="nav-link" data-scroll-target="#combining-test-dataset-results">Combining test dataset results</a></li>
+  <li><a href="#evaluating-performance-with-yardstick" id="toc-evaluating-performance-with-yardstick" class="nav-link" data-scroll-target="#evaluating-performance-with-yardstick">Evaluating performance with yardstick</a></li>
+  <li><a href="#creating-custom-metric-sets" id="toc-creating-custom-metric-sets" class="nav-link" data-scroll-target="#creating-custom-metric-sets">Creating custom metric sets</a></li>
+  <li><a href="#plotting-the-confusion-matrix" id="toc-plotting-the-confusion-matrix" class="nav-link" data-scroll-target="#plotting-the-confusion-matrix">Plotting the confusion matrix</a></li>
+  <li><a href="#roc-curves-and-area-under-the-roc-curve" id="toc-roc-curves-and-area-under-the-roc-curve" class="nav-link" data-scroll-target="#roc-curves-and-area-under-the-roc-curve">ROC curves and area under the ROC curve</a></li>
+  <li><a href="#collecting-predictions-and-creating-custom-metrics" id="toc-collecting-predictions-and-creating-custom-metrics" class="nav-link" data-scroll-target="#collecting-predictions-and-creating-custom-metrics">Collecting predictions and creating custom metrics</a></li>
+  <li><a href="#complete-modeling-workflow" id="toc-complete-modeling-workflow" class="nav-link" data-scroll-target="#complete-modeling-workflow">Complete modeling workflow</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -991,4 +1014,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

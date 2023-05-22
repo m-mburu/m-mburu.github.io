@@ -124,6 +124,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
+<style>html{ scroll-behavior: smooth; }</style>
 
 <script src="../../site_libs/htmlwidgets-1.6.1/htmlwidgets.js"></script>
 <link href="../../site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
@@ -140,7 +141,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <link rel="stylesheet" href="../../style.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -197,7 +198,59 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#task-1" id="toc-task-1" class="nav-link active" data-scroll-target="#task-1"><strong><em>Task 1</em></strong></a></li>
+  <li><a href="#summary-statistics-age-and-income" id="toc-summary-statistics-age-and-income" class="nav-link" data-scroll-target="#summary-statistics-age-and-income"><strong><em>Summary Statistics Age and Income</em></strong></a></li>
+  <li><a href="#gender-gap" id="toc-gender-gap" class="nav-link" data-scroll-target="#gender-gap"><strong><em>% gender Gap</em></strong></a></li>
+  <li><a href="#gender-gap-1" id="toc-gender-gap-1" class="nav-link" data-scroll-target="#gender-gap-1"><strong><em>% gender Gap</em></strong></a></li>
+  <li><a href="#summary-statistics-single-ladies-nyeri" id="toc-summary-statistics-single-ladies-nyeri" class="nav-link" data-scroll-target="#summary-statistics-single-ladies-nyeri"><strong><em>Summary Statistics Single Ladies Nyeri</em></strong></a></li>
+  <li><a href="#number-of-juniors" id="toc-number-of-juniors" class="nav-link" data-scroll-target="#number-of-juniors"><strong><em>Number of Juniors</em></strong></a></li>
+  <li><a href="#difference-in-mean-income-between-male-and-female" id="toc-difference-in-mean-income-between-male-and-female" class="nav-link" data-scroll-target="#difference-in-mean-income-between-male-and-female"><strong><em>Difference in mean income between male and female</em></strong></a></li>
+  <li><a href="#function-to-plot-categorical-variables" id="toc-function-to-plot-categorical-variables" class="nav-link" data-scroll-target="#function-to-plot-categorical-variables"><strong><em>Function to plot categorical variables</em></strong></a></li>
+  <li><a href="#function-to-plot-categorical-variables-test-1" id="toc-function-to-plot-categorical-variables-test-1" class="nav-link" data-scroll-target="#function-to-plot-categorical-variables-test-1"><strong><em>Function to plot categorical variables test 1</em></strong></a></li>
+  <li><a href="#function-to-plot-categorical-variables-test-2" id="toc-function-to-plot-categorical-variables-test-2" class="nav-link" data-scroll-target="#function-to-plot-categorical-variables-test-2"><strong><em>Function to plot categorical variables test 2</em></strong></a></li>
+  <li><a href="#task-2" id="toc-task-2" class="nav-link" data-scroll-target="#task-2"><strong><em>Task 2</em></strong></a></li>
+  <li><a href="#combine-files" id="toc-combine-files" class="nav-link" data-scroll-target="#combine-files">Combine Files</a></li>
+  <li><a href="#head-output-data-frame" id="toc-head-output-data-frame" class="nav-link" data-scroll-target="#head-output-data-frame"><strong><em>Head output data frame</em></strong></a></li>
+  <li><a href="#head-output-kenya-data" id="toc-head-output-kenya-data" class="nav-link" data-scroll-target="#head-output-kenya-data"><strong><em>Head output kenya data</em></strong></a></li>
+  <li><a href="#head-output-kenya-data-and-saving-files" id="toc-head-output-kenya-data-and-saving-files" class="nav-link" data-scroll-target="#head-output-kenya-data-and-saving-files"><strong><em>Head output kenya data and saving files</em></strong></a></li>
+  <li><a href="#task-3-plots" id="toc-task-3-plots" class="nav-link" data-scroll-target="#task-3-plots">Task 3 Plots</a></li>
+  <li><a href="#average-amount-saved-at-the-bank" id="toc-average-amount-saved-at-the-bank" class="nav-link" data-scroll-target="#average-amount-saved-at-the-bank"><strong><em>Average Amount saved at the Bank</em></strong></a></li>
+  <li><a href="#average-amount-saved-at-the-agent" id="toc-average-amount-saved-at-the-agent" class="nav-link" data-scroll-target="#average-amount-saved-at-the-agent"><strong><em>Average Amount saved at the Agent</em></strong></a></li>
+  <li><a href="#average-amount-saved-mobile-money" id="toc-average-amount-saved-mobile-money" class="nav-link" data-scroll-target="#average-amount-saved-mobile-money"><strong><em>Average Amount saved Mobile money</em></strong></a></li>
+  <li><a href="#end-month-savings-favourite-tool" id="toc-end-month-savings-favourite-tool" class="nav-link" data-scroll-target="#end-month-savings-favourite-tool"><strong><em>End Month Savings Favourite tool</em></strong></a></li>
+  <li><a href="#histogram-deposits" id="toc-histogram-deposits" class="nav-link" data-scroll-target="#histogram-deposits">Histogram Deposits</a></li>
+  <li><a href="#subset-people-who-have-made-one-deposit" id="toc-subset-people-who-have-made-one-deposit" class="nav-link" data-scroll-target="#subset-people-who-have-made-one-deposit"><strong><em>Subset People who have made one deposit</em></strong></a></li>
+  <li><a href="#demographic-characteristics-of-those-who-have-only-made-one-deposit" id="toc-demographic-characteristics-of-those-who-have-only-made-one-deposit" class="nav-link" data-scroll-target="#demographic-characteristics-of-those-who-have-only-made-one-deposit"><strong><em>Demographic characteristics of those who have only made one deposit</em></strong></a></li>
+  <li><a href="#gender" id="toc-gender" class="nav-link" data-scroll-target="#gender"><strong><em>Gender</em></strong></a></li>
+  <li><a href="#region" id="toc-region" class="nav-link" data-scroll-target="#region"><strong><em>Region</em></strong></a></li>
+  <li><a href="#age" id="toc-age" class="nav-link" data-scroll-target="#age"><strong><em>Age</em></strong></a></li>
+  <li><a href="#task-4" id="toc-task-4" class="nav-link" data-scroll-target="#task-4"><strong><em>Task 4</em></strong></a></li>
+  <li><a href="#project-motivation" id="toc-project-motivation" class="nav-link" data-scroll-target="#project-motivation"><strong><em>Project Motivation</em></strong></a></li>
+  <li><a href="#data-cleaning" id="toc-data-cleaning" class="nav-link" data-scroll-target="#data-cleaning"><strong><em>Data Cleaning</em></strong></a></li>
+  <li><a href="#variable-selection" id="toc-variable-selection" class="nav-link" data-scroll-target="#variable-selection"><strong><em>Variable Selection</em></strong></a></li>
+  <li><a href="#visualize-categorical-variables" id="toc-visualize-categorical-variables" class="nav-link" data-scroll-target="#visualize-categorical-variables"><strong><em>Visualize Categorical variables</em></strong></a></li>
+  <li><a href="#visualize-numeric-variables" id="toc-visualize-numeric-variables" class="nav-link" data-scroll-target="#visualize-numeric-variables"><strong><em>Visualize numeric variables</em></strong></a></li>
+  <li><a href="#one-hot-encoding-for-categorical-variables-with-more-than-2-levels" id="toc-one-hot-encoding-for-categorical-variables-with-more-than-2-levels" class="nav-link" data-scroll-target="#one-hot-encoding-for-categorical-variables-with-more-than-2-levels"><strong><em>One-Hot Encoding for categorical variables with more than 2 levels</em></strong></a></li>
+  <li><a href="#scale-variables" id="toc-scale-variables" class="nav-link" data-scroll-target="#scale-variables"><strong><em>Scale variables</em></strong></a></li>
+  <li><a href="#split-test-and-train-sets" id="toc-split-test-and-train-sets" class="nav-link" data-scroll-target="#split-test-and-train-sets"><strong><em>Split test and train sets</em></strong></a></li>
+  <li><a href="#fit-logistic-regression" id="toc-fit-logistic-regression" class="nav-link" data-scroll-target="#fit-logistic-regression"><strong><em>Fit Logistic Regression</em></strong></a></li>
+  <li><a href="#confusion-matrix-logistic-regression" id="toc-confusion-matrix-logistic-regression" class="nav-link" data-scroll-target="#confusion-matrix-logistic-regression"><strong><em>Confusion Matrix Logistic regression</em></strong></a></li>
+  <li><a href="#accuracy-logistic-regression" id="toc-accuracy-logistic-regression" class="nav-link" data-scroll-target="#accuracy-logistic-regression"><strong><em>Accuracy Logistic regression</em></strong></a></li>
+  <li><a href="#area-under-curve" id="toc-area-under-curve" class="nav-link" data-scroll-target="#area-under-curve"><strong><em>Area under curve</em></strong></a></li>
+  <li><a href="#cross-validation-svm" id="toc-cross-validation-svm" class="nav-link" data-scroll-target="#cross-validation-svm"><strong><em>Cross Validation SVM</em></strong></a></li>
+  <li><a href="#confusion-matrix-svm" id="toc-confusion-matrix-svm" class="nav-link" data-scroll-target="#confusion-matrix-svm"><strong><em>Confusion Matrix SVM</em></strong></a></li>
+  <li><a href="#area-under-curve-1" id="toc-area-under-curve-1" class="nav-link" data-scroll-target="#area-under-curve-1"><strong><em>Area under curve</em></strong></a></li>
+  <li><a href="#accuracy-svm" id="toc-accuracy-svm" class="nav-link" data-scroll-target="#accuracy-svm"><strong><em>Accuracy SVM</em></strong></a></li>
+  <li><a href="#validation-curves" id="toc-validation-curves" class="nav-link" data-scroll-target="#validation-curves"><strong><em>Validation Curves</em></strong></a></li>
+  <li><a href="#deployment" id="toc-deployment" class="nav-link" data-scroll-target="#deployment"><strong><em>Deployment</em></strong></a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -1213,4 +1266,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
