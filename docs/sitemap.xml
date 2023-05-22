@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://m-mburu.github.io/index.html</loc>
-    <lastmod>2023-05-22T15:48:05.000Z</lastmod>
+    <lastmod>2023-05-22T16:35:08.630Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/datacamp/regression_r/regression.html</loc>
@@ -46,7 +46,7 @@
   </url>
   <url>
     <loc>https://m-mburu.github.io/datacamp.html</loc>
-    <lastmod>2023-05-22T15:47:39.150Z</lastmod>
+    <lastmod>2023-05-22T16:35:07.500Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/kaggle/heart_disease/heart_disease.html</loc>
@@ -119,5 +119,13 @@
   <url>
     <loc>https://m-mburu.github.io/datacamp/introduction_statistics_R/introduction_stats.html</loc>
     <lastmod>2023-05-22T15:49:05.630Z</lastmod>
+  </url>
+  <url>
+    <loc>https://m-mburu.github.io/datacamp/string-manipulation-with-stringr-in-r/stringR.html</loc>
+    <lastmod>2023-05-22T16:35:19.260Z</lastmod>
+  </url>
+  <url>
+    <loc>https://m-mburu.github.io/datacamp/functions_in_R/functions_R.html</loc>
+    <lastmod>2023-05-22T16:35:07.200Z</lastmod>
   </url>
 </urlset>

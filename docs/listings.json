@@ -15,6 +15,7 @@
       "/datacamp/survival_analysis_R/survival_analysis_R.html",
       "/datacamp/foundation_prob_R/foundation_probability.html",
       "/datacamp/introduction_statistics_R/introduction_stats.html",
+      "/datacamp/functions_in_R/functions_R.html",
       "/datacamp/imputations_in_R/imputations_in_R.html",
       "/datacamp/anomaly_detection_R/anomaly_detection.html",
       "/datacamp/sampling_R/sampling_R.html",
@@ -27,8 +28,8 @@
       "/datacamp/regression_r/regression.html",
       "/datacamp/scalable_data_R/scalable_data_r.html",
       "/datacamp/network-analysis-in-r/network_analysis_r.html",
-      "/datacamp/ml_tree_methods_r/ml_tree_methods.html",
-      "/datacamp/functions_in_R/functions_R.html"
+      "/datacamp/string-manipulation-with-stringr-in-r/stringR.html",
+      "/datacamp/ml_tree_methods_r/ml_tree_methods.html"
     ]
   }
 ]

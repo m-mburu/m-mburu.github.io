@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2013-12-10">
+<meta name="dcterms.date" content="2022-12-10">
 
 <title>Personal Blog - Functions in R</title>
 <style>
@@ -241,7 +241,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 10, 2013</p>
+      <p class="date">December 10, 2022</p>
     </div>
   </div>
   
@@ -366,8 +366,8 @@ FIN MAR NGR POR TTO UAE IOC
 <span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="fu">toss_coin</span>(<span class="dv">1000</span>) <span class="sc">%&gt;%</span> <span class="fu">table</span>() <span class="sc">%&gt;%</span> <span class="fu">prop.table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>.
-head tail 
-0.49 0.51 </code></pre>
+ head  tail 
+0.493 0.507 </code></pre>
 </div>
 </div>
 </section>
@@ -387,7 +387,7 @@ head tail
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate 10 coin tosses</span></span>
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="fu">toss_coin</span>(<span class="dv">10</span>,<span class="at">p_head=</span>.<span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "tail" "head" "head" "tail" "head" "head" "head" "tail" "head" "head"</code></pre>
+<pre><code> [1] "head" "head" "head" "head" "tail" "tail" "tail" "tail" "head" "head"</code></pre>
 </div>
 </div>
 </section>
@@ -887,20 +887,20 @@ $ pe_ratio &lt;dbl&gt; 18.31678, 57.66621, 22.43805, 45.63993, 27.00233, 20.1359
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 346 × 11
-   .rownames n_visits gender income  travel .fitted .resid .std.…¹   .hat .sigma
-   &lt;chr&gt;        &lt;dbl&gt; &lt;fct&gt;  &lt;fct&gt;   &lt;fct&gt;    &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
- 1 25               2 female ($95k,… (4h,I…    8.67  -6.67 -0.155  0.0179   43.4
- 2 26               1 female ($95k,… (4h,I…    8.67  -7.67 -0.179  0.0179   43.4
- 3 27               1 male   ($95k,… (0.25…   16.3  -15.3  -0.357  0.0153   43.4
- 4 29               1 male   ($95k,… (4h,I…   -2.18   3.18  0.0738 0.0122   43.4
- 5 30               1 female ($55k,… (4h,I…    7.95  -6.95 -0.162  0.0229   43.4
- 6 31               1 male   [$0,$2… [0h,0…   61.5  -60.5  -1.42   0.0326   43.3
- 7 33              80 female [$0,$2… [0h,0…   72.4    7.61  0.178  0.0291   43.4
- 8 34             104 female ($95k,… [0h,0…   53.8   50.2   1.17   0.0215   43.3
- 9 35              55 male   ($25k,… (0.25…   33.0   22.0   0.512  0.0165   43.4
-10 36             350 female ($25k,… [0h,0…   70.4  280.    6.52   0.0215   40.6
-# … with 336 more rows, 1 more variable: .cooksd &lt;dbl&gt;, and abbreviated
-#   variable name ¹​.std.resid</code></pre>
+   .rownames n_visits gender income  travel .fitted .resid   .hat .sigma .cooksd
+   &lt;chr&gt;        &lt;dbl&gt; &lt;fct&gt;  &lt;fct&gt;   &lt;fct&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+ 1 25               2 female ($95k,… (4h,I…    8.67  -6.67 0.0179   43.4 6.27e-5
+ 2 26               1 female ($95k,… (4h,I…    8.67  -7.67 0.0179   43.4 8.29e-5
+ 3 27               1 male   ($95k,… (0.25…   16.3  -15.3  0.0153   43.4 2.82e-4
+ 4 29               1 male   ($95k,… (4h,I…   -2.18   3.18 0.0122   43.4 9.60e-6
+ 5 30               1 female ($55k,… (4h,I…    7.95  -6.95 0.0229   43.4 8.81e-5
+ 6 31               1 male   [$0,$2… [0h,0…   61.5  -60.5  0.0326   43.3 9.73e-3
+ 7 33              80 female [$0,$2… [0h,0…   72.4    7.61 0.0291   43.4 1.36e-4
+ 8 34             104 female ($95k,… [0h,0…   53.8   50.2  0.0215   43.3 4.31e-3
+ 9 35              55 male   ($25k,… (0.25…   33.0   22.0  0.0165   43.4 6.29e-4
+10 36             350 female ($25k,… [0h,0…   70.4  280.   0.0215   40.6 1.33e-1
+# ℹ 336 more rows
+# ℹ 1 more variable: .std.resid &lt;dbl&gt;</code></pre>
 </div>
 </div>
 </section>
@@ -1059,7 +1059,7 @@ pipeable_plot : function (data, formula)
 plt_dist_vs_speed : 'data.frame':   50 obs. of  2 variables:
  $ speed: num  4 4 7 7 8 9 10 10 10 11 ...
  $ dist : num  2 10 4 22 16 10 18 26 34 17 ...
-rsa_env : &lt;environment: 0x55e3db0a0db0&gt; 
+rsa_env : &lt;environment: 0x565000cb9880&gt; 
 rsa_lst : List of 3
  $ capitals      : chr [1:2] "J Burg" "Capetown"
  $ national_parks: chr [1:2] "Krug" "Iddo"
