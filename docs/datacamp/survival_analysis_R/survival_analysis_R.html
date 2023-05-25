@@ -203,15 +203,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
    
   <ul>
   <li><a href="#what-is-survival-analysis" id="toc-what-is-survival-analysis" class="nav-link active" data-scroll-target="#what-is-survival-analysis">What is Survival Analysis?</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#introducing-the-gbsg2-dataset" id="toc-introducing-the-gbsg2-dataset" class="nav-link" data-scroll-target="#introducing-the-gbsg2-dataset">Introducing the GBSG2 dataset</a></li>
   <li><a href="#digging-into-the-gbsg2-dataset-1" id="toc-digging-into-the-gbsg2-dataset-1" class="nav-link" data-scroll-target="#digging-into-the-gbsg2-dataset-1">Digging into the GBSG2 dataset 1</a></li>
   <li><a href="#using-the-surv-function-for-gbsg2" id="toc-using-the-surv-function-for-gbsg2" class="nav-link" data-scroll-target="#using-the-surv-function-for-gbsg2">Using the Surv() function for GBSG2</a></li>
   <li><a href="#the-unempdur-dataset" id="toc-the-unempdur-dataset" class="nav-link" data-scroll-target="#the-unempdur-dataset">The UnempDur dataset</a></li>
   </ul></li>
   <li><a href="#estimation-of-survival-curves" id="toc-estimation-of-survival-curves" class="nav-link" data-scroll-target="#estimation-of-survival-curves">Estimation of survival curves</a>
+  <ul>
+  <li><a href="#first-kaplan-meier-estimate" id="toc-first-kaplan-meier-estimate" class="nav-link" data-scroll-target="#first-kaplan-meier-estimate">First Kaplan-Meier estimate</a>
   <ul class="collapse">
-  <li><a href="#first-kaplan-meier-estimate" id="toc-first-kaplan-meier-estimate" class="nav-link" data-scroll-target="#first-kaplan-meier-estimate">First Kaplan-Meier estimate</a></li>
+  <li><a href="#kaplan-meier-estimate-calculation" id="toc-kaplan-meier-estimate-calculation" class="nav-link" data-scroll-target="#kaplan-meier-estimate-calculation">Kaplan-Meier estimate Calculation</a></li>
+  </ul></li>
   <li><a href="#exercise-ignoring-censoring" id="toc-exercise-ignoring-censoring" class="nav-link" data-scroll-target="#exercise-ignoring-censoring">Exercise ignoring censoring</a></li>
   <li><a href="#estimating-and-visualizing-a-survival-curve" id="toc-estimating-and-visualizing-a-survival-curve" class="nav-link" data-scroll-target="#estimating-and-visualizing-a-survival-curve">Estimating and visualizing a survival curve</a></li>
   <li><a href="#estimating-median-survival-from-a-weibull-model" id="toc-estimating-median-survival-from-a-weibull-model" class="nav-link" data-scroll-target="#estimating-median-survival-from-a-weibull-model">Estimating median survival from a Weibull model</a></li>
@@ -219,18 +222,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#comparing-weibull-model-and-kaplan-meier-estimate" id="toc-comparing-weibull-model-and-kaplan-meier-estimate" class="nav-link" data-scroll-target="#comparing-weibull-model-and-kaplan-meier-estimate">Comparing Weibull model and Kaplan-Meier estimate</a></li>
   </ul></li>
   <li><a href="#the-weibull-model" id="toc-the-weibull-model" class="nav-link" data-scroll-target="#the-weibull-model">The Weibull model</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#interpreting-coefficients" id="toc-interpreting-coefficients" class="nav-link" data-scroll-target="#interpreting-coefficients">Interpreting coefficients</a></li>
   <li><a href="#compute-weibull-model" id="toc-compute-weibull-model" class="nav-link" data-scroll-target="#compute-weibull-model">Compute Weibull model</a></li>
   <li><a href="#visualising-a-weibull-model" id="toc-visualising-a-weibull-model" class="nav-link" data-scroll-target="#visualising-a-weibull-model">Visualising a Weibull model</a></li>
   <li><a href="#computing-a-weibull-and-a-log-normal-model" id="toc-computing-a-weibull-and-a-log-normal-model" class="nav-link" data-scroll-target="#computing-a-weibull-and-a-log-normal-model">Computing a Weibull and a log-normal model</a></li>
-  <li><a href="#comparing-weibull-and-log-normal-model-i" id="toc-comparing-weibull-and-log-normal-model-i" class="nav-link" data-scroll-target="#comparing-weibull-and-log-normal-model-i">Comparing Weibull and Log-Normal Model I</a></li>
+  <li><a href="#comparing-weibull-and-log-normal-model-i" id="toc-comparing-weibull-and-log-normal-model-i" class="nav-link" data-scroll-target="#comparing-weibull-and-log-normal-model-i">Comparing Weibull and Log-Normal Model I</a>
+  <ul class="collapse">
+  <li><a href="#comparing-weibull-and-log-normal-model-ii" id="toc-comparing-weibull-and-log-normal-model-ii" class="nav-link" data-scroll-target="#comparing-weibull-and-log-normal-model-ii">Comparing Weibull and Log-Normal Model II</a></li>
+  </ul></li>
   </ul></li>
   <li><a href="#the-cox-model" id="toc-the-cox-model" class="nav-link" data-scroll-target="#the-cox-model">The Cox model</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#computing-a-cox-model" id="toc-computing-a-cox-model" class="nav-link" data-scroll-target="#computing-a-cox-model">Computing a Cox model</a></li>
   <li><a href="#computing-the-survival-curve-from-a-cox-model" id="toc-computing-the-survival-curve-from-a-cox-model" class="nav-link" data-scroll-target="#computing-the-survival-curve-from-a-cox-model">Computing the survival curve from a Cox model</a></li>
-  <li><a href="#visualizing-cox" id="toc-visualizing-cox" class="nav-link" data-scroll-target="#visualizing-cox">Visualizing Cox</a></li>
+  <li><a href="#visualizing-cox" id="toc-visualizing-cox" class="nav-link" data-scroll-target="#visualizing-cox">Visualizing Cox</a>
+  <ul class="collapse">
+  <li><a href="#plot" id="toc-plot" class="nav-link" data-scroll-target="#plot">Plot</a></li>
+  </ul></li>
   <li><a href="#capstone-the-cox-model" id="toc-capstone-the-cox-model" class="nav-link" data-scroll-target="#capstone-the-cox-model">Capstone: The Cox model</a></li>
   <li><a href="#capstone-comparing-survival-curves" id="toc-capstone-comparing-survival-curves" class="nav-link" data-scroll-target="#capstone-comparing-survival-curves">Capstone: Comparing survival curves</a></li>
   </ul></li>

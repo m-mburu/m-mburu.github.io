@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://m-mburu.github.io/index.html</loc>
-    <lastmod>2023-05-22T16:35:08.630Z</lastmod>
+    <lastmod>2023-05-25T17:01:35.260Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/datacamp/regression_r/regression.html</loc>
@@ -30,7 +30,7 @@
   </url>
   <url>
     <loc>https://m-mburu.github.io/datacamp/survival_analysis_R/survival_analysis_R.html</loc>
-    <lastmod>2023-05-22T15:47:37.490Z</lastmod>
+    <lastmod>2023-05-25T16:24:35.700Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/notes/iml/intro.html</loc>
@@ -46,7 +46,7 @@
   </url>
   <url>
     <loc>https://m-mburu.github.io/datacamp.html</loc>
-    <lastmod>2023-05-22T16:35:07.500Z</lastmod>
+    <lastmod>2023-05-25T17:01:31.810Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/kaggle/heart_disease/heart_disease.html</loc>
@@ -118,7 +118,7 @@
   </url>
   <url>
     <loc>https://m-mburu.github.io/datacamp/introduction_statistics_R/introduction_stats.html</loc>
-    <lastmod>2023-05-22T15:49:05.630Z</lastmod>
+    <lastmod>2023-05-25T16:50:15.760Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/datacamp/string-manipulation-with-stringr-in-r/stringR.html</loc>
@@ -127,5 +127,21 @@
   <url>
     <loc>https://m-mburu.github.io/datacamp/functions_in_R/functions_R.html</loc>
     <lastmod>2023-05-22T16:35:07.200Z</lastmod>
+  </url>
+  <url>
+    <loc>https://m-mburu.github.io/posts/welcome/index.html</loc>
+    <lastmod>2023-05-25T16:14:43.790Z</lastmod>
+  </url>
+  <url>
+    <loc>https://m-mburu.github.io/posts/breast_cancer_prediction/shap_vals.html</loc>
+    <lastmod>2023-05-25T16:14:48.270Z</lastmod>
+  </url>
+  <url>
+    <loc>https://m-mburu.github.io/datacamp/foundation_prob_R/foundation_probability.html</loc>
+    <lastmod>2023-05-25T17:01:52.150Z</lastmod>
+  </url>
+  <url>
+    <loc>https://m-mburu.github.io/about.html</loc>
+    <lastmod>2023-05-25T16:50:45.830Z</lastmod>
   </url>
 </urlset>

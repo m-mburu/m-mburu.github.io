@@ -6,6 +6,9 @@ website:
   title: "Personal Blog"
   site-url: https://m-mburu.github.io/
   favicon: "milkyway.jpeg"
+  google-analytics: "G-BFNZ97VTLJ"
+  open-graph: true
+  twitter-card: true
   page-navigation: true
   reader-mode: true  
   navbar:
@@ -27,11 +30,14 @@ website:
       - icon: twitter
         href: https://twitter.com/mmburu_w
 format:
-  html:
-    theme: lumen
-    css: style.css
-    toc: true
-    smooth-scroll: true
+    html:
+        toc: true
+        toc-depth: 4 
+        smooth-scroll: true
+        css: style.css
+        warning: false
+        error: false
+        lang: en
 
 
 
