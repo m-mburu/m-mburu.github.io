@@ -18,10 +18,9 @@ output:
     toc_depth: '2'
 ---
 
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE,
-                      message = FALSE)
+                      message = FALSE, eval = FALSE)
 
 ```
 
@@ -50,7 +49,6 @@ datatable(heart_failure,
           options = list(scrollX = T) )
 ```
 
-
 ```{r}
 heart_failure[, death_char := factor(death_event,
                                      levels = c(0, 1), 
@@ -66,7 +64,6 @@ deaths_tab[, bar_text := paste0("N = ",freq, ", ", perc, "%")]
 
 ```
 
-
 ```{r, fig.width=6, fig.height=5}
 ggplot(deaths_tab, aes(death_char, perc))+
     geom_bar(stat = "identity", width = 0.5)+
@@ -74,7 +71,6 @@ ggplot(deaths_tab, aes(death_char, perc))+
               position = position_dodge(width = 0.5),
               vjust = 0.05)
 ```
-
 
 ```{r}
 find_factors <- function(x){
@@ -92,7 +88,6 @@ datatable(dt_factors[1:10],
           options = list(scrollX = T) )
 ```
 
-
 ```{r}
 dt_factors_m <- melt(dt_factors, 
                      id.vars = "death_char",
@@ -102,14 +97,12 @@ datatable(dt_factors_m[1:10],
           options = list(scrollX = T) )
 ```
 
-
 ```{r}
 summary_factors <- dt_factors_m[, .(freq = .N), 
              by = c( "variable", "death_char", "value")] %>%
     .[, perc := round(100 * freq/sum(freq), 2),
       by = c( "variable","value")] 
 ```
-
 
 ```{r, fig.height=7, fig.width=10}
 summary_factors[, value := as.factor(value)]
@@ -140,7 +133,6 @@ ggplot(dt_num_m, aes(death_char, value))+
   geom_violin()+
   facet_wrap(~variable)
 ```
-
 
 ```{r}
 nms <- c("death_event", "time")
@@ -180,4 +172,3 @@ xgb_model <-train(death_char~.,
 
 xgb_model
 ```
-

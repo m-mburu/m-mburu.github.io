@@ -123,10 +123,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-BFNZ97VTLJ"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
+</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
 
 <link rel="stylesheet" href="../../style.css">
+<meta property="og:title" content="Personal Blog - Functions in R">
+<meta property="og:description" content="One way to make your code more readable is to be careful about the order you pass arguments when you call functions, and whether you pass the arguments by position or by name.">
+<meta property="og:site-name" content="Personal Blog">
+<meta name="twitter:title" content="Personal Blog - Functions in R">
+<meta name="twitter:description" content="One way to make your code more readable is to be careful about the order you pass arguments when you call functions, and whether you pass the arguments by position or by name.">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-fixed">
@@ -367,7 +382,7 @@ FIN MAR NGR POR TTO UAE IOC
 <div class="cell-output cell-output-stdout">
 <pre><code>.
  head  tail 
-0.493 0.507 </code></pre>
+0.505 0.495 </code></pre>
 </div>
 </div>
 </section>
@@ -387,7 +402,7 @@ FIN MAR NGR POR TTO UAE IOC
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate 10 coin tosses</span></span>
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="fu">toss_coin</span>(<span class="dv">10</span>,<span class="at">p_head=</span>.<span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "head" "head" "head" "head" "tail" "tail" "tail" "tail" "head" "head"</code></pre>
+<pre><code> [1] "head" "tail" "head" "head" "head" "tail" "head" "tail" "head" "tail"</code></pre>
 </div>
 </div>
 </section>
@@ -1059,7 +1074,7 @@ pipeable_plot : function (data, formula)
 plt_dist_vs_speed : 'data.frame':   50 obs. of  2 variables:
  $ speed: num  4 4 7 7 8 9 10 10 10 11 ...
  $ dist : num  2 10 4 22 16 10 18 26 34 17 ...
-rsa_env : &lt;environment: 0x565000cb9880&gt; 
+rsa_env : &lt;environment: 0x55bfa9886c38&gt; 
 rsa_lst : List of 3
  $ capitals      : chr [1:2] "J Burg" "Capetown"
  $ national_parks: chr [1:2] "Krug" "Iddo"

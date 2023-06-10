@@ -123,10 +123,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-BFNZ97VTLJ"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
+</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
 
 <link rel="stylesheet" href="../../style.css">
+<meta property="og:title" content="Personal Blog - Handling Missing Data with Imputations in R">
+<meta property="og:site-name" content="Personal Blog">
+<meta name="twitter:title" content="Personal Blog - Handling Missing Data with Imputations in R">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-fixed">
@@ -192,7 +205,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
    
   <ul>
   <li><a href="#the-problem-of-missing-data" id="toc-the-problem-of-missing-data" class="nav-link active" data-scroll-target="#the-problem-of-missing-data">The problem of missing data</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#linear-regression-with-incomplete-data" id="toc-linear-regression-with-incomplete-data" class="nav-link" data-scroll-target="#linear-regression-with-incomplete-data">Linear regression with incomplete data</a>
   <ul class="collapse">
   <li><a href="#print-first-10-observations" id="toc-print-first-10-observations" class="nav-link" data-scroll-target="#print-first-10-observations">Print first 10 observations</a></li>
@@ -213,7 +226,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#mosaic-plot" id="toc-mosaic-plot" class="nav-link" data-scroll-target="#mosaic-plot">Mosaic plot</a></li>
   </ul></li>
   <li><a href="#donor-based-imputation" id="toc-donor-based-imputation" class="nav-link" data-scroll-target="#donor-based-imputation">Donor-based imputation</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#smelling-the-danger-of-mean-imputation" id="toc-smelling-the-danger-of-mean-imputation" class="nav-link" data-scroll-target="#smelling-the-danger-of-mean-imputation">Smelling the danger of mean imputation</a>
   <ul class="collapse">
   <li><a href="#print-first-10-observations-1" id="toc-print-first-10-observations-1" class="nav-link" data-scroll-target="#print-first-10-observations-1">Print first 10 observations</a></li>
@@ -234,7 +247,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#knn-tricks-tips-ii-sorting-variables" id="toc-knn-tricks-tips-ii-sorting-variables" class="nav-link" data-scroll-target="#knn-tricks-tips-ii-sorting-variables">kNN tricks &amp; tips II: sorting variables</a></li>
   </ul></li>
   <li><a href="#model-based-imputation" id="toc-model-based-imputation" class="nav-link" data-scroll-target="#model-based-imputation">Model-based imputation</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#linear-regression-imputation" id="toc-linear-regression-imputation" class="nav-link" data-scroll-target="#linear-regression-imputation">Linear regression imputation</a></li>
   <li><a href="#initializing-missing-values-iterating-over-variables" id="toc-initializing-missing-values-iterating-over-variables" class="nav-link" data-scroll-target="#initializing-missing-values-iterating-over-variables">Initializing missing values &amp; iterating over variables</a></li>
   <li><a href="#detecting-convergence" id="toc-detecting-convergence" class="nav-link" data-scroll-target="#detecting-convergence">Detecting convergence</a></li>
@@ -246,7 +259,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#speed-accuracy-trade-off" id="toc-speed-accuracy-trade-off" class="nav-link" data-scroll-target="#speed-accuracy-trade-off">Speed-accuracy trade-off</a></li>
   </ul></li>
   <li><a href="#uncertainty-from-imputation" id="toc-uncertainty-from-imputation" class="nav-link" data-scroll-target="#uncertainty-from-imputation">Uncertainty from imputation</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#wrapping-imputation-modeling-in-a-function" id="toc-wrapping-imputation-modeling-in-a-function" class="nav-link" data-scroll-target="#wrapping-imputation-modeling-in-a-function">Wrapping imputation &amp; modeling in a function</a></li>
   <li><a href="#running-the-bootstrap" id="toc-running-the-bootstrap" class="nav-link" data-scroll-target="#running-the-bootstrap">Running the bootstrap</a>
   <ul class="collapse">
@@ -1486,7 +1499,7 @@ mean of x mean of y
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(imp_err)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     NRMSE        PFC 
-0.01900541 0.14506548 </code></pre>
+0.01855238 0.13713911 </code></pre>
 </div>
 </div>
 <p><strong><em>Note that missForest() outputs a list and you have to manually extract the imputed data - it’s a common mistake to overlook it when building a data processing pipeline. Also, take a look at the errors. Can you tell which variables have been imputed particularly well? Let’s look at it more closely in the next exercise!</em></strong></p>
@@ -1505,7 +1518,7 @@ mean of x mean of y
 <span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(per_variable_errors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         PFC          MSE          MSE          MSE          PFC          PFC 
-   0.3779528    0.0000000 1140.0608613    0.0000000    0.0000000    0.1808511 
+   0.3937008    0.0000000 1121.3172164    0.0000000    0.0000000    0.1666667 
          MSE          PFC 
    0.0000000    0.0000000 </code></pre>
 </div>
@@ -1518,9 +1531,9 @@ mean of x mean of y
 <span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(per_variable_errors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  country_PFC      year_MSE  earnings_MSE   sub_num_MSE  sub_type_PFC 
-    0.3779528     0.0000000  1140.0608613     0.0000000     0.0000000 
+    0.3937008     0.0000000  1121.3172164     0.0000000     0.0000000 
  sub_race_PFC non_white_MSE   sub_sex_PFC 
-    0.1808511     0.0000000     0.0000000 </code></pre>
+    0.1666667     0.0000000     0.0000000 </code></pre>
 </div>
 </div>
 </section>
@@ -1536,7 +1549,7 @@ mean of x mean of y
 <span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(imp_res<span class="sc">$</span>OOBerror)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     NRMSE        PFC 
-0.02470357 0.20708241 </code></pre>
+0.02366722 0.20008035 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set number of trees to 50 and number of variables used for splitting to 6</span></span>
 <span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>imp_res <span class="ot">&lt;-</span> <span class="fu">missForest</span>(biopics, <span class="at">ntree =</span> <span class="dv">50</span>, <span class="at">mtry =</span> <span class="dv">6</span>)</span>
@@ -1545,7 +1558,7 @@ mean of x mean of y
 <span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(imp_res<span class="sc">$</span>OOBerror)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     NRMSE        PFC 
-0.02024884 0.12773985 </code></pre>
+0.01981473 0.12538044 </code></pre>
 </div>
 </div>
 <ul>
@@ -1598,8 +1611,8 @@ boot(data = biopics, statistic = calc_gender_coef, R = 50)
 
 
 Bootstrap Statistics :
-    original    bias    std. error
-t1* 2.513701 -1.212152    3.372918</code></pre>
+    original     bias    std. error
+t1* 2.250153 -0.3854591    3.323437</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(boot_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1617,7 +1630,7 @@ boot.ci(boot.out = boot_results, conf = 0.95, type = "norm")
 
 Intervals : 
 Level      Normal        
-95%   (-2.885, 10.337 )  
+95%   (-3.878,  9.149 )  
 Calculations and Intervals on Original Scale</code></pre>
 </div>
 </div>
@@ -1645,7 +1658,7 @@ boot(data = biopics, statistic = calc_gender_coef, R = 1000)
 
 Bootstrap Statistics :
     original     bias    std. error
-t1*  1.80782 -0.1648429    3.509105</code></pre>
+t1* 2.313105 -0.9596865    3.775439</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(boot_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1663,7 +1676,7 @@ boot.ci(boot.out = boot_results, conf = 0.95, type = "norm")
 
 Intervals : 
 Level      Normal        
-95%   (-4.905,  8.850 )  
+95%   (-4.127, 10.673 )  
 Calculations and Intervals on Original Scale</code></pre>
 </div>
 </div>

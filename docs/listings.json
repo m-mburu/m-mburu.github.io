@@ -12,6 +12,7 @@
   {
     "listing": "/datacamp.html",
     "items": [
+      "/datacamp/intermidiate_regression_R/intermediate_regression.html",
       "/datacamp/survival_analysis_R/survival_analysis_R.html",
       "/datacamp/foundation_prob_R/foundation_probability.html",
       "/datacamp/introduction_statistics_R/introduction_stats.html",
@@ -22,11 +23,11 @@
       "/datacamp/introduction-to-advanced-dimensionality-reduction/introduction_dimensionality_reduction.html",
       "/datacamp/us_census/us_census.html",
       "/datacamp/tidymodels/tidymodels.html",
-      "/datacamp/comm_tidyverse/rmarkdown_ex.html",
       "/datacamp/comm_tidyverse/tidyverse.html",
+      "/datacamp/comm_tidyverse/rmarkdown_ex.html",
       "/datacamp/efficient_R_code/efficient_R_code.html",
-      "/datacamp/regression_r/regression.html",
       "/datacamp/scalable_data_R/scalable_data_r.html",
+      "/datacamp/regression_r/regression.html",
       "/datacamp/network-analysis-in-r/network_analysis_r.html",
       "/datacamp/string-manipulation-with-stringr-in-r/stringR.html",
       "/datacamp/ml_tree_methods_r/ml_tree_methods.html"

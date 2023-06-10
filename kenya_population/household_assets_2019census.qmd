@@ -11,8 +11,6 @@ format:
       collapsed: no
       smooth_scroll: no
     #theme: united
-    highlight: pygments
-  pdf: default
 categories: [code, analysis]
 ---
 

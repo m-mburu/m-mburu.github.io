@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Mburu">
+<meta name="dcterms.date" content="2023-06-06">
+
+<title>Personal Blog - Intermediate Regression in R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../milkyway.jpeg" rel="icon" type="image/jpeg">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-BFNZ97VTLJ"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
+</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+<script src="../../site_libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<link href="../../site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="../../site_libs/datatables-binding-0.27/datatables.js"></script>
+<script src="../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<link href="../../site_libs/dt-core-bootstrap4-1.12.1/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+<link href="../../site_libs/dt-core-bootstrap4-1.12.1/css/dataTables.bootstrap4.extra.css" rel="stylesheet">
+<script src="../../site_libs/dt-core-bootstrap4-1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="../../site_libs/dt-core-bootstrap4-1.12.1/js/dataTables.bootstrap4.min.js"></script>
+<link href="../../site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="../../site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+
+
+<link rel="stylesheet" href="../../style.css">
+<meta property="og:title" content="Personal Blog - Intermediate Regression in R">
+<meta property="og:site-name" content="Personal Blog">
+<meta name="twitter:title" content="Personal Blog - Intermediate Regression in R">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Personal Blog</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../datacamp.html">
+ <span class="menu-text">Data Camp Courses</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/m-mburu"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/mmburu_w"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-reader-toggle nav-link" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#parallel-slopes" id="toc-parallel-slopes" class="nav-link active" data-scroll-target="#parallel-slopes">Parallel Slopes</a>
+  <ul>
+  <li><a href="#fitting-a-parallel-slopes-linear-regression" id="toc-fitting-a-parallel-slopes-linear-regression" class="nav-link" data-scroll-target="#fitting-a-parallel-slopes-linear-regression">Fitting a parallel slopes linear regression</a>
+  <ul class="collapse">
+  <li><a href="#fit-a-linear-regrn-of-price_twd_msq-vs.-n_convenience" id="toc-fit-a-linear-regrn-of-price_twd_msq-vs.-n_convenience" class="nav-link" data-scroll-target="#fit-a-linear-regrn-of-price_twd_msq-vs.-n_convenience">Fit a linear regr’n of price_twd_msq vs.&nbsp;n_convenience</a></li>
+  <li><a href="#fit-a-linear-regrn-of-price_twd_msq-vs.-house_age_years-no-intercept" id="toc-fit-a-linear-regrn-of-price_twd_msq-vs.-house_age_years-no-intercept" class="nav-link" data-scroll-target="#fit-a-linear-regrn-of-price_twd_msq-vs.-house_age_years-no-intercept">Fit a linear regr’n of price_twd_msq vs.&nbsp;house_age_years, no intercept</a></li>
+  <li><a href="#fit-a-linear-regrn-of-price_twd_msq-vs.-n_convenience-plus-house_age_years-no-intercept" id="toc-fit-a-linear-regrn-of-price_twd_msq-vs.-n_convenience-plus-house_age_years-no-intercept" class="nav-link" data-scroll-target="#fit-a-linear-regrn-of-price_twd_msq-vs.-n_convenience-plus-house_age_years-no-intercept">Fit a linear regr’n of price_twd_msq vs.&nbsp;n_convenience plus house_age_years, no intercept</a></li>
+  </ul></li>
+  <li><a href="#interpreting-parallel-slopes-coefficients" id="toc-interpreting-parallel-slopes-coefficients" class="nav-link" data-scroll-target="#interpreting-parallel-slopes-coefficients">Interpreting parallel slopes coefficients</a></li>
+  <li><a href="#visualizing-each-explanatory-variable" id="toc-visualizing-each-explanatory-variable" class="nav-link" data-scroll-target="#visualizing-each-explanatory-variable">Visualizing each explanatory variable</a></li>
+  <li><a href="#visualizing-parallel-slopes" id="toc-visualizing-parallel-slopes" class="nav-link" data-scroll-target="#visualizing-parallel-slopes">Visualizing parallel slopes</a></li>
+  <li><a href="#predicting-with-a-parallel-slopes-model" id="toc-predicting-with-a-parallel-slopes-model" class="nav-link" data-scroll-target="#predicting-with-a-parallel-slopes-model">Predicting with a parallel slopes model</a>
+  <ul class="collapse">
+  <li><a href="#make-a-grid-of-explanatory-data-formed-from-combinations-of-the-following-variables." id="toc-make-a-grid-of-explanatory-data-formed-from-combinations-of-the-following-variables." class="nav-link" data-scroll-target="#make-a-grid-of-explanatory-data-formed-from-combinations-of-the-following-variables.">Make a grid of explanatory data, formed from combinations of the following variables.</a></li>
+  </ul></li>
+  <li><a href="#manually-calculating-predictions" id="toc-manually-calculating-predictions" class="nav-link" data-scroll-target="#manually-calculating-predictions">Manually calculating predictions</a>
+  <ul class="collapse">
+  <li><a href="#add-columns-to-explanatory_data." id="toc-add-columns-to-explanatory_data." class="nav-link" data-scroll-target="#add-columns-to-explanatory_data.">Add columns to explanatory_data.</a></li>
+  </ul></li>
+  <li><a href="#comparing-coefficients-of-determination" id="toc-comparing-coefficients-of-determination" class="nav-link" data-scroll-target="#comparing-coefficients-of-determination">Comparing coefficients of determination</a></li>
+  <li><a href="#comparing-residual-standard-error" id="toc-comparing-residual-standard-error" class="nav-link" data-scroll-target="#comparing-residual-standard-error">Comparing residual standard error</a></li>
+  </ul></li>
+  <li><a href="#interactions" id="toc-interactions" class="nav-link" data-scroll-target="#interactions">Interactions</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Intermediate Regression in R</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Mburu </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 6, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="parallel-slopes" class="level2">
+<h2 class="anchored" data-anchor-id="parallel-slopes">Parallel Slopes</h2>
+<section id="fitting-a-parallel-slopes-linear-regression" class="level3">
+<h3 class="anchored" data-anchor-id="fitting-a-parallel-slopes-linear-regression">Fitting a parallel slopes linear regression</h3>
+<p>In Introduction to Regression in R, you learned to fit linear regression models with a single explanatory variable. In many cases, using only one explanatory variable limits the accuracy of predictions. That means that to truly master linear regression, you need to be able to include multiple explanatory variables.</p>
+<p>The case when there is one numeric explanatory variable and one categorical explanatory variable is sometimes called a “parallel slopes” linear regression due to the shape of the predictions—more on that in the next exercise.</p>
+<p>Here, you’ll revisit the Taiwan real estate dataset. Recall the meaning of each variable.</p>
+<section id="fit-a-linear-regrn-of-price_twd_msq-vs.-n_convenience" class="level4">
+<h4 class="anchored" data-anchor-id="fit-a-linear-regrn-of-price_twd_msq-vs.-n_convenience">Fit a linear regr’n of price_twd_msq vs.&nbsp;n_convenience</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mTools)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fst)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>taiwan_real_estate <span class="ot">&lt;-</span> <span class="fu">read_fst</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"taiwan_real_estate2.fst"</span>))</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a linear regr'n of price_twd_msq vs. n_convenience</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>mdl_price_vs_conv <span class="ot">&lt;-</span> <span class="fu">lm</span>(price_twd_msq <span class="sc">~</span> n_convenience, <span class="at">data =</span> taiwan_real_estate)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># See the result</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">DT_tidy_model</span>(mdl_price_vs_conv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-6da059322aa98974265e" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-6da059322aa98974265e">{"x":{"style":"bootstrap4","filter":"none","vertical":false,"data":[["(Intercept)","n_convenience"],[8.2242,0.7981],[0.285,0.0565],[28.8571,14.118],[0,0]],"container":"<table class=\"table table-bordered table-striped\">\n  <thead>\n    <tr>\n      <th>term<\/th>\n      <th>estimate<\/th>\n      <th>std.error<\/th>\n      <th>statistic<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-center","targets":[0,1,2,3,4]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="fit-a-linear-regrn-of-price_twd_msq-vs.-house_age_years-no-intercept" class="level4">
+<h4 class="anchored" data-anchor-id="fit-a-linear-regrn-of-price_twd_msq-vs.-house_age_years-no-intercept">Fit a linear regr’n of price_twd_msq vs.&nbsp;house_age_years, no intercept</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a linear regr'n of price_twd_msq vs. house_age_years, no intercept</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>mdl_price_vs_age <span class="ot">&lt;-</span> <span class="fu">lm</span>(price_twd_msq <span class="sc">~</span> house_age_years <span class="sc">-</span><span class="dv">1</span>, <span class="at">data =</span> taiwan_real_estate )</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># See the result</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">DT_tidy_model</span>(mdl_price_vs_age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-f90120ecbe097315a152" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-f90120ecbe097315a152">{"x":{"style":"bootstrap4","filter":"none","vertical":false,"data":[["house_age_years0 to 15","house_age_years15 to 30","house_age_years30 to 45"],[12.6375,9.8767,11.3933],[0.2866,0.3478,0.4053],[44.0981,28.3982,28.1121],[0,0,0]],"container":"<table class=\"table table-bordered table-striped\">\n  <thead>\n    <tr>\n      <th>term<\/th>\n      <th>estimate<\/th>\n      <th>std.error<\/th>\n      <th>statistic<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-center","targets":[0,1,2,3,4]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="fit-a-linear-regrn-of-price_twd_msq-vs.-n_convenience-plus-house_age_years-no-intercept" class="level4">
+<h4 class="anchored" data-anchor-id="fit-a-linear-regrn-of-price_twd_msq-vs.-n_convenience-plus-house_age_years-no-intercept">Fit a linear regr’n of price_twd_msq vs.&nbsp;n_convenience plus house_age_years, no intercept</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a linear regr'n of price_twd_msq vs. n_convenience plus house_age_years, no intercept</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>mdl_price_vs_both <span class="ot">&lt;-</span> <span class="fu">lm</span>(price_twd_msq <span class="sc">~</span> n_convenience </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                        <span class="sc">+</span> house_age_years <span class="sc">-</span> <span class="dv">1</span>, </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> taiwan_real_estate)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># See the result</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">DT_tidy_model</span>(mdl_price_vs_both)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-e7de24684730155fad0e" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-e7de24684730155fad0e">{"x":{"style":"bootstrap4","filter":"none","vertical":false,"data":[["n_convenience","house_age_years0 to 15","house_age_years15 to 30","house_age_years30 to 45"],[0.7915,9.4133,7.0852,7.511],[0.0545,0.3219,0.342,0.4244],[14.5278,29.2455,20.7161,17.698],[0,0,0,0]],"container":"<table class=\"table table-bordered table-striped\">\n  <thead>\n    <tr>\n      <th>term<\/th>\n      <th>estimate<\/th>\n      <th>std.error<\/th>\n      <th>statistic<\/th>\n      <th>p.value<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-center","targets":[0,1,2,3,4]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+</section>
+<section id="interpreting-parallel-slopes-coefficients" class="level3">
+<h3 class="anchored" data-anchor-id="interpreting-parallel-slopes-coefficients">Interpreting parallel slopes coefficients</h3>
+<p>For linear regression with a single numeric explanatory variable, there is an intercept coefficient and a slope coefficient. For linear regression with a single categorical explanatory variable, there is an intercept coefficient for each category.</p>
+<p>In the “parallel slopes” case, where you have a numeric and a categorical explanatory variable, what do the coefficients mean?</p>
+<p>taiwan_real_estate and mdl_price_vs_both are available.</p>
+<ul>
+<li>For each additional nearby convenience store, the expected house price, in TWD per square meter, increases by 0.79.</li>
+</ul>
+</section>
+<section id="visualizing-each-explanatory-variable" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-each-explanatory-variable">Visualizing each explanatory variable</h3>
+<p>Being able to see the predictions made by a model makes it easier to understand. In the case where there is only one explanatory variable, ggplot lets you do this without any manual calculation or messing about.</p>
+<p>To visualize the relationship between a numeric explanatory variable and the numeric response, you can draw a scatter plot with a linear trend line.</p>
+<p>To visualize the relationship between a categorical explanatory variable and the numeric response, you can draw a box plot.</p>
+<p>taiwan_real_estate is available and ggplot2 is loaded.</p>
+<ul>
+<li>Using the taiwan_real_estate dataset, plot the house price versus the number of nearby convenience stores.</li>
+<li>Make it a scatter plot.</li>
+<li>Add a smooth linear regression trend line without a standard error ribbon.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using taiwan_real_estate, plot price_twd_msq vs. n_convenience</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(taiwan_real_estate, <span class="fu">aes</span>(n_convenience, price_twd_msq)) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add a point layer</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add a smooth trend line using linear regr'n, no ribbon</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="intermediate_regression_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li>Using the taiwan_real_estate dataset, plot the house price versus the house age.</li>
+<li>Make it a box plot.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using taiwan_real_estate, plot price_twd_msq vs. house_age_years</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(taiwan_real_estate, <span class="fu">aes</span>( house_age_years, price_twd_msq)) <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add a box plot layer</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="intermediate_regression_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="visualizing-parallel-slopes" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-parallel-slopes">Visualizing parallel slopes</h3>
+<p>The two plots in the previous exercise gave very different predictions: one gave a predicted response that increased linearly with a numeric variable; the other gave a fixed response for each category. The only sensible way to reconcile these two conflicting predictions is to incorporate both explanatory variables in the model at once.</p>
+<p>When it comes to a linear regression model with a numeric and a categorical explanatory variable, ggplot2 doesn’t have an easy, “out of the box” way to show the predictions. Fortunately, the moderndive package includes an extra geom, geom_parallel_slopes() to make it simple.</p>
+<p>taiwan_real_estate is available; ggplot2 and moderndive are loaded.</p>
+<ul>
+<li>Using the taiwan_real_estate dataset, plot house prices versus the number of nearby convenience stores, colored by house age.</li>
+<li>Make it a scatter plot.</li>
+<li>Add parallel slopes, without a standard error ribbon.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(moderndive)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Using taiwan_real_estate, plot price_twd_msq vs. n_convenience colored by house_age_years</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(taiwan_real_estate, <span class="fu">aes</span>( n_convenience , price_twd_msq, <span class="at">color =</span> house_age_years))  <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add a point layer</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add parallel slopes, no ribbon</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_parallel_slopes</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="intermediate_regression_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="predicting-with-a-parallel-slopes-model" class="level3">
+<h3 class="anchored" data-anchor-id="predicting-with-a-parallel-slopes-model">Predicting with a parallel slopes model</h3>
+<p>While ggplot can automatically show you model predictions, in order to get those values to program with, you’ll need to do the calculations yourself.</p>
+<p>Just as with the case of a single explanatory variable, the workflow has two steps: create a data frame of explanatory variables, then add a column of predictions. To make sure you’ve got the right answer, you can add your predictions to the ggplot with the geom_parallel_slopes() lines.</p>
+<p>taiwan_real_estate and mdl_price_vs_both are available; dplyr, tidyr, and ggplot2 are loaded.</p>
+<section id="make-a-grid-of-explanatory-data-formed-from-combinations-of-the-following-variables." class="level4">
+<h4 class="anchored" data-anchor-id="make-a-grid-of-explanatory-data-formed-from-combinations-of-the-following-variables.">Make a grid of explanatory data, formed from combinations of the following variables.</h4>
+<ul>
+<li>n_convenience should take the numbers zero to ten.</li>
+<li>house_age_years should take the unique values of the house_age_years column of taiwan_real_estate.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a grid of explanatory data</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>explanatory_data <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Set n_convenience to zero to ten</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_convenience =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">10</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Set house_age_years to the unique values of that variable</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">house_age_years =</span> <span class="fu">unique</span>(taiwan_real_estate<span class="sc">$</span>house_age_years)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># See the result</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>explanatory_data[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,] <span class="sc">%&gt;%</span> <span class="fu">data_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-6541ede5ddb04313fbf3" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-6541ede5ddb04313fbf3">{"x":{"style":"bootstrap4","filter":"none","vertical":false,"data":[[0,1,2,3,4,5,6,7,8,9],["30 to 45","30 to 45","30 to 45","30 to 45","30 to 45","30 to 45","30 to 45","30 to 45","30 to 45","30 to 45"]],"container":"<table class=\"table table-bordered table-striped\">\n  <thead>\n    <tr>\n      <th>n_convenience<\/th>\n      <th>house_age_years<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-center","targets":[0,1]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<ul>
+<li>Add a column to the explanatory_data named for the response variable, assigning to prediction_data.</li>
+<li>The response column contain predictions made using mdl_price_vs_both and explanatory_data.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add predictions to the data frame</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>prediction_data <span class="ot">&lt;-</span> explanatory_data <span class="sc">%&gt;%</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">price_twd_msq =</span> <span class="fu">predict</span>(mdl_price_vs_both, explanatory_data) )</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># See the result</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>prediction_data[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,] <span class="sc">%&gt;%</span> <span class="fu">data_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-36bf4df08ac819ce0ba3" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-36bf4df08ac819ce0ba3">{"x":{"style":"bootstrap4","filter":"none","vertical":false,"data":[[0,1,2,3,4,5,6,7,8,9],["30 to 45","30 to 45","30 to 45","30 to 45","30 to 45","30 to 45","30 to 45","30 to 45","30 to 45","30 to 45"],[7.51095832608341,8.30241544955215,9.09387257302089,9.88532969648963,10.6767868199584,11.4682439434271,12.2597010668958,13.0511581903646,13.8426153138333,14.6340724373021]],"container":"<table class=\"table table-bordered table-striped\">\n  <thead>\n    <tr>\n      <th>n_convenience<\/th>\n      <th>house_age_years<\/th>\n      <th>price_twd_msq<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-center","targets":[0,1,2]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<ul>
+<li>Update the plot to add a point layer of predictions. Use the prediction_data, set the point size to 5, and the point shape to 15.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>taiwan_real_estate <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(n_convenience, price_twd_msq, <span class="at">color =</span> house_age_years)) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_parallel_slopes</span>(<span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add points using prediction_data, with size 5 and shape 15</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span>prediction_data, </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(n_convenience, price_twd_msq),</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">5</span>, <span class="at">shape =</span> <span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="intermediate_regression_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="manually-calculating-predictions" class="level3">
+<h3 class="anchored" data-anchor-id="manually-calculating-predictions">Manually calculating predictions</h3>
+<p>As with simple linear regression, you can manually calculate the predictions from the model coefficients. The only change for the parallel slopes case is that the intercept is different for each category of the categorical explanatory variable. That means you need to consider the case when each each category occurs separately.</p>
+<p>taiwan_real_estate, mdl_price_vs_both, and explanatory_data are available; dplyr is loaded.</p>
+<ul>
+<li>Get the coefficients from mdl_price_vs_both, assigning to coeffs.</li>
+<li>Assign each of the elements of coeffs to the appropriate variable.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the coefficients from mdl_price_vs_both</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>coeffs <span class="ot">&lt;-</span> <span class="fu">coefficients</span>(mdl_price_vs_both)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the slope coefficient</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>slope <span class="ot">&lt;-</span> coeffs[<span class="dv">1</span>]</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the intercept coefficient for 0 to 15</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>intercept_0_15 <span class="ot">&lt;-</span> coeffs[<span class="dv">2</span>]</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the intercept coefficient for 15 to 30</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>intercept_15_30 <span class="ot">&lt;-</span> coeffs[<span class="dv">3</span>]</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the intercept coefficient for 30 to 45</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>intercept_30_45 <span class="ot">&lt;-</span> coeffs[<span class="dv">4</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="add-columns-to-explanatory_data." class="level4">
+<h4 class="anchored" data-anchor-id="add-columns-to-explanatory_data.">Add columns to explanatory_data.</h4>
+<ul>
+<li>To choose the intercept, in the case when house_age_years is “0 to 15”, choose intercept_0_15. In the case when house_age_years is “15 to 30”, choose intercept_15_30. Do likewise for “30 to 45”.</li>
+<li>Manually calculate the predictions as the intercept plus the slope times n_convenience.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>prediction_data <span class="ot">&lt;-</span> explanatory_data <span class="sc">%&gt;%</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Consider the 3 cases to choose the intercept</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">intercept =</span> <span class="fu">case_when</span>(</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>            house_age_years <span class="sc">==</span> <span class="st">"0 to 15"</span> <span class="sc">~</span> intercept_0_15,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>            house_age_years <span class="sc">==</span>  <span class="st">"15 to 30"</span> <span class="sc">~</span> intercept_15_30,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>            house_age_years <span class="sc">==</span>  <span class="st">"30 to 45"</span> <span class="sc">~</span> intercept_30_45</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Manually calculate the predictions</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">price_twd_msq =</span> slope<span class="sc">*</span>n_convenience <span class="sc">+</span> intercept</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co"># See the results</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>prediction_data[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,] <span class="sc">%&gt;%</span> <span class="fu">data_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-0763c7666677a525e95c" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-0763c7666677a525e95c">{"x":{"style":"bootstrap4","filter":"none","vertical":false,"data":[[0,1,2,3,4,5,6,7,8,9],["30 to 45","30 to 45","30 to 45","30 to 45","30 to 45","30 to 45","30 to 45","30 to 45","30 to 45","30 to 45"],[7.51095832608341,7.51095832608341,7.51095832608341,7.51095832608341,7.51095832608341,7.51095832608341,7.51095832608341,7.51095832608341,7.51095832608341,7.51095832608341],[7.51095832608341,8.30241544955215,9.09387257302089,9.88532969648963,10.6767868199584,11.4682439434271,12.2597010668958,13.0511581903646,13.8426153138333,14.6340724373021]],"container":"<table class=\"table table-bordered table-striped\">\n  <thead>\n    <tr>\n      <th>n_convenience<\/th>\n      <th>house_age_years<\/th>\n      <th>intercept<\/th>\n      <th>price_twd_msq<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-center","targets":[0,1,2,3]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+</section>
+<section id="comparing-coefficients-of-determination" class="level3">
+<h3 class="anchored" data-anchor-id="comparing-coefficients-of-determination">Comparing coefficients of determination</h3>
+<p>Recall that the coefficient of determination is a measure of how well the linear regression line fits the observed values. An important motivation for including several explanatory variables in a linear regression is that you can improve the fit compared to considering only a single explanatory variable.</p>
+<p>Here you’ll compare the coefficient of determination for the three Taiwan house price models, to see which gives the best result.</p>
+<p>mdl_price_vs_conv, mdl_price_vs_age, and mdl_price_vs_both are available; dplyr and broom are loaded.</p>
+<ul>
+<li>Get the unadjusted and adjusted coefficients of determination for mdl_price_vs_conv by glancing at the model, then selecting the r.squared and adj.r.squared values.</li>
+<li>Do the same for mdl_price_vs_age and mdl_price_vs_both.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>my_models <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">mdl_price_vs_conv =</span> mdl_price_vs_conv,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">mdl_price_vs_age =</span> mdl_price_vs_age,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">mdl_price_vs_both =</span> mdl_price_vs_both)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>nms_ms <span class="ot">&lt;-</span> <span class="fu">names</span>(my_models)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>my_dfs <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="fu">seq_along</span>(my_models), <span class="cf">function</span>(x){</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    my_models[[x]] <span class="sc">%&gt;%</span> </span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">glance</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">lm_model =</span>nms_ms[x] ) <span class="sc">%&gt;%</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">select</span>(lm_model, r.squared, adj.r.squared, sigma) </span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>model_glance <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">rbindlist</span>(my_dfs)</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>model_glance <span class="sc">%&gt;%</span> </span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round_all_num_cols</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-843c4ae377e5cc793ff0" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-843c4ae377e5cc793ff0">{"x":{"style":"bootstrap4","filter":"none","vertical":false,"data":[["mdl_price_vs_conv","mdl_price_vs_age","mdl_price_vs_both"],[0.33,0.9,0.93],[0.32,0.9,0.93],[3.38,3.95,3.21]],"container":"<table class=\"table table-bordered table-striped\">\n  <thead>\n    <tr>\n      <th>lm_model<\/th>\n      <th>r.squared<\/th>\n      <th>adj.r.squared<\/th>\n      <th>sigma<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-center","targets":[0,1,2,3]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<ul>
+<li>Which model does the adjusted coefficient of determination suggest gives a better fit?</li>
+<li><strong><em>mdl_price_vs_both</em></strong></li>
+</ul>
+</section>
+<section id="comparing-residual-standard-error" class="level3">
+<h3 class="anchored" data-anchor-id="comparing-residual-standard-error">Comparing residual standard error</h3>
+<p>The other common metric for assessing model fit is the residual standard error (RSE), which measures the typical size of the residuals.</p>
+<p>In the last exercise you saw how including both explanatory variables into the model increased the coefficient of determination. How do you think using both explanatory variables will change the RSE?</p>
+<p>mdl_price_vs_conv, mdl_price_vs_age, and mdl_price_vs_both are available; dplyr and broom are loaded.</p>
+<ul>
+<li>Shown as sigma below</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>model_glance <span class="sc">%&gt;%</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">round_all_num_cols</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">data_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-49738f1298665a8d6562" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-49738f1298665a8d6562">{"x":{"style":"bootstrap4","filter":"none","vertical":false,"data":[["mdl_price_vs_conv","mdl_price_vs_age","mdl_price_vs_both"],[0.33,0.9,0.93],[0.32,0.9,0.93],[3.38,3.95,3.21]],"container":"<table class=\"table table-bordered table-striped\">\n  <thead>\n    <tr>\n      <th>lm_model<\/th>\n      <th>r.squared<\/th>\n      <th>adj.r.squared<\/th>\n      <th>sigma<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"columnDefs":[{"className":"dt-center","targets":[0,1,2,3]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<ul>
+<li>The model with the list sigma <strong><em>mdl_price_vs_both</em></strong></li>
+</ul>
+</section>
+</section>
+<section id="interactions" class="level2">
+<h2 class="anchored" data-anchor-id="interactions">Interactions</h2>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

@@ -23,7 +23,8 @@ categories: [news, code, analysis]
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, 
                       warning = FALSE,
-                      message = FALSE)
+                      message = FALSE,
+                      eval = FALSE)
 
 data_table <- function(df){
     library(DT)

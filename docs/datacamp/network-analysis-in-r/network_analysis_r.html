@@ -124,8 +124,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-BFNZ97VTLJ"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
+</script>
 <style>html{ scroll-behavior: smooth; }</style>
-<script src="../../site_libs/htmlwidgets-1.6.1/htmlwidgets.js"></script>
+<script src="../../site_libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
 <script src="../../site_libs/jquery-3.5.1/jquery.min.js"></script>
 <script src="../../site_libs/threejs-111/three.min.js"></script>
 <script src="../../site_libs/threejs-111/Detector.js"></script>
@@ -139,6 +148,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 <link rel="stylesheet" href="../../style.css">
+<meta property="og:title" content="Personal Blog - Network analysis in R">
+<meta property="og:description" content="Here you will learn how to create an igraph ‘object’ from data stored in an edgelist. The data are friendships in a group of students.">
+<meta property="og:site-name" content="Personal Blog">
+<meta name="twitter:title" content="Personal Blog - Network analysis in R">
+<meta name="twitter:description" content="Here you will learn how to create an igraph ‘object’ from data stored in an edgelist. The data are friendships in a group of students.">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-fixed">
@@ -213,23 +228,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#visualizing-edges" id="toc-visualizing-edges" class="nav-link" data-scroll-target="#visualizing-edges">Visualizing edges</a></li>
   <li><a href="#directed-igraph-objects" id="toc-directed-igraph-objects" class="nav-link" data-scroll-target="#directed-igraph-objects">Directed igraph objects</a></li>
   <li><a href="#identifying-edges-for-each-vertex" id="toc-identifying-edges-for-each-vertex" class="nav-link" data-scroll-target="#identifying-edges-for-each-vertex">Identifying edges for each vertex</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#neighbors" id="toc-neighbors" class="nav-link" data-scroll-target="#neighbors">Neighbors</a></li>
   </ul></li>
   <li><a href="#distances-between-vertices" id="toc-distances-between-vertices" class="nav-link" data-scroll-target="#distances-between-vertices">Distances between vertices</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#finding-longest-path-between-two-vertices" id="toc-finding-longest-path-between-two-vertices" class="nav-link" data-scroll-target="#finding-longest-path-between-two-vertices">Finding longest path between two vertices</a></li>
   </ul></li>
   <li><a href="#identifying-key-vertices" id="toc-identifying-key-vertices" class="nav-link" data-scroll-target="#identifying-key-vertices">Identifying key vertices</a></li>
   <li><a href="#betweenness" id="toc-betweenness" class="nav-link" data-scroll-target="#betweenness">Betweenness</a></li>
   <li><a href="#visualizing-important-nodes-and-edges" id="toc-visualizing-important-nodes-and-edges" class="nav-link" data-scroll-target="#visualizing-important-nodes-and-edges">Visualizing important nodes and edges</a></li>
   <li><a href="#forrest-gump-network" id="toc-forrest-gump-network" class="nav-link" data-scroll-target="#forrest-gump-network">Forrest Gump network</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#network-density-and-average-path-length" id="toc-network-density-and-average-path-length" class="nav-link" data-scroll-target="#network-density-and-average-path-length">Network density and average path length</a></li>
   </ul></li>
   <li><a href="#random-graphs" id="toc-random-graphs" class="nav-link" data-scroll-target="#random-graphs">Random graphs</a></li>
   <li><a href="#network-randomizations" id="toc-network-randomizations" class="nav-link" data-scroll-target="#network-randomizations">Network randomizations</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#randomization-quiz" id="toc-randomization-quiz" class="nav-link" data-scroll-target="#randomization-quiz">Randomization quiz</a></li>
   </ul></li>
   <li><a href="#triangles-and-transitivity" id="toc-triangles-and-transitivity" class="nav-link" data-scroll-target="#triangles-and-transitivity">Triangles and transitivity</a></li>
@@ -239,7 +254,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#assortativity" id="toc-assortativity" class="nav-link" data-scroll-target="#assortativity">Assortativity</a></li>
   <li><a href="#using-randomizations-to-assess-assortativity" id="toc-using-randomizations-to-assess-assortativity" class="nav-link" data-scroll-target="#using-randomizations-to-assess-assortativity">Using randomizations to assess assortativity</a></li>
   <li><a href="#reciprocity" id="toc-reciprocity" class="nav-link" data-scroll-target="#reciprocity">Reciprocity</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#what-does-assortativity-measure" id="toc-what-does-assortativity-measure" class="nav-link" data-scroll-target="#what-does-assortativity-measure">What does assortativity measure</a></li>
   </ul></li>
   <li><a href="#fast-greedy-community-detection" id="toc-fast-greedy-community-detection" class="nav-link" data-scroll-target="#fast-greedy-community-detection">Fast-greedy community detection</a></li>
@@ -353,13 +368,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset vertices and edges</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>+ 16/16 vertices, named, from 03b2a0a:
+<pre><code>+ 16/16 vertices, named, from c97b400:
  [1] Jessie  Sidney  Britt   Donnie  Karl    Berry   Rene    Shayne  Elisha 
 [10] Whitney Odell   Lacy    Eugene  Jude    Rickie  Tommy  </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">E</span>(g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>+ 27/27 edges from 03b2a0a (vertex names):
+<pre><code>+ 27/27 edges from c97b400 (vertex names):
  [1] Jessie --Sidney  Jessie --Britt   Sidney --Britt   Sidney --Donnie 
  [5] Karl   --Berry   Sidney --Rene    Britt  --Rene    Sidney --Shayne 
  [9] Sidney --Elisha  Sidney --Whitney Jessie --Whitney Donnie --Odell  
@@ -427,7 +442,7 @@ $age
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View attributes of first five vertices in a dataframe</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(g)[[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>+ 5/16 vertices, named, from 03b2a0a:
+<pre><code>+ 5/16 vertices, named, from c97b400:
     name gender age
 1 Jessie      M  18
 2 Sidney      F  19
@@ -464,7 +479,7 @@ $age
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find all edges that include "Britt"</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">E</span>(g)[[<span class="fu">inc</span>(<span class="st">'Britt'</span>)]]  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>+ 5/27 edges from 03b2a0a (vertex names):
+<pre><code>+ 5/27 edges from c97b400 (vertex names):
      tail    head tid hid hours
 2  Jessie   Britt   1   3     2
 3  Sidney   Britt   2   3     2
@@ -475,7 +490,7 @@ $age
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find all pairs that spend 4 or more hours together per week</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">E</span>(g)[[hours<span class="sc">&gt;=</span> <span class="dv">4</span>]]  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>+ 6/27 edges from 03b2a0a (vertex names):
+<pre><code>+ 6/27 edges from c97b400 (vertex names):
      tail    head tid hid hours
 6  Sidney    Rene   2   7     5
 7   Britt    Rene   3   7     5
@@ -501,7 +516,7 @@ $age
 <span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset edges greater than or equal to 5 hours</span></span>
 <span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="fu">E</span>(g1)[[hours<span class="sc">&gt;=</span><span class="dv">5</span>]]  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>+ 4/25 edges from 312589d (vertex names):
+<pre><code>+ 4/25 edges from 611175d (vertex names):
         tail      head tid hid hours
 5     Kelley Valentine   3   6     5
 8     Ronald   Jasmine   4   8     5
@@ -662,13 +677,13 @@ $age
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show all edges going to or from vertex 184</span></span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">incident</span>(g, <span class="st">'184'</span>, <span class="at">mode =</span> <span class="fu">c</span>(<span class="st">"all"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>+ 6/184 edges from 6d9e41a (vertex names):
+<pre><code>+ 6/184 edges from c7e1d35 (vertex names):
 [1] 184-&gt;45  184-&gt;182 184-&gt;181 184-&gt;178 184-&gt;183 184-&gt;177</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show all edges going out from vertex 184</span></span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">incident</span>(g, <span class="st">'184'</span>, <span class="at">mode =</span> <span class="fu">c</span>(<span class="st">"out"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>+ 6/184 edges from 6d9e41a (vertex names):
+<pre><code>+ 6/184 edges from c7e1d35 (vertex names):
 [1] 184-&gt;45  184-&gt;182 184-&gt;181 184-&gt;178 184-&gt;183 184-&gt;177</code></pre>
 </div>
 </div>
@@ -679,13 +694,13 @@ $age
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify all neighbors of vertex 12 regardless of direction</span></span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">neighbors</span>(g, <span class="st">'12'</span>, <span class="at">mode =</span> <span class="fu">c</span>(<span class="st">'all'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>+ 5/187 vertices, named, from 6d9e41a:
+<pre><code>+ 5/187 vertices, named, from c7e1d35:
 [1] 45  13  72  89  109</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify other vertices that direct edges towards vertex 12</span></span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">neighbors</span>(g, <span class="st">'12'</span>, <span class="at">mode =</span> <span class="fu">c</span>(<span class="st">'in'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>+ 1/187 vertex, named, from 6d9e41a:
+<pre><code>+ 1/187 vertex, named, from c7e1d35:
 [1] 45</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify any vertices that receive an edge from vertex 42 and direct an edge to vertex 124</span></span>
@@ -693,7 +708,7 @@ $age
 <span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> <span class="fu">neighbors</span>(g, <span class="st">'124'</span>, <span class="at">mode =</span> <span class="fu">c</span>(<span class="st">'in'</span>))</span>
 <span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="fu">intersection</span>(n1, n2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>+ 1/187 vertex, named, from 6d9e41a:
+<pre><code>+ 1/187 vertex, named, from c7e1d35:
 [1] 7</code></pre>
 </div>
 </div>
@@ -707,7 +722,7 @@ $age
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">farthest_vertices</span>(g) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$vertices
-+ 2/187 vertices, named, from 6d9e41a:
++ 2/187 vertices, named, from c7e1d35:
 [1] 184 162
 
 $distance
@@ -716,21 +731,21 @@ $distance
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Shows the path sequence between two furthest apart vertices.</span></span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">get_diameter</span>(g)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>+ 6/187 vertices, named, from 6d9e41a:
+<pre><code>+ 6/187 vertices, named, from c7e1d35:
 [1] 184 178 42  7   123 162</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify vertices that are reachable within two connections from vertex 42</span></span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ego</span>(g, <span class="dv">2</span>, <span class="st">'42'</span>, <span class="at">mode =</span> <span class="fu">c</span>(<span class="st">'out'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
-+ 13/187 vertices, named, from 6d9e41a:
++ 13/187 vertices, named, from c7e1d35:
  [1] 42  7   106 43  123 101 120 124 125 128 129 108 127</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify vertices that can reach vertex 42 within two connections</span></span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ego</span>(g, <span class="dv">2</span>, <span class="st">'42'</span>, <span class="at">mode =</span> <span class="fu">c</span>(<span class="st">'in'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
-+ 3/187 vertices, named, from 6d9e41a:
++ 3/187 vertices, named, from c7e1d35:
 [1] 42  178 184</code></pre>
 </div>
 </div>
@@ -929,17 +944,17 @@ $distance
 <span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a>g.random</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>IGRAPH 333d163 U--- 94 285 -- Erdos-Renyi (gnp) graph
+<pre><code>IGRAPH 7583738 U--- 94 270 -- Erdos-Renyi (gnp) graph
 + attr: name (g/c), type (g/c), loops (g/l), p (g/n)
-+ edges from 333d163:
- [1]  2-- 6  6-- 8  5--10 13--16  3--17  2--18  4--18  6--18  9--18  6--19
-[11]  4--21 21--22  3--23  4--23 15--23 17--24 18--24 14--26  4--27  6--27
-[21] 17--28 27--28 27--29 17--30 23--30  8--31 16--31  6--32 31--32 15--33
-[31]  4--34 24--34 26--36 36--37  4--38  7--38 14--38 26--38 31--39  4--40
-[41]  8--40 10--40 33--40 35--40 38--40 14--41  1--42  7--42 34--42  2--43
-[51] 17--43 27--43 29--43  1--44 12--44 21--44 22--44 36--44 39--44 10--45
-[61] 26--45 32--47 34--47 13--48 19--48 20--48 34--49 19--50 29--50 35--50
-[71] 43--50  7--51 14--51 23--51 30--51 34--51 41--51 50--51 18--52 21--52
++ edges from 7583738:
+ [1]  2-- 4  1-- 9  7-- 9  5--10  6--11  5--12  1--13 11--15 11--16 14--17
+[11] 15--18  8--19 15--20 14--21  6--23 16--23  8--24  5--25  5--28 14--28
+[21] 27--28 16--29 17--30  5--31 13--31 17--31 19--31 28--31 31--33 12--34
+[31] 24--34 28--34 32--34 11--35 31--35  8--36 23--36 11--38 30--38  3--39
+[41]  6--39 12--39 12--40 13--40 16--40 30--40 36--40 10--41 20--41 37--41
+[51] 23--43 26--43 27--43  5--44 12--44 21--44 26--44 20--45  7--46 10--46
+[61] 24--46 42--46 10--47 12--47 31--47 42--47  2--48 17--48 31--48 40--48
+[71] 12--49 17--49 23--49 30--49 16--50 27--51 28--51 30--51 32--52 37--52
 + ... omitted several edges</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(g.random)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -949,12 +964,12 @@ $distance
 <div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get density of new random graph `g.random`</span></span>
 <span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="fu">edge_density</span>(g.random)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.06520247</code></pre>
+<pre><code>[1] 0.06177076</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Get the average path length of the random graph g.random</span></span>
 <span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean_distance</span>(g.random, <span class="at">directed =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2.71105</code></pre>
+<pre><code>[1] 2.743537</code></pre>
 </div>
 </div>
 </section>
@@ -1030,7 +1045,7 @@ $distance
 <span id="cb98-6"><a href="#cb98-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gl.trs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-0.03166 0.05360 0.06083 0.06156 0.07014 0.09665 </code></pre>
+0.03068 0.05361 0.06125 0.06103 0.06795 0.10115 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the proportion of graphs with a transitivity score higher than Forrest Gump's network</span></span>
 <span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(gl.trs <span class="sc">&gt;</span> g.tr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1047,11 +1062,11 @@ $distance
 <span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a><span class="fu">largest_cliques</span>(g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
-+ 9/94 vertices, named, from ea618c8:
++ 9/94 vertices, named, from 6dcdb3b:
 [1] EMCEE   FORREST MEN     MAN #5  MAN #3  MAN #2  MAN #1  MAN #   JENNY  
 
 [[2]]
-+ 9/94 vertices, named, from ea618c8:
++ 9/94 vertices, named, from 6dcdb3b:
 [1] FORREST   LT DAN    STRONGARM SONG      SOLDIER   SGT SIMS  MAN      
 [8] DALLAS    BUBBA    </code></pre>
 </div>
@@ -1300,8 +1315,8 @@ $distance
 <span id="cb122-7"><a href="#cb122-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Redraw the graph and make the vertex size 1</span></span>
 <span id="cb122-8"><a href="#cb122-8" aria-hidden="true" tabindex="-1"></a><span class="fu">graphjs</span>(g1, <span class="at">vertex.size =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="scatterplotThree html-widget html-fill-item-overflow-hidden html-fill-item" id="4WyiEKzS2A" style="width:100%;height:650px;"></div>
-<script type="application/json" data-for="4WyiEKzS2A">{"x":{"NROW":19,"height":null,"width":null,"axis":false,"numticks":[6,6,6],"xticklabs":null,"yticklabs":null,"zticklabs":null,"color":[["#1E90FF","#1E90FF","#1E90FF","#1E90FF","#1E90FF","#1E90FF","#1E90FF","#1E90FF","#1E90FF","#1E90FF","#1E90FF","#1E90FF","#1E90FF","#1E90FF","#1E90FF","#1E90FF","#1E90FF","#1E90FF","#1E90FF"]],"size":1,"stroke":"black","flipy":true,"grid":false,"renderer":"auto","signif":8,"bg":"white","cexsymbols":1,"xlim":[-1,1],"ylim":[-1,1],"zlim":[-1,1],"axisscale":[1,1,1],"pch":["@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@"],"elementId":"4WyiEKzS2A","from":[[0,0,0,1,2,3,3,3,4,4,4,5,6,6,7,7,8,9,10,10,11,11,12,12,13]],"to":[[3,4,6,2,5,6,14,7,6,7,8,14,7,8,8,9,15,10,11,16,16,17,13,18,18]],"lwd":1,"linealpha":1,"center":true,"main":[""],"options":true,"alpha":[[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]],"vertices":[[0.62666666,-0.44111792,-1,0.11690329,0.47009153,1,0.44225769,0.46564257,0.76610345,0.42859956,-0.20530807,-0.68809043,0.84981627,-0.67050327,-0.66137413,0.56688836,0.45157736,0.3299351,0.56171426,-0.61909318,-0.69021926,0.34031048,-0.68440497,-0.46533306,0.79734084,-0.81266346,-0.28315319,-0.28772707,-0.81965023,-0.234768,-0.61954548,-0.83398673,0.073460727,-0.65470573,-0.8821721,0.49503369,-0.84901315,0.89578813,0.059321352,-0.74273769,0.91904866,-0.26437038,0.56120741,0.31316842,-0.19790637,1,-0.98187051,0.13357515,-1,-0.75606788,0.23348306,-0.34711405,-1,0.748558,-0.50027817,1,-0.032231898]],"xticklab":["-1.00","-0.60","-0.20","0.20","0.60","1.00"],"yticklab":["-1.00","-0.60","-0.20","0.20","0.60","1.00"],"zticklab":["1.00","0.60","0.20","-0.20","-0.60","-1.00"],"xtick":[0,0.2,0.4,0.6,0.8,1],"ytick":[0,0.2,0.4,0.6,0.8,1],"ztick":[0,0.2,0.4,0.6,0.8,1],"axislength":[1,1,1]},"evals":[],"jsHooks":[]}</script>
+<div class="scatterplotThree html-widget html-fill-item-overflow-hidden html-fill-item" id="9b0bIeH4VB" style="width:100%;height:650px;"></div>
+<script type="application/json" data-for="9b0bIeH4VB">{"x":{"NROW":19,"height":null,"width":null,"axis":false,"numticks":[6,6,6],"xticklabs":null,"yticklabs":null,"zticklabs":null,"color":[["#1E90FF","#1E90FF","#1E90FF","#1E90FF","#1E90FF","#1E90FF","#1E90FF","#1E90FF","#1E90FF","#1E90FF","#1E90FF","#1E90FF","#1E90FF","#1E90FF","#1E90FF","#1E90FF","#1E90FF","#1E90FF","#1E90FF"]],"size":1,"stroke":"black","flipy":true,"grid":false,"renderer":"auto","signif":8,"bg":"white","cexsymbols":1,"xlim":[-1,1],"ylim":[-1,1],"zlim":[-1,1],"axisscale":[1,1,1],"pch":["@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@"],"elementId":"9b0bIeH4VB","from":[[0,0,0,1,2,3,3,3,4,4,4,5,6,6,7,7,8,9,10,10,11,11,12,12,13]],"to":[[3,4,6,2,5,6,14,7,6,7,8,14,7,8,8,9,15,10,11,16,16,17,13,18,18]],"lwd":1,"linealpha":1,"center":true,"main":[""],"options":true,"alpha":[[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]],"vertices":[[0.72808391,-0.46641721,0.67355531,-0.86417277,-0.49082264,-0.70233967,-1,-0.50070052,-0.30131357,0.27205454,-0.41429586,0.39548658,1,-0.45088388,0.23345116,-0.88932214,-0.53902388,0.097473163,0.6847465,-0.48901348,0.29441984,0.70882057,-0.13146584,0.035292975,0.85998218,-0.67346138,-0.13011777,0.6833449,0.5567526,-0.17746755,0.4345191,0.82711031,-0.5814429,0.02423771,0.80283143,-0.87588234,-0.44014218,0.93461681,0.66062746,-0.31000902,0.87617946,1,-0.42041316,-0.5665224,0.32918725,0.72940912,-1,-0.59271173,0.38346102,0.96817694,-0.98009001,-0.35765758,0.58865756,-1,-0.054518408,1,0.76352624]],"xticklab":["-1.00","-0.60","-0.20","0.20","0.60","1.00"],"yticklab":["-1.00","-0.60","-0.20","0.20","0.60","1.00"],"zticklab":["1.00","0.60","0.20","-0.20","-0.60","-1.00"],"xtick":[0,0.2,0.4,0.6,0.8,1],"ytick":[0,0.2,0.4,0.6,0.8,1],"ztick":[0,0.2,0.4,0.6,0.8,1],"axislength":[1,1,1]},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
@@ -1319,8 +1334,8 @@ $distance
 <span id="cb123-8"><a href="#cb123-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot threejs plot of graph setting vertex size to v</span></span>
 <span id="cb123-9"><a href="#cb123-9" aria-hidden="true" tabindex="-1"></a><span class="fu">graphjs</span>(g, <span class="at">vertex.size =</span> v)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="scatterplotThree html-widget html-fill-item-overflow-hidden html-fill-item" id="NYd5cXJs0g" style="width:100%;height:650px;"></div>
-<script type="application/json" data-for="NYd5cXJs0g">{"x":{"NROW":94,"height":null,"width":null,"axis":false,"numticks":[6,6,6],"xticklabs":null,"yticklabs":null,"zticklabs":null,"color":["#FFA500"],"size":[2.12084176260786,1.7390275313786,2.04593370803847,1.80299880533694,1.50196403521037,2.12084176260785,1.92145191629311,1.92145191629311,1.59474856479237,1.22375829864031,2.01378097311402,2.01378097311402,2.01378097311402,2.37521337252376,1.49662222526426,1.10970164799072,1.73174586451702,1.51249821305605,2.22552758696846,1.46708788366813,1.49662222526426,1.73174586451702,1.46708788366813,1.80299880533694,1.46708788366813,2.39878177984916,2.12084176260786,1.55013604913293,1.37822540517063,2.01378097311402,1.46708788366813,1.76944709302399,1.76944709302399,1.43377041557783,1.51264988467081,5,1.76944709302399,2.12084176260786,2.12084176260786,2.12084176260786,4.02583512039286,1.73174586451702,2.2386085030207,2.91070025915354,2.12084176260785,1.52009515251025,2.39878177984916,2.39878177984916,2.39878177984916,2.39878177984916,2.01378097311402,2.39878177984916,2.12064081439468,1.9886523572403,0.670590108225352,1.90548637466692,1.80299880533694,1.87158792952074,1.43377041557783,1.82420654846708,2.01378097311402,2.2615365627181,2.22552758696846,2.32631145662754,2.37521337252376,2.12084176260786,0.93461133295273,1.45920728263392,1.92145191629311,2.01378097311402,2.22552758696846,1.49662222526426,2.39878177984916,1.76944709302399,2.12084176260786,1.37822540517063,1.37822540517063,1.37822540517063,1.84311954060196,1.37822540517063,1.46708788366813,2.12064081439468,2.12084176260786,2.01378097311402,1.37822540517063,1.76944709302399,1.48323535185594,1.43377041557783,1.47491700361015,1.44294136051896,1.37822540517063,1.43377041557783,1.37822540517063,1.37822540517063],"stroke":"black","flipy":true,"grid":false,"renderer":"auto","signif":8,"bg":"white","cexsymbols":1,"xlim":[-1,1],"ylim":[-1,1],"zlim":[-1,1],"axisscale":[1,1,1],"pch":["@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@"],"elementId":"NYd5cXJs0g","from":[[0,0,1,1,1,1,1,2,2,2,3,3,3,4,4,5,5,6,7,7,8,9,10,10,10,10,10,11,11,11,11,12,12,12,13,13,13,13,13,13,14,14,15,16,16,4,17,17,17,18,18,19,19,20,16,21,21,21,22,3,13,23,23,23,24,25,25,25,25,25,25,25,26,27,0,28,3,5,6,29,7,8,13,30,14,18,20,31,32,33,34,24,25,26,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,36,0,37,37,37,0,37,38,38,38,5,6,29,31,32,26,35,39,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,33,35,16,35,41,5,26,39,35,40,42,42,13,18,35,43,43,43,43,5,26,39,44,45,34,46,46,46,47,47,47,47,46,48,48,48,46,49,49,43,29,50,51,35,40,42,43,52,30,22,35,42,40,42,53,35,54,40,55,56,35,27,35,9,40,57,35,40,35,35,58,59,35,35,29,40,50,60,35,18,35,61,62,62,35,2,18,35,43,61,63,13,18,35,43,61,62,63,64,61,0,40,65,29,6,40,53]],"to":[[40,65,35,43,66,59,67,35,40,43,13,56,64,27,35,26,39,7,40,68,43,40,11,12,35,40,69,12,35,40,69,35,40,69,18,61,56,62,63,70,20,71,40,35,43,17,27,35,54,61,70,35,59,71,21,35,41,43,35,23,23,35,56,64,59,40,46,47,48,49,51,72,39,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,37,38,73,71,44,74,45,61,46,47,48,49,51,50,72,75,53,56,76,77,57,78,65,79,80,60,70,81,82,83,68,84,85,86,39,36,40,37,40,65,82,38,38,40,65,82,40,40,40,40,40,40,40,40,73,44,43,74,46,47,48,49,51,50,72,78,69,81,83,85,87,87,41,41,43,44,44,44,42,42,43,81,43,43,43,61,62,70,81,74,74,74,74,63,61,51,72,47,48,49,51,72,48,49,51,72,49,51,72,66,50,83,72,52,52,52,52,81,59,59,59,59,53,53,55,55,55,55,88,64,58,89,89,57,57,78,90,65,67,91,91,80,88,92,60,60,60,83,93,62,62,62,63,70,69,63,63,63,63,63,70,64,64,64,64,64,64,64,70,70,82,82,82,83,68,68,86]],"lwd":1,"linealpha":1,"center":true,"main":[""],"options":true,"alpha":[1],"vertices":[[-0.85042955,0.31436083,0.17710011,0.34173587,0.30047642,-0.75509265,-0.47951344,0.40440465,-0.20765257,0.17108079,0.63021058,-0.67555538,0.63961898,-0.70778579,0.070791431,-0.31348658,0.53732581,0.31414452,-0.94325405,-0.26577807,-0.1496546,-1,-0.22693772,-0.0078148255,0.31873621,0.76343737,-0.30259724,-0.49579214,-0.29019475,0.96865506,-0.027804997,-0.33756964,0.49676489,-0.12959088,-0.47001052,0.51565219,-0.29916728,-0.52244009,0.47345073,-0.02372722,0.79626691,-0.56718823,0.70113962,0.47169002,0.11173078,-0.67727087,0.10991041,1,-0.12835686,0.18766733,-0.76343016,0.62733056,-0.72694561,0.27308964,-0.22844565,0.82376649,-0.41478623,0.55058596,-0.53672762,-0.57704769,0.7659094,0.26573441,0.1480047,-0.39503177,0.13439383,-0.76543997,-0.17591945,-0.42726743,-0.83760405,0.27341238,0.74432056,-0.64031274,0.10695322,-0.39579705,-0.89334673,-0.49884514,-0.55944316,0.065446731,-0.19656363,0.45730247,0.41358363,0.47326418,-0.86803137,-0.016538277,0.55589158,0.46723638,0.47372593,-0.89079692,-0.13636541,0.20824728,0.00097964793,-0.63035495,-0.75471667,-0.097051184,0.10532634,0.63585117,0.1515694,-0.46777602,0.38034364,0.78695024,-0.49771207,-0.24119261,0.023842064,1,-0.086698793,-0.060928396,-0.020420376,-0.095796744,-0.62526355,-0.48412991,0.32535617,-0.8199156,0.46564845,0.089626174,-0.92475654,0.28829298,-0.032450811,-0.46308013,0.44314696,0.3787408,-0.41066229,-0.066230913,0.18128385,-0.27164513,0.1902086,-0.81538071,0.037610672,0.034480951,-0.28260978,-0.12127996,0.44670732,-0.45110945,-0.40353158,0.48398143,0.47941842,-0.71815934,0.4295165,-0.59385918,-0.44603017,-0.72714828,0.084676547,-0.70420948,-0.67820631,0.046343831,-0.3064988,-0.70358603,0.050858123,-0.50526431,-0.75921592,-0.071008166,-0.76416697,-0.10775603,0.41893715,-0.5355456,-0.59153273,-0.074341914,-0.30525304,0.10352519,-0.26262015,0.18493576,0.12767666,0.19608961,0.93674107,-0.79286686,0.63997757,0.4088247,-0.27355467,0.43512797,0.025746459,0.54739401,-0.72975071,-0.22789069,-0.15559704,0.62493279,0.59811627,-0.18115439,-0.72771924,0.2058757,-0.27405515,-0.67561204,-0.83415057,0.012688479,0.31441431,-0.15930215,0.78493251,-0.36278811,-0.33948749,0.85773829,-0.47872524,-0.43892482,0.62328697,-0.45243068,-0.11334341,0.70999469,-0.61561504,-0.86002739,0.16307858,0.025874877,0.35994223,0.81333226,-1,0.55414164,0.1581785,-0.7960237,-0.93118693,-0.40208148,-0.049032689,-0.12183783,-0.59000837,0.37735575,-0.3130422,0.72987452,-0.59233397,0.89139816,0.39515315,-0.044134606,-0.56842272,-0.76145078,0.1737462,-0.5443422,0.14742994,0.53591766,-0.2749685,0.36870147,0.49956338,0.92698003,-0.038201695,-0.041590962,-0.055204359,-0.94229448,-0.48057999,0.84425296,0.32560653,-0.36670362,-0.45397174,-0.21001714,0.63865438,0.25849578,-1,0.10057701,0.43188013,-0.54265845,-0.71653523,-0.18939032,0.24869062,-0.14536732,-0.72514267,0.33510622,0.077592181,-0.81296252,-0.24967685,0.31682825,0.59645663,0.85389297,0.035819926,-0.62858151,-0.2350701,-0.21971511,0.30620221,0.61236813,0.3457062,0.8459387,-0.39796496,-0.092265789,0.7227861,-0.12333171,0.42099033,0.27604525,-0.98168329,-0.19337053,0.96295954,-0.13866223,-0.36350186,0.78691471,-0.072775369,-0.64281396,0.24558591,-0.8605047,-0.52084898,1,0.33476799,0.17475318]],"xticklab":["-1.00","-0.60","-0.20","0.20","0.60","1.00"],"yticklab":["-1.00","-0.60","-0.20","0.20","0.60","1.00"],"zticklab":["1.00","0.60","0.20","-0.20","-0.60","-1.00"],"xtick":[0,0.2,0.4,0.6,0.8,1],"ytick":[0,0.2,0.4,0.6,0.8,1],"ztick":[0,0.2,0.4,0.6,0.8,1],"axislength":[1,1,1]},"evals":[],"jsHooks":[]}</script>
+<div class="scatterplotThree html-widget html-fill-item-overflow-hidden html-fill-item" id="akdqIxvOvq" style="width:100%;height:650px;"></div>
+<script type="application/json" data-for="akdqIxvOvq">{"x":{"NROW":94,"height":null,"width":null,"axis":false,"numticks":[6,6,6],"xticklabs":null,"yticklabs":null,"zticklabs":null,"color":["#FFA500"],"size":[2.12084176260786,1.73902753137861,2.04593370803847,1.80299880533694,1.50196403521037,2.12084176260786,1.92145191629311,1.92145191629311,1.59474856479237,1.22375829864031,2.01378097311402,2.01378097311402,2.01378097311402,2.37521337252377,1.49662222526426,1.10970164799072,1.73174586451702,1.51249821305606,2.22552758696846,1.46708788366813,1.49662222526426,1.73174586451702,1.46708788366813,1.80299880533694,1.46708788366813,2.39878177984916,2.12084176260786,1.55013604913293,1.37822540517063,2.01378097311402,1.46708788366813,1.769447093024,1.769447093024,1.43377041557783,1.51264988467081,5,1.769447093024,2.12084176260786,2.12084176260786,2.12084176260786,4.02583512039286,1.73174586451702,2.2386085030207,2.91070025915355,2.12084176260786,1.52009515251025,2.39878177984916,2.39878177984917,2.39878177984917,2.39878177984917,2.01378097311402,2.39878177984917,2.12064081439468,1.9886523572403,0.670590108225352,1.90548637466692,1.80299880533694,1.87158792952075,1.43377041557783,1.82420654846708,2.01378097311402,2.2615365627181,2.22552758696846,2.32631145662754,2.37521337252377,2.12084176260786,0.93461133295273,1.45920728263392,1.92145191629311,2.01378097311402,2.22552758696846,1.49662222526426,2.39878177984917,1.769447093024,2.12084176260786,1.37822540517063,1.37822540517063,1.37822540517063,1.84311954060196,1.37822540517063,1.46708788366813,2.12064081439468,2.12084176260786,2.01378097311402,1.37822540517063,1.769447093024,1.48323535185594,1.43377041557783,1.47491700361015,1.44294136051896,1.37822540517063,1.43377041557783,1.37822540517063,1.37822540517063],"stroke":"black","flipy":true,"grid":false,"renderer":"auto","signif":8,"bg":"white","cexsymbols":1,"xlim":[-1,1],"ylim":[-1,1],"zlim":[-1,1],"axisscale":[1,1,1],"pch":["@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@"],"elementId":"akdqIxvOvq","from":[[0,0,1,1,1,1,1,2,2,2,3,3,3,4,4,5,5,6,7,7,8,9,10,10,10,10,10,11,11,11,11,12,12,12,13,13,13,13,13,13,14,14,15,16,16,4,17,17,17,18,18,19,19,20,16,21,21,21,22,3,13,23,23,23,24,25,25,25,25,25,25,25,26,27,0,28,3,5,6,29,7,8,13,30,14,18,20,31,32,33,34,24,25,26,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,36,0,37,37,37,0,37,38,38,38,5,6,29,31,32,26,35,39,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,33,35,16,35,41,5,26,39,35,40,42,42,13,18,35,43,43,43,43,5,26,39,44,45,34,46,46,46,47,47,47,47,46,48,48,48,46,49,49,43,29,50,51,35,40,42,43,52,30,22,35,42,40,42,53,35,54,40,55,56,35,27,35,9,40,57,35,40,35,35,58,59,35,35,29,40,50,60,35,18,35,61,62,62,35,2,18,35,43,61,63,13,18,35,43,61,62,63,64,61,0,40,65,29,6,40,53]],"to":[[40,65,35,43,66,59,67,35,40,43,13,56,64,27,35,26,39,7,40,68,43,40,11,12,35,40,69,12,35,40,69,35,40,69,18,61,56,62,63,70,20,71,40,35,43,17,27,35,54,61,70,35,59,71,21,35,41,43,35,23,23,35,56,64,59,40,46,47,48,49,51,72,39,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,37,38,73,71,44,74,45,61,46,47,48,49,51,50,72,75,53,56,76,77,57,78,65,79,80,60,70,81,82,83,68,84,85,86,39,36,40,37,40,65,82,38,38,40,65,82,40,40,40,40,40,40,40,40,73,44,43,74,46,47,48,49,51,50,72,78,69,81,83,85,87,87,41,41,43,44,44,44,42,42,43,81,43,43,43,61,62,70,81,74,74,74,74,63,61,51,72,47,48,49,51,72,48,49,51,72,49,51,72,66,50,83,72,52,52,52,52,81,59,59,59,59,53,53,55,55,55,55,88,64,58,89,89,57,57,78,90,65,67,91,91,80,88,92,60,60,60,83,93,62,62,62,63,70,69,63,63,63,63,63,70,64,64,64,64,64,64,64,70,70,82,82,82,83,68,68,86]],"lwd":1,"linealpha":1,"center":true,"main":[""],"options":true,"alpha":[1],"vertices":[[0.0095039469,-0.63847655,-0.048996591,0.57978958,0.58946502,0.6615387,0.27616423,-0.30515869,0.44080032,0.97223537,-0.098532857,0.51153558,0.7272954,-0.070699197,-0.42904279,-0.2641431,-0.097105441,-0.25692776,-0.072499197,-0.23058421,-0.47189171,0.087283983,-0.23499418,-0.42439103,0.49920331,0.37316892,0.81451757,-0.7109774,-0.77478837,-0.23479727,-0.23972273,0.2331507,-0.31778523,-0.15638759,0.30263178,-0.35740004,-0.27803157,0.11260566,-0.38755715,0.70429781,-0.1393911,0.61723017,0.5846547,-0.88330281,0.12428094,-1,-0.48582631,-0.19105964,0.76456417,0.40876103,0.42814857,0.61057837,0.057614918,-0.59590833,0.51147563,-0.20837435,0.80362721,0.3005909,0.38742123,0.9697622,0.5162066,-0.92762577,0.30073393,0.76589729,0.4167819,0.28169781,-0.0041476119,0.47696342,0.90759495,0.92048445,0.069991196,0.47569842,0.24410169,0.83077685,0.63977187,-0.60541062,0.23707613,0.16910318,-0.32704483,-0.17147735,-0.18727637,0.62419081,-0.20579229,-0.53270266,0.086776849,0.97356677,0.3024308,-0.34409272,-0.69660217,0.31498281,0.115372,0.25251785,0.98297866,-0.27297541,0.045315838,0.58390638,-0.47626651,-0.27438729,0.50822632,-0.11237222,-0.36917614,1,0.52662345,-0.72535161,0.67024971,0.1882357,-0.029716661,0.19244253,-0.30631389,-0.21980772,0.59253374,0.021124129,-0.5774336,-0.28729868,-0.11479264,-0.66354692,-0.23069968,-0.25054751,-0.22134084,-0.19628685,-0.19741469,-0.13395414,0.058189095,0.57099241,0.53836987,0.37769945,0.11523979,0.38551382,0.30330361,0.45810309,0.13056344,0.56587123,-0.37852426,-0.021789292,-0.12969581,0.89968639,-0.48382278,0.45527351,-0.52483669,0.34613149,0.033930991,-0.41914281,0.29457681,0.090599379,-0.53968707,0.08562473,0.19648305,-0.38870249,0.37256446,0.20135881,-0.27291134,-0.53501927,0.39934213,-0.43556192,0.32738897,0.32534204,0.0022854042,0.16509077,0.52869698,0.19147586,0.47221051,-0.068846944,0.65675987,0.32030097,-1,0.31268629,0.24758704,-0.40925009,0.91394355,-0.1155516,0.38436636,-0.40681188,-0.58411818,-0.076570313,0.79933994,-0.54399891,-0.20800009,0.2257308,0.56779578,0.71558957,-0.38584329,-0.48233964,0.41166128,0.59913656,-0.35630477,0.74009893,0.60795339,-0.10143769,0.77810987,0.62560381,-0.35221631,0.58491173,0.78645165,-0.086199425,0.67547177,0.073136358,-0.51677397,-0.17406515,0.81882418,0.71760477,0.95786139,0.69292309,0.75169296,0.34208074,0.031747033,-0.038569331,-0.44167482,-0.3851536,0.26116314,-0.28066189,0.6379947,-0.18815097,0.89162479,0.41588237,-1,0.14933393,-0.49893447,0.21692332,0.27492484,-0.62066019,-0.22118321,0.2215786,-0.41916234,-0.22759375,-0.12225464,0.48629789,-0.77579897,-0.26525916,0.15222112,0.66703627,-0.42020736,1,-0.054211049,-0.10892052,-0.22813662,-0.68417295,0.04003631,0.18653793,-0.87802538,0.66902128,0.017360311,0.72883212,0.74842779,0.09106355,0.22574962,0.44088135,0.073603107,-0.69419171,-0.14381203,-0.43993615,-0.54236916,0.23859411,0.042543584,1,0.025011563,-0.090105335,-0.74947034,0.30006905,0.42918847,0.80975692,-0.069521453,-0.01187929,-0.56255593,0.94125928,0.58881753,0.34173248,-0.41548957,0.49511531,-0.45123256,-0.55324219,-0.11478223,0.84537407,-0.11491794,0.82071397,-0.54781975,-0.039903714,0.48136872,0.64951405,-0.37136482,0.80450736,0.5828496,-0.14965702]],"xticklab":["-1.00","-0.60","-0.20","0.20","0.60","1.00"],"yticklab":["-1.00","-0.60","-0.20","0.20","0.60","1.00"],"zticklab":["1.00","0.60","0.20","-0.20","-0.60","-1.00"],"xtick":[0,0.2,0.4,0.6,0.8,1],"ytick":[0,0.2,0.4,0.6,0.8,1],"ztick":[0,0.2,0.4,0.6,0.8,1],"axislength":[1,1,1]},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
@@ -1344,8 +1359,8 @@ $distance
 <span id="cb126-4"><a href="#cb126-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the graph using threejs</span></span>
 <span id="cb126-5"><a href="#cb126-5" aria-hidden="true" tabindex="-1"></a><span class="fu">graphjs</span>(g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="scatterplotThree html-widget html-fill-item-overflow-hidden html-fill-item" id="MqnyLxuTSz" style="width:100%;height:650px;"></div>
-<script type="application/json" data-for="MqnyLxuTSz">{"x":{"NROW":94,"height":null,"width":null,"axis":false,"numticks":[6,6,6],"xticklabs":null,"yticklabs":null,"zticklabs":null,"color":[["#FFFFFF","#FFFF00","#FFFF00","#FFFF00","#FF0000","#FFFFFF","#0000FF","#0000FF","#FFFF00","#0000FF","#0000FF","#0000FF","#0000FF","#FFFF00","#FF0000","#0000FF","#FFFF00","#FF0000","#FFFF00","#FF0000","#FF0000","#FFFF00","#FF0000","#FFFF00","#FF0000","#FFFFFF","#FFFFFF","#FF0000","#FF0000","#0000FF","#FF0000","#0000FF","#0000FF","#FF0000","#FFFF00","#FF0000","#0000FF","#FFFFFF","#FFFFFF","#FFFFFF","#0000FF","#FFFF00","#FFFFFF","#FFFF00","#FFFFFF","#FFFF00","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#0000FF","#FFFFFF","#FFFFFF","#FF0000","#FF0000","#FF0000","#FFFF00","#0000FF","#FF0000","#FF0000","#0000FF","#FFFF00","#FFFF00","#FFFF00","#FFFF00","#FFFFFF","#FFFF00","#FFFF00","#0000FF","#0000FF","#FFFF00","#FF0000","#FFFFFF","#0000FF","#FFFFFF","#FF0000","#FF0000","#FF0000","#0000FF","#FF0000","#FF0000","#FFFFFF","#FFFFFF","#0000FF","#FF0000","#0000FF","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000"]],"size":2,"stroke":"black","flipy":true,"grid":false,"renderer":"auto","signif":8,"bg":"white","cexsymbols":1,"xlim":[-1,1],"ylim":[-1,1],"zlim":[-1,1],"axisscale":[1,1,1],"pch":["@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@"],"elementId":"MqnyLxuTSz","from":[[0,0,1,1,1,1,1,2,2,2,3,3,3,4,4,5,5,6,7,7,8,9,10,10,10,10,10,11,11,11,11,12,12,12,13,13,13,13,13,13,14,14,15,16,16,4,17,17,17,18,18,19,19,20,16,21,21,21,22,3,13,23,23,23,24,25,25,25,25,25,25,25,26,27,0,28,3,5,6,29,7,8,13,30,14,18,20,31,32,33,34,24,25,26,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,36,0,37,37,37,0,37,38,38,38,5,6,29,31,32,26,35,39,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,33,35,16,35,41,5,26,39,35,40,42,42,13,18,35,43,43,43,43,5,26,39,44,45,34,46,46,46,47,47,47,47,46,48,48,48,46,49,49,43,29,50,51,35,40,42,43,52,30,22,35,42,40,42,53,35,54,40,55,56,35,27,35,9,40,57,35,40,35,35,58,59,35,35,29,40,50,60,35,18,35,61,62,62,35,2,18,35,43,61,63,13,18,35,43,61,62,63,64,61,0,40,65,29,6,40,53]],"to":[[40,65,35,43,66,59,67,35,40,43,13,56,64,27,35,26,39,7,40,68,43,40,11,12,35,40,69,12,35,40,69,35,40,69,18,61,56,62,63,70,20,71,40,35,43,17,27,35,54,61,70,35,59,71,21,35,41,43,35,23,23,35,56,64,59,40,46,47,48,49,51,72,39,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,37,38,73,71,44,74,45,61,46,47,48,49,51,50,72,75,53,56,76,77,57,78,65,79,80,60,70,81,82,83,68,84,85,86,39,36,40,37,40,65,82,38,38,40,65,82,40,40,40,40,40,40,40,40,73,44,43,74,46,47,48,49,51,50,72,78,69,81,83,85,87,87,41,41,43,44,44,44,42,42,43,81,43,43,43,61,62,70,81,74,74,74,74,63,61,51,72,47,48,49,51,72,48,49,51,72,49,51,72,66,50,83,72,52,52,52,52,81,59,59,59,59,53,53,55,55,55,55,88,64,58,89,89,57,57,78,90,65,67,91,91,80,88,92,60,60,60,83,93,62,62,62,63,70,69,63,63,63,63,63,70,64,64,64,64,64,64,64,70,70,82,82,82,83,68,68,86]],"lwd":1,"linealpha":1,"center":true,"main":[""],"options":true,"alpha":[[0,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,0,1,0,1,0,0,0,0,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1]],"vertices":[[0.24513326,-0.095812119,0.50658695,0.019333027,0.40107466,-0.68817859,0.49418329,0.39984807,-0.065061693,-0.27955277,1,-0.19019305,-0.40772101,0.73422277,0.53871098,0.42750696,-0.59684638,-0.14688307,0.81974374,0.069583343,-0.10751846,0.72690207,-0.081685807,-0.25361962,-0.24014734,0.54932597,-0.50010176,0.42745993,-1,0.41468078,0.017047013,-0.41179711,-0.23014651,0.19310805,-0.31761986,-0.33433442,0.3526761,-0.40311163,-0.31462734,-0.00094060172,0.89748365,-0.31259074,-0.802341,0.0044591385,0.43080845,1,-0.85575782,0.36256827,0.3977107,0.37172719,-0.53693395,-0.11901862,0.72060775,0.65325189,0.25496997,0.8656312,-0.37251392,-0.53770859,-0.12194993,-0.42061071,-0.88461407,0.19912113,0.4279509,0.19549402,0.51595792,-0.57231318,-0.53229736,0.098758789,-0.47107534,-0.37916579,0.8970501,-0.3062478,-0.39030972,-0.31788924,-0.42631639,0.84891384,-0.059814958,0.19179321,0.276592,-0.64910529,-0.044224079,-0.26475251,0.81937732,0.47108713,-0.90285181,-0.23100259,0.17741766,0.67240533,0.23189397,0.32925302,-0.039309023,-0.092668426,-0.64051762,-0.13179892,-0.36185909,0.40938667,-0.25947536,-0.52227537,0.069742769,-0.75570837,0.64303148,-0.058354128,-0.12752352,0.97985463,0.12682034,0.0054349558,0.1434441,0.027809851,-0.29583601,-0.29753121,0.42081024,0.31820858,-0.24278352,0.497123,0.10470093,-0.1235611,0.56295191,0.39761364,-0.56051811,0.028248476,0.35140388,-0.19800929,0.12787935,0.43172089,0.55622958,-0.53676953,0.2316681,0.16161657,-0.17599385,0.22182842,0.52700602,-0.35694881,0.50552071,-0.47253346,-0.12640757,0.59267915,0.86824677,-0.011518933,0.79581378,-0.1464943,0.10053296,0.70749349,-0.11422637,0.29694148,0.75228085,-0.30879069,0.10549208,0.62940734,-0.17359652,0.25028621,0.6135588,0.10532206,0.4928547,0.78488447,-0.31409316,0.18501126,0.38303516,0.11606771,-0.3075647,0.38414461,0.408965,0.22643845,0.080732023,0.88262988,1,0.10818934,0.42736599,0.5034849,-0.31734877,0.86316679,-0.20874696,0.20281993,-0.67949367,0.2656187,-1,-0.025086962,-0.1596586,-0.20557395,0.0036313822,-0.49652687,0.55549056,0.29024307,0.43064764,0.10759864,0.92009974,-0.11818921,0.25481746,0.87534123,-0.2477425,0.32053029,0.7895158,-0.17449059,-0.071662786,0.83014338,-0.2283727,0.22053542,-0.29210326,0.55309863,0.24139833,0.75468981,-1,-0.24044257,0.24186596,-0.69779947,0.86017102,-0.056103333,-0.15733619,0.16220021,-0.51616283,-0.26124036,0.14571039,0.78997732,-0.25175648,-0.7704877,0.2493125,0.31368238,0.78444193,-0.23736811,0.25519679,-0.082703077,-0.59044553,0.12032873,0.13617997,-0.58938662,-0.056004007,-0.81444022,-0.39727015,-0.055899955,-0.61087846,0.13690073,0.63462178,0.30457928,0.91495934,0.40224485,0.10962102,-0.53981008,0.35048577,-0.27142313,0.21987707,0.75410335,-0.15787085,-0.28220165,-0.56515942,0.49767242,0.22637234,-0.24287581,0.092850933,-0.2667858,0.4782568,0.45672214,0.16555651,0.49856999,-0.87238574,0.43375414,0.015127072,-0.28862368,-0.40787079,0.21942655,0.64900437,0.73095147,0.27072643,-0.79140643,0.72195295,0.073357595,-0.31965992,0.4648869,0.51890671,-0.14942645,0.97319167,0.36912078,-0.62662347,-0.22974469,-0.55786095,-0.91259786,0.13646021,-0.17405487,-0.94471234,0.16858689,0.10721125,-0.82802694,0.28882869,-0.36316581]],"xticklab":["-1.00","-0.60","-0.20","0.20","0.60","1.00"],"yticklab":["-1.00","-0.60","-0.20","0.20","0.60","1.00"],"zticklab":["1.00","0.60","0.20","-0.20","-0.60","-1.00"],"xtick":[0,0.2,0.4,0.6,0.8,1],"ytick":[0,0.2,0.4,0.6,0.8,1],"ztick":[0,0.2,0.4,0.6,0.8,1],"axislength":[1,1,1]},"evals":[],"jsHooks":[]}</script>
+<div class="scatterplotThree html-widget html-fill-item-overflow-hidden html-fill-item" id="bbGWaMU2Va" style="width:100%;height:650px;"></div>
+<script type="application/json" data-for="bbGWaMU2Va">{"x":{"NROW":94,"height":null,"width":null,"axis":false,"numticks":[6,6,6],"xticklabs":null,"yticklabs":null,"zticklabs":null,"color":[["#FFFFFF","#FFFF00","#FFFF00","#FFFF00","#FF0000","#FFFFFF","#0000FF","#0000FF","#FFFF00","#0000FF","#0000FF","#0000FF","#0000FF","#FFFF00","#FF0000","#0000FF","#FFFF00","#FF0000","#FFFF00","#FF0000","#FF0000","#FFFF00","#FF0000","#FFFF00","#FF0000","#FFFFFF","#FFFFFF","#FF0000","#FF0000","#0000FF","#FF0000","#0000FF","#0000FF","#FF0000","#FFFF00","#FF0000","#0000FF","#FFFFFF","#FFFFFF","#FFFFFF","#0000FF","#FFFF00","#FFFFFF","#FFFF00","#FFFFFF","#FFFF00","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#0000FF","#FFFFFF","#FFFFFF","#FF0000","#FF0000","#FF0000","#FFFF00","#0000FF","#FF0000","#FF0000","#0000FF","#FFFF00","#FFFF00","#FFFF00","#FFFF00","#FFFFFF","#FFFF00","#FFFF00","#0000FF","#0000FF","#FFFF00","#FF0000","#FFFFFF","#0000FF","#FFFFFF","#FF0000","#FF0000","#FF0000","#0000FF","#FF0000","#FF0000","#FFFFFF","#FFFFFF","#0000FF","#FF0000","#0000FF","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000","#FF0000"]],"size":2,"stroke":"black","flipy":true,"grid":false,"renderer":"auto","signif":8,"bg":"white","cexsymbols":1,"xlim":[-1,1],"ylim":[-1,1],"zlim":[-1,1],"axisscale":[1,1,1],"pch":["@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@","@"],"elementId":"bbGWaMU2Va","from":[[0,0,1,1,1,1,1,2,2,2,3,3,3,4,4,5,5,6,7,7,8,9,10,10,10,10,10,11,11,11,11,12,12,12,13,13,13,13,13,13,14,14,15,16,16,4,17,17,17,18,18,19,19,20,16,21,21,21,22,3,13,23,23,23,24,25,25,25,25,25,25,25,26,27,0,28,3,5,6,29,7,8,13,30,14,18,20,31,32,33,34,24,25,26,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,36,0,37,37,37,0,37,38,38,38,5,6,29,31,32,26,35,39,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,40,33,35,16,35,41,5,26,39,35,40,42,42,13,18,35,43,43,43,43,5,26,39,44,45,34,46,46,46,47,47,47,47,46,48,48,48,46,49,49,43,29,50,51,35,40,42,43,52,30,22,35,42,40,42,53,35,54,40,55,56,35,27,35,9,40,57,35,40,35,35,58,59,35,35,29,40,50,60,35,18,35,61,62,62,35,2,18,35,43,61,63,13,18,35,43,61,62,63,64,61,0,40,65,29,6,40,53]],"to":[[40,65,35,43,66,59,67,35,40,43,13,56,64,27,35,26,39,7,40,68,43,40,11,12,35,40,69,12,35,40,69,35,40,69,18,61,56,62,63,70,20,71,40,35,43,17,27,35,54,61,70,35,59,71,21,35,41,43,35,23,23,35,56,64,59,40,46,47,48,49,51,72,39,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,35,37,38,73,71,44,74,45,61,46,47,48,49,51,50,72,75,53,56,76,77,57,78,65,79,80,60,70,81,82,83,68,84,85,86,39,36,40,37,40,65,82,38,38,40,65,82,40,40,40,40,40,40,40,40,73,44,43,74,46,47,48,49,51,50,72,78,69,81,83,85,87,87,41,41,43,44,44,44,42,42,43,81,43,43,43,61,62,70,81,74,74,74,74,63,61,51,72,47,48,49,51,72,48,49,51,72,49,51,72,66,50,83,72,52,52,52,52,81,59,59,59,59,53,53,55,55,55,55,88,64,58,89,89,57,57,78,90,65,67,91,91,80,88,92,60,60,60,83,93,62,62,62,63,70,69,63,63,63,63,63,70,64,64,64,64,64,64,64,70,70,82,82,82,83,68,68,86]],"lwd":1,"linealpha":1,"center":true,"main":[""],"options":true,"alpha":[[0,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,0,1,0,1,0,0,0,0,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1]],"vertices":[[0.43978408,0.45398735,-0.11224894,0.54814979,-0.20327862,-0.77227603,0.72749902,0.018773806,-0.012322457,0.41906568,-0.75493092,-0.44704497,-0.45456593,-0.50272762,0.40315563,-0.22407704,0.11098138,0.50700261,-0.16456024,0.35506446,-0.13445299,-0.12211977,0.45886232,0.010871078,0.7062874,-0.25972098,-0.69293257,0.18867431,1,0.58022137,0.50885958,0.13074887,0.94380153,0.53966811,-0.0088804323,0.85099339,0.56101434,0.13028175,0.77722828,0.63667923,-0.56325932,-0.36365506,-0.36133226,-0.65297085,-0.17305955,0.1803938,0.96857915,0.94232598,0.98574321,-0.40785878,0.074967988,-0.55123993,-0.35289612,0.63311868,0.8720925,-0.52001953,-0.36891889,-0.043251436,-0.035811837,-0.79317265,-0.24433398,-0.73392763,-0.33889952,0.8790386,-0.45961877,0.16708575,-0.12944311,-0.39941559,-0.74415128,0.48081445,-0.82142262,-0.20299284,-0.012019313,-0.52552699,-0.61928999,0.69001367,0.39257699,0.61096401,-0.14919276,0.29052353,0.38672742,-0.37393291,-0.58463254,0.588388,0.65000391,-0.67094378,0.74412273,0.065539498,-0.089106593,0.75166086,0.14606639,-0.4194927,-0.83277641,0.09349639,0.46722709,0.060375666,0.10674949,0.2548718,0.90321529,-0.49517027,-0.1956866,-0.44209737,0.70553516,-0.77450529,0.18752624,0.23153309,-0.19305502,0.13792305,-0.11112997,0.46160554,0.64523017,0.33904967,0.53423836,-0.0030375754,0.1579411,0.39261217,-0.22168181,-0.15123384,0.25073631,0.58863024,0.20641166,0.29234834,0.41785529,0.97596412,-0.28894576,0.1927764,0.23459124,0.012938545,-0.20158788,0.69757731,-0.21709085,-0.21160429,-0.23808586,0.21378376,0.49911705,0.89834112,-0.030460748,-0.45318051,0.6088428,0.39435211,0.39611503,0.52525739,0.49028341,0.47600506,0.48509473,0.41524093,0.61133081,0.56648723,0.4159832,0.29828075,0.21028867,-0.10653671,0.76785513,0.6758596,0.32054469,0.4141962,0.47843574,0.13475394,-0.14205003,-0.16190073,0.021845133,0.05152345,-1,-0.21454964,0.90410529,-0.43315475,-0.011620517,0.5209999,0.44564812,-0.75995861,-0.3141442,0.16893936,0.65046419,0.43222528,0.042059752,-0.83400277,0.61783774,0.097517259,-0.24659242,-0.70463484,0.2138425,-0.041979648,0.89560729,0.79445505,-0.57307995,-0.11954577,0.76989442,-0.43556827,-0.4488817,0.84637838,-0.25962223,-0.28118692,0.64959849,-0.57580964,-0.25468594,0.19337056,0.53756991,-0.087272636,0.97473565,-0.24343668,-1,0.34678924,-0.061794888,-0.87588588,-0.18156778,0.34866186,0.057054197,0.64405778,0.043053546,0.69591014,0.87475682,-0.44726095,-0.22343782,-0.27469311,-0.79932743,-0.081026268,0.59051216,0.29008042,0.49959092,0.27696197,0.17284791,0.89378551,-0.26653304,0.22392265,0.32406536,0.074315114,-0.57438466,0.99804103,0.0143866,-0.94859758,0.067914507,0.28341925,-1,0.26605426,0.07646658,0.50185879,0.33655546,1,-0.40953237,0.57622462,-0.19046052,-0.23346599,-0.71824989,0.52986144,0.042648054,-0.082954377,0.32520333,0.37955344,-0.22223772,0.049894831,-0.0075891315,0.92220693,-0.3548311,-0.74322768,0.35596701,-0.056408142,0.22466468,0.91382955,-0.46633537,-0.078949686,-0.19993688,-0.49060198,-0.34827107,-0.30234147,-0.59055421,-0.20440213,0.25906884,-0.21404857,-0.78576167,0.48079271,0.56173912,-0.48459421,1,0.10119279,-0.79574372,0.81437379,0.31141236,-0.63146547,0.98113029,0.41542374,-0.8374043,0.57731868]],"xticklab":["-1.00","-0.60","-0.20","0.20","0.60","1.00"],"yticklab":["-1.00","-0.60","-0.20","0.20","0.60","1.00"],"zticklab":["1.00","0.60","0.20","-0.20","-0.60","-1.00"],"xtick":[0,0.2,0.4,0.6,0.8,1],"ytick":[0,0.2,0.4,0.6,0.8,1],"ztick":[0,0.2,0.4,0.6,0.8,1],"axislength":[1,1,1]},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 

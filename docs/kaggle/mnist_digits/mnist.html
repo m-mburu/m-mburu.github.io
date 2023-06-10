@@ -124,10 +124,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-BFNZ97VTLJ"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
+</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
 
 <link rel="stylesheet" href="../../style.css">
+<meta property="og:title" content="Personal Blog - MNIST Digits">
+<meta property="og:site-name" content="Personal Blog">
+<meta name="twitter:title" content="Personal Blog - MNIST Digits">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-fixed">
@@ -193,7 +206,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
    
   <ul>
   <li><a href="#mnist-digits" id="toc-mnist-digits" class="nav-link active" data-scroll-target="#mnist-digits">MNIST Digits</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#read-data-and-load-libraries" id="toc-read-data-and-load-libraries" class="nav-link" data-scroll-target="#read-data-and-load-libraries">Read data and Load libraries</a></li>
   <li><a href="#frequency-of-digits" id="toc-frequency-of-digits" class="nav-link" data-scroll-target="#frequency-of-digits">Frequency of digits</a></li>
   <li><a href="#randomly-sample-12-digits" id="toc-randomly-sample-12-digits" class="nav-link" data-scroll-target="#randomly-sample-12-digits">Randomly sample 12 digits</a></li>
@@ -208,7 +221,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </ul></li>
   </ul></li>
   <li><a href="#compare-between-tsne-amd-glmr" id="toc-compare-between-tsne-amd-glmr" class="nav-link" data-scroll-target="#compare-between-tsne-amd-glmr">Compare between tsne amd glmr</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#tsne" id="toc-tsne" class="nav-link" data-scroll-target="#tsne">TSNE</a></li>
   <li><a href="#plot-tsne-group-means" id="toc-plot-tsne-group-means" class="nav-link" data-scroll-target="#plot-tsne-group-means">Plot tsne group means</a></li>
   <li><a href="#kmeans-to-see-if-tsne-and-kmeans-agree" id="toc-kmeans-to-see-if-tsne-and-kmeans-agree" class="nav-link" data-scroll-target="#kmeans-to-see-if-tsne-and-kmeans-agree">Kmeans to see if tsne and kmeans agree</a></li>

@@ -124,10 +124,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-BFNZ97VTLJ"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
+</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
 
 <link rel="stylesheet" href="../../style.css">
+<meta property="og:title" content="Personal Blog - The reduction in weekly working hours in Europe">
+<meta property="og:description" content="Looking at the development between 1996 and 2006">
+<meta property="og:site-name" content="Personal Blog">
+<meta name="twitter:title" content="Personal Blog - The reduction in weekly working hours in Europe">
+<meta name="twitter:description" content="Looking at the development between 1996 and 2006">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-fixed">
@@ -195,10 +210,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#summary" id="toc-summary" class="nav-link active" data-scroll-target="#summary">Summary</a></li>
   <li><a href="#preparations" id="toc-preparations" class="nav-link" data-scroll-target="#preparations">Preparations</a></li>
   <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis">Analysis</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
   <li><a href="#preprocessing" id="toc-preprocessing" class="nav-link" data-scroll-target="#preprocessing">Preprocessing</a></li>
-  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a>
+  <ul class="collapse">
+  <li><a href="#an-interesting-correlation" id="toc-an-interesting-correlation" class="nav-link" data-scroll-target="#an-interesting-correlation">An interesting correlation</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -277,7 +295,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  8 1987                     12.1                33.6
  9 1988                     13.2                33.7
 10 1989                     13.1                33.5
-# … with 17 more rows</code></pre>
+# ℹ 17 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># pipe the above data frame into the knitr::kable function</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>

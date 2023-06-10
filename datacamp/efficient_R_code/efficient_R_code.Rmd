@@ -165,7 +165,7 @@ A common operation in statistics is to calculate the sum of log probabilities. T
 
 # x is a vector of probabilities
 
-total \<- 0 for(i in seq_along(x)) total \<- total + log(x\[i\]) However this piece of code could be significantly improved using vectorized code.
+total \<- 0 for(i in seq_along(x)) total \<- total + log(x$$i$$) However this piece of code could be significantly improved using vectorized code.
 
 ```{r}
 # Initial code
@@ -194,7 +194,7 @@ microbenchmark(mat[, 1], df[, 1])
 
 Similar to the previous example, the objects mat and df are a matrix and a data frame, respectively. Using microbenchmark(), how long does it take to select the first row from each of these objects?
 
-To make the comparison fair, just use mat\[1, \] and df\[1, \].
+To make the comparison fair, just use mat$$1, $$ and df$$1, $$.
 
 -   Interesting! Accessing a row of a data frame is much slower than accessing that of a matrix, more so than when accessing a column from each data type. This is because the values of a column of a data frame must be the same data type, whereas that of a row doesn't have to be. Do you see the pattern here?
 

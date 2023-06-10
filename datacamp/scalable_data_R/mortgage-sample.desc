@@ -1,5 +1,5 @@
 new("big.matrix.descriptor", description = list(sharedType = "FileBacked", 
-    filename = "mortgage-sample.bin", dirname = "/home/mburu/personal_projects/github_io_blog/datacamp/scalable_data_R/", 
+    filename = "mortgage-sample.bin", dirname = "/home/mburu/r_projects/m-mburu.github.io/datacamp/scalable_data_R/", 
     totalRows = 70000L, totalCols = 16L, rowOffset = c(0, 70000
     ), colOffset = c(0, 16), nrow = 70000, ncol = 16, rowNames = NULL, 
     colNames = c("enterprise", "record_number", "msa", "perc_minority", 
