@@ -34,7 +34,7 @@ nav ul li:hover{
   border-width: 0 1px 1px 1px;
   border-color: black;
   color: white;
-  background-color: #000;
+  background-color:#000;/* #2c3e50;*/
   padding: 10px 15px;
   margin-bottom: 10px;
   text-align: center;

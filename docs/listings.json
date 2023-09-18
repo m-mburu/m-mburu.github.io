@@ -2,6 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/cbk_data/R/kenya_income_exp.html",
+      "/posts/Diabetes/predict_diabetes_tidymodels.html",
       "/posts/welcome/index.html",
       "/posts/breast_cancer_prediction/shap_vals.html",
       "/posts/loan_prediction/loan_prediction.html",
@@ -12,6 +14,7 @@
   {
     "listing": "/datacamp.html",
     "items": [
+      "/datacamp/introduction_python/introduction_python.html",
       "/datacamp/intermidiate_regression_R/intermediate_regression.html",
       "/datacamp/survival_analysis_R/survival_analysis_R.html",
       "/datacamp/foundation_prob_R/foundation_probability.html",
