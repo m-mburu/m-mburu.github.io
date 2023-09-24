@@ -14,6 +14,7 @@
   {
     "listing": "/datacamp.html",
     "items": [
+      "/datacamp/intermediatePython/IntermediatePython.html",
       "/datacamp/introduction_python/introduction_python.html",
       "/datacamp/intermidiate_regression_R/intermediate_regression.html",
       "/datacamp/survival_analysis_R/survival_analysis_R.html",
