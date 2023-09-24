@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://m-mburu.github.io/index.html</loc>
-    <lastmod>2023-08-22T04:07:17.691Z</lastmod>
+    <lastmod>2023-09-24T04:31:49.242Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/kenya_population/household_assets_2019census.html</loc>
@@ -14,7 +14,7 @@
   </url>
   <url>
     <loc>https://m-mburu.github.io/datacamp.html</loc>
-    <lastmod>2023-09-22T05:47:19.858Z</lastmod>
+    <lastmod>2023-09-24T06:24:08.522Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/datacamp/intermidiate_regression_R/intermediate_regression.html</loc>
@@ -47,5 +47,17 @@
   <url>
     <loc>https://m-mburu.github.io/datacamp/intermediatePython/IntermediatePython.html</loc>
     <lastmod>2023-09-22T05:47:19.450Z</lastmod>
+  </url>
+  <url>
+    <loc>https://m-mburu.github.io/datacamp/DataManipulationPandas/DataManipulationPandas.html</loc>
+    <lastmod>2023-09-24T06:24:15.154Z</lastmod>
+  </url>
+  <url>
+    <loc>https://m-mburu.github.io/inProcess/Diabetes/predict_diabetes_tidymodels.html</loc>
+    <lastmod>2023-09-24T04:31:46.478Z</lastmod>
+  </url>
+  <url>
+    <loc>https://m-mburu.github.io/inProcess/cbk_data/R/kenya_income_exp.html</loc>
+    <lastmod>2023-09-24T04:31:48.630Z</lastmod>
   </url>
 </urlset>
