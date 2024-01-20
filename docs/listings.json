@@ -12,6 +12,8 @@
   {
     "listing": "/datacamp.html",
     "items": [
+      "/datacamp/introduction_to_shell/intoroduction_shell.html",
+      "/datacamp/Python_Data_Science_Toolbox_Part_1/python_data_science_toolbox_part_1.html",
       "/datacamp/DataManipulationPandas/DataManipulationPandas.html",
       "/datacamp/intermediatePython/IntermediatePython.html",
       "/datacamp/introduction_python/introduction_python.html",
