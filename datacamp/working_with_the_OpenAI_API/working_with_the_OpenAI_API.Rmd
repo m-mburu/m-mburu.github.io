@@ -1,0 +1,138 @@
+---
+title: "Introduction to the OpenAI API"
+output: html_document
+date: "2024-01-23"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, 
+                      warning = FALSE, 
+                      message = FALSE,
+                      eval = TRUE)
+
+```
+
+## Introduction to the OpenAI API
+
+### Applications built on the OpenAI API
+Software applications, web browser experiences, and even whole products are being built on top of the OpenAI API. In this exercise, you'll be able to explore an application built on top of the OpenAI API: DataCamp's own version of ChatGPT!
+
+The text you type into the interface will be sent as a request to the OpenAI API and the response will be delivered and unpacked directly back to you.
+
+Using the ChatGPT interface, answer the following question: In what year was OpenAI founded?
+
+- 2015
+
+
+### Your first API request!
+Throughout the course, you'll write Python code to interact with the OpenAI API. As a first step, you'll need to create your own API key. API keys used in this course's exercises will not be stored in any way.
+
+
+
+
+To create a key, you'll first need to create an OpenAI account by visiting their [signup page](https://platform.openai.com/signup). Next, navigate to the [API keys page](https://platform.openai.com/account/api-keys) to create your secret key.
+
+```{python}
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Access the variables as you normally would with os.getenv()
+
+api_key = os.getenv('OPEN_API_KEY2')
+
+```
+
+The button to create a new secret key.
+
+OpenAI sometimes provides free credits for the API, but this can differ depending on geography. You may also need to add debit/credit card details. You'll need less than $1 credit to complete this course.
+
+Warning: if you send many requests or use lots of tokens in a short period, you may see an openai.error.RateLimitError. If you see this error, please wait a minute for your quota to reset and you should be able to begin sending more requests. Please see [OpenAI's rate limit error support article](https://help.openai.com/en/articles/6897202-ratelimiterror) for more information.
+
+```{python}
+# Import the OpenAI client
+from openai import OpenAI
+
+# Create the OpenAI client and set your API key
+client = OpenAI(api_key=api_key)
+
+# Create a request to the Completions endpoint
+response = client.completions.create(
+  # Specify the correct model
+  model="gpt-3.5-turbo-instruct",
+  prompt="Who developed ChatGPT?"
+)
+
+print(response)
+```
+
+
+### Digging into the response
+One of the key skills required to work with APIs is manipulating the response to extract the desired information. In this exercise, you'll push your Python dictionary and list manipulation skills to the max to extract information from the API response.
+
+You've been provided with response, which is a response from the OpenAI API when provided with the prompt, What is the goal of OpenAI?
+
+This response object has been printed for you so you can see and understand its structure. If you're struggling to picture the structure, view the dictionary form of the response with .model_dump().
+
+
+```{python}
+#Extract the model used from response using attributes.
+print(response.model)
+
+#Extract the total tokens used from response using attributes.
+print(response.usage.total_tokens)
+
+#Extract the text answer to the prompt from response.
+print(response.choices[0].text)
+```
+
+
+### Solving problems with AI solutions
+An Online Scientific Journal called Terra Scientia wants to use AI to make their scientific papers more accessible to a wider audience. To do this, they want to develop a feature where users can double-click on words they don't understand, and an AI model will explain what it means in the context of the article.
+
+To accomplish this, the developers at Terra Scientia want to build the feature on top of the OpenAI API.
+
+Which OpenAI API endpoint(s) could they use to build this feature?
+
+- Completions
+- Chat
+
+### Structuring organizations
+You've learned that you can set up organizations to manage API usage and billing. Users can be part of multiple organizations and attribute API requests to a specific organization. It's best practice to structure organizations such that each business unit or product feature has a separate organization, depending on the number of features the business has built on the OpenAI API.
+
+What are the benefits of having separate organizations for each business unit or product feature?
+
+- Reducing risk of hitting rate limits
+- Improved management of usage and billing
+- Removes single failure point
+
+
+### Find and replace
+Text completion models can be used for much more than answering questions. In this exercise, you'll explore the model's ability to transform a text prompt.
+
+Find-and-replace tools have been around for decades, but they are often limited to identifying and replacing exact words or phrases. You've been provided with a block of text discussing cars, and you'll use a completion model to update the text to discuss planes instead, updating the text appropriately.
+
+Warning: if you send many requests or use lots of tokens in a short period, you may hit your rate limit and see an openai.error.RateLimitError. If you see this error, please wait a minute for your quota to reset and you should be able to begin sending more requests. Please see OpenAI's rate limit error support article for more informatio
+
+```{python}
+# Set your API key
+client = OpenAI(api_key=api_key)
+
+prompt="""Replace car with plane and adjust phrase:
+A car is a vehicle that is typically powered by an internal combustion engine or an electric motor. It has four wheels, and is designed to carry passengers and/or cargo on roads or highways. Cars have become a ubiquitous part of modern society, and are used for a wide variety of purposes, such as commuting, travel, and transportation of goods. Cars are often associated with freedom, independence, and mobility."""
+
+# Create a request to the Completions endpoint
+response = client.completions.create(
+  model="gpt-3.5-turbo-instruct",
+  prompt=prompt,
+  max_tokens = 100
+
+)
+
+# Extract and print the response text
+print(response.choices[0].text)
+```
+
+
