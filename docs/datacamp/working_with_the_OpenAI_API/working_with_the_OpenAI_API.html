@@ -212,6 +212,14 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
   <li><a href="#solving-problems-with-ai-solutions" id="toc-solving-problems-with-ai-solutions" class="nav-link" data-scroll-target="#solving-problems-with-ai-solutions">Solving problems with AI solutions</a></li>
   <li><a href="#structuring-organizations" id="toc-structuring-organizations" class="nav-link" data-scroll-target="#structuring-organizations">Structuring organizations</a></li>
   <li><a href="#find-and-replace" id="toc-find-and-replace" class="nav-link" data-scroll-target="#find-and-replace">Find and replace</a></li>
+  <li><a href="#text-summarization" id="toc-text-summarization" class="nav-link" data-scroll-target="#text-summarization">Text summarization</a></li>
+  <li><a href="#content-generation" id="toc-content-generation" class="nav-link" data-scroll-target="#content-generation">Content generation</a></li>
+  <li><a href="#classifying-text-sentiment" id="toc-classifying-text-sentiment" class="nav-link" data-scroll-target="#classifying-text-sentiment">Classifying text sentiment</a></li>
+  <li><a href="#categorizing-companies" id="toc-categorizing-companies" class="nav-link" data-scroll-target="#categorizing-companies">Categorizing companies</a></li>
+  <li><a href="#the-chat-completions-endpoint" id="toc-the-chat-completions-endpoint" class="nav-link" data-scroll-target="#the-chat-completions-endpoint">The Chat Completions endpoint</a></li>
+  <li><a href="#code-explanation" id="toc-code-explanation" class="nav-link" data-scroll-target="#code-explanation">Code explanation</a></li>
+  <li><a href="#in-context-learning" id="toc-in-context-learning" class="nav-link" data-scroll-target="#in-context-learning">In-context learning</a></li>
+  <li><a href="#creating-an-ai-chatbot" id="toc-creating-an-ai-chatbot" class="nav-link" data-scroll-target="#creating-an-ai-chatbot">Creating an AI chatbot</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -257,67 +265,48 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
 <h3 class="anchored" data-anchor-id="your-first-api-request">Your first API request!</h3>
 <p>Throughout the course, you’ll write Python code to interact with the OpenAI API. As a first step, you’ll need to create your own API key. API keys used in this course’s exercises will not be stored in any way.</p>
 <p>To create a key, you’ll first need to create an OpenAI account by visiting their <a href="https://platform.openai.com/signup">signup page</a>. Next, navigate to the <a href="https://platform.openai.com/account/api-keys">API keys page</a> to create your secret key.</p>
-<div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load environment variables from .env file</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>load_dotenv()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>True</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Access the variables as you normally would with os.getenv()</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>api_key <span class="op">=</span> os.getenv(<span class="st">'OPEN_API_KEY2'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<p>True</p>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Access the variables as you normally would with os.getenv()</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>api_key <span class="op">=</span> os.getenv(<span class="st">'OPEN_API_KEY2'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The button to create a new secret key.</p>
 <p>OpenAI sometimes provides free credits for the API, but this can differ depending on geography. You may also need to add debit/credit card details. You’ll need less than $1 credit to complete this course.</p>
 <p>Warning: if you send many requests or use lots of tokens in a short period, you may see an openai.error.RateLimitError. If you see this error, please wait a minute for your quota to reset and you should be able to begin sending more requests. Please see <a href="https://help.openai.com/en/articles/6897202-ratelimiterror">OpenAI’s rate limit error support article</a> for more information.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import the OpenAI client</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the OpenAI client and set your API key</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> OpenAI(api_key<span class="op">=</span>api_key)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a request to the Completions endpoint</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.completions.create(</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Specify the correct model</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  model<span class="op">=</span><span class="st">"gpt-3.5-turbo-instruct"</span>,</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  prompt<span class="op">=</span><span class="st">"Who developed ChatGPT?"</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Completion(id='cmpl-8k5VGYmknDyaYGcJqXTRCC7wjQ7yK', choices=[CompletionChoice(finish_reason='length', index=0, logprobs=None, text='\n\nChatGPT was developed by OpenAI, an artificial intelligence research organization founded')], created=1705994934, model='gpt-3.5-turbo-instruct', object='text_completion', system_fingerprint=None, usage=CompletionUsage(completion_tokens=16, prompt_tokens=6, total_tokens=22))</code></pre>
-</div>
-</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import the OpenAI client</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> OpenAI(api_key<span class="op">=</span>api_key)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a request to the Completions endpoint</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.completions.create(</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Specify the correct model</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  model<span class="op">=</span><span class="st">"gpt-3.5-turbo-instruct"</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  prompt<span class="op">=</span><span class="st">"Who developed ChatGPT?"</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Completion(id=‘cmpl-8kS72QP8ZF8MeDVpOazDaX55Kaw59’, choices=[CompletionChoice(finish_reason=‘stop’, index=0, logprobs=None, text=‘was developed by OpenAI.’)], created=1706081844, model=‘gpt-3.5-turbo-instruct’, object=‘text_completion’, system_fingerprint=None, usage=CompletionUsage(completion_tokens=10, prompt_tokens=6, total_tokens=16))</p>
 </section>
 <section id="digging-into-the-response" class="level3">
 <h3 class="anchored" data-anchor-id="digging-into-the-response">Digging into the response</h3>
 <p>One of the key skills required to work with APIs is manipulating the response to extract the desired information. In this exercise, you’ll push your Python dictionary and list manipulation skills to the max to extract information from the API response.</p>
 <p>You’ve been provided with response, which is a response from the OpenAI API when provided with the prompt, What is the goal of OpenAI?</p>
 <p>This response object has been printed for you so you can see and understand its structure. If you’re struggling to picture the structure, view the dictionary form of the response with .model_dump().</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract the model used from response using attributes.</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>gpt-3.5-turbo-instruct</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract the total tokens used from response using attributes.</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.usage.total_tokens)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>22</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract the text answer to the prompt from response.</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-
-ChatGPT was developed by OpenAI, an artificial intelligence research organization founded</code></pre>
-</div>
-</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract the model used from response using attributes.</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>gpt-3.5-turbo-instruct</p>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract the total tokens used from response using attributes.</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.usage.total_tokens)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>16</p>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract the text answer to the prompt from response.</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>ChatGPT was developed by OpenAI.</p>
 </section>
 <section id="solving-problems-with-ai-solutions" class="level3">
 <h3 class="anchored" data-anchor-id="solving-problems-with-ai-solutions">Solving problems with AI solutions</h3>
@@ -344,29 +333,266 @@ ChatGPT was developed by OpenAI, an artificial intelligence research organizatio
 <p>Text completion models can be used for much more than answering questions. In this exercise, you’ll explore the model’s ability to transform a text prompt.</p>
 <p>Find-and-replace tools have been around for decades, but they are often limited to identifying and replacing exact words or phrases. You’ve been provided with a block of text discussing cars, and you’ll use a completion model to update the text to discuss planes instead, updating the text appropriately.</p>
 <p>Warning: if you send many requests or use lots of tokens in a short period, you may hit your rate limit and see an openai.error.RateLimitError. If you see this error, please wait a minute for your quota to reset and you should be able to begin sending more requests. Please see OpenAI’s rate limit error support article for more informatio</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set your API key</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> OpenAI(api_key<span class="op">=</span>api_key)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span><span class="st">"""Replace car with plane and adjust phrase:</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="st">A car is a vehicle that is typically powered by an internal combustion engine or an electric motor. It has four wheels, and is designed to carry passengers and/or cargo on roads or highways. Cars have become a ubiquitous part of modern society, and are used for a wide variety of purposes, such as commuting, travel, and transportation of goods. Cars are often associated with freedom, independence, and mobility."""</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a request to the Completions endpoint</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.completions.create(</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  model<span class="op">=</span><span class="st">"gpt-3.5-turbo-instruct"</span>,</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  prompt<span class="op">=</span>prompt,</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  max_tokens <span class="op">=</span> <span class="dv">100</span></span>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span><span class="st">"""Replace car with plane and adjust phrase:</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="st">A car is a vehicle that is typically powered by an internal combustion engine or an electric motor. It has four wheels, and is designed to carry passengers and/or cargo on roads or highways. Cars have become a ubiquitous part of modern society, and are used for a wide variety of purposes, such as commuting, travel, and transportation of goods. Cars are often associated with freedom, independence, and mobility."""</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a request to the Completions endpoint</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.completions.create(</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  model<span class="op">=</span><span class="st">"gpt-3.5-turbo-instruct"</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  prompt<span class="op">=</span>prompt,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  max_tokens <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract and print the response text</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A plane is a vehicle that is typically powered by jet engines or propellers. It has wings, and is designed to carry passengers and/or cargo through the air. Planes have become a vital mode of transportation in the modern world, and are used for a wide variety of purposes, such as traveling long distances, transporting goods, and providing emergency medical services. Planes are often associated with speed, efficiency, and the ability to reach distant destinations.</p>
+</section>
+<section id="text-summarization" class="level3">
+<h3 class="anchored" data-anchor-id="text-summarization">Text summarization</h3>
+<p>One really common use case for using OpenAI’s models is summarizing text. This has a ton of applications in business settings, including summarizing reports into concise one-pagers or a handful of bullet points, or extracting the next steps and timelines for different stakeholders.</p>
+<p>In this exercise, you’ll summarize a passage of text on financial investment into two concise bullet points using a text completion model.</p>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span><span class="st">"""Summarize the following text into two concise bullet points:</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="st">Investment refers to the act of committing money or capital to an enterprise with the expectation of obtaining an added income or profit in return. There are a variety of investment options available, including stocks, bonds, mutual funds, real estate, precious metals, and currencies. Making an investment decision requires careful analysis, assessment of risk, and evaluation of potential rewards. Good investments have the ability to produce high returns over the long term while minimizing risk. Diversification of investment portfolios reduces risk exposure. Investment can be a valuable tool for building wealth, generating income, and achieving financial security. It is important to be diligent and informed when investing to avoid losses."""</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a request to the Completions endpoint</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.completions.create(</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  model<span class="op">=</span><span class="st">"gpt-3.5-turbo-instruct"</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  prompt<span class="op">=</span>prompt,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  max_tokens <span class="op">=</span> <span class="dv">400</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  temperature <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Investment involves committing money or capital to an enterprise in order to obtain added income or profit.</li>
+<li>Careful analysis, risk assessment, and diversification are important for making successful investments that can build wealth and achieve financial security.</li>
+</ul>
+</section>
+<section id="content-generation" class="level3">
+<h3 class="anchored" data-anchor-id="content-generation">Content generation</h3>
+<p>AI is playing a much greater role in content generation, from creating marketing content such as blog post titles to creating outreach email templates for sales teams.</p>
+<p>In this exercise, you’ll harness AI through the Completions endpoint to generate a catchy slogan for a new restaurant. Feel free to test out different prompts, such as varying the type of cuisine (e.g., Italian, Chinese) or the type of restaurant (e.g., fine-dining, fast-food), to see how the response changes.</p>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a request to the Completions endpoint</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"""create a catchy slogan for a new restaurant:</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="st">  The restaurant deals mainly in italian cuisine"""</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.completions.create(</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"gpt-3.5-turbo-instruct"</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    prompt<span class="op">=</span>prompt,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    max_tokens <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>“Indulge in Italy’s Finest Flavors at Our Table”</p>
+</section>
+<section id="classifying-text-sentiment" class="level3">
+<h3 class="anchored" data-anchor-id="classifying-text-sentiment">Classifying text sentiment</h3>
+<p>As well as answering questions, transforming text, and generating new text, Completions models can also be used for classification tasks, such as categorization and sentiment classification. This sort of task requires not only knowledge of the words but also a deeper understanding of their meaning.</p>
+<p>In this exercise, you’ll explore using Completions models for sentiment classification using reviews from an online shoe store called Toe-Tally Comfortable:</p>
+<ul>
+<li>Unbelievably good!</li>
+<li>Shoes fell apart on the second use.</li>
+<li>The shoes look nice, but they aren’t very comfortable.</li>
+<li>Can’t wait to show them off!</li>
+</ul>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a request to the Completions endpoint</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"""classify the sentiment of the following statements as either negative, positive, or neutral list in bullet points:</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="st">Unbelievably good!</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="st">Shoes fell apart on the second use.</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="st">The shoes look nice, but they aren't very comfortable.</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="st">Can't wait to show them off! """</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.completions.create(</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  model<span class="op">=</span><span class="st">"gpt-3.5-turbo-instruct"</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  prompt<span class="op">=</span>prompt,</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  max_tokens<span class="op">=</span><span class="dv">100</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Positive</li>
+<li>Negative</li>
+<li>Neutral</li>
+<li>Positive</li>
+</ul>
+</section>
+<section id="categorizing-companies" class="level3">
+<h3 class="anchored" data-anchor-id="categorizing-companies">Categorizing companies</h3>
+<p>In this exercise, you’ll use a Completions model to categorize different companies. At first, you won’t specify the categories to see how the model categorizes them. Then, you’ll specify the categories in the prompt to ensure they are categorized in a desirable and predictable way.</p>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a request to the Completions endpoint</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"""Categorize the following companies  into, Tech, Energy, Luxury Goods, or Investment list in bullet points: </span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="st">  Apple, </span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="st">  Microsoft,</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="st">  Saudi Aramco,</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="st">  Alphabet,</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="st">  Amazon, </span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="st">  Berkshire Hathaway, </span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="st">  NVIDIA,</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="st">  Meta,</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="st">  Tesla, </span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="st">  LVMH """</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.completions.create(</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"gpt-3.5-turbo-instruct"</span>,</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    prompt<span class="op">=</span>prompt,</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    max_tokens<span class="op">=</span><span class="dv">100</span>,</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    temperature<span class="op">=</span><span class="fl">0.5</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Tech:
+<ul>
+<li>Apple</li>
+<li>Microsoft</li>
+<li>Alphabet</li>
+<li>Amazon</li>
+<li>NVIDIA</li>
+<li>Meta</li>
+<li>Tesla</li>
+</ul></li>
+<li>Energy:
+<ul>
+<li>Saudi Aramco</li>
+</ul></li>
+<li>Luxury Goods:
+<ul>
+<li>LVMH</li>
+</ul></li>
+<li>Investment:
+<ul>
+<li>Berkshire Hathaway</li>
+</ul></li>
+</ul>
+</section>
+<section id="the-chat-completions-endpoint" class="level3">
+<h3 class="anchored" data-anchor-id="the-chat-completions-endpoint">The Chat Completions endpoint</h3>
+<p>The models available via the Chat Completions endpoint can not only perform similar single-turn tasks as models from the Completions endpoint, but can also be used to have multi-turn conversations.</p>
+<p>To enable multi-turn conversations, the endpoint supports three different roles:</p>
+<p>System: controls assistant’s behavior User: instruct the assistant Assistant: response to user instruction In this exercise, you’ll make your first request to the Chat Completions endpoint to answer the following question:</p>
+<p>What is the difference between a for loop and a while loop?</p>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a request to the Chat Completions endpoint</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  model<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  max_tokens<span class="op">=</span><span class="dv">150</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  messages<span class="op">=</span>[</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"system"</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>     <span class="st">"content"</span>: <span class="st">"You are a helpful data science tutor. Provide code example using rmarkdown syntax ie code between ``` code ```"</span>},</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"user"</span>,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"content"</span>: <span class="st">"What is the difference between a for loop and a while loop?"</span>}</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract and print the response text</span></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-
-A plane is a vehicle that is typically powered by jet engines or propellers. It has wings, and is designed to carry passengers and/or cargo in the air. Planes have become a vital mode of transportation in modern society, used for travel, shipping, and emergency services. Planes are often associated with speed, convenience, and global connectivity.</code></pre>
-</div>
-</div>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&nbsp;Extract and print the assistant's text response</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].message.content)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A for loop and a while loop are both types of iteration statements used in programming to repeat a block of code multiple times. However, they differ in their syntax and the way they control the loop execution.</p>
+<p>Here is an example of a for loop in R:</p>
+<pre class="{r}"><code># Example: Print numbers from 1 to 5 using a for loop
+for (i in 1:5) {
+  print(i)
+}</code></pre>
+<p>In the above code snippet, the for loop iterates over the sequence <code>1:5</code> and assigns each value to the variable <code>i</code>. The code block inside the loop (enclosed within curly brackets) is executed for each iteration, printing the value of <code>i</code> in this case.</p>
+<p>Now,</p>
+</section>
+<section id="code-explanation" class="level3">
+<h3 class="anchored" data-anchor-id="code-explanation">Code explanation</h3>
+<p>One of the most popular use cases for using OpenAI models is for explaining complex content, such as technical jargon and code. This is a task that data practitioners, software engineers, and many others must tackle in their day-to-day as they review and utilize code written by others.</p>
+<p>In this exercise, you’ll use the OpenAI API to explain a block of Python code to understand what it is doing.</p>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>instruction <span class="op">=</span> <span class="st">"""Explain what this Python code does in one sentence:</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="st">import numpy as np</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="st">heights_dict = {"Mark": 1.76, "Steve": 1.88, "Adnan": 1.73}</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="st">heights = heights_dict.values()</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="st">print(np.mean(heights))</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a request to the Chat Completions endpoint</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  model<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>,</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  max_tokens<span class="op">=</span><span class="dv">100</span>,</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  messages<span class="op">=</span>[</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"system"</span>,</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>     <span class="st">"content"</span>: <span class="st">"You are a helpful data science tutor."</span>},</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"user"</span>,</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"content"</span>: instruction}</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].message.content)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This Python code calculates the mean height from the heights dictionary using the numpy library.</p>
+</section>
+<section id="in-context-learning" class="level3">
+<h3 class="anchored" data-anchor-id="in-context-learning">In-context learning</h3>
+<p>For more complex use cases, the models lack the understanding or context of the problem to provide a suitable response from a prompt. In these cases, you need to provide examples to the model for it to learn from, so-called in-context learning.</p>
+<p>In this exercise, you’ll improve on a Python programming tutor built on the OpenAI API by providing an example that the model can learn from.</p>
+<p>Here is an example of a user and assistant message you can use, but feel free to try out your own:</p>
+<ul>
+<li>User → Explain what the min() function does.</li>
+<li>Assistant → The min() function returns the smallest item from an iterable.</li>
+</ul>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>   model<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Add a user and assistant message for in-context learning</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>   messages<span class="op">=</span>[</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>     {<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: <span class="st">"You are a helpful Python programming tutor."</span>},</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>     {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"Explain what sum function in python does"</span>},</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>     {<span class="st">"role"</span>: <span class="st">"assistant"</span>, </span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>     <span class="st">"content"</span>: <span class="st">"""the sum() function is a built-in function used to calculate the sum of all the elements in an iterable, like a list, tuple, or  </span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="st">     set. The basic syntax of the sum() function is as follows:</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="st">     `sum(iterable, start)`</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="st">     example:</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="st">     `numbers = [1, 2, 3, 4, 5]</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="st">      result = sum(numbers)  # This will add 1 + 2 + 3 + 4 + 5</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="st">      print(result)  # Output will be 15`</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="st">     """</span>},</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>     {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"Explain what the type() function does."</span>}</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>   ]</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].message.content)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The type() function in Python is a built-in function that returns the type of an object. It takes an object as an argument and returns a string representing the type of that object.</p>
+<p>Here’s an example:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(x))  <span class="co"># Output: &lt;class 'int'&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="st">"Hello"</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(y))  <span class="co"># Output: &lt;class 'str'&gt;</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(z))  <span class="co"># Output: &lt;class 'list'&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In the above example, the type() function is used to determine the type of the variable x, y, and z. It returns the type of each object, which is an integer, string, and list respectively.</p>
+</section>
+<section id="creating-an-ai-chatbot" class="level3">
+<h3 class="anchored" data-anchor-id="creating-an-ai-chatbot">Creating an AI chatbot</h3>
+<p>An online learning platform called Easy as Pi that specializes in teaching math skills has contracted you to help develop an AI tutor. You immediately see that you can build this feature on top of the OpenAI API, and start to design a simple proof-of-concept (POC) for the major stakeholders at the company. This POC will demonstrate the core functionality required to build the final feature and the power of the OpenAI’s GPT models.</p>
+<p>Example system and user messages have been provided for you, but feel free to play around with these to change the model’s behavior or design a completely different chatbot!</p>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span> [{<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: <span class="st">"You are a helpful math tutor."</span>}]</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>user_msgs <span class="op">=</span> [<span class="st">"Explain what pi is."</span>, <span class="st">"Summarize this in two bullet points."</span>]</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> q <span class="kw">in</span> user_msgs:</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"User: "</span>, q)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create a dictionary for the user message from q and append to messages</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    user_dict <span class="op">=</span> {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: q}</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    messages.append(user_dict)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create the API request</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>        model<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>,</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>        messages <span class="op">=</span> messages,</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>        max_tokens<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Convert the assistant's message to a dict and append to messages</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    assistant_dict <span class="op">=</span> {<span class="st">"role"</span>: <span class="st">"assistant"</span>, <span class="st">"content"</span>: response.choices[<span class="dv">0</span>].message.content}</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    messages.append(assistant_dict)</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Assistant: "</span>, response.choices[<span class="dv">0</span>].message.content, <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>User: Explain what pi is. Assistant: Pi, denoted by the symbol π, is a mathematical constant that represents the ratio of a circle’s circumference to its diameter. In simpler terms, it tells us how the size of a circle’s circumference relates to its size across.</p>
+<p>Pi is an irrational number, meaning it cannot be expressed as a finite decimal or a fraction. It is approximately equal to 3.14159, but its decimal representation goes on infinitely without repeating.</p>
+<p>The significance of pi extends beyond circles and can be found in many</p>
+<p>User: Summarize this in two bullet points. Assistant: - Pi is a mathematical constant representing the ratio of a circle’s circumference to its diameter. - It is an irrational number approximately equal to 3.14159, with an infinite decimal representation.</p>
 
 
 </section>

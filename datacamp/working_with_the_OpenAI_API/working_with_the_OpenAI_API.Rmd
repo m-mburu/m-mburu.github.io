@@ -8,7 +8,8 @@ date: "2024-01-23"
 knitr::opts_chunk$set(echo = TRUE, 
                       warning = FALSE, 
                       message = FALSE,
-                      eval = TRUE)
+                      eval = TRUE,
+                      results = "asis")
 
 ```
 
@@ -43,6 +44,7 @@ load_dotenv()
 
 api_key = os.getenv('OPEN_API_KEY2')
 
+
 ```
 
 The button to create a new secret key.
@@ -55,7 +57,6 @@ Warning: if you send many requests or use lots of tokens in a short period, you 
 # Import the OpenAI client
 from openai import OpenAI
 
-# Create the OpenAI client and set your API key
 client = OpenAI(api_key=api_key)
 
 # Create a request to the Completions endpoint
@@ -117,8 +118,6 @@ Find-and-replace tools have been around for decades, but they are often limited 
 Warning: if you send many requests or use lots of tokens in a short period, you may hit your rate limit and see an openai.error.RateLimitError. If you see this error, please wait a minute for your quota to reset and you should be able to begin sending more requests. Please see OpenAI's rate limit error support article for more informatio
 
 ```{python}
-# Set your API key
-client = OpenAI(api_key=api_key)
 
 prompt="""Replace car with plane and adjust phrase:
 A car is a vehicle that is typically powered by an internal combustion engine or an electric motor. It has four wheels, and is designed to carry passengers and/or cargo on roads or highways. Cars have become a ubiquitous part of modern society, and are used for a wide variety of purposes, such as commuting, travel, and transportation of goods. Cars are often associated with freedom, independence, and mobility."""
@@ -135,4 +134,237 @@ response = client.completions.create(
 print(response.choices[0].text)
 ```
 
+
+
+### Text summarization
+One really common use case for using OpenAI's models is summarizing text. This has a ton of applications in business settings, including summarizing reports into concise one-pagers or a handful of bullet points, or extracting the next steps and timelines for different stakeholders.
+
+In this exercise, you'll summarize a passage of text on financial investment into two concise bullet points using a text completion model.
+
+
+```{python}
+
+prompt="""Summarize the following text into two concise bullet points:
+Investment refers to the act of committing money or capital to an enterprise with the expectation of obtaining an added income or profit in return. There are a variety of investment options available, including stocks, bonds, mutual funds, real estate, precious metals, and currencies. Making an investment decision requires careful analysis, assessment of risk, and evaluation of potential rewards. Good investments have the ability to produce high returns over the long term while minimizing risk. Diversification of investment portfolios reduces risk exposure. Investment can be a valuable tool for building wealth, generating income, and achieving financial security. It is important to be diligent and informed when investing to avoid losses."""
+
+# Create a request to the Completions endpoint
+response = client.completions.create(
+  model="gpt-3.5-turbo-instruct",
+  prompt=prompt,
+  max_tokens = 400,
+  temperature = 0
+)
+
+print(response.choices[0].text)
+```
+
+
+### Content generation
+AI is playing a much greater role in content generation, from creating marketing content such as blog post titles to creating outreach email templates for sales teams.
+
+In this exercise, you'll harness AI through the Completions endpoint to generate a catchy slogan for a new restaurant. Feel free to test out different prompts, such as varying the type of cuisine (e.g., Italian, Chinese) or the type of restaurant (e.g., fine-dining, fast-food), to see how the response changes.
+
+```{python}
+
+# Create a request to the Completions endpoint
+prompt = """create a catchy slogan for a new restaurant:
+  The restaurant deals mainly in italian cuisine"""
+  
+response = client.completions.create(
+    model="gpt-3.5-turbo-instruct",
+    prompt=prompt,
+    max_tokens = 100
+    )
+    
+print(response.choices[0].text)
+```
+
+
+### Classifying text sentiment
+As well as answering questions, transforming text, and generating new text, Completions models can also be used for classification tasks, such as categorization and sentiment classification. This sort of task requires not only knowledge of the words but also a deeper understanding of their meaning.
+
+In this exercise, you'll explore using Completions models for sentiment classification using reviews from an online shoe store called Toe-Tally Comfortable:
+
+- Unbelievably good!
+- Shoes fell apart on the second use.
+- The shoes look nice, but they aren't very comfortable.
+- Can't wait to show them off!
+
+```{python}
+# Create a request to the Completions endpoint
+prompt = """classify the sentiment of the following statements as either negative, positive, or neutral list in bullet points:
+Unbelievably good!
+Shoes fell apart on the second use.
+The shoes look nice, but they aren't very comfortable.
+Can't wait to show them off! """
+response = client.completions.create(
+  model="gpt-3.5-turbo-instruct",
+  prompt=prompt,
+  max_tokens=100
+)
+
+print(response.choices[0].text)
+```
+
+
+### Categorizing companies
+In this exercise, you'll use a Completions model to categorize different companies. At first, you won't specify the categories to see how the model categorizes them. Then, you'll specify the categories in the prompt to ensure they are categorized in a desirable and predictable way.
+
+```{python}
+# Create a request to the Completions endpoint
+prompt = """Categorize the following companies  into, Tech, Energy, Luxury Goods, or Investment list in bullet points: 
+  Apple, 
+  Microsoft,
+  Saudi Aramco,
+  Alphabet,
+  Amazon, 
+  Berkshire Hathaway, 
+  NVIDIA,
+  Meta,
+  Tesla, 
+  LVMH """
+  
+  
+response = client.completions.create(
+    model="gpt-3.5-turbo-instruct",
+    prompt=prompt,
+    max_tokens=100,
+    temperature=0.5
+)
+    
+print(response.choices[0].text)
+```
+
+
+### The Chat Completions endpoint
+The models available via the Chat Completions endpoint can not only perform similar single-turn tasks as models from the Completions endpoint, but can also be used to have multi-turn conversations.
+
+To enable multi-turn conversations, the endpoint supports three different roles:
+
+System: controls assistant's behavior
+User: instruct the assistant
+Assistant: response to user instruction
+In this exercise, you'll make your first request to the Chat Completions endpoint to answer the following question:
+
+What is the difference between a for loop and a while loop?
+
+```{python}
+
+# Create a request to the Chat Completions endpoint
+response = client.chat.completions.create(
+  model="gpt-3.5-turbo",
+  max_tokens=150,
+  messages=[
+    {"role": "system",
+     "content": "You are a helpful data science tutor. Provide code example using rmarkdown syntax ie code between ``` code ```"},
+    {"role": "user",
+    "content": "What is the difference between a for loop and a while loop?"}
+  ]
+)
+
+# Extract and print the assistant's text response
+print(response.choices[0].message.content)
+
+```
+
+
+
+### Code explanation
+
+One of the most popular use cases for using OpenAI models is for explaining complex content, such as technical jargon and code. This is a task that data practitioners, software engineers, and many others must tackle in their day-to-day as they review and utilize code written by others.
+
+In this exercise, you'll use the OpenAI API to explain a block of Python code to understand what it is doing.
+
+```{python}
+instruction = """Explain what this Python code does in one sentence:
+import numpy as np
+
+heights_dict = {"Mark": 1.76, "Steve": 1.88, "Adnan": 1.73}
+heights = heights_dict.values()
+print(np.mean(heights))
+"""
+
+# Create a request to the Chat Completions endpoint
+response = client.chat.completions.create(
+  model="gpt-3.5-turbo",
+  max_tokens=100,
+  messages=[
+    {"role": "system",
+     "content": "You are a helpful data science tutor."},
+    {"role": "user",
+    "content": instruction}
+  ]
+)
+
+print(response.choices[0].message.content)
+
+```
+
+
+### In-context learning
+For more complex use cases, the models lack the understanding or context of the problem to provide a suitable response from a prompt. In these cases, you need to provide examples to the model for it to learn from, so-called in-context learning.
+
+In this exercise, you'll improve on a Python programming tutor built on the OpenAI API by providing an example that the model can learn from.
+
+Here is an example of a user and assistant message you can use, but feel free to try out your own:
+
+- User → Explain what the min() function does.
+- Assistant → The min() function returns the smallest item from an iterable.
+
+
+```{python}
+response = client.chat.completions.create(
+   model="gpt-3.5-turbo",
+   # Add a user and assistant message for in-context learning
+   messages=[
+     {"role": "system", "content": "You are a helpful Python programming tutor."},
+     {"role": "user", "content": "Explain what sum function in python does"},
+     {"role": "assistant", 
+     "content": """the sum() function is a built-in function used to calculate the sum of all the elements in an iterable, like a list, tuple, or  
+     set. The basic syntax of the sum() function is as follows:
+     `sum(iterable, start)`
+     example:
+     `numbers = [1, 2, 3, 4, 5]
+      result = sum(numbers)  # This will add 1 + 2 + 3 + 4 + 5
+      print(result)  # Output will be 15`
+     """},
+     {"role": "user", "content": "Explain what the type() function does."}
+   ]
+)
+
+print(response.choices[0].message.content)
+```
+
+
+
+### Creating an AI chatbot
+An online learning platform called Easy as Pi that specializes in teaching math skills has contracted you to help develop an AI tutor. You immediately see that you can build this feature on top of the OpenAI API, and start to design a simple proof-of-concept (POC) for the major stakeholders at the company. This POC will demonstrate the core functionality required to build the final feature and the power of the OpenAI's GPT models.
+
+Example system and user messages have been provided for you, but feel free to play around with these to change the model's behavior or design a completely different chatbot!
+
+
+```{python}
+messages = [{"role": "system", "content": "You are a helpful math tutor."}]
+user_msgs = ["Explain what pi is.", "Summarize this in two bullet points."]
+
+for q in user_msgs:
+    print("User: ", q)
+    
+    # Create a dictionary for the user message from q and append to messages
+    user_dict = {"role": "user", "content": q}
+    messages.append(user_dict)
+    
+    # Create the API request
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages = messages,
+        max_tokens=100)
+
+    
+    # Convert the assistant's message to a dict and append to messages
+    assistant_dict = {"role": "assistant", "content": response.choices[0].message.content}
+    messages.append(assistant_dict)
+
+    print("Assistant: ", response.choices[0].message.content, "\n")
+```
 
