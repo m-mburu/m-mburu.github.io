@@ -211,6 +211,9 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
   <li><a href="#digging-into-the-response" id="toc-digging-into-the-response" class="nav-link" data-scroll-target="#digging-into-the-response">Digging into the response</a></li>
   <li><a href="#solving-problems-with-ai-solutions" id="toc-solving-problems-with-ai-solutions" class="nav-link" data-scroll-target="#solving-problems-with-ai-solutions">Solving problems with AI solutions</a></li>
   <li><a href="#structuring-organizations" id="toc-structuring-organizations" class="nav-link" data-scroll-target="#structuring-organizations">Structuring organizations</a></li>
+  </ul></li>
+  <li><a href="#openais-text-and-chat-capabilities" id="toc-openais-text-and-chat-capabilities" class="nav-link" data-scroll-target="#openais-text-and-chat-capabilities">OpenAI’s Text and Chat Capabilities</a>
+  <ul>
   <li><a href="#find-and-replace" id="toc-find-and-replace" class="nav-link" data-scroll-target="#find-and-replace">Find and replace</a></li>
   <li><a href="#text-summarization" id="toc-text-summarization" class="nav-link" data-scroll-target="#text-summarization">Text summarization</a></li>
   <li><a href="#content-generation" id="toc-content-generation" class="nav-link" data-scroll-target="#content-generation">Content generation</a></li>
@@ -220,6 +223,13 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
   <li><a href="#code-explanation" id="toc-code-explanation" class="nav-link" data-scroll-target="#code-explanation">Code explanation</a></li>
   <li><a href="#in-context-learning" id="toc-in-context-learning" class="nav-link" data-scroll-target="#in-context-learning">In-context learning</a></li>
   <li><a href="#creating-an-ai-chatbot" id="toc-creating-an-ai-chatbot" class="nav-link" data-scroll-target="#creating-an-ai-chatbot">Creating an AI chatbot</a></li>
+  </ul></li>
+  <li><a href="#going-beyond-text-completions" id="toc-going-beyond-text-completions" class="nav-link" data-scroll-target="#going-beyond-text-completions">Going Beyond Text Completions</a>
+  <ul>
+  <li><a href="#why-use-text-moderation-models" id="toc-why-use-text-moderation-models" class="nav-link" data-scroll-target="#why-use-text-moderation-models">Why use text moderation models?</a></li>
+  <li><a href="#requesting-moderation" id="toc-requesting-moderation" class="nav-link" data-scroll-target="#requesting-moderation">Requesting moderation</a></li>
+  <li><a href="#examining-moderation-category-scores" id="toc-examining-moderation-category-scores" class="nav-link" data-scroll-target="#examining-moderation-category-scores">Examining moderation category scores</a></li>
+  <li><a href="#creating-a-podcast-transcript" id="toc-creating-a-podcast-transcript" class="nav-link" data-scroll-target="#creating-a-podcast-transcript">Creating a podcast transcript</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -291,7 +301,7 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Completion(id=‘cmpl-8kS72QP8ZF8MeDVpOazDaX55Kaw59’, choices=[CompletionChoice(finish_reason=‘stop’, index=0, logprobs=None, text=‘was developed by OpenAI.’)], created=1706081844, model=‘gpt-3.5-turbo-instruct’, object=‘text_completion’, system_fingerprint=None, usage=CompletionUsage(completion_tokens=10, prompt_tokens=6, total_tokens=16))</p>
+<p>Completion(id=‘cmpl-8knh6UnPeXHUTdYOHhGr8COqz4YFG’, choices=[CompletionChoice(finish_reason=‘length’, index=0, logprobs=None, text=‘was developed by OpenAI, an artificial intelligence research and deployment’)], created=1706164804, model=‘gpt-3.5-turbo-instruct’, object=‘text_completion’, system_fingerprint=None, usage=CompletionUsage(completion_tokens=16, prompt_tokens=6, total_tokens=22))</p>
 </section>
 <section id="digging-into-the-response" class="level3">
 <h3 class="anchored" data-anchor-id="digging-into-the-response">Digging into the response</h3>
@@ -303,10 +313,10 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
 <p>gpt-3.5-turbo-instruct</p>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract the total tokens used from response using attributes.</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.usage.total_tokens)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>16</p>
+<p>22</p>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract the text answer to the prompt from response.</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>ChatGPT was developed by OpenAI.</p>
+<p>ChatGPT was developed by OpenAI, an artificial intelligence research and deployment</p>
 </section>
 <section id="solving-problems-with-ai-solutions" class="level3">
 <h3 class="anchored" data-anchor-id="solving-problems-with-ai-solutions">Solving problems with AI solutions</h3>
@@ -328,6 +338,9 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
 <li>Removes single failure point</li>
 </ul>
 </section>
+</section>
+<section id="openais-text-and-chat-capabilities" class="level2">
+<h2 class="anchored" data-anchor-id="openais-text-and-chat-capabilities">OpenAI’s Text and Chat Capabilities</h2>
 <section id="find-and-replace" class="level3">
 <h3 class="anchored" data-anchor-id="find-and-replace">Find and replace</h3>
 <p>Text completion models can be used for much more than answering questions. In this exercise, you’ll explore the model’s ability to transform a text prompt.</p>
@@ -346,7 +359,7 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract and print the response text</span></span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>A plane is a vehicle that is typically powered by jet engines or propellers. It has wings, and is designed to carry passengers and/or cargo through the air. Planes have become a vital mode of transportation in the modern world, and are used for a wide variety of purposes, such as traveling long distances, transporting goods, and providing emergency medical services. Planes are often associated with speed, efficiency, and the ability to reach distant destinations.</p>
+<p>A plane is a vehicle that is typically powered by jet engines or propellers. It has wings and is designed to transport passengers and/or cargo through the air. Planes have become an integral part of modern transportation, and are used for various purposes such as long-distance travel and shipping of goods. Planes are often associated with convenience, efficiency, and global connectivity.</p>
 </section>
 <section id="text-summarization" class="level3">
 <h3 class="anchored" data-anchor-id="text-summarization">Text summarization</h3>
@@ -384,7 +397,7 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>“Indulge in Italy’s Finest Flavors at Our Table”</p>
+<p>“Indulge in heavenly Italian fare at our table!”</p>
 </section>
 <section id="classifying-text-sentiment" class="level3">
 <h3 class="anchored" data-anchor-id="classifying-text-sentiment">Classifying text sentiment</h3>
@@ -442,28 +455,10 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
 <span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
-<li>Tech:
-<ul>
-<li>Apple</li>
-<li>Microsoft</li>
-<li>Alphabet</li>
-<li>Amazon</li>
-<li>NVIDIA</li>
-<li>Meta</li>
-<li>Tesla</li>
-</ul></li>
-<li>Energy:
-<ul>
-<li>Saudi Aramco</li>
-</ul></li>
-<li>Luxury Goods:
-<ul>
-<li>LVMH</li>
-</ul></li>
-<li>Investment:
-<ul>
-<li>Berkshire Hathaway</li>
-</ul></li>
+<li><p>Tech: Apple Microsoft Alphabet Amazon NVIDIA Meta Tesla</p></li>
+<li><p>Energy: Saudi Aramco</p></li>
+<li><p>Luxury Goods: LVMH</p></li>
+<li><p>Investment: Berkshire Hathaway</p></li>
 </ul>
 </section>
 <section id="the-chat-completions-endpoint" class="level3">
@@ -478,7 +473,7 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  max_tokens<span class="op">=</span><span class="dv">150</span>,</span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  messages<span class="op">=</span>[</span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"system"</span>,</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>     <span class="st">"content"</span>: <span class="st">"You are a helpful data science tutor. Provide code example using rmarkdown syntax ie code between ``` code ```"</span>},</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>     <span class="st">"content"</span>: <span class="st">"You are a helpful data science tutor. Provide code examples using this syntax ie code between ```</span><span class="sc">{python}</span><span class="st"> code ```"</span>},</span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"user"</span>,</span>
 <span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"content"</span>: <span class="st">"What is the difference between a for loop and a while loop?"</span>}</span>
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  ]</span>
@@ -486,14 +481,12 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
 <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&nbsp;Extract and print the assistant's text response</span></span>
 <span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].message.content)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>A for loop and a while loop are both types of iteration statements used in programming to repeat a block of code multiple times. However, they differ in their syntax and the way they control the loop execution.</p>
-<p>Here is an example of a for loop in R:</p>
-<pre class="{r}"><code># Example: Print numbers from 1 to 5 using a for loop
-for (i in 1:5) {
-  print(i)
-}</code></pre>
-<p>In the above code snippet, the for loop iterates over the sequence <code>1:5</code> and assigns each value to the variable <code>i</code>. The code block inside the loop (enclosed within curly brackets) is executed for each iteration, printing the value of <code>i</code> in this case.</p>
-<p>Now,</p>
+<p>A <code>for</code> loop and a <code>while</code> loop are both flow control structures used in programming. However, they have some differences in their functionality.</p>
+<p>A <code>for</code> loop is used when you know the number of times you want to iterate or when you want to iterate over elements in a sequence. It has the following syntax:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> variable <span class="kw">in</span> sequence:</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># code to be executed</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In this loop, <code>variable</code> takes on the value of each element in the <code>sequence</code> one by one, and the code block inside the loop is executed for each iteration.</p>
+<p>On the other hand, a <code>while</code> loop is used when you want to repeat a set of statements as long as a certain condition is true. It</p>
 </section>
 <section id="code-explanation" class="level3">
 <h3 class="anchored" data-anchor-id="code-explanation">Code explanation</h3>
@@ -520,7 +513,7 @@ for (i in 1:5) {
 <span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].message.content)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This Python code calculates the mean height from the heights dictionary using the numpy library.</p>
+<p>This code calculates the mean height from the values in the <code>heights_dict</code> dictionary using the numpy library.</p>
 </section>
 <section id="in-context-learning" class="level3">
 <h3 class="anchored" data-anchor-id="in-context-learning">In-context learning</h3>
@@ -551,17 +544,16 @@ for (i in 1:5) {
 <span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].message.content)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The type() function in Python is a built-in function that returns the type of an object. It takes an object as an argument and returns a string representing the type of that object.</p>
-<p>Here’s an example:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">5</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(x))  <span class="co"># Output: &lt;class 'int'&gt;</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="st">"Hello"</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(y))  <span class="co"># Output: &lt;class 'str'&gt;</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(z))  <span class="co"># Output: &lt;class 'list'&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>In the above example, the type() function is used to determine the type of the variable x, y, and z. It returns the type of each object, which is an integer, string, and list respectively.</p>
+<p>The type() function is a built-in Python function that returns the data type of a given object or variable. It helps us determine the type of data that an object holds. The syntax of the type() function is as follows: <code>type(object)</code> Here, “object” is the parameter that can be any valid Python object or variable that we want to check the type of. The type() function returns a type object that represents the type of the passed object. For example:</p>
+<pre><code>x = 5
+print(type(x))  # Output will be &lt;class 'int'&gt;
+
+y = "Hello"
+print(type(y))  # Output will be &lt;class 'str'&gt;
+
+z = [1, 2, 3]
+print(type(z))  # Output will be &lt;class 'list'&gt;</code></pre>
+<p>In each case, the type() function is called with a different object, and it returns the corresponding data type for that object: int, str, or list.</p>
 </section>
 <section id="creating-an-ai-chatbot" class="level3">
 <h3 class="anchored" data-anchor-id="creating-an-ai-chatbot">Creating an AI chatbot</h3>
@@ -589,10 +581,70 @@ for (i in 1:5) {
 <span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    messages.append(assistant_dict)</span>
 <span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Assistant: "</span>, response.choices[<span class="dv">0</span>].message.content, <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>User: Explain what pi is. Assistant: Pi, denoted by the symbol π, is a mathematical constant that represents the ratio of a circle’s circumference to its diameter. In simpler terms, it tells us how the size of a circle’s circumference relates to its size across.</p>
-<p>Pi is an irrational number, meaning it cannot be expressed as a finite decimal or a fraction. It is approximately equal to 3.14159, but its decimal representation goes on infinitely without repeating.</p>
-<p>The significance of pi extends beyond circles and can be found in many</p>
-<p>User: Summarize this in two bullet points. Assistant: - Pi is a mathematical constant representing the ratio of a circle’s circumference to its diameter. - It is an irrational number approximately equal to 3.14159, with an infinite decimal representation.</p>
+<p>User: Explain what pi is. Assistant: Pi (π) is a mathematical constant that represents the ratio of a circle’s circumference to its diameter. It is an irrational number, meaning it cannot be expressed as a simple fraction or as a terminating or repeating decimal. The value of pi is approximately 3.14159, but it goes on infinitely without repetition.</p>
+<p>Pi is a crucial number in mathematics, appearing in various formulas in many different areas of study. It is often used in geometry to calculate the circumference (C) or area (A</p>
+<p>User: Summarize this in two bullet points. Assistant: - Pi (π) is a mathematical constant representing the ratio of a circle’s circumference to its diameter. - Pi is an irrational number, approximately equal to 3.14159, and has infinite decimal places without repetition.</p>
+</section>
+</section>
+<section id="going-beyond-text-completions" class="level2">
+<h2 class="anchored" data-anchor-id="going-beyond-text-completions">Going Beyond Text Completions</h2>
+<section id="why-use-text-moderation-models" class="level3">
+<h3 class="anchored" data-anchor-id="why-use-text-moderation-models">Why use text moderation models?</h3>
+<p>Text moderation is a vital component of most social media platforms, internet chatrooms, and many other user-facing systems. It serves the purpose of preventing the distribution and promotion of inappropriate content, such as hate speech.</p>
+<p>In this exercise, you’ll compare OpenAI’s text moderation model to traditional methods of moderation: manual moderation and keyword pattern matching.</p>
+<p><strong>OpenAI’s Moderation model</strong></p>
+<ul>
+<li>Designed to moderate the prompts and responses to and from OpenAI models</li>
+<li>Outputs confidence of text violation</li>
+<li>A model that uses all of the words to inform its decision</li>
+<li>Evaluates content based on specific violation categories</li>
+</ul>
+<p><strong>Keyword Pattern Matching</strong></p>
+<ul>
+<li>Don’t understand context</li>
+</ul>
+<p><strong>Manual Moderation</strong></p>
+<ul>
+<li>Expensive</li>
+<li>Requires 24/7 support</li>
+<li>Inconsistent classification</li>
+</ul>
+</section>
+<section id="requesting-moderation" class="level3">
+<h3 class="anchored" data-anchor-id="requesting-moderation">Requesting moderation</h3>
+<p>Aside from text and chat completion models, OpenAI provides models with other capabilities, including text moderation. OpenAI’s text moderation model is designed for evaluating prompts and responses to determine if they violate OpenAI’s usage policies, including inciting hate speech and promoting violence.</p>
+<p>In this exercise, you’ll test out OpenAI’s moderation functionality on a sentence that may have been flagged as containing violent content using traditional word detection algorithms.</p>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Ceate a request to the Moderation endpoint</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.moderations.create(  </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  model<span class="op">=</span><span class="st">"text-moderation-latest"</span>,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="bu">input</span><span class="op">=</span> <span class="st">"My favorite book is How to Kill a Mockingbird."</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the category scores</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.results[<span class="dv">0</span>].category_scores)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>CategoryScores(harassment=3.4255714126629755e-05, harassment_threatening=3.3559299481566995e-06, hate=5.238259745965479e-07, hate_threatening=2.622775596705651e-08, self_harm=5.782478496030308e-09, self_harm_instructions=1.604589724979455e-11, self_harm_intent=9.663713163021725e-10, sexual=9.011665724756313e-07, sexual_minors=5.687450155278384e-08, violence=0.0500854030251503, violence_graphic=8.806916866888059e-07, self-harm=5.782478496030308e-09, sexual/minors=5.687450155278384e-08, hate/threatening=2.622775596705651e-08, violence/graphic=8.806916866888059e-07, self-harm/intent=9.663713163021725e-10, self-harm/instructions=1.604589724979455e-11, harassment/threatening=3.3559299481566995e-06)</p>
+</section>
+<section id="examining-moderation-category-scores" class="level3">
+<h3 class="anchored" data-anchor-id="examining-moderation-category-scores">Examining moderation category scores</h3>
+<p>The same request you created in the last exercise to the Moderation endpoint has been run again, sending the sentence “My favorite book is How to Kill a Mockingbird.” to the model. The response from the API has been printed for you, and is available as response.</p>
+<p>What is the correct interpretation of the category_scores here?</p>
+<ul>
+<li>The model believes that there are no violations, as all categories are close to 0</li>
+</ul>
+</section>
+<section id="creating-a-podcast-transcript" class="level3">
+<h3 class="anchored" data-anchor-id="creating-a-podcast-transcript">Creating a podcast transcript</h3>
+<p>The OpenAI API Audio endpoint provides access to the Whisper model, which can be used for speech-to-text transcription and translation. In this exercise, you’ll create a transcript from a DataFramed podcast episode with OpenAI Developer, Logan Kilpatrick.</p>
+<p>If you’d like to hear more from Logan, check out the full ChatGPT and the OpenAI Developer Ecosystem podcast episode.</p>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the openai-audio.mp3 file</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>audio_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">"openai-audio.mp3"</span>, <span class="st">"rb"</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a transcript from the audio file</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.audio.transcriptions.create(model<span class="op">=</span><span class="st">"whisper-1"</span>, <span class="bu">file</span><span class="op">=</span>audio_file)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract and print the transcript text</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Hi there, Logan, thank you for joining us on the show today. Thanks for having me. I’m super excited about this. Brilliant. We’re going to dive right in, and I think ChatGPT is maybe the most famous AI product that you have at OpenAI, but I’d just like to get an overview of what all the other AIs that are available are. So I think two and a half years ago, OpenAI released the API that we still have available today, which is essentially our giving people access to these models. And for a lot of people, giving people access to the model that powers ChatGPT, which is our consumer-facing first-party application, which essentially just, in very simple terms, puts a nice UI on top of what was already available through our API for the last two and a half years. So it’s sort of democratizing the access to this technology through our API. If you want to just play around with it, as an end user, we have ChatGPT available to the world as well.</p>
 
 
 </section>
