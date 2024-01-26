@@ -258,7 +258,7 @@ response = client.chat.completions.create(
   max_tokens=150,
   messages=[
     {"role": "system",
-     "content": "You are a helpful data science tutor. Provide code examples using this syntax ie code between ```{python} code ```"},
+     "content": "You are a helpful data science tutor. Provide code examples for both while and for loops using this syntax ie code between ` code ` "},
     {"role": "user",
     "content": "What is the difference between a for loop and a while loop?"}
   ]
@@ -276,6 +276,8 @@ print(response.choices[0].message.content)
 One of the most popular use cases for using OpenAI models is for explaining complex content, such as technical jargon and code. This is a task that data practitioners, software engineers, and many others must tackle in their day-to-day as they review and utilize code written by others.
 
 In this exercise, you'll use the OpenAI API to explain a block of Python code to understand what it is doing.
+
+
 
 ```{python}
 instruction = """Explain what this Python code does in one sentence:
@@ -435,5 +437,106 @@ response = client.audio.transcriptions.create(model="whisper-1", file=audio_file
 
 # Extract and print the transcript text
 print(response.text)
+```
+
+
+
+### Transcribing a non-English language
+The Whisper model can not only transcribe English language, but also performs well on speech in many other languages.
+
+In this exercise, you’ll create a transcript from audio.m4a, which contains speech in Portuguese.
+
+```{python}
+
+# Open the audio.m4a file
+audio_file= open("audio.m4a", "rb")
+
+# Create a transcript from the audio file
+response = client.audio.transcriptions.create(model="whisper-1", file=audio_file)
+
+print(response.text)
+```
+
+
+### Translating Portuguese
+Whisper can not only transcribe audio into its native language but also supports translation capabilities for creating English transcriptions.
+
+In this exercise, you'll return to the Portuguese audio, but this time, you'll translate it into English!
+
+```{python}
+# Create a translation from the audio file
+response = client.audio.translations.create(model="whisper-1", file=audio_file)
+
+# Extract and print the translated text
+print(response.text)
+```
+
+
+### Translating with prompts
+The quality of Whisper's translation can vary depending on the language spoken, the audio quality, and the model's awareness of the subject matter. If you have any extra context about what is being spoken about, you can send it along with the audio to the model to give it a helping hand.
+
+You've been provided with with an audio file, audio.wav; you're not sure what language is spoken in it, but you do know it relates to a recent World Bank report. Because you don't know how well the model will perform on this unknown language, you opt to send the model this extra context to steer it in the right direction.
+
+
+```{python}
+# Open the audio.wav file
+audio_file = open("audio.wav", "rb")
+
+# Write an appropriate prompt to help the model
+prompt = "The audio relates to a recent world bank report "
+
+# Create a translation from the audio file
+response =  client.audio.translations.create(model="whisper-1", file=audio_file, prompt = prompt)
+
+print(response.text)
+```
+
+
+### Identifying audio language
+You've learned that you're not only limited to creating a single request, and that you can actually feed the output of one model as an input to another! This is called chaining, and it opens to the doors to more complex, multi-modal use cases.
+
+In this exercise, you'll practice model chaining to identify the language used in an audio file. You'll do this by bringing together OpenAI's audio transcription functionality and its text models with only a few lines of code.
+
+
+
+```{python}
+audio_file = open("arne-german-automotive-forecast.wav", "rb")
+
+# Create a transcription request using audio_file
+audio_response = client.audio.transcriptions.create(model="whisper-1", file=audio_file)
+
+# Create a request to the API to identify the language spoken
+chat_response = client.chat.completions.create(  model="gpt-3.5-turbo",  
+  messages=[
+    {"role": "user", "content": "Identify the language in " + audio_response.text }
+    ])
+
+print(chat_response.choices[0].message.content)
+
+
+```
+
+
+
+### Creating meeting summaries
+Time for business! One time-consuming task that many find themselves doing day-to-day is taking meeting notes to summarize attendees, discussion points, next steps, etc.
+
+In this exercise, you'll use AI to augment this task to not only save a substantial amount of time, but also to empower attendees to focus on the discussion rather than administrative tasks. You've been provided with a recording from DataCamp's Q2 Roadmap webinar, which summarizes what DataCamp will be releasing during that quarter. You'll chain the Whisper model with a text or chat model to discover which courses will be launched in Q2.
+
+
+```{python}
+audio_file = open("datacamp-q2-roadmap-short.mp3", "rb")
+
+# Create a transcription request using audio_file
+audio_response =  client.audio.transcriptions.create(model="whisper-1", file=audio_file)
+
+# Create a request to the API to summarize the transcript into bullet points
+chat_response = client.chat.completions.create(  model="gpt-3.5-turbo",  
+  messages=[
+    {"role": "user", "content": "Summarise text given, list in bullet points with a bit of explanation for each bullet point:"  + audio_response.text }
+    ])
+
+print(chat_response.choices[0].message.content)
+
 ```
 

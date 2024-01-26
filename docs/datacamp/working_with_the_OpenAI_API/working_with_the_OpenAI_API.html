@@ -230,6 +230,11 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
   <li><a href="#requesting-moderation" id="toc-requesting-moderation" class="nav-link" data-scroll-target="#requesting-moderation">Requesting moderation</a></li>
   <li><a href="#examining-moderation-category-scores" id="toc-examining-moderation-category-scores" class="nav-link" data-scroll-target="#examining-moderation-category-scores">Examining moderation category scores</a></li>
   <li><a href="#creating-a-podcast-transcript" id="toc-creating-a-podcast-transcript" class="nav-link" data-scroll-target="#creating-a-podcast-transcript">Creating a podcast transcript</a></li>
+  <li><a href="#transcribing-a-non-english-language" id="toc-transcribing-a-non-english-language" class="nav-link" data-scroll-target="#transcribing-a-non-english-language">Transcribing a non-English language</a></li>
+  <li><a href="#translating-portuguese" id="toc-translating-portuguese" class="nav-link" data-scroll-target="#translating-portuguese">Translating Portuguese</a></li>
+  <li><a href="#translating-with-prompts" id="toc-translating-with-prompts" class="nav-link" data-scroll-target="#translating-with-prompts">Translating with prompts</a></li>
+  <li><a href="#identifying-audio-language" id="toc-identifying-audio-language" class="nav-link" data-scroll-target="#identifying-audio-language">Identifying audio language</a></li>
+  <li><a href="#creating-meeting-summaries" id="toc-creating-meeting-summaries" class="nav-link" data-scroll-target="#creating-meeting-summaries">Creating meeting summaries</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -301,7 +306,7 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Completion(id=‘cmpl-8knh6UnPeXHUTdYOHhGr8COqz4YFG’, choices=[CompletionChoice(finish_reason=‘length’, index=0, logprobs=None, text=‘was developed by OpenAI, an artificial intelligence research and deployment’)], created=1706164804, model=‘gpt-3.5-turbo-instruct’, object=‘text_completion’, system_fingerprint=None, usage=CompletionUsage(completion_tokens=16, prompt_tokens=6, total_tokens=22))</p>
+<p>Completion(id=‘cmpl-8lAB6YHgnJYEyn8iTMZdPLLvUUJEZ’, choices=[CompletionChoice(finish_reason=‘stop’, index=0, logprobs=None, text=‘was developed by the company OpenAI.’)], created=1706251232, model=‘gpt-3.5-turbo-instruct’, object=‘text_completion’, system_fingerprint=None, usage=CompletionUsage(completion_tokens=12, prompt_tokens=6, total_tokens=18))</p>
 </section>
 <section id="digging-into-the-response" class="level3">
 <h3 class="anchored" data-anchor-id="digging-into-the-response">Digging into the response</h3>
@@ -313,10 +318,10 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
 <p>gpt-3.5-turbo-instruct</p>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract the total tokens used from response using attributes.</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.usage.total_tokens)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>22</p>
+<p>18</p>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract the text answer to the prompt from response.</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>ChatGPT was developed by OpenAI, an artificial intelligence research and deployment</p>
+<p>ChatGPT was developed by the company OpenAI.</p>
 </section>
 <section id="solving-problems-with-ai-solutions" class="level3">
 <h3 class="anchored" data-anchor-id="solving-problems-with-ai-solutions">Solving problems with AI solutions</h3>
@@ -359,7 +364,7 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract and print the response text</span></span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>A plane is a vehicle that is typically powered by jet engines or propellers. It has wings and is designed to transport passengers and/or cargo through the air. Planes have become an integral part of modern transportation, and are used for various purposes such as long-distance travel and shipping of goods. Planes are often associated with convenience, efficiency, and global connectivity.</p>
+<p>A plane is an aircraft that is typically powered by jet engines or propellers. It has wings, and is designed to carry passengers and/or cargo through the air. Planes have become a vital part of modern society, and are used for a wide range of purposes, such as air travel, transportation of goods, and military operations. Planes are often associated with speed, efficiency, and global connectivity.</p>
 </section>
 <section id="text-summarization" class="level3">
 <h3 class="anchored" data-anchor-id="text-summarization">Text summarization</h3>
@@ -397,7 +402,7 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>“Indulge in heavenly Italian fare at our table!”</p>
+<p>“Indulge in Italian flair at our restaurant’s savory affair!”</p>
 </section>
 <section id="classifying-text-sentiment" class="level3">
 <h3 class="anchored" data-anchor-id="classifying-text-sentiment">Classifying text sentiment</h3>
@@ -422,12 +427,7 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ul>
-<li>Positive</li>
-<li>Negative</li>
-<li>Neutral</li>
-<li>Positive</li>
-</ul>
+<p>-Positive -Negative -Neutral -Positive</p>
 </section>
 <section id="categorizing-companies" class="level3">
 <h3 class="anchored" data-anchor-id="categorizing-companies">Categorizing companies</h3>
@@ -455,10 +455,10 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
 <span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
-<li><p>Tech: Apple Microsoft Alphabet Amazon NVIDIA Meta Tesla</p></li>
-<li><p>Energy: Saudi Aramco</p></li>
-<li><p>Luxury Goods: LVMH</p></li>
-<li><p>Investment: Berkshire Hathaway</p></li>
+<li>Tech: Apple, Microsoft, Alphabet, Amazon, NVIDIA, Meta</li>
+<li>Energy: Saudi Aramco</li>
+<li>Luxury Goods: LVMH</li>
+<li>Investment: Berkshire Hathaway</li>
 </ul>
 </section>
 <section id="the-chat-completions-endpoint" class="level3">
@@ -473,7 +473,7 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  max_tokens<span class="op">=</span><span class="dv">150</span>,</span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  messages<span class="op">=</span>[</span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"system"</span>,</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>     <span class="st">"content"</span>: <span class="st">"You are a helpful data science tutor. Provide code examples using this syntax ie code between ```</span><span class="sc">{python}</span><span class="st"> code ```"</span>},</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>     <span class="st">"content"</span>: <span class="st">"You are a helpful data science tutor. Provide code examples for both while and for loops using this syntax ie code between ` code ` "</span>},</span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"user"</span>,</span>
 <span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"content"</span>: <span class="st">"What is the difference between a for loop and a while loop?"</span>}</span>
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  ]</span>
@@ -481,12 +481,13 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
 <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&nbsp;Extract and print the assistant's text response</span></span>
 <span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].message.content)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>A <code>for</code> loop and a <code>while</code> loop are both flow control structures used in programming. However, they have some differences in their functionality.</p>
-<p>A <code>for</code> loop is used when you know the number of times you want to iterate or when you want to iterate over elements in a sequence. It has the following syntax:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> variable <span class="kw">in</span> sequence:</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># code to be executed</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>In this loop, <code>variable</code> takes on the value of each element in the <code>sequence</code> one by one, and the code block inside the loop is executed for each iteration.</p>
-<p>On the other hand, a <code>while</code> loop is used when you want to repeat a set of statements as long as a certain condition is true. It</p>
+<p>A for loop and a while loop are both control structures used to execute a specific piece of code repeatedly. However, they differ in their syntax and the conditions under which they execute.</p>
+<p>A for loop is used when you know the number of times you want to iterate through a block of code. It consists of three parts: initialization, condition, and iteration.</p>
+<p>On the other hand, a while loop is used when you want to repeat a block of code until a certain condition is met. It only requires a condition to evaluate. The loop will continue executing as long as the condition is True.</p>
+<p>Here are examples of both for and while loops:</p>
+<p><strong>For loop example:</strong></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="code-explanation" class="level3">
 <h3 class="anchored" data-anchor-id="code-explanation">Code explanation</h3>
@@ -513,7 +514,7 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
 <span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].message.content)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This code calculates the mean height from the values in the <code>heights_dict</code> dictionary using the numpy library.</p>
+<p>This code calculates and prints the mean height from the values in the heights_dict dictionary using the numpy library.</p>
 </section>
 <section id="in-context-learning" class="level3">
 <h3 class="anchored" data-anchor-id="in-context-learning">In-context learning</h3>
@@ -544,16 +545,22 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
 <span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].message.content)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The type() function is a built-in Python function that returns the data type of a given object or variable. It helps us determine the type of data that an object holds. The syntax of the type() function is as follows: <code>type(object)</code> Here, “object” is the parameter that can be any valid Python object or variable that we want to check the type of. The type() function returns a type object that represents the type of the passed object. For example:</p>
-<pre><code>x = 5
-print(type(x))  # Output will be &lt;class 'int'&gt;
+<p>The type() function is a built-in function in Python that is used to determine the type of an object. It takes an object as its parameter and returns the type of that object.</p>
+<p>The basic syntax of the type() function is as follows: <code>type(object)</code></p>
+<p>Here, “object” can be any value or variable in Python. For example, it can be a string, integer, list, dictionary, function, class, etc.</p>
+<p>Examples:</p>
+<pre><code>number = 10
+print(type(number))  # Output: &lt;class 'int'&gt;
 
-y = "Hello"
-print(type(y))  # Output will be &lt;class 'str'&gt;
+name = "John"
+print(type(name))  # Output: &lt;class 'str'&gt;
 
-z = [1, 2, 3]
-print(type(z))  # Output will be &lt;class 'list'&gt;</code></pre>
-<p>In each case, the type() function is called with a different object, and it returns the corresponding data type for that object: int, str, or list.</p>
+my_list = [1, 2, 3]
+print(type(my_list))  # Output: &lt;class 'list'&gt;
+
+my_dictionary = {"apple": 1, "banana": 2}
+print(type(my_dictionary))  # Output: &lt;class 'dict'&gt;</code></pre>
+<p>The type() function is often used to perform type checking or type validation in Python code.</p>
 </section>
 <section id="creating-an-ai-chatbot" class="level3">
 <h3 class="anchored" data-anchor-id="creating-an-ai-chatbot">Creating an AI chatbot</h3>
@@ -581,9 +588,9 @@ print(type(z))  # Output will be &lt;class 'list'&gt;</code></pre>
 <span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    messages.append(assistant_dict)</span>
 <span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Assistant: "</span>, response.choices[<span class="dv">0</span>].message.content, <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>User: Explain what pi is. Assistant: Pi (π) is a mathematical constant that represents the ratio of a circle’s circumference to its diameter. It is an irrational number, meaning it cannot be expressed as a simple fraction or as a terminating or repeating decimal. The value of pi is approximately 3.14159, but it goes on infinitely without repetition.</p>
-<p>Pi is a crucial number in mathematics, appearing in various formulas in many different areas of study. It is often used in geometry to calculate the circumference (C) or area (A</p>
-<p>User: Summarize this in two bullet points. Assistant: - Pi (π) is a mathematical constant representing the ratio of a circle’s circumference to its diameter. - Pi is an irrational number, approximately equal to 3.14159, and has infinite decimal places without repetition.</p>
+<p>User: Explain what pi is. Assistant: Pi (π) is a mathematical constant that represents the ratio of the circumference of a circle to its diameter. It is an irrational number, which means it cannot be expressed as a finite decimal or fraction. The value of pi is approximately 3.14159, but it goes on infinitely without repeating.</p>
+<p>Pi is a fundamental constant in mathematics and is used in a wide range of mathematical calculations, especially those involving circles, spheres, and trigonometry. It is commonly represented by the Greek letter ”</p>
+<p>User: Summarize this in two bullet points. Assistant: - Pi (π) is a mathematical constant representing the ratio of a circle’s circumference to its diameter. - It is an irrational number approximately equal to 3.14159, with infinite decimal places.</p>
 </section>
 </section>
 <section id="going-beyond-text-completions" class="level2">
@@ -622,7 +629,7 @@ print(type(z))  # Output will be &lt;class 'list'&gt;</code></pre>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the category scores</span></span>
 <span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.results[<span class="dv">0</span>].category_scores)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>CategoryScores(harassment=3.4255714126629755e-05, harassment_threatening=3.3559299481566995e-06, hate=5.238259745965479e-07, hate_threatening=2.622775596705651e-08, self_harm=5.782478496030308e-09, self_harm_instructions=1.604589724979455e-11, self_harm_intent=9.663713163021725e-10, sexual=9.011665724756313e-07, sexual_minors=5.687450155278384e-08, violence=0.0500854030251503, violence_graphic=8.806916866888059e-07, self-harm=5.782478496030308e-09, sexual/minors=5.687450155278384e-08, hate/threatening=2.622775596705651e-08, violence/graphic=8.806916866888059e-07, self-harm/intent=9.663713163021725e-10, self-harm/instructions=1.604589724979455e-11, harassment/threatening=3.3559299481566995e-06)</p>
+<p>CategoryScores(harassment=1.396209336235188e-05, harassment_threatening=8.344479283550754e-06, hate=4.862324567511678e-05, hate_threatening=1.5291941224404582e-07, self_harm=1.391318733112712e-06, self_harm_instructions=5.645471219395404e-07, self_harm_intent=4.05220532684325e-07, sexual=6.411371941794641e-06, sexual_minors=1.5648997759853955e-06, violence=0.0019001936307176948, violence_graphic=3.9556569390697405e-05, self-harm=1.391318733112712e-06, sexual/minors=1.5648997759853955e-06, hate/threatening=1.5291941224404582e-07, violence/graphic=3.9556569390697405e-05, self-harm/intent=4.05220532684325e-07, self-harm/instructions=5.645471219395404e-07, harassment/threatening=8.344479283550754e-06)</p>
 </section>
 <section id="examining-moderation-category-scores" class="level3">
 <h3 class="anchored" data-anchor-id="examining-moderation-category-scores">Examining moderation category scores</h3>
@@ -645,6 +652,88 @@ print(type(z))  # Output will be &lt;class 'list'&gt;</code></pre>
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract and print the transcript text</span></span>
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Hi there, Logan, thank you for joining us on the show today. Thanks for having me. I’m super excited about this. Brilliant. We’re going to dive right in, and I think ChatGPT is maybe the most famous AI product that you have at OpenAI, but I’d just like to get an overview of what all the other AIs that are available are. So I think two and a half years ago, OpenAI released the API that we still have available today, which is essentially our giving people access to these models. And for a lot of people, giving people access to the model that powers ChatGPT, which is our consumer-facing first-party application, which essentially just, in very simple terms, puts a nice UI on top of what was already available through our API for the last two and a half years. So it’s sort of democratizing the access to this technology through our API. If you want to just play around with it, as an end user, we have ChatGPT available to the world as well.</p>
+</section>
+<section id="transcribing-a-non-english-language" class="level3">
+<h3 class="anchored" data-anchor-id="transcribing-a-non-english-language">Transcribing a non-English language</h3>
+<p>The Whisper model can not only transcribe English language, but also performs well on speech in many other languages.</p>
+<p>In this exercise, you’ll create a transcript from audio.m4a, which contains speech in Portuguese.</p>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the audio.m4a file</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>audio_file<span class="op">=</span> <span class="bu">open</span>(<span class="st">"audio.m4a"</span>, <span class="st">"rb"</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a transcript from the audio file</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.audio.transcriptions.create(model<span class="op">=</span><span class="st">"whisper-1"</span>, <span class="bu">file</span><span class="op">=</span>audio_file)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Olá, o meu nome é Eduardo, sou CTO no Datacamp. Espero que esteja a gostar deste curso que o James e eu criamos para você. Esta API permite enviar um áudio e trazer para inglês. O áudio original está em português.</p>
+</section>
+<section id="translating-portuguese" class="level3">
+<h3 class="anchored" data-anchor-id="translating-portuguese">Translating Portuguese</h3>
+<p>Whisper can not only transcribe audio into its native language but also supports translation capabilities for creating English transcriptions.</p>
+<p>In this exercise, you’ll return to the Portuguese audio, but this time, you’ll translate it into English!</p>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a translation from the audio file</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.audio.translations.create(model<span class="op">=</span><span class="st">"whisper-1"</span>, <span class="bu">file</span><span class="op">=</span>audio_file)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract and print the translated text</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Hello, my name is Eduardo, I am a CTO at Datacamp. I hope you are enjoying this course that James and I have created for you. This API allows you to send an audio and bring it to English. The original audio is in Portuguese.</p>
+</section>
+<section id="translating-with-prompts" class="level3">
+<h3 class="anchored" data-anchor-id="translating-with-prompts">Translating with prompts</h3>
+<p>The quality of Whisper’s translation can vary depending on the language spoken, the audio quality, and the model’s awareness of the subject matter. If you have any extra context about what is being spoken about, you can send it along with the audio to the model to give it a helping hand.</p>
+<p>You’ve been provided with with an audio file, audio.wav; you’re not sure what language is spoken in it, but you do know it relates to a recent World Bank report. Because you don’t know how well the model will perform on this unknown language, you opt to send the model this extra context to steer it in the right direction.</p>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the audio.wav file</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>audio_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">"audio.wav"</span>, <span class="st">"rb"</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Write an appropriate prompt to help the model</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"The audio relates to a recent world bank report "</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a translation from the audio file</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span>  client.audio.translations.create(model<span class="op">=</span><span class="st">"whisper-1"</span>, <span class="bu">file</span><span class="op">=</span>audio_file, prompt <span class="op">=</span> prompt)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The World Bank said in its latest economic outlook report that the global economy is in a dangerous state. As interest rates rise, consumer spending and corporate investment will slow down, economic activities will be impacted, and the vulnerability of low-income countries will be exposed. Global economic growth will be significantly slowed down, and the stability of the financial system will be threatened.</p>
+</section>
+<section id="identifying-audio-language" class="level3">
+<h3 class="anchored" data-anchor-id="identifying-audio-language">Identifying audio language</h3>
+<p>You’ve learned that you’re not only limited to creating a single request, and that you can actually feed the output of one model as an input to another! This is called chaining, and it opens to the doors to more complex, multi-modal use cases.</p>
+<p>In this exercise, you’ll practice model chaining to identify the language used in an audio file. You’ll do this by bringing together OpenAI’s audio transcription functionality and its text models with only a few lines of code.</p>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>audio_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">"arne-german-automotive-forecast.wav"</span>, <span class="st">"rb"</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a transcription request using audio_file</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>audio_response <span class="op">=</span> client.audio.transcriptions.create(model<span class="op">=</span><span class="st">"whisper-1"</span>, <span class="bu">file</span><span class="op">=</span>audio_file)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a request to the API to identify the language spoken</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>chat_response <span class="op">=</span> client.chat.completions.create(  model<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>,  </span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  messages<span class="op">=</span>[</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"Identify the language in "</span> <span class="op">+</span> audio_response.text }</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    ])</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(chat_response.choices[<span class="dv">0</span>].message.content)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The language used is German.</p>
+</section>
+<section id="creating-meeting-summaries" class="level3">
+<h3 class="anchored" data-anchor-id="creating-meeting-summaries">Creating meeting summaries</h3>
+<p>Time for business! One time-consuming task that many find themselves doing day-to-day is taking meeting notes to summarize attendees, discussion points, next steps, etc.</p>
+<p>In this exercise, you’ll use AI to augment this task to not only save a substantial amount of time, but also to empower attendees to focus on the discussion rather than administrative tasks. You’ve been provided with a recording from DataCamp’s Q2 Roadmap webinar, which summarizes what DataCamp will be releasing during that quarter. You’ll chain the Whisper model with a text or chat model to discover which courses will be launched in Q2.</p>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>audio_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">"datacamp-q2-roadmap-short.mp3"</span>, <span class="st">"rb"</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a transcription request using audio_file</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>audio_response <span class="op">=</span>  client.audio.transcriptions.create(model<span class="op">=</span><span class="st">"whisper-1"</span>, <span class="bu">file</span><span class="op">=</span>audio_file)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a request to the API to summarize the transcript into bullet points</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>chat_response <span class="op">=</span> client.chat.completions.create(  model<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>,  </span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  messages<span class="op">=</span>[</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"Summarise text given, list in bullet points with a bit of explanation for each bullet point:"</span>  <span class="op">+</span> audio_response.text }</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    ])</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(chat_response.choices[<span class="dv">0</span>].message.content)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Technical courses include working with the OpenAI API and Python programming against GPT and Whisper.</li>
+<li>Understanding Artificial Intelligence is aimed at a less technical audience and provides a broad background on the topic.</li>
+<li>Artificial Intelligence Ethics focuses on the potential risks and harm of improper AI implementation and is important for businesses and organizations.</li>
+<li>Data literacy courses are also available, with a specific course on forming analytical questions to bridge the communication gap between technical and non-technical individuals.</li>
+<li>Communication is identified as a key aspect of better data science and is highlighted as an important skill to develop.</li>
+</ul>
 
 
 </section>
