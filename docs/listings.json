@@ -2,8 +2,10 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/cbk_data/kenya_income_exp.html",
       "/posts/welcome/index.html",
       "/posts/breast_cancer_prediction/shap_vals.html",
+      "/posts/mnist_digits/digit-recognition.html",
       "/posts/loan_prediction/loan_prediction.html",
       "/posts/breast_cancer_prediction/cancer_data.html",
       "/posts/association_analysis/association_analysis.html"

@@ -1,0 +1,50 @@
+---
+title: "Kenya Mobile Phones Usage and Financial Inclusion Insights from FinAccess 2021"
+author: "Mburu"
+date:  "2024-01-28"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, dpi = 500)
+
+```
+
+```{r, include=FALSE}
+source("R/data_check.R")
+```
+
+In the latest insights from the FinServe survey 2021, a nuanced picture emerges on how Kenyans are embracing various savings mechanisms, with a spotlight on the burgeoning influence of mobile money. The stacked bar chart starkly illustrates the gender dynamics in savings preferences, revealing that while traditional methods like secret hiding places are largely eschewed, communal methods like 'Group or Chama Savings' are more favored by women. This trend underscores the communal nature of savings among Kenyan women and their inclination towards collaborative financial strategies.
+
+Diving deeper, the mobile money accounts, encapsulated in options like M-PESA, Airtel Money, and T-Kash, stand out for their widespread acceptance across both genders, signaling a shift towards digitized financial services. As a data analyst with a keen eye on the pulse of financial trends, I'm particularly interested in dissecting the adoption of mobile money platforms across various demographics. The interplay of factors such as county-specific economic landscapes, sex, educational achievements, and the primary sources of income offers a rich tapestry for analysis. By delving into these layers, we can uncover not just the prevalence of mobile money usage, but also the socio-economic and cultural drivers that underpin this digital financial revolution in Kenya.
+
+
+```{r, fig.width=9.5, fig.height=9.5}
+
+#girafe(ggobj = map5)
+
+```
+
+```{r, echo=FALSE,result="hide"}
+gc()
+```
+
+
+```{r}
+girafe(ggobj = map3)
+```
+
+```{r, fig.width=9.5, fig.height=9.5}
+#map1
+girafe(ggobj = map1)
+```
+
+```{r, fig.width=9.5, fig.height=9.5}
+girafe(ggobj = map3)
+```
+
+```{r, fig.width=9.5, fig.height=9.5}
+girafe(ggobj = map4)
+
+```
+

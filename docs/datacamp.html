@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,7 +17,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -48,7 +48,13 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -57,8 +63,10 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script>
@@ -101,11 +109,39 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
 </script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="style.css">
 <meta property="og:title" content="Personal Blog -">
-<meta property="og:site-name" content="Personal Blog">
+<meta property="og:site_name" content="Personal Blog">
 <meta name="twitter:title" content="Personal Blog -">
 <meta name="twitter:card" content="summary">
 </head>
@@ -113,53 +149,53 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Personal Blog</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./datacamp.html" aria-current="page">
- <span class="menu-text">Data Camp Courses</span></a>
+    <a class="nav-link active" href="./datacamp.html" aria-current="page"> 
+<span class="menu-text">Data Camp Courses</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/m-mburu"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/m-mburu"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/mmburu_w"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/mmburu_w"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div class="quarto-toggle-container">
-                  <a href="" class="quarto-reader-toggle nav-link" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
   </div>
 </a>
-              </div>
-              <div id="quarto-search" class="" title="Search"></div>
-          </div> <!-- /navcollapse -->
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -179,176 +215,153 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
 
 
 
+
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-listing-date-sort="1705957200000" data-listing-file-modified-sort="1706081834175" data-listing-reading-time-sort="11.815">
+<div class="quarto-post image-right" data-index="0" data-listing-date-sort="1705957200000" data-listing-file-modified-sort="1707195297681" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3287">
 <div class="thumbnail">
-<a href="./datacamp/working_with_the_OpenAI_API/working_with_the_OpenAI_API.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./datacamp/working_with_the_OpenAI_API/working_with_the_OpenAI_API.html"></a></p>
+<p><a href="./datacamp/working_with_the_OpenAI_API/working_with_the_OpenAI_API.html" class="no-external"></a></p><a href="./datacamp/working_with_the_OpenAI_API/working_with_the_OpenAI_API.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./datacamp/working_with_the_OpenAI_API/working_with_the_OpenAI_API.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./datacamp/working_with_the_OpenAI_API/working_with_the_OpenAI_API.html">
 <h3 class="no-anchor listing-title">
-Introduction to the OpenAI API
+<a href="./datacamp/working_with_the_OpenAI_API/working_with_the_OpenAI_API.html" class="no-external">Introduction to the OpenAI API</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./datacamp/working_with_the_OpenAI_API/working_with_the_OpenAI_API.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-Software applications, web browser experiences, and even whole…
+<a href="./datacamp/working_with_the_OpenAI_API/working_with_the_OpenAI_API.html" class="no-external">Software applications, web browser experiences, and even whole products are being built on top of the OpenAI API. In this exercise, you’ll be able to explore an application…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./datacamp/working_with_the_OpenAI_API/working_with_the_OpenAI_API.html">
+<a href="./datacamp/working_with_the_OpenAI_API/working_with_the_OpenAI_API.html" class="no-external">
 <div class="listing-date">
 Jan 23, 2024
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-listing-date-sort="1705611600000" data-listing-file-modified-sort="1705909962038" data-listing-reading-time-sort="35.46">
+<div class="quarto-post image-right" data-index="1" data-listing-date-sort="1705611600000" data-listing-file-modified-sort="1705909962038" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="36" data-listing-word-count-sort="7092">
 <div class="thumbnail">
-<a href="./datacamp/introduction_to_shell/intoroduction_shell.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./datacamp/introduction_to_shell/intoroduction_shell.html"></a></p>
+<p><a href="./datacamp/introduction_to_shell/intoroduction_shell.html" class="no-external"></a></p><a href="./datacamp/introduction_to_shell/intoroduction_shell.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./datacamp/introduction_to_shell/intoroduction_shell.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./datacamp/introduction_to_shell/intoroduction_shell.html">
 <h3 class="no-anchor listing-title">
-Introduction to Shell
+<a href="./datacamp/introduction_to_shell/intoroduction_shell.html" class="no-external">Introduction to Shell</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./datacamp/introduction_to_shell/intoroduction_shell.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-An operating system like…
+<a href="./datacamp/introduction_to_shell/intoroduction_shell.html" class="no-external">An operating system like Windows, Linux, or Mac OS is a special kind of program. It controls the computer’s processor, hard drive, and network connection, but its most…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./datacamp/introduction_to_shell/intoroduction_shell.html">
+<a href="./datacamp/introduction_to_shell/intoroduction_shell.html" class="no-external">
 <div class="listing-date">
 Jan 19, 2024
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-listing-date-sort="1696453200000" data-listing-file-modified-sort="1696568743373" data-listing-reading-time-sort="11.075">
+<div class="quarto-post image-right" data-index="2" data-listing-date-sort="1696453200000" data-listing-file-modified-sort="1696568743373" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2215">
 <div class="thumbnail">
-<a href="./datacamp/Python_Data_Science_Toolbox_Part_1/python_data_science_toolbox_part_1.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./datacamp/Python_Data_Science_Toolbox_Part_1/python_data_science_toolbox_part_1.html"></a></p>
+<p><a href="./datacamp/Python_Data_Science_Toolbox_Part_1/python_data_science_toolbox_part_1.html" class="no-external"></a></p><a href="./datacamp/Python_Data_Science_Toolbox_Part_1/python_data_science_toolbox_part_1.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./datacamp/Python_Data_Science_Toolbox_Part_1/python_data_science_toolbox_part_1.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./datacamp/Python_Data_Science_Toolbox_Part_1/python_data_science_toolbox_part_1.html">
 <h3 class="no-anchor listing-title">
-Python Data Science Toolbox (Part 1)
+<a href="./datacamp/Python_Data_Science_Toolbox_Part_1/python_data_science_toolbox_part_1.html" class="no-external">Python Data Science Toolbox (Part 1)</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./datacamp/Python_Data_Science_Toolbox_Part_1/python_data_science_toolbox_part_1.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-In…
+<a href="./datacamp/Python_Data_Science_Toolbox_Part_1/python_data_science_toolbox_part_1.html" class="no-external">In the video, you learned of another standard Python datatype, strings. Recall that these represent textual data. To assign the string ‘DataCamp’ to a variable company, you…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./datacamp/Python_Data_Science_Toolbox_Part_1/python_data_science_toolbox_part_1.html">
+<a href="./datacamp/Python_Data_Science_Toolbox_Part_1/python_data_science_toolbox_part_1.html" class="no-external">
 <div class="listing-date">
 Oct 5, 2023
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-listing-date-sort="1695502800000" data-listing-file-modified-sort="1696171349215" data-listing-reading-time-sort="23.88">
+<div class="quarto-post image-right" data-index="3" data-listing-date-sort="1695502800000" data-listing-file-modified-sort="1696171349215" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="24" data-listing-word-count-sort="4776">
 <div class="thumbnail">
-<a href="./datacamp/DataManipulationPandas/DataManipulationPandas.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./datacamp/DataManipulationPandas/DataManipulationPandas.html"></a></p>
+<p><a href="./datacamp/DataManipulationPandas/DataManipulationPandas.html" class="no-external"></a></p><a href="./datacamp/DataManipulationPandas/DataManipulationPandas.html" class="no-external">
+<p class="card-img-top"><img src="datacamp/DataManipulationPandas/DataManipulationPandas_files/figure-html/unnamed-chunk-31-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./datacamp/DataManipulationPandas/DataManipulationPandas.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./datacamp/DataManipulationPandas/DataManipulationPandas.html">
 <h3 class="no-anchor listing-title">
-Data Manipulation with pandas
+<a href="./datacamp/DataManipulationPandas/DataManipulationPandas.html" class="no-external">Data Manipulation with pandas</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./datacamp/DataManipulationPandas/DataManipulationPandas.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-When you get a new DataFrame to work with, the first thing you need to do is explore it and see what it contains. There are several useful methods and attributes for this.
+<a href="./datacamp/DataManipulationPandas/DataManipulationPandas.html" class="no-external">When you get a new DataFrame to work with, the first thing you need to do is explore it and see what it contains. There are several useful methods and attributes for this.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./datacamp/DataManipulationPandas/DataManipulationPandas.html">
+<a href="./datacamp/DataManipulationPandas/DataManipulationPandas.html" class="no-external">
 <div class="listing-date">
 Sep 24, 2023
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-listing-date-sort="1695070800000" data-listing-file-modified-sort="1695361611293" data-listing-reading-time-sort="49.045">
+<div class="quarto-post image-right" data-index="4" data-listing-date-sort="1695070800000" data-listing-file-modified-sort="1695361611293" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="50" data-listing-word-count-sort="9809">
 <div class="thumbnail">
-<a href="./datacamp/intermediatePython/IntermediatePython.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./datacamp/intermediatePython/IntermediatePython.html"></a></p>
+<p><a href="./datacamp/intermediatePython/IntermediatePython.html" class="no-external"></a></p><a href="./datacamp/intermediatePython/IntermediatePython.html" class="no-external">
+<p class="card-img-top"><img src="datacamp/intermediatePython/IntermediatePython_files/figure-html/unnamed-chunk-1-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./datacamp/intermediatePython/IntermediatePython.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./datacamp/intermediatePython/IntermediatePython.html">
 <h3 class="no-anchor listing-title">
-Intermediate Python
+<a href="./datacamp/intermediatePython/IntermediatePython.html" class="no-external">Intermediate Python</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./datacamp/intermediatePython/IntermediatePython.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-With matplotlib, you can create a bunch of different plots in Python. The most basic plot is the line plot. A general recipe is given here.
+<a href="./datacamp/intermediatePython/IntermediatePython.html" class="no-external">With matplotlib, you can create a bunch of different plots in Python. The most basic plot is the line plot. A general recipe is given here.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./datacamp/intermediatePython/IntermediatePython.html">
+<a href="./datacamp/intermediatePython/IntermediatePython.html" class="no-external">
 <div class="listing-date">
 Sep 19, 2023
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-listing-date-sort="1694811600000" data-listing-file-modified-sort="1695058110836" data-listing-reading-time-sort="25.435">
+<div class="quarto-post image-right" data-index="5" data-listing-date-sort="1694811600000" data-listing-file-modified-sort="1695058110836" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="26" data-listing-word-count-sort="5087">
 <div class="thumbnail">
-<a href="./datacamp/introduction_python/introduction_python.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./datacamp/introduction_python/introduction_python.html"></a></p>
+<p><a href="./datacamp/introduction_python/introduction_python.html" class="no-external"></a></p><a href="./datacamp/introduction_python/introduction_python.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./datacamp/introduction_python/introduction_python.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./datacamp/introduction_python/introduction_python.html">
 <h3 class="no-anchor listing-title">
-Introduction to Python
+<a href="./datacamp/introduction_python/introduction_python.html" class="no-external">Introduction to Python</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./datacamp/introduction_python/introduction_python.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-Python Basics
+<a href="./datacamp/introduction_python/introduction_python.html" class="no-external">Python Basics</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./datacamp/introduction_python/introduction_python.html">
+<a href="./datacamp/introduction_python/introduction_python.html" class="no-external">
 <div class="listing-date">
 Sep 16, 2023
 </div>
@@ -358,29 +371,25 @@ Mburu
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-listing-date-sort="1685998800000" data-listing-file-modified-sort="1686379416069" data-listing-reading-time-sort="8.675">
+<div class="quarto-post image-right" data-index="6" data-listing-date-sort="1685998800000" data-listing-file-modified-sort="1686379416069" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1735">
 <div class="thumbnail">
-<a href="./datacamp/intermidiate_regression_R/intermediate_regression.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./datacamp/intermidiate_regression_R/intermediate_regression.html"></a></p>
+<p><a href="./datacamp/intermidiate_regression_R/intermediate_regression.html" class="no-external"></a></p><a href="./datacamp/intermidiate_regression_R/intermediate_regression.html" class="no-external">
+<p class="card-img-top"><img src="datacamp/intermidiate_regression_R/intermediate_regression_files/figure-html/unnamed-chunk-4-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./datacamp/intermidiate_regression_R/intermediate_regression.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./datacamp/intermidiate_regression_R/intermediate_regression.html">
 <h3 class="no-anchor listing-title">
-Intermediate Regression in R
+<a href="./datacamp/intermidiate_regression_R/intermediate_regression.html" class="no-external">Intermediate Regression in R</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./datacamp/intermidiate_regression_R/intermediate_regression.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-In Introduction to Regression in R, you learned to fit linear regression models with a single explanatory variable. In many cases, using…
+<a href="./datacamp/intermidiate_regression_R/intermediate_regression.html" class="no-external">In Introduction to Regression in R, you learned to fit linear regression models with a single explanatory variable. In many cases, using only one explanatory variable limits…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./datacamp/intermidiate_regression_R/intermediate_regression.html">
+<a href="./datacamp/intermidiate_regression_R/intermediate_regression.html" class="no-external">
 <div class="listing-date">
 Jun 6, 2023
 </div>
@@ -390,166 +399,150 @@ Mburu
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="7" data-listing-date-sort="1683925200000" data-listing-file-modified-sort="1686379416449" data-listing-reading-time-sort="16.78">
+<div class="quarto-post image-right" data-index="7" data-listing-date-sort="1683925200000" data-listing-file-modified-sort="1686379416449" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3356">
 <div class="thumbnail">
-<p><a href="./datacamp/survival_analysis_R/survival_analysis_R.html"> <img src="./datacamp/survival_analysis_R/kap.png" class="thumnail-image"> </a></p>
+<p><a href="./datacamp/survival_analysis_R/survival_analysis_R.html" class="no-external"></a></p><a href="./datacamp/survival_analysis_R/survival_analysis_R.html" class="no-external">
+<p class="card-img-top"><img src="datacamp/survival_analysis_R/survival_analysis_R_files/figure-html/unnamed-chunk-2-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./datacamp/survival_analysis_R/survival_analysis_R.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./datacamp/survival_analysis_R/survival_analysis_R.html">
 <h3 class="no-anchor listing-title">
-Survival Analysis R
+<a href="./datacamp/survival_analysis_R/survival_analysis_R.html" class="no-external">Survival Analysis R</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./datacamp/survival_analysis_R/survival_analysis_R.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-In this course…
+<a href="./datacamp/survival_analysis_R/survival_analysis_R.html" class="no-external">In this course, we will frequently use the GBSG2 dataset. This dataset contains information on breast cancer patients and their survival. In this exercise, we will take a…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./datacamp/survival_analysis_R/survival_analysis_R.html">
+<a href="./datacamp/survival_analysis_R/survival_analysis_R.html" class="no-external">
 <div class="listing-date">
 May 13, 2023
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="8" data-listing-date-sort="1675544400000" data-listing-file-modified-sort="1686379416057" data-listing-reading-time-sort="2.515">
+<div class="quarto-post image-right" data-index="8" data-listing-date-sort="1675544400000" data-listing-file-modified-sort="1686379416057" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="503">
 <div class="thumbnail">
-<a href="./datacamp/foundation_prob_R/foundation_probability.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./datacamp/foundation_prob_R/foundation_probability.html"></a></p>
+<p><a href="./datacamp/foundation_prob_R/foundation_probability.html" class="no-external"></a></p><a href="./datacamp/foundation_prob_R/foundation_probability.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./datacamp/foundation_prob_R/foundation_probability.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./datacamp/foundation_prob_R/foundation_probability.html">
 <h3 class="no-anchor listing-title">
-Foundations of Probability in R
+<a href="./datacamp/foundation_prob_R/foundation_probability.html" class="no-external">Foundations of Probability in R</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./datacamp/foundation_prob_R/foundation_probability.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-In these exercises, you’ll practice using the rbinom() function, which generates random “flips” that are either 1 (“heads”) or 0 (“tails”).
+<a href="./datacamp/foundation_prob_R/foundation_probability.html" class="no-external">In these exercises, you’ll practice using the rbinom() function, which generates random “flips” that are either 1 (“heads”) or 0 (“tails”).</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./datacamp/foundation_prob_R/foundation_probability.html">
+<a href="./datacamp/foundation_prob_R/foundation_probability.html" class="no-external">
 <div class="listing-date">
 Feb 5, 2023
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="9" data-listing-date-sort="1673902800000" data-listing-file-modified-sort="1686379416317" data-listing-reading-time-sort="16.525">
+<div class="quarto-post image-right" data-index="9" data-listing-date-sort="1673902800000" data-listing-file-modified-sort="1686379416317" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3305">
 <div class="thumbnail">
-<a href="./datacamp/introduction_statistics_R/introduction_stats.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./datacamp/introduction_statistics_R/introduction_stats.html"></a></p>
+<p><a href="./datacamp/introduction_statistics_R/introduction_stats.html" class="no-external"></a></p><a href="./datacamp/introduction_statistics_R/introduction_stats.html" class="no-external">
+<p class="card-img-top"><img src="datacamp/introduction_statistics_R/introduction_stats_files/figure-html/unnamed-chunk-2-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./datacamp/introduction_statistics_R/introduction_stats.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./datacamp/introduction_statistics_R/introduction_stats.html">
 <h3 class="no-anchor listing-title">
-Introduction to Statistics with R
+<a href="./datacamp/introduction_statistics_R/introduction_stats.html" class="no-external">Introduction to Statistics with R</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./datacamp/introduction_statistics_R/introduction_stats.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-In this chapter, you’ll be working with the 2018 Food Carbon Footprint Index from nu3. The food_consumption dataset contains information about the kilograms of food consumed…
+<a href="./datacamp/introduction_statistics_R/introduction_stats.html" class="no-external">In this chapter, you’ll be working with the 2018 Food Carbon Footprint Index from nu3. The food_consumption dataset contains information about the kilograms of food consumed…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./datacamp/introduction_statistics_R/introduction_stats.html">
+<a href="./datacamp/introduction_statistics_R/introduction_stats.html" class="no-external">
 <div class="listing-date">
 Jan 17, 2023
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="10" data-listing-date-sort="1670619600000" data-listing-file-modified-sort="1686379416057" data-listing-reading-time-sort="25.135">
+<div class="quarto-post image-right" data-index="10" data-listing-date-sort="1670619600000" data-listing-file-modified-sort="1686379416057" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="26" data-listing-word-count-sort="5027">
 <div class="thumbnail">
-<a href="./datacamp/functions_in_R/functions_R.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./datacamp/functions_in_R/functions_R.html"></a></p>
+<p><a href="./datacamp/functions_in_R/functions_R.html" class="no-external"></a></p><a href="./datacamp/functions_in_R/functions_R.html" class="no-external">
+<p class="card-img-top"><img src="datacamp/functions_in_R/functions_R_files/figure-html/unnamed-chunk-17-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./datacamp/functions_in_R/functions_R.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./datacamp/functions_in_R/functions_R.html">
 <h3 class="no-anchor listing-title">
-Functions in R
+<a href="./datacamp/functions_in_R/functions_R.html" class="no-external">Functions in R</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./datacamp/functions_in_R/functions_R.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-One way to make your code more readable is to be careful about the order you pass arguments when you call functions, and whether you pass the arguments by position or by name.
+<a href="./datacamp/functions_in_R/functions_R.html" class="no-external">One way to make your code more readable is to be careful about the order you pass arguments when you call functions, and whether you pass the arguments by position or by name.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./datacamp/functions_in_R/functions_R.html">
+<a href="./datacamp/functions_in_R/functions_R.html" class="no-external">
 <div class="listing-date">
 Dec 10, 2022
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="11" data-listing-date-sort="1670014800000" data-listing-file-modified-sort="1686379416061" data-listing-reading-time-sort="42.69">
+<div class="quarto-post image-right" data-index="11" data-listing-date-sort="1670014800000" data-listing-file-modified-sort="1686379416061" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="43" data-listing-word-count-sort="8538">
 <div class="thumbnail">
-<p><a href="./datacamp/imputations_in_R/imputations_in_R.html"> <img src="./datacamp/imputations_in_R/data/miss_mecha.png" class="thumnail-image"> </a></p>
+<p><a href="./datacamp/imputations_in_R/imputations_in_R.html" class="no-external"></a></p><a href="./datacamp/imputations_in_R/imputations_in_R.html" class="no-external">
+<p class="card-img-top"><img src="datacamp/imputations_in_R/data/miss_mecha.png" alt="Missing mechanisms examples"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./datacamp/imputations_in_R/imputations_in_R.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./datacamp/imputations_in_R/imputations_in_R.html">
 <h3 class="no-anchor listing-title">
-Handling Missing Data with Imputations in R
+<a href="./datacamp/imputations_in_R/imputations_in_R.html" class="no-external">Handling Missing Data with Imputations in R</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./datacamp/imputations_in_R/imputations_in_R.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-Missing data is a common problem and dealing with it appropriately is…
+<a href="./datacamp/imputations_in_R/imputations_in_R.html" class="no-external">Missing data is a common problem and dealing with it appropriately is extremely important. Ignoring the missing data points or filling them incorrectly may cause the models…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./datacamp/imputations_in_R/imputations_in_R.html">
+<a href="./datacamp/imputations_in_R/imputations_in_R.html" class="no-external">
 <div class="listing-date">
 Dec 3, 2022
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="12" data-listing-date-sort="1667422800000" data-listing-file-modified-sort="1686379416033" data-listing-reading-time-sort="17.99">
+<div class="quarto-post image-right" data-index="12" data-listing-date-sort="1667422800000" data-listing-file-modified-sort="1686379416033" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18" data-listing-word-count-sort="3598">
 <div class="thumbnail">
-<a href="./datacamp/anomaly_detection_R/anomaly_detection.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./datacamp/anomaly_detection_R/anomaly_detection.html"></a></p>
+<p><a href="./datacamp/anomaly_detection_R/anomaly_detection.html" class="no-external"></a></p><a href="./datacamp/anomaly_detection_R/anomaly_detection.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./datacamp/anomaly_detection_R/anomaly_detection.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./datacamp/anomaly_detection_R/anomaly_detection.html">
 <h3 class="no-anchor listing-title">
-Anomaly Detection in R
+<a href="./datacamp/anomaly_detection_R/anomaly_detection.html" class="no-external">Anomaly Detection in R</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./datacamp/anomaly_detection_R/anomaly_detection.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-In this exercise, you’ll explore the river dataset…
+<a href="./datacamp/anomaly_detection_R/anomaly_detection.html" class="no-external">In this exercise, you’ll explore the river dataset which will be used throughout this chapter to illustrate the use of common anomaly detection techniques. The river data is…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./datacamp/anomaly_detection_R/anomaly_detection.html">
+<a href="./datacamp/anomaly_detection_R/anomaly_detection.html" class="no-external">
 <div class="listing-date">
 Nov 3, 2022
 </div>
@@ -559,48 +552,44 @@ Mburu
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="13" data-listing-date-sort="1662670800000" data-listing-file-modified-sort="1686379416385" data-listing-reading-time-sort="3.755">
+<div class="quarto-post image-right" data-index="13" data-listing-date-sort="1662670800000" data-listing-file-modified-sort="1686379416385" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="751">
 <div class="thumbnail">
-<a href="./datacamp/sampling_R/sampling_R.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./datacamp/sampling_R/sampling_R.html"></a></p>
+<p><a href="./datacamp/sampling_R/sampling_R.html" class="no-external"></a></p><a href="./datacamp/sampling_R/sampling_R.html" class="no-external">
+<p class="card-img-top"><img src="datacamp/sampling_R/sampling_R_files/figure-html/unnamed-chunk-4-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./datacamp/sampling_R/sampling_R.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./datacamp/sampling_R/sampling_R.html">
 <h3 class="no-anchor listing-title">
-Sampling in R
+<a href="./datacamp/sampling_R/sampling_R.html" class="no-external">Sampling in R</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./datacamp/sampling_R/sampling_R.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-Sampling is an important technique in your statistical arsenal. It isn’t always appropriate though—you need to know when to use it and when to work with the whole dataset.
+<a href="./datacamp/sampling_R/sampling_R.html" class="no-external">Sampling is an important technique in your statistical arsenal. It isn’t always appropriate though—you need to know when to use it and when to work with the whole dataset.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./datacamp/sampling_R/sampling_R.html">
+<a href="./datacamp/sampling_R/sampling_R.html" class="no-external">
 <div class="listing-date">
 Sep 9, 2022
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="14" data-categories="code,analysis" data-listing-date-sort="1649365200000" data-listing-file-modified-sort="1686379416305" data-listing-reading-time-sort="31.91">
+<div class="quarto-post image-right" data-index="14" data-categories="code,analysis" data-listing-date-sort="1649365200000" data-listing-file-modified-sort="1686379416305" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="32" data-listing-word-count-sort="6382">
 <div class="thumbnail">
-<p><a href="./datacamp/introduction-to-advanced-dimensionality-reduction/introduction_dimensionality_reduction.html"> <img src="./datacamp/introduction-to-advanced-dimensionality-reduction/MNIST_input_ex.png" class="thumnail-image"> </a></p>
+<p><a href="./datacamp/introduction-to-advanced-dimensionality-reduction/introduction_dimensionality_reduction.html" class="no-external"></a></p><a href="./datacamp/introduction-to-advanced-dimensionality-reduction/introduction_dimensionality_reduction.html" class="no-external">
+<p class="card-img-top"><img src="datacamp/introduction-to-advanced-dimensionality-reduction/MNIST_input_ex.png" alt="degit 3."  class="thumbnail-image card-img"/></p>
+</a><p><a href="./datacamp/introduction-to-advanced-dimensionality-reduction/introduction_dimensionality_reduction.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./datacamp/introduction-to-advanced-dimensionality-reduction/introduction_dimensionality_reduction.html">
 <h3 class="no-anchor listing-title">
-Introduction to advanced dimensionality reduction
+<a href="./datacamp/introduction-to-advanced-dimensionality-reduction/introduction_dimensionality_reduction.html" class="no-external">Introduction to advanced dimensionality reduction</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./datacamp/introduction-to-advanced-dimensionality-reduction/introduction_dimensionality_reduction.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
 code
@@ -609,14 +598,12 @@ code
 analysis
 </div>
 </div>
-<a href="./datacamp/introduction-to-advanced-dimensionality-reduction/introduction_dimensionality_reduction.html">
 <div class="listing-description">
-You will use the MNIST dataset in several exercises through the course. Let’s do some data exploration to gain a better…
+<a href="./datacamp/introduction-to-advanced-dimensionality-reduction/introduction_dimensionality_reduction.html" class="no-external">You will use the MNIST dataset in several exercises through the course. Let’s do some data exploration to gain a better understanding. Remember that the MNIST dataset…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./datacamp/introduction-to-advanced-dimensionality-reduction/introduction_dimensionality_reduction.html">
+<a href="./datacamp/introduction-to-advanced-dimensionality-reduction/introduction_dimensionality_reduction.html" class="no-external">
 <div class="listing-date">
 Apr 8, 2022
 </div>
@@ -626,83 +613,75 @@ Mburu
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="15" data-listing-date-sort="1645563600000" data-listing-file-modified-sort="1686397171594" data-listing-reading-time-sort="31.96">
+<div class="quarto-post image-right" data-index="15" data-listing-date-sort="1645563600000" data-listing-file-modified-sort="1686397171594" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="32" data-listing-word-count-sort="6392">
 <div class="thumbnail">
-<a href="./datacamp/us_census/us_census.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./datacamp/us_census/us_census.html"></a></p>
+<p><a href="./datacamp/us_census/us_census.html" class="no-external"></a></p><a href="./datacamp/us_census/us_census.html" class="no-external">
+<p class="card-img-top"><img src="datacamp/us_census/us_census_files/figure-html/unnamed-chunk-5-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./datacamp/us_census/us_census.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./datacamp/us_census/us_census.html">
 <h3 class="no-anchor listing-title">
-Census data in r with tidycensus
+<a href="./datacamp/us_census/us_census.html" class="no-external">Census data in r with tidycensus</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./datacamp/us_census/us_census.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-tidycensus is an R package designed to return data from the US Census Bureau ready for use within the Tidyverse.
+<a href="./datacamp/us_census/us_census.html" class="no-external">tidycensus is an R package designed to return data from the US Census Bureau ready for use within the Tidyverse.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./datacamp/us_census/us_census.html">
+<a href="./datacamp/us_census/us_census.html" class="no-external">
 <div class="listing-date">
 Feb 23, 2022
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="16" data-listing-date-sort="1639083600000" data-listing-file-modified-sort="1686379416449" data-listing-reading-time-sort="13.795">
+<div class="quarto-post image-right" data-index="16" data-listing-date-sort="1639083600000" data-listing-file-modified-sort="1686379416449" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2759">
 <div class="thumbnail">
-<p><a href="./datacamp/tidymodels/tidymodels.html"> <img src="./datacamp/tidymodels/tidymodels_paks.png" class="thumnail-image"> </a></p>
+<p><a href="./datacamp/tidymodels/tidymodels.html" class="no-external"></a></p><a href="./datacamp/tidymodels/tidymodels.html" class="no-external">
+<p class="card-img-top"><img src="datacamp/tidymodels/tidymodels_paks.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./datacamp/tidymodels/tidymodels.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./datacamp/tidymodels/tidymodels.html">
 <h3 class="no-anchor listing-title">
-Modeling with tidymodels in R
+<a href="./datacamp/tidymodels/tidymodels.html" class="no-external">Modeling with tidymodels in R</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./datacamp/tidymodels/tidymodels.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-The rsample package is designed to create training and test datasets. Creating a test dataset is important for estimating how a trained…
+<a href="./datacamp/tidymodels/tidymodels.html" class="no-external">The rsample package is designed to create training and test datasets. Creating a test dataset is important for estimating how a trained model will likely perform on new…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./datacamp/tidymodels/tidymodels.html">
+<a href="./datacamp/tidymodels/tidymodels.html" class="no-external">
 <div class="listing-date">
 Dec 10, 2021
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="17" data-listing-date-sort="1636318800000" data-listing-file-modified-sort="1686379416037" data-listing-reading-time-sort="12.795">
+<div class="quarto-post image-right" data-index="17" data-listing-date-sort="1636318800000" data-listing-file-modified-sort="1686379416037" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13" data-listing-word-count-sort="2559">
 <div class="thumbnail">
-<a href="./datacamp/comm_tidyverse/tidyverse.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./datacamp/comm_tidyverse/tidyverse.html"></a></p>
+<p><a href="./datacamp/comm_tidyverse/tidyverse.html" class="no-external"></a></p><a href="./datacamp/comm_tidyverse/tidyverse.html" class="no-external">
+<p class="card-img-top"><img src="datacamp/comm_tidyverse/tidyverse_files/figure-html/unnamed-chunk-5-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./datacamp/comm_tidyverse/tidyverse.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./datacamp/comm_tidyverse/tidyverse.html">
 <h3 class="no-anchor listing-title">
-Communicating with Data in the Tidyverse
+<a href="./datacamp/comm_tidyverse/tidyverse.html" class="no-external">Communicating with Data in the Tidyverse</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./datacamp/comm_tidyverse/tidyverse.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-In the video, you have learned that the inner_join() function of dplyr needs to be given a “key” on which two data frames are joined. Actually, multiple keys that need to…
+<a href="./datacamp/comm_tidyverse/tidyverse.html" class="no-external">In the video, you have learned that the inner_join() function of dplyr needs to be given a “key” on which two data frames are joined. Actually, multiple keys that need to…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./datacamp/comm_tidyverse/tidyverse.html">
+<a href="./datacamp/comm_tidyverse/tidyverse.html" class="no-external">
 <div class="listing-date">
 Nov 8, 2021
 </div>
@@ -712,25 +691,25 @@ Mburu
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="18" data-listing-date-sort="1636318800000" data-listing-file-modified-sort="1686379416037" data-listing-reading-time-sort="4.54">
+<div class="quarto-post image-right" data-index="18" data-listing-date-sort="1636318800000" data-listing-file-modified-sort="1686379416037" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="908">
 <div class="thumbnail">
-<p><a href="./datacamp/comm_tidyverse/rmarkdown_ex.html"> <img src="http://s3.amazonaws.com/assets.datacamp.com/production/course_5807/datasets/relationship.png" class="thumnail-image"> </a></p>
+<p><a href="./datacamp/comm_tidyverse/rmarkdown_ex.html" class="no-external"></a></p><a href="./datacamp/comm_tidyverse/rmarkdown_ex.html" class="no-external">
+<p class="card-img-top"><img src="datacamp/comm_tidyverse/rmarkdown_ex_files/figure-html/unnamed-chunk-2-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./datacamp/comm_tidyverse/rmarkdown_ex.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./datacamp/comm_tidyverse/rmarkdown_ex.html">
 <h3 class="no-anchor listing-title">
-The reduction in weekly working hours in Europe
+<a href="./datacamp/comm_tidyverse/rmarkdown_ex.html" class="no-external">The reduction in weekly working hours in Europe</a>
 </h3>
 <div class="listing-subtitle">
-Looking at the development between 1996 and 2006
+<a href="./datacamp/comm_tidyverse/rmarkdown_ex.html" class="no-external">Looking at the development between 1996 and 2006</a>
 </div>
 <div class="listing-description">
-The <strong>International Labour Organization (ILO)</strong> has many data sets on working conditions. For example, one can look at how weekly working…<em></em>
+<a href="./datacamp/comm_tidyverse/rmarkdown_ex.html" class="no-external">The <strong>International Labour Organization (ILO)</strong> has many data sets on working conditions. For example, one can look at how weekly working hours have been decreasing in many…<em></em></a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./datacamp/comm_tidyverse/rmarkdown_ex.html">
+<a href="./datacamp/comm_tidyverse/rmarkdown_ex.html" class="no-external">
 <div class="listing-date">
 Nov 8, 2021
 </div>
@@ -740,29 +719,25 @@ Mburu
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="19" data-listing-date-sort="1628802000000" data-listing-file-modified-sort="1686396933128" data-listing-reading-time-sort="5.785">
+<div class="quarto-post image-right" data-index="19" data-listing-date-sort="1628802000000" data-listing-file-modified-sort="1686396933128" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1157">
 <div class="thumbnail">
-<a href="./datacamp/efficient_R_code/efficient_R_code.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./datacamp/efficient_R_code/efficient_R_code.html"></a></p>
+<p><a href="./datacamp/efficient_R_code/efficient_R_code.html" class="no-external"></a></p><a href="./datacamp/efficient_R_code/efficient_R_code.html" class="no-external">
+<p class="card-img-top"><img src="datacamp/efficient_R_code/efficient_R_code_files/figure-html/unnamed-chunk-5-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./datacamp/efficient_R_code/efficient_R_code.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./datacamp/efficient_R_code/efficient_R_code.html">
 <h3 class="no-anchor listing-title">
-Writing Efficient R Code
+<a href="./datacamp/efficient_R_code/efficient_R_code.html" class="no-external">Writing Efficient R Code</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./datacamp/efficient_R_code/efficient_R_code.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-One of the relatively easy optimizations available is to use an…
+<a href="./datacamp/efficient_R_code/efficient_R_code.html" class="no-external">One of the relatively easy optimizations available is to use an up-to-date version of R. In general, R is very conservative, so upgrading doesn’t break existing code.…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./datacamp/efficient_R_code/efficient_R_code.html">
+<a href="./datacamp/efficient_R_code/efficient_R_code.html" class="no-external">
 <div class="listing-date">
 Aug 13, 2021
 </div>
@@ -772,29 +747,25 @@ Mburu
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="20" data-listing-date-sort="1618261200000" data-listing-file-modified-sort="1686379416401" data-listing-reading-time-sort="2.52">
+<div class="quarto-post image-right" data-index="20" data-listing-date-sort="1618261200000" data-listing-file-modified-sort="1686379416401" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="504">
 <div class="thumbnail">
-<a href="./datacamp/scalable_data_R/scalable_data_r.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./datacamp/scalable_data_R/scalable_data_r.html"></a></p>
+<p><a href="./datacamp/scalable_data_R/scalable_data_r.html" class="no-external"></a></p><a href="./datacamp/scalable_data_R/scalable_data_r.html" class="no-external">
+<p class="card-img-top"><img src="datacamp/scalable_data_R/scalable_data_r_files/figure-html/unnamed-chunk-1-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./datacamp/scalable_data_R/scalable_data_r.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./datacamp/scalable_data_R/scalable_data_r.html">
 <h3 class="no-anchor listing-title">
-Scalable Data Processing in R
+<a href="./datacamp/scalable_data_R/scalable_data_r.html" class="no-external">Scalable Data Processing in R</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./datacamp/scalable_data_R/scalable_data_r.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-If you are processing all elements of two data sets, and one data set is bigger, then the bigger data set will take longer to process. However, it’s important to realize…
+<a href="./datacamp/scalable_data_R/scalable_data_r.html" class="no-external">If you are processing all elements of two data sets, and one data set is bigger, then the bigger data set will take longer to process. However, it’s important to realize…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./datacamp/scalable_data_R/scalable_data_r.html">
+<a href="./datacamp/scalable_data_R/scalable_data_r.html" class="no-external">
 <div class="listing-date">
 Apr 13, 2021
 </div>
@@ -804,29 +775,25 @@ Mburu
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="21" data-listing-date-sort="1618261200000" data-listing-file-modified-sort="1686379416361" data-listing-reading-time-sort="10.705">
+<div class="quarto-post image-right" data-index="21" data-listing-date-sort="1618261200000" data-listing-file-modified-sort="1686379416361" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2141">
 <div class="thumbnail">
-<a href="./datacamp/regression_r/regression.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./datacamp/regression_r/regression.html"></a></p>
+<p><a href="./datacamp/regression_r/regression.html" class="no-external"></a></p><a href="./datacamp/regression_r/regression.html" class="no-external">
+<p class="card-img-top"><img src="datacamp/regression_r/regression_files/figure-html/unnamed-chunk-2-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./datacamp/regression_r/regression.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./datacamp/regression_r/regression.html">
 <h3 class="no-anchor listing-title">
-Multiple Linear and Logistic Regression in R
+<a href="./datacamp/regression_r/regression.html" class="no-external">Multiple Linear and Logistic Regression in R</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./datacamp/regression_r/regression.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-We use the lm() function to fit linear models to data. In this case, we want to understand how the price of MarioKart games sold at auction varies as a function of not only…
+<a href="./datacamp/regression_r/regression.html" class="no-external">We use the lm() function to fit linear models to data. In this case, we want to understand how the price of MarioKart games sold at auction varies as a function of not only…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./datacamp/regression_r/regression.html">
+<a href="./datacamp/regression_r/regression.html" class="no-external">
 <div class="listing-date">
 Apr 13, 2021
 </div>
@@ -836,29 +803,25 @@ Mburu
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="22" data-listing-date-sort="1592514000000" data-listing-file-modified-sort="1686379416357" data-listing-reading-time-sort="21.41">
+<div class="quarto-post image-right" data-index="22" data-listing-date-sort="1592514000000" data-listing-file-modified-sort="1686379416357" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="22" data-listing-word-count-sort="4282">
 <div class="thumbnail">
-<a href="./datacamp/network-analysis-in-r/network_analysis_r.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./datacamp/network-analysis-in-r/network_analysis_r.html"></a></p>
+<p><a href="./datacamp/network-analysis-in-r/network_analysis_r.html" class="no-external"></a></p><a href="./datacamp/network-analysis-in-r/network_analysis_r.html" class="no-external">
+<p class="card-img-top"><img src="datacamp/network-analysis-in-r/network_analysis_r_files/figure-html/unnamed-chunk-2-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./datacamp/network-analysis-in-r/network_analysis_r.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./datacamp/network-analysis-in-r/network_analysis_r.html">
 <h3 class="no-anchor listing-title">
-Network analysis in R
+<a href="./datacamp/network-analysis-in-r/network_analysis_r.html" class="no-external">Network analysis in R</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./datacamp/network-analysis-in-r/network_analysis_r.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-Here you will learn how to…
+<a href="./datacamp/network-analysis-in-r/network_analysis_r.html" class="no-external">Here you will learn how to create an igraph ‘object’ from data stored in an edgelist. The data are friendships in a group of students. You will also learn how to make a…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./datacamp/network-analysis-in-r/network_analysis_r.html">
+<a href="./datacamp/network-analysis-in-r/network_analysis_r.html" class="no-external">
 <div class="listing-date">
 Jun 19, 2020
 </div>
@@ -868,29 +831,25 @@ Mburu
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="23" data-listing-date-sort="1590872400000" data-listing-file-modified-sort="1686379416449" data-listing-reading-time-sort="23.82">
+<div class="quarto-post image-right" data-index="23" data-listing-date-sort="1590872400000" data-listing-file-modified-sort="1686379416449" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="24" data-listing-word-count-sort="4764">
 <div class="thumbnail">
-<a href="./datacamp/string-manipulation-with-stringr-in-r/stringR.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./datacamp/string-manipulation-with-stringr-in-r/stringR.html"></a></p>
+<p><a href="./datacamp/string-manipulation-with-stringr-in-r/stringR.html" class="no-external"></a></p><a href="./datacamp/string-manipulation-with-stringr-in-r/stringR.html" class="no-external">
+<p class="card-img-top"><img src="datacamp/string-manipulation-with-stringr-in-r/stringR_files/figure-html/unnamed-chunk-12-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./datacamp/string-manipulation-with-stringr-in-r/stringR.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./datacamp/string-manipulation-with-stringr-in-r/stringR.html">
 <h3 class="no-anchor listing-title">
-String manipulation with stringr in r
+<a href="./datacamp/string-manipulation-with-stringr-in-r/stringR.html" class="no-external">String manipulation with stringr in r</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./datacamp/string-manipulation-with-stringr-in-r/stringR.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-Let’s get started by entering some strings in R. In t he…
+<a href="./datacamp/string-manipulation-with-stringr-in-r/stringR.html" class="no-external">Let’s get started by entering some strings in R. In t he video you saw that you use quotes to tell R to interpret something as a string. Both double quotes (“) and single…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./datacamp/string-manipulation-with-stringr-in-r/stringR.html">
+<a href="./datacamp/string-manipulation-with-stringr-in-r/stringR.html" class="no-external">
 <div class="listing-date">
 May 31, 2020
 </div>
@@ -900,29 +859,25 @@ Mburu
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="24" data-listing-date-sort="1585947600000" data-listing-file-modified-sort="1686379416337" data-listing-reading-time-sort="36.8">
+<div class="quarto-post image-right" data-index="24" data-listing-date-sort="1585947600000" data-listing-file-modified-sort="1686379416337" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="37" data-listing-word-count-sort="7360">
 <div class="thumbnail">
-<a href="./datacamp/ml_tree_methods_r/ml_tree_methods.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./datacamp/ml_tree_methods_r/ml_tree_methods.html"></a></p>
+<p><a href="./datacamp/ml_tree_methods_r/ml_tree_methods.html" class="no-external"></a></p><a href="./datacamp/ml_tree_methods_r/ml_tree_methods.html" class="no-external">
+<p class="card-img-top"><img src="datacamp/ml_tree_methods_r/ml_tree_methods_files/figure-html/unnamed-chunk-1-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./datacamp/ml_tree_methods_r/ml_tree_methods.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./datacamp/ml_tree_methods_r/ml_tree_methods.html">
 <h3 class="no-anchor listing-title">
-ML with tree based models in r
+<a href="./datacamp/ml_tree_methods_r/ml_tree_methods.html" class="no-external">ML with tree based models in r</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./datacamp/ml_tree_methods_r/ml_tree_methods.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-Let’s get started and build our first classification tree. A classification tree is a decision tree that performs a classification (vs regression) task. You will train a…
+<a href="./datacamp/ml_tree_methods_r/ml_tree_methods.html" class="no-external">Let’s get started and build our first classification tree. A classification tree is a decision tree that performs a classification (vs regression) task. You will train a…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./datacamp/ml_tree_methods_r/ml_tree_methods.html">
+<a href="./datacamp/ml_tree_methods_r/ml_tree_methods.html" class="no-external">
 <div class="listing-date">
 Apr 4, 2020
 </div>
@@ -964,9 +919,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1002,10 +971,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1015,8 +983,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1031,6 +1008,238 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -1071,6 +1280,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 

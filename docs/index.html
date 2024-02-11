@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,7 +17,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -48,7 +48,13 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -57,8 +63,10 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script>
@@ -101,67 +109,93 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
 </script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="style.css">
 <meta property="og:title" content="Personal Blog -">
-<meta property="og:image" content="https://m-mburu.github.io/posts/welcome/thumbnail.jpg">
-<meta property="og:site-name" content="Personal Blog">
+<meta property="og:site_name" content="Personal Blog">
 <meta name="twitter:title" content="Personal Blog -">
-<meta name="twitter:image" content="https://m-mburu.github.io/posts/welcome/thumbnail.jpg">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Personal Blog</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./datacamp.html">
- <span class="menu-text">Data Camp Courses</span></a>
+    <a class="nav-link" href="./datacamp.html"> 
+<span class="menu-text">Data Camp Courses</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/m-mburu"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/m-mburu"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/mmburu_w"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/mmburu_w"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div class="quarto-toggle-container">
-                  <a href="" class="quarto-reader-toggle nav-link" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
   </div>
 </a>
-              </div>
-              <div id="quarto-search" class="" title="Search"></div>
-          </div> <!-- /navcollapse -->
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -171,7 +205,7 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(5)</span></div><div class="category" data-category="analysis">analysis <span class="quarto-category-count">(2)</span></div><div class="category" data-category="code">code <span class="quarto-category-count">(2)</span></div><div class="category" data-category="news">news <span class="quarto-category-count">(1)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(7)</span></div><div class="category" data-category="analysis">analysis <span class="quarto-category-count">(2)</span></div><div class="category" data-category="code">code <span class="quarto-category-count">(2)</span></div><div class="category" data-category="news">news <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
@@ -181,34 +215,61 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
 
 
 
+
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="news" data-listing-date-sort="1675803600000" data-listing-file-modified-sort="1686379417729" data-listing-reading-time-sort="0.095">
+<div class="quarto-post image-right" data-index="0" data-listing-date-sort="1705266000000" data-listing-file-modified-sort="1707643876367" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1577">
 <div class="thumbnail">
-<p><a href="./posts/welcome/index.html"> <img src="./posts/welcome/thumbnail.jpg" class="thumnail-image"> </a></p>
+<p><a href="./posts/cbk_data/kenya_income_exp.html" class="no-external"></a></p><a href="./posts/cbk_data/kenya_income_exp.html" class="no-external">
+<p class="card-img-top"><img src="posts/cbk_data/usd_xchange.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/cbk_data/kenya_income_exp.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/welcome/index.html">
 <h3 class="no-anchor listing-title">
-Welcome To My Blog
+<a href="./posts/cbk_data/kenya_income_exp.html" class="no-external">Analyzing Kenya’s Fiscal Trends from 2000 to 2023</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/cbk_data/kenya_income_exp.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./posts/cbk_data/kenya_income_exp.html" class="no-external">Exploring Kenya’s fiscal journey since 2000 unveils a narrative of growing revenues shadowed by even greater expenditures, signaling an enduring budget deficit financed…</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/cbk_data/kenya_income_exp.html" class="no-external">
+<div class="listing-date">
+Jan 15, 2024
+</div>
+<div class="listing-author">
+Mburu
 </div>
 </a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="news" data-listing-date-sort="1675803600000" data-listing-file-modified-sort="1686379417729" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="19">
+<div class="thumbnail">
+<p><a href="./posts/welcome/index.html" class="no-external"></a></p><a href="./posts/welcome/index.html" class="no-external">
+<p class="card-img-top"><img src="posts/welcome/thumbnail.jpg"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/welcome/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/welcome/index.html" class="no-external">Welcome To My Blog</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/welcome/index.html" class="no-external"></a>
+</div>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('news'); return false;">
 news
 </div>
 </div>
-<a href="./posts/welcome/index.html">
 <div class="listing-description">
-Okay I’m excited to finally sit down and work on my blog!. I hope to continually add interesting.
+<a href="./posts/welcome/index.html" class="no-external">Okay I’m excited to finally sit down and work on my blog!. I hope to continually add interesting.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/welcome/index.html">
+<a href="./posts/welcome/index.html" class="no-external">
 <div class="listing-date">
 Feb 8, 2023
 </div>
@@ -218,29 +279,25 @@ Mburu
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-listing-date-sort="1614891600000" data-listing-file-modified-sort="1686379417481" data-listing-reading-time-sort="6.67">
+<div class="quarto-post image-right" data-index="2" data-listing-date-sort="1614891600000" data-listing-file-modified-sort="1686379417481" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1334">
 <div class="thumbnail">
-<a href="./posts/breast_cancer_prediction/shap_vals.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/breast_cancer_prediction/shap_vals.html"></a></p>
+<p><a href="./posts/breast_cancer_prediction/shap_vals.html" class="no-external"></a></p><a href="./posts/breast_cancer_prediction/shap_vals.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./posts/breast_cancer_prediction/shap_vals.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/breast_cancer_prediction/shap_vals.html">
 <h3 class="no-anchor listing-title">
-Shap Calculation R
+<a href="./posts/breast_cancer_prediction/shap_vals.html" class="no-external">Shap Calculation R</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/breast_cancer_prediction/shap_vals.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-A mini example of calculating shap values in R. I used an open source data set from Kaggle. See more about Wiscosin breast cancer data set. I use IML package from R I prefer it since you can calculate from any model. At this time I have tested it using models from caret package but they have examples from mlr…
+<a href="./posts/breast_cancer_prediction/shap_vals.html" class="no-external">A mini example of calculating shap values in R. I used an open source data set from Kaggle. See more about Wiscosin breast cancer data set. I use IML package from R I prefer…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/breast_cancer_prediction/shap_vals.html">
+<a href="./posts/breast_cancer_prediction/shap_vals.html" class="no-external">
 <div class="listing-date">
 Mar 5, 2021
 </div>
@@ -250,23 +307,59 @@ Mburu
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="code,analysis" data-listing-date-sort="1587157200000" data-listing-file-modified-sort="1686379417509" data-listing-reading-time-sort="10.42">
+<div class="quarto-post image-right" data-index="3" data-listing-date-sort="1594328400000" data-listing-file-modified-sort="1707364700090" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="632">
 <div class="thumbnail">
-<a href="./posts/loan_prediction/loan_prediction.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/loan_prediction/loan_prediction.html"></a></p>
+<p><a href="./posts/mnist_digits/digit-recognition.html" class="no-external"></a></p><a href="./posts/mnist_digits/digit-recognition.html" class="no-external">
+<p class="card-img-top"><img src="posts/mnist_digits/digit-recognition_files/figure-html/unnamed-chunk-2-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/mnist_digits/digit-recognition.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/loan_prediction/loan_prediction.html">
 <h3 class="no-anchor listing-title">
-Predicting loan defaults
+<a href="./posts/mnist_digits/digit-recognition.html" class="no-external">MNIST Digits Recognition</a>
 </h3>
 <div class="listing-subtitle">
+<a href="./posts/mnist_digits/digit-recognition.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./posts/mnist_digits/digit-recognition.html" class="no-external">
 
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><span class="fu">library</span>(data.table)</span>
+<span id="cb1-3"><span class="fu">library</span>(keras)</span>
+<span id="cb1-4"><span class="fu">library</span>(caret)</span>
+<span id="cb1-5"><span class="fu">library</span>(DT)</span>
+<span id="cb1-6"><span class="fu">library</span>(caretEnsemble)</span>
+<span id="cb1-7"><span class="fu">library</span>(tictoc)</span>
+<span id="cb1-8"></span>
+<span id="cb1-9">train_data <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="st">"data/train.csv"</span>)</span>
+<span id="cb1-10"><span class="fu">set.seed</span>(<span class="dv">100</span>)</span>…<span id="cb1-11"><span class="ot"></span><span class="fu"></span></span><span id="cb1-12"><span class="ot"></span><span class="fu"></span><span class="dv"></span></span><span id="cb1-13"><span class="ot"></span></span><span id="cb1-14"><span class="ot"></span><span class="fu"></span><span class="st"></span></span></code></pre></div></div></a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/mnist_digits/digit-recognition.html" class="no-external">
+<div class="listing-date">
+Jul 10, 2020
+</div>
+<div class="listing-author">
+Mburu
 </div>
 </a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="4" data-categories="code,analysis" data-listing-date-sort="1587157200000" data-listing-file-modified-sort="1707193408216" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2084">
+<div class="thumbnail">
+<p><a href="./posts/loan_prediction/loan_prediction.html" class="no-external"></a></p><a href="./posts/loan_prediction/loan_prediction.html" class="no-external">
+<p class="card-img-top"><img src="posts/loan_prediction/loan_prediction_files/figure-html/unnamed-chunk-5-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/loan_prediction/loan_prediction.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/loan_prediction/loan_prediction.html" class="no-external">Predicting loan defaults</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/loan_prediction/loan_prediction.html" class="no-external"></a>
+</div>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
 code
@@ -275,14 +368,25 @@ code
 analysis
 </div>
 </div>
-<a href="./posts/loan_prediction/loan_prediction.html">
 <div class="listing-description">
+<a href="./posts/loan_prediction/loan_prediction.html" class="no-external">
 
+<section id="packages-used" class="level2">
+
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><span class="fu">library</span>(data.table)</span>
+<span id="cb1-3"><span class="fu">library</span>(caret)</span>
+<span id="cb1-4"><span class="fu">library</span>(ggthemes)</span>
+<span id="cb1-5"><span class="fu">library</span>(lubridate)</span>
+<span id="cb1-6"><span class="fu">library</span>(DT)</span></code></pre></div>
 </div>
+</section>
 </a>
 </div>
+</div>
 <div class="metadata">
-<a href="./posts/loan_prediction/loan_prediction.html">
+<a href="./posts/loan_prediction/loan_prediction.html" class="no-external">
 <div class="listing-date">
 Apr 18, 2020
 </div>
@@ -292,25 +396,25 @@ mburu
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-listing-date-sort="1548450000000" data-listing-file-modified-sort="1686379417473" data-listing-reading-time-sort="21.635">
+<div class="quarto-post image-right" data-index="5" data-listing-date-sort="1548450000000" data-listing-file-modified-sort="1686379417473" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="22" data-listing-word-count-sort="4327">
 <div class="thumbnail">
-<p><a href="./posts/breast_cancer_prediction/cancer_data.html"> <img src="./posts/breast_cancer_prediction/dataset-cover.jpg" class="thumnail-image"> </a></p>
+<p><a href="./posts/breast_cancer_prediction/cancer_data.html" class="no-external"></a></p><a href="./posts/breast_cancer_prediction/cancer_data.html" class="no-external">
+<p class="card-img-top"><img src="posts/breast_cancer_prediction/dataset-cover.jpg"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/breast_cancer_prediction/cancer_data.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/breast_cancer_prediction/cancer_data.html">
 <h3 class="no-anchor listing-title">
-Predict whether the cancer is benign or malignant
+<a href="./posts/breast_cancer_prediction/cancer_data.html" class="no-external">Predict whether the cancer is benign or malignant</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/breast_cancer_prediction/cancer_data.html" class="no-external"></a>
 </div>
 <div class="listing-description">
- In this tutorial I’m going to predict whether a breast cancer tumor is benign or malignant. Using Wiscosin breast cancer data set available on Kaggle. The 30 predictors are divided into three parts first is Mean ( variables 3-13), Standard Error(13-23) and Worst(23-32) and each contain 10 parameter…
+<a href="./posts/breast_cancer_prediction/cancer_data.html" class="no-external"> In this tutorial I’m going to predict whether a breast cancer tumor is benign or malignant. Using Wiscosin breast cancer data set available on Kaggle. The 30 predictors are…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/breast_cancer_prediction/cancer_data.html">
+<a href="./posts/breast_cancer_prediction/cancer_data.html" class="no-external">
 <div class="listing-date">
 Jan 26, 2019
 </div>
@@ -320,23 +424,19 @@ Mburu
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="code,analysis" data-listing-date-sort="1543266000000" data-listing-file-modified-sort="1686379417441" data-listing-reading-time-sort="7.02">
+<div class="quarto-post image-right" data-index="6" data-categories="code,analysis" data-listing-date-sort="1543266000000" data-listing-file-modified-sort="1686379417441" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1404">
 <div class="thumbnail">
-<a href="./posts/association_analysis/association_analysis.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/association_analysis/association_analysis.html"></a></p>
+<p><a href="./posts/association_analysis/association_analysis.html" class="no-external"></a></p><a href="./posts/association_analysis/association_analysis.html" class="no-external">
+<p class="card-img-top"><img src="posts/association_analysis/association_analysis_files/figure-html/unnamed-chunk-3-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/association_analysis/association_analysis.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/association_analysis/association_analysis.html">
 <h3 class="no-anchor listing-title">
-Association analysis
+<a href="./posts/association_analysis/association_analysis.html" class="no-external">Association analysis</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/association_analysis/association_analysis.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
 code
@@ -345,14 +445,12 @@ code
 analysis
 </div>
 </div>
-<a href="./posts/association_analysis/association_analysis.html">
 <div class="listing-description">
-Maybe you have heard of a grocery store that carried out analysis and found out that men who buy diapers between 5pm to 7pm were more likely to buy beer.…
+<a href="./posts/association_analysis/association_analysis.html" class="no-external">Maybe you have heard of a grocery store that carried out analysis and found out that men who buy diapers between 5pm to 7pm were more likely to buy beer. The grocery store…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/association_analysis/association_analysis.html">
+<a href="./posts/association_analysis/association_analysis.html" class="no-external">
 <div class="listing-date">
 Nov 27, 2018
 </div>
@@ -394,9 +492,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -432,10 +544,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -445,8 +556,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -461,6 +581,238 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -501,6 +853,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 

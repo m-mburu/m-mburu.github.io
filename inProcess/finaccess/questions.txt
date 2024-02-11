@@ -1,0 +1,45 @@
+---
+title: "questions"
+author: "Mburu"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Based on the variables and themes identified in the Kenya FinAccess demand survey, here are 30 questions that could be worth exploring in an analysis of this dataset:
+
+1.  How does the usage of mobile banking services vary across different counties in Kenya?
+2.  What is the relationship between education level and the adoption of digital financial services?
+3.  Are there any gender disparities in access to financial products like loans and insurance?
+4.  How does age influence the choice of main financial institutions for individuals?
+5.  What are the most common financial goals among different demographic groups?
+6.  How do financial behaviors differ between urban and rural residents?
+7.  What is the impact of marital status on financial decision-making and product usage?
+8.  Is there a correlation between household size and types of financial services used?
+9.  How do physical or cognitive difficulties affect access to financial services?
+10. What role do social networks play in influencing financial decisions?
+11. How does employment status impact the use of savings products?
+12. What are the barriers to financial inclusion for the unbanked population?
+13. How prevalent is the use of informal financial services, and what factors drive this?
+14. What are the trends in pension enrollment among different age groups?
+15. Does financial literacy correlate with better financial decision-making?
+16. How do different education levels impact the understanding and usage of insurance products?
+17. What are the primary reasons for taking out loans among different income groups?
+18. How does the presence of dependents influence financial planning and security?
+19. Are there significant differences in financial behavior based on the main language spoken?
+20. What is the role of gender in managing household finances?
+21. How does the type of employment (formal vs informal) affect access to credit?
+22. What factors contribute to the preference for cash transactions over digital transactions?
+23. How does the level of financial inclusion vary among different ethnic groups?
+24. What are the patterns in emergency fund usage among different demographic groups?
+25. How does the type of housing (owned vs rented) relate to financial stability?
+26. What impact does the level of education have on investment behaviors?
+27. Are there differences in financial service usage based on the type of community (agricultural, business, etc.)?
+28. How do health issues affect financial resilience and access to services?
+29. What financial strategies are adopted by households to cope with economic shocks?
+30. How does the use of financial advisors correlate with financial outcomes for individuals?
+
+These questions encompass a range of topics, including demographic influences, financial behaviors, access to services, and the impact of personal and socio-economic factors on financial decisions. Analyzing these aspects can provide valuable insights into the state of financial inclusion and behavior in Kenya.

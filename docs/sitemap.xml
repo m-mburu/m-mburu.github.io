@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://m-mburu.github.io/index.html</loc>
-    <lastmod>2023-09-24T04:31:49.242Z</lastmod>
+    <lastmod>2024-02-08T03:44:43.443Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/kenya_population/household_assets_2019census.html</loc>
@@ -14,7 +14,7 @@
   </url>
   <url>
     <loc>https://m-mburu.github.io/datacamp.html</loc>
-    <lastmod>2024-01-24T07:38:06.411Z</lastmod>
+    <lastmod>2024-02-06T04:50:15.140Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/datacamp/intermidiate_regression_R/intermediate_regression.html</loc>
@@ -71,5 +71,25 @@
   <url>
     <loc>https://m-mburu.github.io/datacamp/working_with_the_OpenAI_API/working_with_the_OpenAI_API.html</loc>
     <lastmod>2024-01-26T06:41:40.234Z</lastmod>
+  </url>
+  <url>
+    <loc>https://m-mburu.github.io/kaggle/mnist_digits/digit-recognition.html</loc>
+    <lastmod>2024-02-08T02:49:28.072Z</lastmod>
+  </url>
+  <url>
+    <loc>https://m-mburu.github.io/posts/mnist_digits/digit-recognition.html</loc>
+    <lastmod>2024-02-08T03:58:20.090Z</lastmod>
+  </url>
+  <url>
+    <loc>https://m-mburu.github.io/inProcess/finaccess/finaccess_2021.html</loc>
+    <lastmod>2024-02-06T03:50:43.656Z</lastmod>
+  </url>
+  <url>
+    <loc>https://m-mburu.github.io/inProcess/cbk_data/kenya_income_exp.html</loc>
+    <lastmod>2024-02-11T09:09:12.126Z</lastmod>
+  </url>
+  <url>
+    <loc>https://m-mburu.github.io/posts/cbk_data/kenya_income_exp.html</loc>
+    <lastmod>2024-02-11T09:31:16.367Z</lastmod>
   </url>
 </urlset>

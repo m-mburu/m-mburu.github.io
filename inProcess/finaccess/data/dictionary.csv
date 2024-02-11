@@ -1,0 +1,2116 @@
+col_names,col_labels,col_types,as_type,is_type
+County,County,factor,as.factor,is.factor
+ClusterNo,NASSEP Cluster Number,numeric,as.numeric,is.numeric
+HHNo,Household Number,numeric,as.numeric,is.numeric
+interview__key,Interview key (identifier in XX-XX-XX-XX format),character,as.character,is.character
+interview__id,Unique 32-character long identifier of the interview,character,as.character,is.character
+A9,Cluster type,factor,as.factor,is.factor
+A9i,What was the RESULTS of this interview?,factor,as.factor,is.factor
+A10i,Sex,factor,as.factor,is.factor
+A14v,Number of eligible persons,double,as.double,is.double
+A14vi,Index of the selected person,double,as.double,is.double
+A15,Language,factor,as.factor,is.factor
+A15i,Language,character,as.character,is.character
+A17,Not returned to complete their education,double,as.double,is.double
+A18,Selected Respondent sex,factor,as.factor,is.factor
+A19,AGE OF RESPONDENT,double,as.double,is.double
+A20,Relation to HH Head,factor,as.factor,is.factor
+A21,Education Completed,factor,as.factor,is.factor
+A21i,Other Education level Completed,character,as.character,is.character
+A22,Marital Status,factor,as.factor,is.factor
+A23,Female HH Highest Formal Education,factor,as.factor,is.factor
+A24,Chronic Disease,factor,as.factor,is.factor
+A25,Persons with disability,factor,as.factor,is.factor
+A26__1,Difficulty in seeing,double,as.double,is.double
+A26__2,Difficulty in hearing,double,as.double,is.double
+A26__3,Difficulty in walking or climbing steps (mobility),double,as.double,is.double
+A26__4,Difficulty in remembering or concentration,double,as.double,is.double
+A26__5,Difficulty in self-care e.g. washing all over or dressing,double,as.double,is.double
+A26__6,Difficulty in communicating using your usual language,double,as.double,is.double
+B1A,Main Life Goal,factor,as.factor,is.factor
+B1B1,B1B1 People in your life,factor,as.factor,is.factor
+B1B2,Keep money aside?,factor,as.factor,is.factor
+B1B3,Spending plan,factor,as.factor,is.factor
+B1B4,Loan Security,factor,as.factor,is.factor
+B1B5,Overcome Financial problems,factor,as.factor,is.factor
+B1C1,B1C1 Frequency gone without enough food to eat,factor,as.factor,is.factor
+B1C2,Frequency gone without medicine or medical treatment,factor,as.factor,is.factor
+B1C3,Frequency miss an important family event,factor,as.factor,is.factor
+B1C4,B1C4.Frequency Child or any person you support  sent home for lack of school fee,factor,as.factor,is.factor
+B1D,Financial decisions Maker-Large,factor,as.factor,is.factor
+B1EF1,Draw on savings,numeric,as.numeric,is.numeric
+B1EF2,Drawing on pension/annuity or access retirement savings,numeric,as.numeric,is.numeric
+B1EF3,Rely on children or other family,numeric,as.numeric,is.numeric
+B1EF4,Run my own business,numeric,as.numeric,is.numeric
+B1EF5,Sell assets,numeric,as.numeric,is.numeric
+B1EF6,"Income from investments (e.g shares,rental)",numeric,as.numeric,is.numeric
+B1EF7,Live off the farm,numeric,as.numeric,is.numeric
+B1EF8,Government fund for the old e.g Older persons(OPCT),numeric,as.numeric,is.numeric
+B1EF9,Other (Specify),numeric,as.numeric,is.numeric
+B1EF10,Don’t know how / Have no plans,numeric,as.numeric,is.numeric
+B1EF11,Employment,numeric,as.numeric,is.numeric
+B1EF98,Don't know (DO NOT READ OUT),numeric,as.numeric,is.numeric
+B1EF99,Refused to Answer(DO NOT READ OUT),numeric,as.numeric,is.numeric
+B1G,Remained Same or Worsened,factor,as.factor,is.factor
+B1H,Access in Case of Emergency,factor,as.factor,is.factor
+B1I,Access in Case of Emergency,factor,as.factor,is.factor
+B1J,Source Emergency Funds,factor,as.factor,is.factor
+B1K,Access in Case of Emergency,factor,as.factor,is.factor
+B2A,Financial Advice,factor,as.factor,is.factor
+B2B,Heard of CRB Report,factor,as.factor,is.factor
+B2C,Access CRB Report,factor,as.factor,is.factor
+B2D,Agree or Disagree Statements- Gaming,factor,as.factor,is.factor
+B2E,Gaming,factor,as.factor,is.factor
+B2F,Interest Paid Answer,factor,as.factor,is.factor
+B2G,Can Read SMS,factor,as.factor,is.factor
+B3A__1,"farming (crops, keeping livestock, fishing, aquaculture)",double,as.double,is.double
+B3A__2,employment,double,as.double,is.double
+B3A__3,casual work,double,as.double,is.double
+B3A__4,running own business/Self employment,double,as.double,is.double
+B3A__5,money from  NGO / Government/Social transfer,double,as.double,is.double
+B3A__6,"renting,  land, house/rooms, equipment",double,as.double,is.double
+B3A__7,"Earning money from investments, e.g. shares, stocks",double,as.double,is.double
+B3A__8,Pension/Annuity,double,as.double,is.double
+B3A__9,Money / support from family / friends / spouse,double,as.double,is.double
+B3B,Main Source,factor,as.factor,is.factor
+B3C,Subsistence Answer,factor,as.factor,is.factor
+B3D__1.1,"Cash:1 farming (crops, keeping livestock, fishing, aquaculture)",double,as.double,is.double
+B3D__1.2,Cash:2 employment,double,as.double,is.double
+B3D__1.3,Cash:3 casual work,double,as.double,is.double
+B3D__1.4,Cash:4 running own business/Self employment,double,as.double,is.double
+B3D__1.5,Cash:5 money from  NGO / Government/Social transfer,double,as.double,is.double
+B3D__1.6,"Cash:6 renting,  land, house/rooms, equipment",double,as.double,is.double
+B3D__1.7,"Cash:7 Earning money from investments, e.g. shares, stocks",double,as.double,is.double
+B3D__1.8,Cash:8 Pension/Annuity,double,as.double,is.double
+B3D__1.9,Cash:9 Money / support from family / friends / spouse,double,as.double,is.double
+B3D__2.1,"Mobile money:1 farming (crops, keeping livestock, fishing, aquaculture)",double,as.double,is.double
+B3D__2.2,Mobile money:2 employment,double,as.double,is.double
+B3D__2.3,Mobile money:3 casual work,double,as.double,is.double
+B3D__2.4,Mobile money:4 running own business/Self employment,double,as.double,is.double
+B3D__2.5,Mobile money:5 money from  NGO / Government/Social transfer,double,as.double,is.double
+B3D__2.6,"Mobile money:6 renting,  land, house/rooms, equipment",double,as.double,is.double
+B3D__2.7,"Mobile money:7 Earning money from investments, e.g. shares, stocks",double,as.double,is.double
+B3D__2.8,Mobile money:8 Pension/Annuity,double,as.double,is.double
+B3D__2.9,Mobile money:9 Money / support from family / friends / spouse,double,as.double,is.double
+B3D__3.1,"Bank cheque:1 farming (crops, keeping livestock, fishing, aquaculture)",double,as.double,is.double
+B3D__3.2,Bank cheque:2 employment,double,as.double,is.double
+B3D__3.3,Bank cheque:3 casual work,double,as.double,is.double
+B3D__3.4,Bank cheque:4 running own business/Self employment,double,as.double,is.double
+B3D__3.5,Bank cheque:5 money from  NGO / Government/Social transfer,double,as.double,is.double
+B3D__3.6,"Bank cheque:6 renting,  land, house/rooms, equipment",double,as.double,is.double
+B3D__3.7,"Bank cheque:7 Earning money from investments, e.g. shares, stocks",double,as.double,is.double
+B3D__3.8,Bank cheque:8 Pension/Annuity,double,as.double,is.double
+B3D__3.9,Bank cheque:9 Money / support from family / friends / spouse,double,as.double,is.double
+B3D__4.1,"Bank transfer (e.g. EFT, SWIFT, Pesalink) / Bank deposit:1 farming (crops, keeping livestock, fishing, aquaculture)",double,as.double,is.double
+B3D__4.2,"Bank transfer (e.g. EFT, SWIFT, Pesalink) / Bank deposit:2 employment",double,as.double,is.double
+B3D__4.3,"Bank transfer (e.g. EFT, SWIFT, Pesalink) / Bank deposit:3 casual work",double,as.double,is.double
+B3D__4.4,"Bank transfer (e.g. EFT, SWIFT, Pesalink) / Bank deposit:4 running own business/Self employment",double,as.double,is.double
+B3D__4.5,"Bank transfer (e.g. EFT, SWIFT, Pesalink) / Bank deposit:5 money from  NGO / Government/Social transfer",double,as.double,is.double
+B3D__4.6,"Bank transfer (e.g. EFT, SWIFT, Pesalink) / Bank deposit:6 renting,  land, house/rooms, equipment",double,as.double,is.double
+B3D__4.7,"Bank transfer (e.g. EFT, SWIFT, Pesalink) / Bank deposit:7 Earning money from investments, e.g. shares, stocks",double,as.double,is.double
+B3D__4.8,"Bank transfer (e.g. EFT, SWIFT, Pesalink) / Bank deposit:8 Pension/Annuity",double,as.double,is.double
+B3D__4.9,"Bank transfer (e.g. EFT, SWIFT, Pesalink) / Bank deposit:9 Money / support from family / friends / spouse",double,as.double,is.double
+B3D__5.1,"Credit cards / debit cards:1 farming (crops, keeping livestock, fishing, aquaculture)",double,as.double,is.double
+B3D__5.2,Credit cards / debit cards:2 employment,double,as.double,is.double
+B3D__5.3,Credit cards / debit cards:3 casual work,double,as.double,is.double
+B3D__5.4,Credit cards / debit cards:4 running own business/Self employment,double,as.double,is.double
+B3D__5.5,Credit cards / debit cards:5 money from  NGO / Government/Social transfer,double,as.double,is.double
+B3D__5.6,"Credit cards / debit cards:6 renting,  land, house/rooms, equipment",double,as.double,is.double
+B3D__5.7,"Credit cards / debit cards:7 Earning money from investments, e.g. shares, stocks",double,as.double,is.double
+B3D__5.8,Credit cards / debit cards:8 Pension/Annuity,double,as.double,is.double
+B3D__5.9,Credit cards / debit cards:9 Money / support from family / friends / spouse,double,as.double,is.double
+B3D__6.1,"Inkind payments in goods and/or services:1 farming (crops, keeping livestock, fishing, aquaculture)",double,as.double,is.double
+B3D__6.2,Inkind payments in goods and/or services:2 employment,double,as.double,is.double
+B3D__6.3,Inkind payments in goods and/or services:3 casual work,double,as.double,is.double
+B3D__6.4,Inkind payments in goods and/or services:4 running own business/Self employment,double,as.double,is.double
+B3D__6.5,Inkind payments in goods and/or services:5 money from  NGO / Government/Social transfer,double,as.double,is.double
+B3D__6.6,"Inkind payments in goods and/or services:6 renting,  land, house/rooms, equipment",double,as.double,is.double
+B3D__6.7,"Inkind payments in goods and/or services:7 Earning money from investments, e.g. shares, stocks",double,as.double,is.double
+B3D__6.8,Inkind payments in goods and/or services:8 Pension/Annuity,double,as.double,is.double
+B3D__6.9,Inkind payments in goods and/or services:9 Money / support from family / friends / spouse,double,as.double,is.double
+B3D__7.1,"Digital /communitycurrency e.g bitcoin, bangla pesa:1 farming (crops, keeping livestock, fishing, aquaculture)",double,as.double,is.double
+B3D__7.2,"Digital /communitycurrency e.g bitcoin, bangla pesa:2 employment",double,as.double,is.double
+B3D__7.3,"Digital /communitycurrency e.g bitcoin, bangla pesa:3 casual work",double,as.double,is.double
+B3D__7.4,"Digital /communitycurrency e.g bitcoin, bangla pesa:4 running own business/Self employment",double,as.double,is.double
+B3D__7.5,"Digital /communitycurrency e.g bitcoin, bangla pesa:5 money from  NGO / Government/Social transfer",double,as.double,is.double
+B3D__7.6,"Digital /communitycurrency e.g bitcoin, bangla pesa:6 renting,  land, house/rooms, equipment",double,as.double,is.double
+B3D__7.7,"Digital /communitycurrency e.g bitcoin, bangla pesa:7 Earning money from investments, e.g. shares, stocks",double,as.double,is.double
+B3D__7.8,"Digital /communitycurrency e.g bitcoin, bangla pesa:8 Pension/Annuity",double,as.double,is.double
+B3D__7.9,"Digital /communitycurrency e.g bitcoin, bangla pesa:9 Money / support from family / friends / spouse",double,as.double,is.double
+B3D__8.1,"Other (SPECIFY):1 farming (crops, keeping livestock, fishing, aquaculture)",double,as.double,is.double
+B3D__8.2,Other (SPECIFY):2 employment,double,as.double,is.double
+B3D__8.3,Other (SPECIFY):3 casual work,double,as.double,is.double
+B3D__8.4,Other (SPECIFY):4 running own business/Self employment,double,as.double,is.double
+B3D__8.5,Other (SPECIFY):5 money from  NGO / Government/Social transfer,double,as.double,is.double
+B3D__8.6,"Other (SPECIFY):6 renting,  land, house/rooms, equipment",double,as.double,is.double
+B3D__8.7,"Other (SPECIFY):7 Earning money from investments, e.g. shares, stocks",double,as.double,is.double
+B3D__8.8,Other (SPECIFY):8 Pension/Annuity,double,as.double,is.double
+B3D__8.9,Other (SPECIFY):9 Money / support from family / friends / spouse,double,as.double,is.double
+B3D__98.1,"Don't know(DO NOT READ OUT):1 farming (crops, keeping livestock, fishing, aquaculture)",double,as.double,is.double
+B3D__98.2,Don't know(DO NOT READ OUT):2 employment,double,as.double,is.double
+B3D__98.3,Don't know(DO NOT READ OUT):3 casual work,double,as.double,is.double
+B3D__98.4,Don't know(DO NOT READ OUT):4 running own business/Self employment,double,as.double,is.double
+B3D__98.5,Don't know(DO NOT READ OUT):5 money from  NGO / Government/Social transfer,double,as.double,is.double
+B3D__98.6,"Don't know(DO NOT READ OUT):6 renting,  land, house/rooms, equipment",double,as.double,is.double
+B3D__98.7,"Don't know(DO NOT READ OUT):7 Earning money from investments, e.g. shares, stocks",double,as.double,is.double
+B3D__98.8,Don't know(DO NOT READ OUT):8 Pension/Annuity,double,as.double,is.double
+B3D__98.9,Don't know(DO NOT READ OUT):9 Money / support from family / friends / spouse,double,as.double,is.double
+B3D__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+B3Di.1,"1 farming (crops, keeping livestock, fishing, aquaculture)",character,as.character,is.character
+B3Di.2,2 employment,character,as.character,is.character
+B3Di.3,3 casual work,character,as.character,is.character
+B3Di.4,4 running own business/Self employment,character,as.character,is.character
+B3Di.5,5 money from  NGO / Government/Social transfer,character,as.character,is.character
+B3Di.6,"6 renting,  land, house/rooms, equipment",character,as.character,is.character
+B3Di.7,"7 Earning money from investments, e.g. shares, stocks",character,as.character,is.character
+B3Di.8,8 Pension/Annuity,character,as.character,is.character
+B3Di.9,9 Money / support from family / friends / spouse,character,as.character,is.character
+B3E.1,"1 farming (crops, keeping livestock, fishing, aquaculture)",factor,as.factor,is.factor
+B3E.2,2 employment,factor,as.factor,is.factor
+B3E.3,3 casual work,factor,as.factor,is.factor
+B3E.4,4 running own business/Self employment,factor,as.factor,is.factor
+B3E.5,5 money from  NGO / Government/Social transfer,factor,as.factor,is.factor
+B3E.6,"6 renting,  land, house/rooms, equipment",factor,as.factor,is.factor
+B3E.7,"7 Earning money from investments, e.g. shares, stocks",factor,as.factor,is.factor
+B3E.8,8 Pension/Annuity,factor,as.factor,is.factor
+B3E.9,9 Money / support from family / friends / spouse,factor,as.factor,is.factor
+B3F,Type of Work,factor,as.factor,is.factor
+B3Fi,Other type of Work,character,as.character,is.character
+B3G,Private or Public Sector Employment,factor,as.factor,is.factor
+B3H1,Orphans and vulnerable (CTOVC),factor,as.factor,is.factor
+B3H2,Older persons (OPCT),factor,as.factor,is.factor
+B3H3,Disabilities (CTPWSD),factor,as.factor,is.factor
+B3H4,Hunger and Safety Net Programme (HSNP),factor,as.factor,is.factor
+B3H5,Covid19 pandemic relief,factor,as.factor,is.factor
+B3H6,Government Assistance,factor,as.factor,is.factor
+B3H7,Other government,factor,as.factor,is.factor
+B3H8,Private sector/NGO,factor,as.factor,is.factor
+B3I,Monthly Income (KSh),factor,as.factor,is.factor
+C1_1,Microfinance institution,factor,as.factor,is.factor
+C1_2,"Savings through mobile banking (e.g. Mshwari , KCB MPesa, MCoop cash, Eazzy Loan, Timiza, HF Whizz)?",factor,as.factor,is.factor
+C1_3,"Savings/keeping through mobile money account (e.g. MPESA, Airtel Money, TCash, Tangaza, MobiKash, Equitel)",factor,as.factor,is.factor
+C1_4,Savings at a Sacco / Savings and Credit Cooperative organisation,factor,as.factor,is.factor
+C1_5,Savings at a group or chama,factor,as.factor,is.factor
+C1_6,Savings with a group of friends,factor,as.factor,is.factor
+C1_7,Savings given to a family or friend to keep,factor,as.factor,is.factor
+C1_8,Savings you keep in a secret hiding place,factor,as.factor,is.factor
+C1_9,"Registered on Mobile money (e.g. MPESA, Airtel Money, TCash, Tangaza, Equitel)",factor,as.factor,is.factor
+C1_10,"Registered on Mobile bank (e.g. Mshwari , KCB MPesa, MCoop cash, Eazzy Loan, Timiza, HF Whizz)",factor,as.factor,is.factor
+C1_11,Personal loan/business loan from a bank,factor,as.factor,is.factor
+C1_12,"Loan from mobile banking (e.g. Mshwari , KCB MPesa, MCoop cash, Eazzy Loan, Timiza, HF Whizz, Stawi loan, M-fanisi)",factor,as.factor,is.factor
+C1_13,Loan from mobile money provider (e.g Fuliza loan),factor,as.factor,is.factor
+C1_14,Loan at a Sacco / Savings and Credit Cooperative organisation,factor,as.factor,is.factor
+C1_15,Loan from a microfinance institution,factor,as.factor,is.factor
+C1_16,"Loan from Shylocks / Loan Sharks / Money Lenders / Money Merchants that are not from your phone (e.g. Platinum, Ngao, etc.)",factor,as.factor,is.factor
+C1_17,Loan from a group/chama,factor,as.factor,is.factor
+C1_18,"Loan from a government institution for education, agriculture or devt",factor,as.factor,is.factor
+C1_19,Loan from an employer,factor,as.factor,is.factor
+C1_20,Loan from family/friend/neighbour,factor,as.factor,is.factor
+C1_21,Cash loan from shopkeeper,factor,as.factor,is.factor
+C1_22,Taking goods and services on credit from a shopkeeper,factor,as.factor,is.factor
+C1_23,"C1-23 Digital loans that you get through the phone that you download through apps (e.g. Branch, Tala, Utunzi, Haraka loans, etc.)",factor,as.factor,is.factor
+C1_24,"C1-24 Loan / credits from buyer of your harvest / supplier of agricultural inputs (e.g. coffee, tea, sugarcane, tobacco, vegetables)",factor,as.factor,is.factor
+C1_25,"Hire purchase (e.g. KuKopesha, Diamond Trust, Kenya Credit Traders (KCT), Synergy, One Africa Capital, Tuskys)",factor,as.factor,is.factor
+C1_26,Loan from Insurance,factor,as.factor,is.factor
+C1_27,"Loan to buy / build a house (mortgage), or to buy land from a bank / building society or Sacco/Insurance/Government",factor,as.factor,is.factor
+C1_28,Current account - with a cheque book/ Transactional acc,factor,as.factor,is.factor
+C1_29,Postbank account,factor,as.factor,is.factor
+C1_30,Bank account for savings or investment (which pays interest),factor,as.factor,is.factor
+C1_31,Bank account for everyday needs but no cheque book,factor,as.factor,is.factor
+C1_32,Bank/ Micro finance bank Overdraft,factor,as.factor,is.factor
+C1_33,"Debit Card (use on ATM, POS to pay)",factor,as.factor,is.factor
+C1_34,Credit card,factor,as.factor,is.factor
+C1_35,Shares and/or stocks,factor,as.factor,is.factor
+C1_36,"T- Bills and Bonds, including M-Akiba",factor,as.factor,is.factor
+C1_37,Mutual Funds/ Unit Trust/ Real Estate Investment Trusts (REITs)/Derivatives,factor,as.factor,is.factor
+C1_38,"Motor insurance (car,motorbike,tuktuks)",factor,as.factor,is.factor
+C1_39,"Home, building or contents insurance",factor,as.factor,is.factor
+C1_40,Crop insurance,factor,as.factor,is.factor
+C1_41,Livestock insurance,factor,as.factor,is.factor
+C1_42,NHIF,factor,as.factor,is.factor
+C1_43,"Other medical/health insurance policy, NOT NHIF",factor,as.factor,is.factor
+C1_44,Life insurance policy,factor,as.factor,is.factor
+C1_45,Education policy,factor,as.factor,is.factor
+C1_46,Workmen's compensation(WIBA),factor,as.factor,is.factor
+C1_47,Other insurance,factor,as.factor,is.factor
+C1_47a,"Private insurance,  not specified",numeric,as.numeric,is.numeric
+C1_47b,Last expense,numeric,as.numeric,is.numeric
+C1_47c,Business/ivestment insurance,numeric,as.numeric,is.numeric
+C1_48,NSSF,factor,as.factor,is.factor
+C1_49,"Employment/ Occupation pension scheme, NOT NSSF",factor,as.factor,is.factor
+C1_50,Mbao pension plan,factor,as.factor,is.factor
+C1_51,"Individual Pension Plan, NOT Mbao",factor,as.factor,is.factor
+C1_52,Other Retirement/ pension plan,factor,as.factor,is.factor
+C1_53,Digital/crypto/community-currencies,factor,as.factor,is.factor
+C2_2,Savings through mobile banking,factor,as.factor,is.factor
+C2_3,Savings through mobile money provider,factor,as.factor,is.factor
+C2_9,Registered on Mobile money,factor,as.factor,is.factor
+C2_10,Registered on Mobile banking,factor,as.factor,is.factor
+C2_12,Loan from mobile banking,factor,as.factor,is.factor
+C2_13,Mobile money loans (e.g Fuliza). Did you use this in the last 12 months?,factor,as.factor,is.factor
+C3_1,Capital Markets Intermediary,factor,as.factor,is.factor
+C3_2,Pensions,factor,as.factor,is.factor
+C4,Trusted financial provider,factor,as.factor,is.factor
+C5,Highest Interest Rate Perception,factor,as.factor,is.factor
+D1i__1,You would like to be a member of a Pension Scheme but cannot afford it,double,as.double,is.double
+D1i__2,You do not know how to become a member,double,as.double,is.double
+D1i__3,Pension Schemes are dishonest,double,as.double,is.double
+D1i__4,"You do not need Pension because your family, friends, groups of friends, chama and relatives will help you in old age",double,as.double,is.double
+D1i__5,You do not need pension because you have saved in other financial institutions/assets for your old age,double,as.double,is.double
+D1i__6,You do not need Pension because I have educated my children and they will take care of me in old age,double,as.double,is.double
+D1i__7,Religious/cultural reasons,double,as.double,is.double
+D1i__8,You do not see the benefits of saving for retirement,double,as.double,is.double
+D1i__9,You do not know about pensions,double,as.double,is.double
+D1i__10,"You have or use pension of another person e.g. your parent, spouse/partner or through a group policy",double,as.double,is.double
+D1i__11,They refused to pay my pension,double,as.double,is.double
+D1i__12,You do not need pension because in your family tree people die before reaching retirement age,double,as.double,is.double
+D1i__13,Other (SPECIFY),double,as.double,is.double
+D1i__14,Already accessed my pension money,numeric,as.numeric,is.numeric
+D1i__15,Lack of National ID/ under 18 yrs of age/student,numeric,as.numeric,is.numeric
+D1i__16,Used to contribute but lost job / stopped working,numeric,as.numeric,is.numeric
+D1i__17,Not interested/ Haven't given pensions a thought,numeric,as.numeric,is.numeric
+D1i__18,Too old for pension,numeric,as.numeric,is.numeric
+D1i__19,In the procees/lost card,numeric,as.numeric,is.numeric
+D1i__98,Don't know (DO NOT READ OUT),double,as.double,is.double
+D1i__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+D1i_i,Other Pension specify,character,as.character,is.character
+D1ii,D1ii_a Enough money during retirement to meet needs,factor,as.factor,is.factor
+D1iib,D1ii_b Pension enough to meet needs on retirement,factor,as.factor,is.factor
+D1iii,Access pension before retirement,factor,as.factor,is.factor
+D1A,Somebody Else's Insurance,factor,as.factor,is.factor
+D1B__1,You would like to have insurance but cannot afford it,double,as.double,is.double
+D1B__2,Trying to buy health or life insurance for yourself or your family can bring bad luck,double,as.double,is.double
+D1B__3,You do not know where to get it from,double,as.double,is.double
+D1B__4,Insurance companies are dishonest,double,as.double,is.double
+D1B__5,Insurance agents are dishonest,double,as.double,is.double
+D1B__6,"You do not need insurance because your family, friends, groups of friends, chama and relatives help you when you are in need",double,as.double,is.double
+D1B__7,You do not have insurance because you save for emergencies,double,as.double,is.double
+D1B__8,Religious reasons /cultural reasons,double,as.double,is.double
+D1B__9,You do not see the benefits of having insurance,double,as.double,is.double
+D1B__10,You do not know about insurance,double,as.double,is.double
+D1B__11,"You have or use insurance through another person e.g. your parent, spouse/partner or through a group policy",double,as.double,is.double
+D1B__12,They refused to pay my insurance claim,double,as.double,is.double
+D1B__14,"ILack of identification document/ necessary documentation to register E.g. ID, KRA pin/student",numeric,as.numeric,is.numeric
+D1B__98,Don't know(DO NOT READ OUT),double,as.double,is.double
+D1B__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+D1Bi,Why Don’t Have Insurance In Own Name - other,character,as.character,is.character
+D1C__1,You would like to have insurance but cannot afford it,double,as.double,is.double
+D1C__2,Trying to buy health or life insurance for yourself or your family can bring bad luck,double,as.double,is.double
+D1C__3,You do not know where to get it from,double,as.double,is.double
+D1C__4,Insurance companies are dishonest,double,as.double,is.double
+D1C__5,Insurance agents are dishonest,double,as.double,is.double
+D1C__6,"You do not need insurance because your family, friends, groups of friends, chama and relatives help you when you are in need",double,as.double,is.double
+D1C__7,You do not have insurance because you save for emergencies,double,as.double,is.double
+D1C__8,Religious reasons /cultural reasons,double,as.double,is.double
+D1C__9,You do not see the benefits of having insurance,double,as.double,is.double
+D1C__10,You do not know about insurance,double,as.double,is.double
+D1C__11,"You have or use insurance through another person e.g. your parent, spouse/partner or through a group policy",double,as.double,is.double
+D1C__12,They refused to pay my insurance claim,double,as.double,is.double
+D1C__14,"Lack of identification document/ necessary documentation to register E.g. ID, KRA pin/student",numeric,as.numeric,is.numeric
+D1C__15,Application in progress/lost card,numeric,as.numeric,is.numeric
+D1C__98,Don't know(DO NOT READ OUT),double,as.double,is.double
+D1C__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+D2_1,Car insurance,factor,as.factor,is.factor
+D2_2,House (e.g. building or contents insurance),factor,as.factor,is.factor
+D2_3,Crop insurance,factor,as.factor,is.factor
+D2_4,Livestock insurance,factor,as.factor,is.factor
+D2_5,NHIF,factor,as.factor,is.factor
+D2_6,Medical/Health Insurance (not NHIF) (includes options such as M-Tiba),factor,as.factor,is.factor
+D2_7,Life insurance,factor,as.factor,is.factor
+D2_8,Education insurance,factor,as.factor,is.factor
+D2_9,Workmen's compensation(WIBA),factor,as.factor,is.factor
+D3__1,NHIF,double,as.double,is.double
+D3__2,APA LIFE ASSURANCE COMPANY,double,as.double,is.double
+D3__3,BRITAM LIFE ASSURANCE,double,as.double,is.double
+D3__4,CAPEX LIFE ASSURANCE COMPANY,double,as.double,is.double
+D3__5,CIC LIFE ASSURANCE COMPANY,double,as.double,is.double
+D3__6,CORPORATE INSURANCE COMPANY,double,as.double,is.double
+D3__7,GA LIFE ASSURANCE COMPANY,double,as.double,is.double
+D3__8,GEMINIA LIFE INSURANCE COMPANY,double,as.double,is.double
+D3__9,ICEA LION LIFE ASSURANCE,double,as.double,is.double
+D3__10,JUBILEE INSURANCE COMPANY,double,as.double,is.double
+D3__11,KENINDIA ASSURANCE COMPANY,double,as.double,is.double
+D3__12,KENYA ORIENT LIFE ASSURANCE,double,as.double,is.double
+D3__13,KUSCCO MUTUAL ASSURANCE LIMITED,double,as.double,is.double
+D3__14,LIBERTY LIFE ASSURANCE COMPANY,double,as.double,is.double
+D3__15,MADISON INSURANCE COMPANY,double,as.double,is.double
+D3__16,METROPOLITAN CANNON INSURANCE,double,as.double,is.double
+D3__17,OLD MUTUAL LIFE ASSURANCE,double,as.double,is.double
+D3__18,PIONEER ASSURANCE COMPANY,double,as.double,is.double
+D3__19,PRUDENTIAL LIFE ASSURANCE,double,as.double,is.double
+D3__20,SAHAM ASSURANCE,double,as.double,is.double
+D3__21,SANLAM LIFE ASSURANCE,double,as.double,is.double
+D3__22,THE KENYAN ALLIANCE INSURANCE,double,as.double,is.double
+D3__23,THE MONARCH INSURANCE,double,as.double,is.double
+D3__24,UAP LIFE ASSURANCE COMPANY,double,as.double,is.double
+D3__25,ABSA LIFE ASSURANCE,double,as.double,is.double
+D3__26,Other,double,as.double,is.double
+D3__27,Broker/Agent,numeric,as.numeric,is.numeric
+D3__28,County Government,numeric,as.numeric,is.numeric
+D3__98,Don't know (DO NOT READ OUT),double,as.double,is.double
+D3__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+D4,Where Purchased Insurance,factor,as.factor,is.factor
+D5__1,Cost of premiums are the lowest out of other options,double,as.double,is.double
+D5__2,Level of cover / benefit it offers out of other options,double,as.double,is.double
+D5__3,Recommended by family member/friend/colleague,double,as.double,is.double
+D5__4,Reputation / brand / reliability/ advertisement of company,double,as.double,is.double
+D5__5,Employer / Government recommendation/ chose the policy provider,double,as.double,is.double
+D5__6,"Compulsory for this policy provider (loan,mortgage,fire,life)",double,as.double,is.double
+D5__7,The agent convinced me,double,as.double,is.double
+D5__8,It was the only policy provider that I knew,double,as.double,is.double
+D5__9,It was the only/nearest policy provider in our area,double,as.double,is.double
+D5__10,"It is a mobile phone policy, so it was easy to get (e.g Riziki cover)",double,as.double,is.double
+D5__11,Other (SPECIFY),double,as.double,is.double
+D5__13,Unspecified reason/under someone else,numeric,as.numeric,is.numeric
+D5__98,Don't know(DO NOT READ OUT),double,as.double,is.double
+D5__99,Refused to Answer(DO NOT READ OUT),double,as.double,is.double
+D6,Insurance Payment Channel,factor,as.factor,is.factor
+D7,Payment for NHIF,factor,as.factor,is.factor
+D8,Ever Made NHIF Claim,factor,as.factor,is.factor
+D9,Refusal for NHIF Refusal to Pay,factor,as.factor,is.factor
+E1,Whether Tried and Failed to Take a Loan,factor,as.factor,is.factor
+E2__1,Bank,double,as.double,is.double
+E2__2,SACCO/ M-SACCO,double,as.double,is.double
+E2__3,Mobile money provider (e.g. Safaricom fuliza ),double,as.double,is.double
+E2__4,"Mobile banking (e.g. Mshwari&nbsp;, KCB MPesa, MCoop cash, Eazzy Loan, Timiza, HF Whizz)",double,as.double,is.double
+E2__5,MFI,double,as.double,is.double
+E2__6,"Digital loans that you get through the phone that you download through apps (e.g. Branch, Tala, Utunzi, Haraka loans, etc.)",double,as.double,is.double
+E2__7,Insurance company,double,as.double,is.double
+E2__8,Shylocks/,double,as.double,is.double
+E2__9,"Government ( Youth fund, uwezo etc)",double,as.double,is.double
+E2__10,Chama/groups,double,as.double,is.double
+E2__11,Shop keeper,double,as.double,is.double
+E2__12,Other (SPECIFY),double,as.double,is.double
+E2__13,Family/friend/neighbour,numeric,as.numeric,is.numeric
+E2__14,Supplier,numeric,as.numeric,is.numeric
+E2__98,Don't know(DO NOT READ OUT),double,as.double,is.double
+E2__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+E3__1,Lack of collateral,double,as.double,is.double
+E3__2,No pay slip,double,as.double,is.double
+E3__3,Lack of records,double,as.double,is.double
+E3__4,Lack of business proposal,double,as.double,is.double
+E3__5,Still had debt to pay off,double,as.double,is.double
+E3__6,No guarantor,double,as.double,is.double
+E3__7,Bad credit history,double,as.double,is.double
+E3__8,No credit history,double,as.double,is.double
+E3__9,Income is low and unable to repay,double,as.double,is.double
+E3__10,Project is too risky,double,as.double,is.double
+E3__11,Savings too low,double,as.double,is.double
+E3__12,Was not given a reason,double,as.double,is.double
+E3__13,Negative listing by CRB,double,as.double,is.double
+E3__14,Discrimination (Gender/culture,double,as.double,is.double
+E3__15,Other (SPECIFY),double,as.double,is.double
+E3__16,No money to loan out,numeric,as.numeric,is.numeric
+E3__17,Not qualified/no/inadequate documentation,numeric,as.numeric,is.numeric
+E3__18,Members defaulting/not cleared loans,numeric,as.numeric,is.numeric
+E3__19,Loan limit,numeric,as.numeric,is.numeric
+E3__98,Don't know(DO NOT READ OUT),double,as.double,is.double
+E3__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+E1iA,Number of Personal loan from a bank/ business,double,as.double,is.double
+E1iiA,Number of outstanding Personal loan from a bank/ business,double,as.double,is.double
+E1iiiA,MAIN reason for taking Personal loan from a bank/ business,factor,as.factor,is.factor
+E1ivA,E1ivA.Collateral / security for Personal loan from a bank/ business,factor,as.factor,is.factor
+E1vA,Frequency of paying - Personal loan from a bank/ business,factor,as.factor,is.factor
+E1viA,Payments ways of Personal loan from a bank/ business,factor,as.factor,is.factor
+E1viiA,Amount of  Personal loan from a bank/ business,double,as.double,is.double
+E1viiiA,time when borrowed Personal loan from a bank/ business,factor,as.factor,is.factor
+E1ixA,When expected to finish repaying - Personal loan from a bank/ business,factor,as.factor,is.factor
+E1xA,Amount outstanding -  Overdraft,double,as.double,is.double
+E1iB,"Number of Mobile bank (e.g. MShwari, KCB MPesa) loans",double,as.double,is.double
+E1iiB,"Number of outstanding Mobile bank (e.g. MShwari, KCB MPesa) loan",double,as.double,is.double
+E1iiiB,"MAIN reason for taking loan - Mobile bank (e.g. MShwari, KCB MPesa)",factor,as.factor,is.factor
+E1vB,"Frequency of paying -  Mobile bank (e.g. MShwari, KCB MPesa)",factor,as.factor,is.factor
+E1viiB,"Amount borrowed - Mobile bank (e.g. MShwari, KCB MPesa, MCoop Cash) loan",double,as.double,is.double
+E1viiiB,E1viiiB.When did you borrow - Loan from Mobile bank,factor,as.factor,is.factor
+E1ixB,When expected to finish repaying- Mobile bank,factor,as.factor,is.factor
+E1xB,"Amount outstanding - Mobile bank (e.g. MShwari, KCB MPesa, MCoop Cash)",double,as.double,is.double
+E1iC,Sacco (Savings and Credit Cooperative Society),double,as.double,is.double
+E1iiC,Number of outstanding Sacco (Savings and Credit Cooperative Society),double,as.double,is.double
+E1iiiC,MAIN reason for taking loan - Loan at a Sacco,factor,as.factor,is.factor
+E1ivC,Collateral / security for Sacco,factor,as.factor,is.factor
+E1vC,Frequency of paying -  Sacco (Savings and Credit Cooperative Society) loan,factor,as.factor,is.factor
+E1viC,Ways of repayment for Loan from Sacco,factor,as.factor,is.factor
+E1viiC,Amount borrowed - Loan from Sacco,double,as.double,is.double
+E1viiiC,E1viiiC.When did you borrow - Loan from Sacco,factor,as.factor,is.factor
+E1ixC,When expected to finish - Sacco,factor,as.factor,is.factor
+E1xC,Amount outstanding -  Sacco (Savings and Credit Cooperative Society),double,as.double,is.double
+E1iD,Microfinance institution,double,as.double,is.double
+E1iiD,Number of outstanding Microfinance institution,double,as.double,is.double
+E1iiiD,MAIN reason for taking loan -  Loan from a microfinance institution,factor,as.factor,is.factor
+E1ivD,E1ivD.Collateral / security for -  Microfinance institution loan,factor,as.factor,is.factor
+E1vD,Frequency of paying -  Loan from Microfinance institution,factor,as.factor,is.factor
+E1viD,Ways of repayment for Loan from Microfinance institution,factor,as.factor,is.factor
+E1viiD,Amount borrowed - Loan from Microfinance institution,double,as.double,is.double
+E1viiiD,E1viiiD.When did you borrow - Loan from Microfinance institution,factor,as.factor,is.factor
+E1ixD,When expected to finish - Microfinance institution,factor,as.factor,is.factor
+E1xD,Amount outstanding -  Microfinance institution,double,as.double,is.double
+E1iE,Moneylender/Shylock,double,as.double,is.double
+E1iiE,Number of outstanding Moneylender/Shylock,double,as.double,is.double
+E1iiiE,MAIN reason for taking loan -  Loan from Moneylender/Shylock,factor,as.factor,is.factor
+E1ivE,Collateral / security for -  Moneylender/Shylock loan,factor,as.factor,is.factor
+E1vE,Frequency of paying - Loan from Moneylender/Shylock,factor,as.factor,is.factor
+E1viE,Ways of repayment for Moneylender/Shylock,factor,as.factor,is.factor
+E1viiE,Amount borrowed - Loan from Moneylender/Shylock,double,as.double,is.double
+E1viiiE,E1viiiE.When did you borrow - Loan from Moneylender/Shylock,factor,as.factor,is.factor
+E1ixE,When expected to finish - Moneylender/Shylock,factor,as.factor,is.factor
+E1xE,Amount outstanding -  Moneylender/Shylock,double,as.double,is.double
+E1iF,Group/chama,double,as.double,is.double
+E1iiF,Number of outstanding loans - Group/chama,double,as.double,is.double
+E1iiiF,MAIN reason for taking loan -  Loan from Group/chama,factor,as.factor,is.factor
+E1ivF,E1ivF.Collateral / security for -   Group/chama loan,factor,as.factor,is.factor
+E1vF,Frequency of paying - Loan from Group/chama,factor,as.factor,is.factor
+E1viF,Ways of repayment for Loan from Group/chama,factor,as.factor,is.factor
+E1viiF,Amount borrowed -Loan from Group/chama,double,as.double,is.double
+E1viiiF,E1viiiF.When did you borrow - Loan from Group/chama,factor,as.factor,is.factor
+E1ixF,When expected to finish - Group/chama,factor,as.factor,is.factor
+E1xF,Amount outstanding -  Group/chama,double,as.double,is.double
+E1iG,"Government institution for education, agriculture or development (e.g. HELB, Agr",double,as.double,is.double
+E1iiG,Number of outstanding loan - Government institution for education,double,as.double,is.double
+E1iiiG,MAIN reason for taking loan - from Government institution for education,factor,as.factor,is.factor
+E1vG,Frequency of paying - Loan from Government inst,factor,as.factor,is.factor
+E1viG,Ways of repayment for Loan from Government institution,factor,as.factor,is.factor
+E1viiG,Amount borrowed - Loan from Government institution for education),double,as.double,is.double
+E1viiiG,E1viiiH.When did you borrow - Loan from Government institution for education,factor,as.factor,is.factor
+E1ixG,When expected to finish - Government inst,factor,as.factor,is.factor
+E1xG,Amount outstanding -  Government institution for education,double,as.double,is.double
+E1iH,Loan from Employer,double,as.double,is.double
+E1iiH,Number of outstanding loans -  Loan from Employer,double,as.double,is.double
+E1iiiH,MAIN reason for taking loan - Loan from Employer,factor,as.factor,is.factor
+E1ivH,E1ivH.Collateral / security for -   Loan from Employer,factor,as.factor,is.factor
+E1vH,Frequency of paying - Loan from Employer,factor,as.factor,is.factor
+E1viH,Ways of repayment for Loan from Employer,factor,as.factor,is.factor
+E1viiH,Amount borrowed - Loan from Employer,double,as.double,is.double
+E1viiiH,E1viiiH.When did you borrow - Loan from Employer,factor,as.factor,is.factor
+E1ixH,When expected to finish - Employer,factor,as.factor,is.factor
+E1xH,Amount outstanding -  Employer,double,as.double,is.double
+E1iI,Loan from family/friend/neighbour,double,as.double,is.double
+E1iiI,Number of outstanding loans - Loan from family/friend/neighbour,double,as.double,is.double
+E1iiiI,MAIN reason for taking loan - Loan from family/friend/neighbour,factor,as.factor,is.factor
+E1vI,Frequency of paying -  Loan from Family / friend / neighbour,factor,as.factor,is.factor
+E1viI,Ways of repayment for Loan from Family / friend / neighbour,factor,as.factor,is.factor
+E1viiI,Amount borrowed - Loan from Family / friend / neighbour,double,as.double,is.double
+E1viiiI,E1viiiI.When did you borrow - Loan from Family / friend / neighbour,factor,as.factor,is.factor
+E1ixI,When expected to finish - Family / friend / neighbour,factor,as.factor,is.factor
+E1xI,Amount outstanding -  Family / friend / neighbour,double,as.double,is.double
+E1iJ,Cash loan from shopkeeper,double,as.double,is.double
+E1iiJ,Number of outstanding loans - Cash loan from shopkeeper,double,as.double,is.double
+E1iiiJ,MAIN reason for taking loan - Cash loan from shopkeeper,factor,as.factor,is.factor
+E1iiiJi,Other reason Cash loan from shopkeeper,character,as.character,is.character
+E1vJ,Frequency of paying -  Loan from Cash from Shopkeeper,factor,as.factor,is.factor
+E1vJi,Other frequency of  repayment for Loan from Cash from Shopkeeper,character,as.character,is.character
+E1viJ,Ways of repayment for Cash from shop keeper,factor,as.factor,is.factor
+E1viJi,Other repayment ways for Cash from Shopkeeper,character,as.character,is.character
+E1viiJ,Amount borrowed - Cash from Shopkeeper,double,as.double,is.double
+E1viiiJ,When did you borrow - Loan from Cash from Shopkeeper,factor,as.factor,is.factor
+E1ixJ,When expected to finish - Cash from Shopkeeper,factor,as.factor,is.factor
+E1xJ,Amount outstanding -  Cash from Shopkeeper,double,as.double,is.double
+E1iiiK,MAIN reason for taking loan - products on credit from a shopkeeper,factor,as.factor,is.factor
+E1iiiKi,Other main reason taking products on credit from a shopkeeper,character,as.character,is.character
+E1vK,Frequency of paying -goods and services on credit from a shopkeeper,factor,as.factor,is.factor
+E1vKi,Other repayments frequency taking products on credit from a shopkeeper,character,as.character,is.character
+E1viK,E1viK Ways of repayment for taking products on credit from a shopkeeper,factor,as.factor,is.factor
+E1viKi,Other frequency of  repayment taking products on credit from a shopkeeper,character,as.character,is.character
+E1viiK,Amount borrowed - Taking goods and services on credit from a shopkeeper,double,as.double,is.double
+E1viiiK,E1viiiK.When did you borrow - products on credit from a shopkeeper,factor,as.factor,is.factor
+E1ixK,When expected to finish - taking products  on credit from a shopkeeper,factor,as.factor,is.factor
+E1xK,Amount outstanding - Taking goods and services on credit from a shopkeeper,double,as.double,is.double
+E1iL,"Digital loans app (e.g. Tala, Branch, Utunzi, Haraka Loans)",double,as.double,is.double
+E1iiL,Number of outstanding loans -  Digital loans app (e.g. Tala),double,as.double,is.double
+E1iiiL,MAIN reason for taking loan -Digital loans app (e.g. Tala),factor,as.factor,is.factor
+E1iiiLi,"Other Digital loans app (e.g. Tala, Branch, Utunzi, Haraka Loans)",character,as.character,is.character
+E1vL,Frequency of paying -  Digital loans app (e.g. Tala),factor,as.factor,is.factor
+E1vLi,"Other frequency of  repayment for Digital loans app (e.g. Tala, Branch)",character,as.character,is.character
+E1viL,"Ways of repayment for Digital loans app (e.g. Tala, Branch)",factor,as.factor,is.factor
+E1viLi,Other ways repayment for Digital loans app,character,as.character,is.character
+E1viiL,Amount borrowed - Digital loans app (e.g. Tala),double,as.double,is.double
+E1viiiL,E1viiiL.When did you borrow Digital loans app (e.g. Tala),factor,as.factor,is.factor
+E1ixL,When expected to finish -Digital loans app (e.g. Tala),factor,as.factor,is.factor
+E1xL,"Amount outstanding -  Digital loans app (e.g. Tala, Branch)",double,as.double,is.double
+E1iiiM,MAIN reason for taking loan - Loan/credits from buyer of your harvest,factor,as.factor,is.factor
+E1iiiMi,"Other Loan/credits from buyer of your harvest, (e.g. tobacco)",character,as.character,is.character
+E1vM,Frequency of paying -  Loan/credits from buyer of your harvest,factor,as.factor,is.factor
+E1vMi,Other frequency of  repayment for Loan/credits from buyer of your harvest,character,as.character,is.character
+E1viM,Ways of repayment for Loan/credits from buyer of your harvest,factor,as.factor,is.factor
+E1viMi,Other ways  your repayment  Loan/credits from buyer of your harvest,character,as.character,is.character
+E1viiM,Amount borrowed - Loan/credits from buyer of your harvest,double,as.double,is.double
+E1viiiM,E1viiiQ.When did you borrow - Loan/credits from buyer of your harvest,factor,as.factor,is.factor
+E1ixM,When expected to finish - Loan/credits from buyer of your harvest,factor,as.factor,is.factor
+E1xM,Amount outstanding -  Loan/credits from buyer of your harvest,double,as.double,is.double
+E1iN,"Hire purchase (e.g. A.R.T., Amedo, Kenya Credit Traders)",double,as.double,is.double
+E1iiN,"Number of outstanding loans - Hire purchase (e.g. A.R.T., Amedo)",double,as.double,is.double
+E1iiiN,"MAIN reason for taking loan - Hire purchase (e.g. A.R.T., Amedo)",factor,as.factor,is.factor
+E1iiiNi,"Other Hire purchase (e.g. A.R.T., Amedo, Kenya Credit Traders)",character,as.character,is.character
+E1vN,"Frequency of paying - Hire purchase (e.g. A.R.T., Amedo)",factor,as.factor,is.factor
+E1vNi,"Other frequency of  repayment for Hire purchase (e.g. A.R.T., Amedo)",character,as.character,is.character
+E1viN,"Ways of repayment for Hire purchase (e.g. A.R.T., Amedo)",factor,as.factor,is.factor
+E1viNi,Other way of repayment for Hire purchase loan,character,as.character,is.character
+E1viiN,Amount borrowed - Hire purchase,double,as.double,is.double
+E1viiiN,When did you borrow - Hire purchase (e.g. A.R.T),factor,as.factor,is.factor
+E1ixN,"When expected to finish - Hire purchase (e.g. A.R.T., Amedo)",factor,as.factor,is.factor
+E1xN,"Amount outstanding -  Hire purchase (e.g. A.R.T., Amedo)",double,as.double,is.double
+E1iO,"Bank/building society or Sacco (mortgage) to buy/build a house, or to buy land",double,as.double,is.double
+E1iiO,Number of outstanding loans - Loan from Insurance,double,as.double,is.double
+E1iiiO,MAIN reason for taking loan - Loan from Insurance,factor,as.factor,is.factor
+E1iiiOi,Other Loan from Insurance,character,as.character,is.character
+E1ivO,E1ivO.Collateral / security for -   Loan from Insurance,factor,as.factor,is.factor
+E1ivOi,E1ivOi.Other collateral / security for   Loan from Insurance,character,as.character,is.character
+E1vO,Frequency of paying - Loan from Insurance,factor,as.factor,is.factor
+E1vOi,Other frequency of  repayment for Loan from Insurance,character,as.character,is.character
+E1viO,Ways of repayment for Loan from Insurance,factor,as.factor,is.factor
+E1viOi,Other Loan from Insurance,character,as.character,is.character
+E1viiO,Amount borrowed - Loan from Insurance,double,as.double,is.double
+E1viiiO,When did you borrow - Loan from Insurance,factor,as.factor,is.factor
+E1ixO,When expected to finish - Loan from Insurance,factor,as.factor,is.factor
+E1xO,Amount outstanding -  Loan from Insurance,double,as.double,is.double
+E1iP,Government or government related institution to buy a house or land,double,as.double,is.double
+E1iiP,Number of outstanding loans -  Govt or governmentrelated institution,double,as.double,is.double
+E1iiiP,MAIN reason for taking loan - Government or govt related ins,factor,as.factor,is.factor
+E1iiiPi,Other Government or govt related institution to buy a house or land,character,as.character,is.character
+E1ivP,E1ivP.Collateral / security for -   Government or govt related inst loan,factor,as.factor,is.factor
+E1ivPi,E1ivPi.Other collateral / security for   Government or govt related inst,character,as.character,is.character
+E1vP,Frequency of paying -  Government or government related inst,factor,as.factor,is.factor
+E1vPi,Other frequency of  repayment for Government or govt related ins,character,as.character,is.character
+E1viP,Ways of repayment for Government or government related inst loan,factor,as.factor,is.factor
+E1viPi,Other way of repayment for Government or government related inst loan,character,as.character,is.character
+E1viiP,Amount borrowed - Loan from Government or government related inst,double,as.double,is.double
+E1viiiP,E1viiiP.When did you borrow - Loan from Government or governmentrelated inst,factor,as.factor,is.factor
+E1ixP,When expected to finish - Loan from Insurance,factor,as.factor,is.factor
+E1xP,Amount outstanding -  Government or governmentrelated inst,double,as.double,is.double
+E1iQ,Overdraft,double,as.double,is.double
+E1iiQ,Number of outstanding loans - Overdraft,double,as.double,is.double
+E1iiiQ,MAIN reason for taking loan - Overdraft,factor,as.factor,is.factor
+E1iiiQi,Other Overdraft,character,as.character,is.character
+E1vQ,Frequency of paying - Overdraft,factor,as.factor,is.factor
+E1vQi,Other frequency of  repayment for an  Overdraft,character,as.character,is.character
+E1viQ,Ways of repayment for Overdraft,factor,as.factor,is.factor
+E1viQi,Other way of repayment for Other Overdraft loan,character,as.character,is.character
+E1viiQ,Amount borrowed - Overdraft,double,as.double,is.double
+E1viiiQ,E1viiiQ.When did you borrow - Overdraft,factor,as.factor,is.factor
+E1ixQ,When expected to finish - Overdraft,factor,as.factor,is.factor
+E1xQ,Amount outstanding -  Overdraft,double,as.double,is.double
+E1iR,Mobile money loan provider e.g Fuliza,double,as.double,is.double
+E1iiR,Number of outstanding loans -  Mobile money loan provider e.g Fuliza,double,as.double,is.double
+E1iiiR,MAIN reason for taking loan - Mobile money loan provider e.g Fuliza,factor,as.factor,is.factor
+E1iiiRi,Other Mobile money loan provider e.g Fuliza,character,as.character,is.character
+E1viiR,Amount borrowed - Mobile money loan provider e.g Fuliza,double,as.double,is.double
+E1viiiR,E1viiiR.When did you borrow - Mobile money loan provider e.g Fuliza,factor,as.factor,is.factor
+E1ixR,When expected to finish - Mobile money loan provider e.g Fuliza,factor,as.factor,is.factor
+E1xR,"Amount outstanding - Mobile bank (e.g. MShwari, KCB MPesa, MCoop Cash)",double,as.double,is.double
+E1iiiS,MAIN reason for taking loan - Credit Card,factor,as.factor,is.factor
+E1iiiSi,Other Credit Card,character,as.character,is.character
+E1vS,Frequency of paying - Credit Card,factor,as.factor,is.factor
+E1vSi,other Credit Card,character,as.character,is.character
+E1viS,Ways of repayment for Credit Card loan,factor,as.factor,is.factor
+E1viSi,Other ways of repayment for Other Credit Card,character,as.character,is.character
+E1viiAS,Amount borrowed Credit Card,double,as.double,is.double
+E1viiiS,Credit Card,factor,as.factor,is.factor
+E1ixS,When expected to finish - Credit Card,factor,as.factor,is.factor
+E1xS,Amount outstanding -  Overdraft,double,as.double,is.double
+E1_ii1,Loan Features,factor,as.factor,is.factor
+E1_ii2,Loan Features,factor,as.factor,is.factor
+E1_2,loan restructuring/negotiation?,factor,as.factor,is.factor
+E1_3,How long was the restructuring,factor,as.factor,is.factor
+E2A,Amount of Repayment,factor,as.factor,is.factor
+E2B1,E2B1 Ease of Loan Repayment,factor,as.factor,is.factor
+E2B2,Used savings to repay the loan,factor,as.factor,is.factor
+E2B3,Sold / gave assets or belongings to repay the loan,factor,as.factor,is.factor
+E2B4,Reduced expenditures on food products to repay the loan,factor,as.factor,is.factor
+E2B5,Reduced expenditures on nonfood products to repay the loan,factor,as.factor,is.factor
+E2B6,Started a business/worked more hours,factor,as.factor,is.factor
+E2Ci__1,Didn't pay at all,double,as.double,is.double
+E2Ci__2,Paid late,double,as.double,is.double
+E2Ci__3,Missed a payment,double,as.double,is.double
+E2Ci__4,Paid less,double,as.double,is.double
+E2Ci__5,Never paid late/less or missed a payment,double,as.double,is.double
+E2Ci__98,Don’t know (DO NOT READ OUT),double,as.double,is.double
+E2Ci__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+E2Cii,Number of Times Defaulted,factor,as.factor,is.factor
+E2D__1,Loan from a bank/MFB,double,as.double,is.double
+E2D__2,"Loan from mobile banking (e.g. Mshwari, KCB MPesa, MCoop, Eazzy Loan, Timiza, HF Whizz)",double,as.double,is.double
+E2D__3,Loan at a Sacco / Savings and Credit Cooperative society,double,as.double,is.double
+E2D__4,Loan from insurance company,double,as.double,is.double
+E2D__5,Loan from a microfinance institution,double,as.double,is.double
+E2D__6,"Loan from Shylocks / Loan Sharks / Money Lenders / Money Merchants that are not from your phone (e.g. Platinum, Ngao, etc",double,as.double,is.double
+E2D__7,Loan from a group/chama,double,as.double,is.double
+E2D__8,"Loan from a government institution for education, agriculture or a development loan (e.g. HELB, Agricultural Finance Corporation, Youth Fund, Women Fund)",double,as.double,is.double
+E2D__9,Loan from an employer,double,as.double,is.double
+E2D__10,Loan from family/friend/neighbour,double,as.double,is.double
+E2D__11,Cash loan from shopkeeper,double,as.double,is.double
+E2D__12,Taking goods and services on credit from a shopkeeper,double,as.double,is.double
+E2D__13,"Digital loans that you get through the phone that you download through apps (e.g. Branch, Tala, Utunzi, KopaCredo, Haraka loans, etc.)",double,as.double,is.double
+E2D__14,"Loan / credits from buyer of your harvest / supplier of agricultural inputs (e.g. coffee, tea, sugarcane, tobacco, vegetables)",double,as.double,is.double
+E2D__15,"Hire purchase (e.g. KuKopesha, Diamond Trust, Kenya Credit Traders (KCT), Synergy, One Africa Capital, Tuskys)",double,as.double,is.double
+E2D__16,"Loan to buy/build a house (mortgage), or to buy land from a bank or SACCO",double,as.double,is.double
+E2D__17,Bank/ Micro finance bank Overdraft,double,as.double,is.double
+E2D__18,Credit cards,double,as.double,is.double
+E2D__19,Loans from mobile money providers e.g fuliza,double,as.double,is.double
+E2D__20,Other (SPECIFY),double,as.double,is.double
+E2D__98,Don’t know (DO NOT READ OUT),double,as.double,is.double
+E2D__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+E2Di,Loans Defaulted - other,character,as.character,is.character
+E2E,Reasons for Default,factor,as.factor,is.factor
+E2Ei,Reasons for Default - Other,character,as.character,is.character
+E2F__1,An extra or rollover fee,double,as.double,is.double
+E2F__2,Reduction in future loan limit,double,as.double,is.double
+E2F__3,Blacklisted at credit bureau,double,as.double,is.double
+E2F__4,Denied access to future loan with the same lender,double,as.double,is.double
+E2F__5,Denied access to future loan with another lender,double,as.double,is.double
+E2F__6,Legal prosecution,double,as.double,is.double
+E2F__7,"Confiscation of property, fines or other penalties",double,as.double,is.double
+E2F__8,Unable to join other group,double,as.double,is.double
+E2F__9,"Social consequences (e.g. lost a friendship, hurt reputation, had to move from my community, brought shame to myself or my community)",double,as.double,is.double
+E2F__10,Lender agreed to give me more time to re-pay,double,as.double,is.double
+E2F__11,Have not experienced any negative consequences,double,as.double,is.double
+E2F__12,Loss of savings,double,as.double,is.double
+E2F__13,Other (SPECIFY),double,as.double,is.double
+E2F__14,never happened,numeric,as.numeric,is.numeric
+E2F__15,power rationed,numeric,as.numeric,is.numeric
+E2F__16,Threatening messages and calls,numeric,as.numeric,is.numeric
+E2F__98,Don’t know (DO NOT READ OUT),double,as.double,is.double
+E2F__99,Refused to Answer  (DO NOT READ OUT),double,as.double,is.double
+E2Fi,Default Consequences - Other,character,as.character,is.character
+E3A__1,Bank/MFB,double,as.double,is.double
+E3A__2,Sacco,double,as.double,is.double
+E3A__3,MFI,double,as.double,is.double
+E3A__4,Digital loans apps providers,double,as.double,is.double
+E3A__5,Shylock/Money merchants,double,as.double,is.double
+E3A__6,"Government e.g. Uwezo,",double,as.double,is.double
+E3B__1,Bank/MFB,double,as.double,is.double
+E3B__2,Sacco,double,as.double,is.double
+E3B__3,MFI,double,as.double,is.double
+E3B__4,Digital loans apps providers,double,as.double,is.double
+E3B__5,Shylock/Money merchants,double,as.double,is.double
+E3B__6,"Government e.g. Uwezo,",double,as.double,is.double
+F1__1,Land,double,as.double,is.double
+F1__2,Livestock,double,as.double,is.double
+F1__3,Jewellery,double,as.double,is.double
+F2__1,There’s nowhere to save my money,double,as.double,is.double
+F2__2,I don’t need to save,double,as.double,is.double
+F2__3,Don’t understand how to save,double,as.double,is.double
+F2__4,You need an ID and/or a referee to save,double,as.double,is.double
+F2__5,I use my money for investments not for savings,double,as.double,is.double
+F2__6,I can sell an asset/something (e.g. livestock) when I need to,double,as.double,is.double
+F2__7,I only save when I need to,double,as.double,is.double
+F2__8,Too many fees / too expensive,double,as.double,is.double
+F2__9,Do not want to keep a minimum balance,double,as.double,is.double
+F2__10,Requires a regular income,double,as.double,is.double
+F2__11,I don't have enough money to save,double,as.double,is.double
+F2__12,I don't trust finacial institutions/ afraid to lose money,double,as.double,is.double
+F2__13,Other (SPECIFY),double,as.double,is.double
+F2__14,Student,numeric,as.numeric,is.numeric
+F2__98,Don’t know  (DO NOT READ OUT),double,as.double,is.double
+F2__99,Refused to Answer   (DO NOT READ OUT),double,as.double,is.double
+F2i,Why Not Currently Saving-other,character,as.character,is.character
+F3__1,"For emergencies such as burial, medical",double,as.double,is.double
+F3__2,For education for myself or others,double,as.double,is.double
+F3__3,To meet day to day household needs,double,as.double,is.double
+F3__4,"To expand my business / invest in machinery, equipment for business",double,as.double,is.double
+F3__5,Start new business,double,as.double,is.double
+F3__6,To invest in premise for my business,double,as.double,is.double
+F3__7,To invest in another person's business,double,as.double,is.double
+F3__8,To purchase land,double,as.double,is.double
+F3__9,To purchase or build a house,double,as.double,is.double
+F3__10,To improve a house,double,as.double,is.double
+F3__11,"For personal reasons such as new clothes, shoes",double,as.double,is.double
+F3__12,To acquire household goods,double,as.double,is.double
+F3__13,"For social reasons (e.g. wedding, bride price, holiday)",double,as.double,is.double
+F3__14,To buy a car or motorcycle,double,as.double,is.double
+F3__15,To purchase livestock,double,as.double,is.double
+F3__16,"To purchase agricultural inputs (e.g. seeds, fertiliser, insemination)",double,as.double,is.double
+F3__17,"For agricultural improvements (e.g. irrigation, dam, fencing, preparing land)",double,as.double,is.double
+F3__18,"To purchase agricultural implements (e.g. plough, hoe, tractor, things for the farm)",double,as.double,is.double
+F3__19,To pay for farm labour,double,as.double,is.double
+F3__20,To transport farm produce to the market,double,as.double,is.double
+F3__21,"For fishing equipment (e.g. boats, nets, engine)",double,as.double,is.double
+F3__22,For later in life/ For old age/retirement,double,as.double,is.double
+F3__23,To leave something for my children,double,as.double,is.double
+F3__24,Other (SPECIFY),double,as.double,is.double
+F3__98,Don’t know (DO NOT READ OUT),double,as.double,is.double
+F3__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+F3i,Reason Saving,character,as.character,is.character
+F1A,Savings Product Code,factor,as.factor,is.factor
+F1B,Savings Features,factor,as.factor,is.factor
+F1Bi_a,Savings Features,character,as.character,is.character
+F2A__1,Green bonds,double,as.double,is.double
+F2A__2,Treasury bills/bonds,double,as.double,is.double
+F2A__3,MAkiba,double,as.double,is.double
+F2A__4,"Other capital market products e.g unit trusts, derivatives, shares etc",double,as.double,is.double
+F2B,Access to Capital Markets,factor,as.factor,is.factor
+F2Bi,Access to Capital Markets - Other,character,as.character,is.character
+F2C__1,Minimal entry requirement of Kshs 3000,double,as.double,is.double
+F2C__2,Guarantee of untaxed returns,double,as.double,is.double
+F2C__3,Ease of purchase of the bond using mobile phone,double,as.double,is.double
+F2C__4,I was able to get all the information I needed about the bond in good time,double,as.double,is.double
+F2C__5,I was guaranteed to get my cash in time once the bond is sold,double,as.double,is.double
+F2C__6,Others,double,as.double,is.double
+F2Ci,Other reason for investing in MAkiba Digital bond,character,as.character,is.character
+F2D__1,I do not have the kind of money required to invest in securities,double,as.double,is.double
+F2D__2,I don’t need to invest,double,as.double,is.double
+F2D__3,Don’t understand how to invest in securities,double,as.double,is.double
+F2D__4,I don't have an ID/passport,double,as.double,is.double
+F2D__5,I use my money for savings not investments,double,as.double,is.double
+F2D__6,"I have better option to invest in, instead of securities",double,as.double,is.double
+F2D__7,I &nbsp;lost money in the securities markets,double,as.double,is.double
+F2D__8,I have never heard of securities markets,double,as.double,is.double
+F2D__9,I don’t trust securities markets and stockbrokers,double,as.double,is.double
+F2D__10,It’s too complicated,double,as.double,is.double
+F2D__11,I do not like taking risk in the securities market,double,as.double,is.double
+F2D__12,Other (SPECIFY),double,as.double,is.double
+F2D__13,Too Young,numeric,as.numeric,is.numeric
+F2D__14,Too old,numeric,as.numeric,is.numeric
+F2D__98,Don’t know (DO NOT READ OUT)98,double,as.double,is.double
+F2D__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+F2Di,Reason not investing in securities,character,as.character,is.character
+G1A1__1,Bank transfer includes interent banking,double,as.double,is.double
+G1A1__2,"The Post Office (e.g  PostPay, Money order)",double,as.double,is.double
+G1A1__3,"A mobile money account (e.g  MPesa, Airtel Money)",double,as.double,is.double
+G1A1__4,A mobile banking account,double,as.double,is.double
+G1A1__5,"Pay bill  / Till number through mobile money (e.g  Lipa na MPesa, Pay Bill)",double,as.double,is.double
+G1A1__6,Cash,double,as.double,is.double
+G1A1__7,Cheque,double,as.double,is.double
+G1A1__8,Credit or Debit card,double,as.double,is.double
+G1A1__9,Hawala,double,as.double,is.double
+G1A1__10,"Money transfer service (e.g  Western Union, Money Gram)",double,as.double,is.double
+G1A1__11,"International mobile transfer (e.g  Wave, Transferwise)",double,as.double,is.double
+G1A1__12,"Courier e.g  Nation, Securicor SpeedPost G4S",double,as.double,is.double
+G1A1__13,Bus / Matatu,double,as.double,is.double
+G1A1__14,In kind / noncash (goods &amp; services),double,as.double,is.double
+G1A1__15,"Community currencies eg  Sarafu, Bangla Pesa",double,as.double,is.double
+G1A1__16,"Cryptourrency e g bitcoin, Etherium,",double,as.double,is.double
+G1A1__17,Other (SPECIFY)   ONLY MENTIONED IN G1A ),double,as.double,is.double
+G1A1__18,Did not do this (DO NOT READ OUT,double,as.double,is.double
+G1A1__98,Don't know(DO NOT READ OUT),double,as.double,is.double
+G1A1__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+G1A1a,"Other way paid monthly bill, specify",character,as.character,is.character
+G1B1,"Most frequent way paid monthly bills, including rent",factor,as.factor,is.factor
+G1B1a,Other most frequent way specify,character,as.character,is.character
+G1A2__1,Bank transfer includes interent banking,double,as.double,is.double
+G1A2__2,"The Post Office (e.g  PostPay, Money order)",double,as.double,is.double
+G1A2__3,"A mobile money account (e.g  MPesa, Airtel Money)",double,as.double,is.double
+G1A2__4,A mobile banking account,double,as.double,is.double
+G1A2__5,"Pay bill  / Till number through mobile money (e.g  Lipa na MPesa, Pay Bill)",double,as.double,is.double
+G1A2__6,Cash,double,as.double,is.double
+G1A2__7,Cheque,double,as.double,is.double
+G1A2__8,Credit or Debit card,double,as.double,is.double
+G1A2__9,Hawala,double,as.double,is.double
+G1A2__10,"Money transfer service (e.g  Western Union, Money Gram)",double,as.double,is.double
+G1A2__11,"International mobile transfer (e.g  Wave, Transferwise)",double,as.double,is.double
+G1A2__12,"Courier e.g  Nation, Securicor SpeedPost G4S",double,as.double,is.double
+G1A2__13,Bus / Matatu,double,as.double,is.double
+G1A2__14,In kind / noncash (goods &amp; services),double,as.double,is.double
+G1A2__15,"Community currencies eg  Sarafu, Bangla Pesa",double,as.double,is.double
+G1A2__16,"Cryptourrency e g bitcoin, Etherium,",double,as.double,is.double
+G1A2__17,Other (SPECIFY)   ONLY MENTIONED IN G1A ),double,as.double,is.double
+G1A2__18,Did not do this (DO NOT READ OUT,double,as.double,is.double
+G1A2__98,Don't know(DO NOT READ OUT),double,as.double,is.double
+G1A2__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+G1A2a,Other way of paying school fees specify,character,as.character,is.character
+G1B2,Most frequent way paid school fees,factor,as.factor,is.factor
+G1B2a,Other most frequent way paid fees,character,as.character,is.character
+G1A3__1,Bank transfer includes interent banking,double,as.double,is.double
+G1A3__2,"The Post Office (e.g  PostPay, Money order)",double,as.double,is.double
+G1A3__3,"A mobile money account (e.g  MPesa, Airtel Money)",double,as.double,is.double
+G1A3__4,A mobile banking account,double,as.double,is.double
+G1A3__5,"Pay bill  / Till number through mobile money (e.g  Lipa na MPesa, Pay Bill)",double,as.double,is.double
+G1A3__6,Cash,double,as.double,is.double
+G1A3__7,Cheque,double,as.double,is.double
+G1A3__8,Credit or Debit card,double,as.double,is.double
+G1A3__9,Hawala,double,as.double,is.double
+G1A3__10,"Money transfer service (e.g  Western Union, Money Gram)",double,as.double,is.double
+G1A3__11,"International mobile transfer (e.g  Wave, Transferwise)",double,as.double,is.double
+G1A3__12,"Courier e.g  Nation, Securicor SpeedPost G4S",double,as.double,is.double
+G1A3__13,Bus / Matatu,double,as.double,is.double
+G1A3__14,In kind / noncash (goods &amp; services),double,as.double,is.double
+G1A3__15,"Community currencies eg  Sarafu, Bangla Pesa",double,as.double,is.double
+G1A3__16,"Cryptourrency e g bitcoin, Etherium,",double,as.double,is.double
+G1A3__17,Other (SPECIFY)   ONLY MENTIONED IN G1A ),double,as.double,is.double
+G1A3__18,Did not do this (DO NOT READ OUT,double,as.double,is.double
+G1A3__19,Deducted from salary/Income,numeric,as.numeric,is.numeric
+G1A3__98,Don't know(DO NOT READ OUT),double,as.double,is.double
+G1A3__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+G1A3a,Other way you paid bills to govt,character,as.character,is.character
+G1B3,"Most frequent way paid bills to the Government (e.g. tax, fine or fee)",factor,as.factor,is.factor
+G1B3a,G1B3a.Other most frequent way paid govt bill,character,as.character,is.character
+G1A4__1,Bank transfer includes interent banking,double,as.double,is.double
+G1A4__2,"The Post Office (e.g  PostPay, Money order)",double,as.double,is.double
+G1A4__3,"A mobile money account (e.g  MPesa, Airtel Money)",double,as.double,is.double
+G1A4__4,A mobile banking account,double,as.double,is.double
+G1A4__5,"Pay bill  / Till number through mobile money (e.g  Lipa na MPesa, Pay Bill)",double,as.double,is.double
+G1A4__6,Cash,double,as.double,is.double
+G1A4__7,Cheque,double,as.double,is.double
+G1A4__8,Credit or Debit card,double,as.double,is.double
+G1A4__9,Hawala,double,as.double,is.double
+G1A4__10,"Money transfer service (e.g  Western Union, Money Gram)",double,as.double,is.double
+G1A4__11,"International mobile transfer (e.g  Wave, Transferwise)",double,as.double,is.double
+G1A4__12,"Courier e.g  Nation, Securicor SpeedPost G4S",double,as.double,is.double
+G1A4__13,Bus / Matatu,double,as.double,is.double
+G1A4__14,In kind / noncash (goods &amp; services),double,as.double,is.double
+G1A4__15,"Community currencies eg  Sarafu, Bangla Pesa",double,as.double,is.double
+G1A4__16,"Cryptourrency e g bitcoin, Etherium,",double,as.double,is.double
+G1A4__17,Other (SPECIFY)   ONLY MENTIONED IN G1A ),double,as.double,is.double
+G1A4__18,Did not do this (DO NOT READ OUT,double,as.double,is.double
+G1A4__98,Don't know(DO NOT READ OUT),double,as.double,is.double
+G1A4__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+G1A4a,G1A4a.Other way you paid for daily expenses,character,as.character,is.character
+G1B4,Most frequent way paid daily expenses payed for goods at a shop/duka,factor,as.factor,is.factor
+G1B4a,G1B4a.Other most frequent way paid for daily expenses,character,as.character,is.character
+G1A5__1,Bank transfer includes interent banking,double,as.double,is.double
+G1A5__2,"The Post Office (e.g  PostPay, Money order)",double,as.double,is.double
+G1A5__3,"A mobile money account (e.g  MPesa, Airtel Money)",double,as.double,is.double
+G1A5__4,A mobile banking account,double,as.double,is.double
+G1A5__5,"Pay bill  / Till number through mobile money (e.g  Lipa na MPesa, Pay Bill)",double,as.double,is.double
+G1A5__6,Cash,double,as.double,is.double
+G1A5__7,Cheque,double,as.double,is.double
+G1A5__8,Credit or Debit card,double,as.double,is.double
+G1A5__9,Hawala,double,as.double,is.double
+G1A5__10,"Money transfer service (e.g  Western Union, Money Gram)",double,as.double,is.double
+G1A5__11,"International mobile transfer (e.g  Wave, Transferwise)",double,as.double,is.double
+G1A5__12,"Courier e.g  Nation, Securicor SpeedPost G4S",double,as.double,is.double
+G1A5__13,Bus / Matatu,double,as.double,is.double
+G1A5__14,In kind / noncash (goods &amp; services),double,as.double,is.double
+G1A5__15,"Community currencies eg  Sarafu, Bangla Pesa",double,as.double,is.double
+G1A5__16,"Cryptourrency e g bitcoin, Etherium,",double,as.double,is.double
+G1A5__17,Other (SPECIFY)   ONLY MENTIONED IN G1A ),double,as.double,is.double
+G1A5__18,Did not do this (DO NOT READ OUT,double,as.double,is.double
+G1A5__98,Don't know(DO NOT READ OUT),double,as.double,is.double
+G1A5__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+G1A5a,G1A5a.Other way sent money inside Kenya,character,as.character,is.character
+G1B5,"Sent / gave money inside Kenya (including to friends, family)",factor,as.factor,is.factor
+G1B5a,G1B5a.Other most frequent way sent money inside Kenya,character,as.character,is.character
+G1A6__1,Bank transfer includes interent banking,double,as.double,is.double
+G1A6__2,"The Post Office (e.g  PostPay, Money order)",double,as.double,is.double
+G1A6__3,"A mobile money account (e.g  MPesa, Airtel Money)",double,as.double,is.double
+G1A6__4,A mobile banking account,double,as.double,is.double
+G1A6__5,"Pay bill  / Till number through mobile money (e.g  Lipa na MPesa, Pay Bill)",double,as.double,is.double
+G1A6__6,Cash,double,as.double,is.double
+G1A6__7,Cheque,double,as.double,is.double
+G1A6__8,Credit or Debit card,double,as.double,is.double
+G1A6__9,Hawala,double,as.double,is.double
+G1A6__10,"Money transfer service (e.g  Western Union, Money Gram)",double,as.double,is.double
+G1A6__11,"International mobile transfer (e.g  Wave, Transferwise)",double,as.double,is.double
+G1A6__12,"Courier e.g  Nation, Securicor SpeedPost G4S",double,as.double,is.double
+G1A6__13,Bus / Matatu,double,as.double,is.double
+G1A6__14,In kind / noncash (goods &amp; services),double,as.double,is.double
+G1A6__15,"Community currencies eg  Sarafu, Bangla Pesa",double,as.double,is.double
+G1A6__16,"Cryptourrency e g bitcoin, Etherium,",double,as.double,is.double
+G1A6__17,Other (SPECIFY)   ONLY MENTIONED IN G1A ),double,as.double,is.double
+G1A6__18,Did not do this (DO NOT READ OUT,double,as.double,is.double
+G1A6__98,Don't know(DO NOT READ OUT),double,as.double,is.double
+G1A6__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+G1A6a,G1A6a.Other way sent money outside Kenya,character,as.character,is.character
+G1B6,Most frequent way Sent / gave money inside Kenya (including to friends)),factor,as.factor,is.factor
+G1B6a,G1B6a.Other most frequent way sent money outside Kenya,character,as.character,is.character
+G1A7__1,Bank transfer includes interent banking,double,as.double,is.double
+G1A7__2,"The Post Office (e.g  PostPay, Money order)",double,as.double,is.double
+G1A7__3,"A mobile money account (e.g  MPesa, Airtel Money)",double,as.double,is.double
+G1A7__4,A mobile banking account,double,as.double,is.double
+G1A7__5,"Pay bill  / Till number through mobile money (e.g  Lipa na MPesa, Pay Bill)",double,as.double,is.double
+G1A7__6,Cash,double,as.double,is.double
+G1A7__7,Cheque,double,as.double,is.double
+G1A7__8,Credit or Debit card,double,as.double,is.double
+G1A7__9,Hawala,double,as.double,is.double
+G1A7__10,"Money transfer service (e.g  Western Union, Money Gram)",double,as.double,is.double
+G1A7__11,"International mobile transfer (e.g  Wave, Transferwise)",double,as.double,is.double
+G1A7__12,"Courier e.g  Nation, Securicor SpeedPost G4S",double,as.double,is.double
+G1A7__13,Bus / Matatu,double,as.double,is.double
+G1A7__14,In kind / noncash (goods &amp; services),double,as.double,is.double
+G1A7__15,"Community currencies eg  Sarafu, Bangla Pesa",double,as.double,is.double
+G1A7__16,"Cryptourrency e g bitcoin, Etherium,",double,as.double,is.double
+G1A7__17,Other (SPECIFY)   ONLY MENTIONED IN G1A ),double,as.double,is.double
+G1A7__18,Did not do this (DO NOT READ OUT,double,as.double,is.double
+G1A7__98,Don't know(DO NOT READ OUT),double,as.double,is.double
+G1A7__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+G1A7a,G1A7a.Other way that you Received money from inside Kenya,character,as.character,is.character
+G1B7,Most frequent way received money from inside Kenya (including from friend),factor,as.factor,is.factor
+G1B7a,G1B7a.Other MOST FREQUENT way that you Received money from inside Kenya,character,as.character,is.character
+G1A8__1,Bank transfer includes interent banking,double,as.double,is.double
+G1A8__2,"The Post Office (e.g  PostPay, Money order)",double,as.double,is.double
+G1A8__3,"A mobile money account (e.g  MPesa, Airtel Money)",double,as.double,is.double
+G1A8__4,A mobile banking account,double,as.double,is.double
+G1A8__5,"Pay bill  / Till number through mobile money (e.g  Lipa na MPesa, Pay Bill)",double,as.double,is.double
+G1A8__6,Cash,double,as.double,is.double
+G1A8__7,Cheque,double,as.double,is.double
+G1A8__8,Credit or Debit card,double,as.double,is.double
+G1A8__9,Hawala,double,as.double,is.double
+G1A8__10,"Money transfer service (e.g  Western Union, Money Gram)",double,as.double,is.double
+G1A8__11,"International mobile transfer (e.g  Wave, Transferwise)",double,as.double,is.double
+G1A8__12,"Courier e.g  Nation, Securicor SpeedPost G4S",double,as.double,is.double
+G1A8__13,Bus / Matatu,double,as.double,is.double
+G1A8__14,In kind / noncash (goods &amp; services),double,as.double,is.double
+G1A8__15,"Community currencies eg  Sarafu, Bangla Pesa",double,as.double,is.double
+G1A8__16,"Cryptourrency e g bitcoin, Etherium,",double,as.double,is.double
+G1A8__17,Other (SPECIFY)   ONLY MENTIONED IN G1A ),double,as.double,is.double
+G1A8__18,Did not do this (DO NOT READ OUT,double,as.double,is.double
+G1A8__98,Don't know(DO NOT READ OUT),double,as.double,is.double
+G1A8__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+G1A8a,G1A8a.Other way that you Received money from outside Kenya,character,as.character,is.character
+G1B8,Most frequent way received money from inside Kenya,factor,as.factor,is.factor
+G1B8a,G1B8a.Other MOST FREQUENT way that you Received money from outside Kenya,character,as.character,is.character
+G1A9__1,Bank transfer includes interent banking,double,as.double,is.double
+G1A9__2,"The Post Office (e.g  PostPay, Money order)",double,as.double,is.double
+G1A9__3,"A mobile money account (e.g  MPesa, Airtel Money)",double,as.double,is.double
+G1A9__4,A mobile banking account,double,as.double,is.double
+G1A9__5,"Pay bill  / Till number through mobile money (e.g  Lipa na MPesa, Pay Bill)",double,as.double,is.double
+G1A9__6,Cash,double,as.double,is.double
+G1A9__7,Cheque,double,as.double,is.double
+G1A9__8,Credit or Debit card,double,as.double,is.double
+G1A9__9,Hawala,double,as.double,is.double
+G1A9__10,"Money transfer service (e.g  Western Union, Money Gram)",double,as.double,is.double
+G1A9__11,"International mobile transfer (e.g  Wave, Transferwise)",double,as.double,is.double
+G1A9__12,"Courier e.g  Nation, Securicor SpeedPost G4S",double,as.double,is.double
+G1A9__13,Bus / Matatu,double,as.double,is.double
+G1A9__14,In kind / noncash (goods &amp; services),double,as.double,is.double
+G1A9__15,"Community currencies eg  Sarafu, Bangla Pesa",double,as.double,is.double
+G1A9__16,"Cryptourrency e g bitcoin, Etherium,",double,as.double,is.double
+G1A9__17,Other (SPECIFY)   ONLY MENTIONED IN G1A ),double,as.double,is.double
+G1A9__18,Did not do this (DO NOT READ OUT,double,as.double,is.double
+G1A9__19,Through Insurance,numeric,as.numeric,is.numeric
+G1A9__20,NHIF,numeric,as.numeric,is.numeric
+G1A9__98,Don't know(DO NOT READ OUT),double,as.double,is.double
+G1A9__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+G1A9a,G1A9a.Other way Paid a bill for medical treatment,character,as.character,is.character
+G1B9,MOST FREQUENT way that you Paid a bill for medical treatment,factor,as.factor,is.factor
+G1B9a,G1B9a.Other MOST FREQUENT way that you Paid a bill for medical treatment,character,as.character,is.character
+G2,use of cash,factor,as.factor,is.factor
+G3__0,Sent Money Where Outside Kenya,factor,as.factor,is.factor
+G3__1,Sent Money Where Outside Kenya,factor,as.factor,is.factor
+G3a,Other Country Sent Money to,character,as.character,is.character
+G4,Frequency Sent,factor,as.factor,is.factor
+G5,Month sent,factor,as.factor,is.factor
+G6,Amount sent last time (KShs),factor,as.factor,is.factor
+G7,Remittance sent use,factor,as.factor,is.factor
+G7i,Remittance sent use - Other,character,as.character,is.character
+G8__0,Received Money from Country,factor,as.factor,is.factor
+G8__1,Received Money from Country,factor,as.factor,is.factor
+G8__2,Received Money from Country,factor,as.factor,is.factor
+G8__3,Received Money from Country,factor,as.factor,is.factor
+G8i,Received Money from Country,character,as.character,is.character
+G9,Amount received (KSh),factor,as.factor,is.factor
+G10,Month Received,factor,as.factor,is.factor
+G11,Amount Received last (KSh),factor,as.factor,is.factor
+G12,Remittance received use,factor,as.factor,is.factor
+G12i,Remittance received use - Other,character,as.character,is.character
+H1A,Somebody Else's Bank Account,factor,as.factor,is.factor
+H1B__1,I don’t want to pay service fees,double,as.double,is.double
+H1B__2,I have to keep a minimum balance at the bank,double,as.double,is.double
+H1B__3,I don’t have money to save,double,as.double,is.double
+H1B__4,The bank will not give me a loan,double,as.double,is.double
+H1B__5,I don’t have a regular income,double,as.double,is.double
+H1B__6,I can’t afford to,double,as.double,is.double
+H1B__7,The bank is too far from where I live,double,as.double,is.double
+H1B__8,I prefer dealing in cash,double,as.double,is.double
+H1B__9,I prefer to use other options rather than the bank,double,as.double,is.double
+H1B__10,It takes too long to get my money,double,as.double,is.double
+H1B__11,I do not have a job,double,as.double,is.double
+H1B__12,I don’t have a national ID / Passport,double,as.double,is.double
+H1B__13,I can’t read or write,double,as.double,is.double
+H1B__14,I'm too young to have a bank account,double,as.double,is.double
+H1B__15,I don’t need a bank account,double,as.double,is.double
+H1B__16,I do not like the long queues,double,as.double,is.double
+H1B__17,I don’t trust banks,double,as.double,is.double
+H1B__18,I can do all the transactions I need using a different kind of institutions (e.g. chama or Sacco),double,as.double,is.double
+H1B__19,Cultural/ Religious reasons,double,as.double,is.double
+H1B__20,Feels discriminated,double,as.double,is.double
+H1B__21,Other (SPECIFY),double,as.double,is.double
+H1B__98,Don’t know (DO NOT READ OUT),double,as.double,is.double
+H1B__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+H1Bi,Reason for Non Use Bank,character,as.character,is.character
+H1__1,African Banking Corporation Ltd,double,as.double,is.double
+H1__2,Absa Bank Kenya Plc,double,as.double,is.double
+H1__3,Access Bank Limited,double,as.double,is.double
+H1__4,Bank of Africa Ltd,double,as.double,is.double
+H1__5,Bank of Baroda (Kenya) Limited,double,as.double,is.double
+H1__6,Bank of India,double,as.double,is.double
+H1__7,Citibank N.A. Kenya,double,as.double,is.double
+H1__8,Consolidated Bank of Kenya Limited,double,as.double,is.double
+H1__9,Co-operative Bank of Kenya Ltd,double,as.double,is.double
+H1__10,Credit Bank Ltd,double,as.double,is.double
+H1__11,Development Bank of Kenya Ltd,double,as.double,is.double
+H1__12,Diamond Trust Bank Kenya Limited,double,as.double,is.double
+H1__13,DIB Bank Kenya Ltd,double,as.double,is.double
+H1__14,Ecobank Kenya Ltd,double,as.double,is.double
+H1__15,Equity Bank Kenya Ltd,double,as.double,is.double
+H1__16,Family Bank Ltd,double,as.double,is.double
+H1__17,First Community Bank Ltd,double,as.double,is.double
+H1__18,Guaranty Trust Bank,double,as.double,is.double
+H1__19,Guardian Bank Limited,double,as.double,is.double
+H1__20,Gulf African Bank,double,as.double,is.double
+H1__21,Habib Bank AG Zurich,double,as.double,is.double
+H1__22,HFC Ltd,double,as.double,is.double
+H1__23,I M Bank Ltd,double,as.double,is.double
+H1__24,KCB Bank Ltd,double,as.double,is.double
+H1__25,Kingdom Bank Limited,double,as.double,is.double
+H1__26,Mayfair Bank Ltd,double,as.double,is.double
+H1__27,Middle East Bank (K) Ltd,double,as.double,is.double
+H1__28,M-Oriental Commercial Bank,double,as.double,is.double
+H1__29,National Bank of Kenya Ltd,double,as.double,is.double
+H1__30,NCBA Bank Kenya PLC,double,as.double,is.double
+H1__31,Paramount Bank Ltd,double,as.double,is.double
+H1__32,Prime Bank Ltd,double,as.double,is.double
+H1__33,SBM Bank Kenya Ltd,double,as.double,is.double
+H1__34,Sidian Bank Ltd,double,as.double,is.double
+H1__35,Spire Bank Limited,double,as.double,is.double
+H1__36,Stanbic Bank Kenya Ltd,double,as.double,is.double
+H1__37,Standard Chartered Bank (K) Ltd,double,as.double,is.double
+H1__38,UBA Kenya Bank Ltd,double,as.double,is.double
+H1__39,Victoria Commercial Bank Limited,double,as.double,is.double
+H1__98,Don’t know (DO NOT READ OUT),double,as.double,is.double
+H1__99,Refused to Answer  (DO NOT READ OUT),double,as.double,is.double
+H2.1,1 African Banking Corporation Ltd,double,as.double,is.double
+H2.2,2 Absa Bank Kenya Plc,double,as.double,is.double
+H2.3,3 Access Bank Limited,double,as.double,is.double
+H2.4,4 Bank of Africa Ltd,double,as.double,is.double
+H2.7,7 Citibank N.A. Kenya,double,as.double,is.double
+H2.8,8 Consolidated Bank of Kenya Limited,double,as.double,is.double
+H2.9,9 Co-operative Bank of Kenya Ltd,double,as.double,is.double
+H2.10,10 Credit Bank Ltd,double,as.double,is.double
+H2.11,11 Development Bank of Kenya Ltd,double,as.double,is.double
+H2.12,12 Diamond Trust Bank Kenya Limited,double,as.double,is.double
+H2.13,13 DIB Bank Kenya Ltd,double,as.double,is.double
+H2.14,14 Ecobank Kenya Ltd,double,as.double,is.double
+H2.15,15 Equity Bank Kenya Ltd,double,as.double,is.double
+H2.16,16 Family Bank Ltd,double,as.double,is.double
+H2.17,17 First Community Bank Ltd,double,as.double,is.double
+H2.18,18 Guaranty Trust Bank,double,as.double,is.double
+H2.20,20 Gulf African Bank,double,as.double,is.double
+H2.21,21 Habib Bank AG Zurich,double,as.double,is.double
+H2.22,22 HFC Ltd,double,as.double,is.double
+H2.23,23 I M Bank Ltd,double,as.double,is.double
+H2.24,24 KCB Bank Ltd,double,as.double,is.double
+H2.25,25 Kingdom Bank Limited,double,as.double,is.double
+H2.26,26 Mayfair Bank Ltd,double,as.double,is.double
+H2.28,28 M-Oriental Commercial Bank,double,as.double,is.double
+H2.29,29 National Bank of Kenya Ltd,double,as.double,is.double
+H2.30,30 NCBA Bank Kenya PLC,double,as.double,is.double
+H2.31,31 Paramount Bank Ltd,double,as.double,is.double
+H2.32,32 Prime Bank Ltd,double,as.double,is.double
+H2.33,33 SBM Bank Kenya Ltd,double,as.double,is.double
+H2.34,34 Sidian Bank Ltd,double,as.double,is.double
+H2.36,36 Stanbic Bank Kenya Ltd,double,as.double,is.double
+H2.37,37 Standard Chartered Bank (K) Ltd,double,as.double,is.double
+H2.38,38 UBA Kenya Bank Ltd,double,as.double,is.double
+H2.98,"98 ""Don’t know (DO NOT READ OUT)""",double,as.double,is.double
+H2.99,"99 ""Refused to Answer  (DO NOT READ OUT)""",double,as.double,is.double
+H3.1,1 African Banking Corporation Ltd,factor,as.factor,is.factor
+H3.2,2 Absa Bank Kenya Plc,factor,as.factor,is.factor
+H3.3,3 Access Bank Limited,factor,as.factor,is.factor
+H3.4,4 Bank of Africa Ltd,factor,as.factor,is.factor
+H3.7,7 Citibank N.A. Kenya,factor,as.factor,is.factor
+H3.8,8 Consolidated Bank of Kenya Limited,factor,as.factor,is.factor
+H3.9,9 Co-operative Bank of Kenya Ltd,factor,as.factor,is.factor
+H3.10,10 Credit Bank Ltd,factor,as.factor,is.factor
+H3.11,11 Development Bank of Kenya Ltd,factor,as.factor,is.factor
+H3.12,12 Diamond Trust Bank Kenya Limited,factor,as.factor,is.factor
+H3.13,13 DIB Bank Kenya Ltd,factor,as.factor,is.factor
+H3.14,14 Ecobank Kenya Ltd,factor,as.factor,is.factor
+H3.15,15 Equity Bank Kenya Ltd,factor,as.factor,is.factor
+H3.16,16 Family Bank Ltd,factor,as.factor,is.factor
+H3.17,17 First Community Bank Ltd,factor,as.factor,is.factor
+H3.18,18 Guaranty Trust Bank,factor,as.factor,is.factor
+H3.20,20 Gulf African Bank,factor,as.factor,is.factor
+H3.21,21 Habib Bank AG Zurich,factor,as.factor,is.factor
+H3.22,22 HFC Ltd,factor,as.factor,is.factor
+H3.23,23 I M Bank Ltd,factor,as.factor,is.factor
+H3.24,24 KCB Bank Ltd,factor,as.factor,is.factor
+H3.25,25 Kingdom Bank Limited,factor,as.factor,is.factor
+H3.26,26 Mayfair Bank Ltd,factor,as.factor,is.factor
+H3.28,28 M-Oriental Commercial Bank,factor,as.factor,is.factor
+H3.29,29 National Bank of Kenya Ltd,factor,as.factor,is.factor
+H3.30,30 NCBA Bank Kenya PLC,factor,as.factor,is.factor
+H3.31,31 Paramount Bank Ltd,factor,as.factor,is.factor
+H3.32,32 Prime Bank Ltd,factor,as.factor,is.factor
+H3.33,33 SBM Bank Kenya Ltd,factor,as.factor,is.factor
+H3.34,34 Sidian Bank Ltd,factor,as.factor,is.factor
+H3.36,36 Stanbic Bank Kenya Ltd,factor,as.factor,is.factor
+H3.37,37 Standard Chartered Bank (K) Ltd,factor,as.factor,is.factor
+H3.38,38 UBA Kenya Bank Ltd,factor,as.factor,is.factor
+H3.98,"98 ""Don’t know (DO NOT READ OUT)""",factor,as.factor,is.factor
+H3.99,"99 ""Refused to Answer  (DO NOT READ OUT)""",factor,as.factor,is.factor
+H4.1,1 African Banking Corporation Ltd,factor,as.factor,is.factor
+H4.2,2 Absa Bank Kenya Plc,factor,as.factor,is.factor
+H4.3,3 Access Bank Limited,factor,as.factor,is.factor
+H4.4,4 Bank of Africa Ltd,factor,as.factor,is.factor
+H4.7,7 Citibank N.A. Kenya,factor,as.factor,is.factor
+H4.8,8 Consolidated Bank of Kenya Limited,factor,as.factor,is.factor
+H4.9,9 Co-operative Bank of Kenya Ltd,factor,as.factor,is.factor
+H4.10,10 Credit Bank Ltd,factor,as.factor,is.factor
+H4.11,11 Development Bank of Kenya Ltd,factor,as.factor,is.factor
+H4.12,12 Diamond Trust Bank Kenya Limited,factor,as.factor,is.factor
+H4.13,13 DIB Bank Kenya Ltd,factor,as.factor,is.factor
+H4.14,14 Ecobank Kenya Ltd,factor,as.factor,is.factor
+H4.15,15 Equity Bank Kenya Ltd,factor,as.factor,is.factor
+H4.16,16 Family Bank Ltd,factor,as.factor,is.factor
+H4.17,17 First Community Bank Ltd,factor,as.factor,is.factor
+H4.18,18 Guaranty Trust Bank,factor,as.factor,is.factor
+H4.20,20 Gulf African Bank,factor,as.factor,is.factor
+H4.21,21 Habib Bank AG Zurich,factor,as.factor,is.factor
+H4.22,22 HFC Ltd,factor,as.factor,is.factor
+H4.23,23 I M Bank Ltd,factor,as.factor,is.factor
+H4.24,24 KCB Bank Ltd,factor,as.factor,is.factor
+H4.25,25 Kingdom Bank Limited,factor,as.factor,is.factor
+H4.26,26 Mayfair Bank Ltd,factor,as.factor,is.factor
+H4.28,28 M-Oriental Commercial Bank,factor,as.factor,is.factor
+H4.29,29 National Bank of Kenya Ltd,factor,as.factor,is.factor
+H4.30,30 NCBA Bank Kenya PLC,factor,as.factor,is.factor
+H4.31,31 Paramount Bank Ltd,factor,as.factor,is.factor
+H4.32,32 Prime Bank Ltd,factor,as.factor,is.factor
+H4.33,33 SBM Bank Kenya Ltd,factor,as.factor,is.factor
+H4.34,34 Sidian Bank Ltd,factor,as.factor,is.factor
+H4.36,36 Stanbic Bank Kenya Ltd,factor,as.factor,is.factor
+H4.37,37 Standard Chartered Bank (K) Ltd,factor,as.factor,is.factor
+H4.38,38 UBA Kenya Bank Ltd,factor,as.factor,is.factor
+H4.98,"98 ""Don’t know (DO NOT READ OUT)""",factor,as.factor,is.factor
+H4.99,"99 ""Refused to Answer  (DO NOT READ OUT)""",factor,as.factor,is.factor
+H5,90 Day Usage Bank,factor,as.factor,is.factor
+H6,Frequency of Use,factor,as.factor,is.factor
+H7__1,At a bank branch,double,as.double,is.double
+H7__2,At a bank agent,double,as.double,is.double
+H7__3,Via mobile banking,double,as.double,is.double
+H7__4,Via ATM,double,as.double,is.double
+H7__5,Using Internet banking / Online Banking,double,as.double,is.double
+H7__6,Using POS/ Card machine swipe,double,as.double,is.double
+H7__7,Other (SPECIFY),double,as.double,is.double
+H7__8,Have not used my bank account in the past 12 months (DO NOT READ OUT),double,as.double,is.double
+H7__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+H7i,Bank Channels Used,character,as.character,is.character
+H8,Most Frequent Banking Channel,factor,as.factor,is.factor
+H8i,Most Frequent Banking Channel,character,as.character,is.character
+H9__1,Transfers between bank and mobile phone accounts (e.g Standing orders),double,as.double,is.double
+H9__2,Credit Card,double,as.double,is.double
+H9__3,ATM/Debit Card,double,as.double,is.double
+H9__4,Pesalink,double,as.double,is.double
+H9__5,"Other bank to bank transfers, not Pesalink (e.g. EFT, RTGS)",double,as.double,is.double
+H9__6,"International bank transfer (e.g. East African Payment System, COMESA Regional Electronic Payment System (REPSS))",double,as.double,is.double
+H9__7,Deposited /withdrew cash/ Cheque over the counter,double,as.double,is.double
+H9__8,Other Specify,double,as.double,is.double
+H9__98,Don’t know (DO NOT READ OUT),double,as.double,is.double
+H9__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+H9i,Bank Channels Used,character,as.character,is.character
+H10__1,Unexpected charges,double,as.double,is.double
+H10__2,Lost money / Money missing from my account eg Cards/PIN fraud,double,as.double,is.double
+H10__3,Poor service received at a branch / agent / customer care,double,as.double,is.double
+H10__4,ATM or Card Swipe machine not working,double,as.double,is.double
+H10__5,Inability to access bank account through mobile /internet banking,double,as.double,is.double
+H11__1,Phone fraud (third party took money from my account via mobile banking/mobile banking pin got into the wrong hands),double,as.double,is.double
+H11__2,"Card fraud (third party took money from my account through my card (pin got into the wrong hands; skimming, fishing)",double,as.double,is.double
+H11__3,Internal fraud (someone internal to the institution (bank) took money from my account),double,as.double,is.double
+H11__4,Identity theft (someone stole my identification details and took a loan under my name/withdrew money from my account,double,as.double,is.double
+H11__5,Cybercrime (my account was hacked),double,as.double,is.double
+H11__6,Other (SPECIFY),double,as.double,is.double
+H11__98,Don’t know (DO NOT READ OUT),double,as.double,is.double
+H11__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+H11i,Other ways lost money,character,as.character,is.character
+H12,Consumer Protection - Banking,factor,as.factor,is.factor
+H13A__1,"Went to the bank / bank manager Go to the bank/ bank manager""",double,as.double,is.double
+H13A__2,"Called customer care Call customer care""",double,as.double,is.double
+H13A__3,"Contacted / went to Central Bank of Kenya (CBK) Contact / go to the Central Bank of Kenya (CBK)""",double,as.double,is.double
+H13A__4,"Contacted / went to another Government agency, not CBK (e.g. CID, Police, ) Contact / go to another government agency, not CBK (e.g. CID, Police,",double,as.double,is.double
+H13A__5,"Posted on social media (e.g. Twitter, Facebook) Post on social media (e.g. Twitter, Facebook)""",double,as.double,is.double
+H13A__6,Other (SPECIFY),double,as.double,is.double
+H13A__98,Don’t know  (DO NOT READ OUT),double,as.double,is.double
+H13A__99,Refused to Answer  (DO NOT READ OUT),double,as.double,is.double
+H13Ai,Banking Services Redress,character,as.character,is.character
+H13B__1,Go to the bank/ bank manager,double,as.double,is.double
+H13B__2,Call customer care,double,as.double,is.double
+H13B__3,Contact / go to the Central Bank of Kenya (CBK),double,as.double,is.double
+H13B__4,"Contact / go to another government agency, not CBK (e.g. CID, Police)",double,as.double,is.double
+H13B__5,"Post on social media (e.g. Twitter, Facebook)",double,as.double,is.double
+H13B__6,Other (SPECIFY),double,as.double,is.double
+H13B__98,Don’t know (DO NOT READ OUT),double,as.double,is.double
+H13B__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+H13Bi,Banking Services Redress,character,as.character,is.character
+H14,Tried to Redress Success,factor,as.factor,is.factor
+I1,MFI CODE,factor,as.factor,is.factor
+I1i,MFI Code - Other,character,as.character,is.character
+I2i,Microfinance accounts status,factor,as.factor,is.factor
+I2ii,Microfinance accounts status,factor,as.factor,is.factor
+I3,Months Usage MFI,factor,as.factor,is.factor
+I4,MFI Frequency of Use,factor,as.factor,is.factor
+I5,Main MFI Channels Used,factor,as.factor,is.factor
+I5i,Main MFI Channels Used - Other,character,as.character,is.character
+I6__1,Unexpected charges,double,as.double,is.double
+I6__2,Lost money / Money missing from my account,double,as.double,is.double
+I6__3,Poor service received at a branch / agent / customer care,double,as.double,is.double
+I6__4,Inability to access the account through mobile /internet banking,double,as.double,is.double
+I6__5,Harrassment/ rogue recovery practices,double,as.double,is.double
+I7,Consumer Protection  MFI,factor,as.factor,is.factor
+I8A__1,"""Went to the MFI / MFI manager / relationship manager",double,as.double,is.double
+I8A__2,"MFI Services Redress:Called / Went to MFI agent""",double,as.double,is.double
+I8A__3,"""Contacted / went to Central Bank of Kenya (CBK)",double,as.double,is.double
+I8A__4,"MFI Services Redress:Contacted / went to another Government agency, not CBK (e.g. CID, Police, Kenya Deposit Insurance Corporation)""",double,as.double,is.double
+I8A__5,"""Posted on social media (e.g. Twitter, Facebook)",double,as.double,is.double
+I8A__6,"MFI Services Redress:Reported to the association of Microfinance Institution Report to association of Microfinance Institution""""""",double,as.double,is.double
+I8A__7,Other (SPECIFY),double,as.double,is.double
+I8A__98,Don’t know (DO NOT READ OUT),double,as.double,is.double
+I8A__99,Refused to Answer  (DO NOT READ OUT),double,as.double,is.double
+I8Ai,Other MFI Services Redress,character,as.character,is.character
+I8B__1,"Go to the MFI / MFI manager / relationship manager""",double,as.double,is.double
+I8B__2,"Call / go to MFI agent""",double,as.double,is.double
+I8B__3,"Contact / go to the Central Bank of Kenya (CBK)""",double,as.double,is.double
+I8B__4,"Contact / go to another government agency, not CBK (e.g. CID, Police, Kenya Deposit Insurance Corportation)""",double,as.double,is.double
+I8B__5,"Post on social media (e.g. Twitter, Facebook)""",double,as.double,is.double
+I8B__6,"Report to association of Microfinance Institution""",double,as.double,is.double
+I8B__7,Other (SPECIFY),double,as.double,is.double
+I8B__98,Don’t know  (DO NOT READ OUT),double,as.double,is.double
+I8B__99,Refused to Answer  (DO NOT READ OUT),double,as.double,is.double
+I8Bi,MFI Services Redress- other,character,as.character,is.character
+I9,Issue resolution,factor,as.factor,is.factor
+J1__1,Unexpected charges based on loan,double,as.double,is.double
+J1__2,Unexpected charges based on an account,double,as.double,is.double
+J1__3,Poor service received at a branch or agent,double,as.double,is.double
+J1__4,Lost job/ collapse of business,double,as.double,is.double
+J1__5,Money missing from account,double,as.double,is.double
+J1__6,Delays in getting services/loans due to liquidity challenges,double,as.double,is.double
+J1__7,Lack of transparency on financial products and services,double,as.double,is.double
+J1__8,Abusive collection techniques,double,as.double,is.double
+J1__9,Sacco closed down/collapsed,double,as.double,is.double
+J1__10,Lack of trust,double,as.double,is.double
+J1__11,Voluntary withdrawal (no particular problem),double,as.double,is.double
+J1__12,Do not have an ID / Passport,double,as.double,is.double
+J1__13,Lost money as a guarantor,double,as.double,is.double
+J1__14,Lack of information/awareness about a good Sacco,double,as.double,is.double
+J1__15,Other specify,double,as.double,is.double
+J1__16,Lack of money,numeric,as.numeric,is.numeric
+J1__17,Don't need,numeric,as.numeric,is.numeric
+J1__98,Don’t know (DO NOT READ OUT),double,as.double,is.double
+J1__99,Refused to Answer  (DO NOT READ OUT),double,as.double,is.double
+J1a,Reasons for NonUse Sacco,character,as.character,is.character
+J2_1,Saccos,factor,as.factor,is.factor
+J2a,Other Sacco specify,character,as.character,is.character
+J3,6 months UsageSacco,factor,as.factor,is.factor
+J4,Frequency of Use of saccos,factor,as.factor,is.factor
+J5__1,At a branch /sattelite offices,double,as.double,is.double
+J5__2,"Via mobile phone eg USSD, Apps",double,as.double,is.double
+J5__3,Via ATM,double,as.double,is.double
+J5__4,Using Internet  / Online channels,double,as.double,is.double
+J5__5,Using POS/ Card machine swipe,double,as.double,is.double
+J5__6,Sacco Agent,double,as.double,is.double
+J5__7,Other (SPECIFY),double,as.double,is.double
+J5__8,None of these,double,as.double,is.double
+J5__98,Don’t know (DO NOT READ OUT),double,as.double,is.double
+J5__99,"Refused to Answer (DO NOT READ OUT)""",double,as.double,is.double
+J5a,Sacco Channels Used,character,as.character,is.character
+J6__1,Unexpected charges based on loan,double,as.double,is.double
+J6__2,Lost money / money missing from account,double,as.double,is.double
+J6__3,Poor service,double,as.double,is.double
+J6__4,Delays in disbursements of my money/getting services,double,as.double,is.double
+J6__5,Abusive collection techniques,double,as.double,is.double
+J7,Consumer Protection  Sacco,factor,as.factor,is.factor
+J8A__1,"""Went to the Sacco management",double,as.double,is.double
+J8A__2,"Sacco  Services Redress:Called / Went to the Sacco Societies Regulatory Authority (SASRA)""",double,as.double,is.double
+J8A__3,"""Contacted / went to Central Bank of Kenya (CBK)",double,as.double,is.double
+J8A__4,"Sacco  Services Redress:Contacted / went to another Government agency, not CBK or SASRA (e.g. CID, Police, Cooperitives Commissioners Office)""",double,as.double,is.double
+J8A__5,"""Posted on social media (e.g. Twitter, Facebook)",double,as.double,is.double
+J8A__6,"Sacco  Services Redress:Contacted Sacco Union i.e KUSCCO""",double,as.double,is.double
+J8A__7,Other (SPECIFY),double,as.double,is.double
+J8A__98,"Don’t know  (DO NOT READ OUT)""",double,as.double,is.double
+J8A__99,Refused to Answer  (DO NOT READ OUT),double,as.double,is.double
+J8Ai,Sacco  Services Redress- other,character,as.character,is.character
+J8B__1,"Go to the Sacco management""",double,as.double,is.double
+J8B__2,"Call / go to the Sacco Societies Regulatory Authority (SASRA)""",double,as.double,is.double
+J8B__3,"Contact / go to the Central Bank of Kenya (CBK)""",double,as.double,is.double
+J8B__4,"Contact / go to another government agency, not CBK or SASRA (e.g. CID, Police, Cooperitives Commissioners Office)""",double,as.double,is.double
+J8B__5,"Post on social media (e.g. Twitter, Facebook)""",double,as.double,is.double
+J8B__6,"Contact Sacco Union i.e KUSCCO""",double,as.double,is.double
+J8B__7,Other (SPECIFY),double,as.double,is.double
+J8B__98,Don’t know (DO NOT READ OUT),double,as.double,is.double
+J8B__99,Refused to Answer  (DO NOT READ OUT),double,as.double,is.double
+J9,Issue resolution,factor,as.factor,is.factor
+K1,Somebody Else's Mobile Money Account,factor,as.factor,is.factor
+K2__1,Changed Number/Lost Phone and do not have a line,double,as.double,is.double
+K2__2,Too young to have a phone,double,as.double,is.double
+K2__3,Do not have an ID /Passport,double,as.double,is.double
+K2__4,My line was blocked,double,as.double,is.double
+K2__5,Cannot afford a phone,double,as.double,is.double
+K2__6,Service fees too high,double,as.double,is.double
+K2__7,Social and / or cultural reasons,double,as.double,is.double
+K2__8,Too much downtime,double,as.double,is.double
+K2__9,Too much fraud,double,as.double,is.double
+K2__10,Poor customer care / service,double,as.double,is.double
+K2__11,Mobile agents are untrustworthy or fraudulent,double,as.double,is.double
+K2__12,Don't need to,double,as.double,is.double
+K2__13,Other (SPECIFY),double,as.double,is.double
+K2__14,can't operate a phone,numeric,as.numeric,is.numeric
+K2__15,can't read or write,numeric,as.numeric,is.numeric
+K2__16,No money,numeric,as.numeric,is.numeric
+K2__17,Visually impaired,numeric,as.numeric,is.numeric
+K2__98,Don’t know (DO NOT READ OUT),double,as.double,is.double
+K2__99,Refused to Answer  (DO NOT READ OUT),double,as.double,is.double
+K2_i,Reason for NonUse Mobile Money-Other,character,as.character,is.character
+K3__1,In your own name only,double,as.double,is.double
+K3__2,In someone else's name only,double,as.double,is.double
+K4__1,MPesa,double,as.double,is.double
+K4__2,Airtel money,double,as.double,is.double
+K4__3,Equitel,double,as.double,is.double
+K4__4,TKash,double,as.double,is.double
+K4__5,Tangaza,double,as.double,is.double
+K4__6,Other (SPECIFY),double,as.double,is.double
+K4__98,Don’t know (DO NOT READ OUT),double,as.double,is.double
+K4__99,Refused to Answer  (DO NOT READ OUT),double,as.double,is.double
+K4i,Mobile money products  -Other,character,as.character,is.character
+K5i,Mobile money accounts per Product/ service - Mpesa,double,as.double,is.double
+K5ii,Mobile money accounts per Product/ service - Airtel money,double,as.double,is.double
+K5iii,Mobile money accounts per Product/ service - Equitel,double,as.double,is.double
+K5iv,Mobile money accounts per Product/ service - TKash,double,as.double,is.double
+K5v,Mobile money accounts per Product/ service - Tangaza,double,as.double,is.double
+K5vi,Mobile money accounts per Product/ service - Other,double,as.double,is.double
+K6,Mobile money product Frequency,factor,as.factor,is.factor
+K7,Use in Past 3 months,factor,as.factor,is.factor
+K8,Mobile Money Frequency of Use,factor,as.factor,is.factor
+K9,Most Frequent Channel,factor,as.factor,is.factor
+K9i,Most Frequent Channel,character,as.character,is.character
+K10__1,Saving or keeping money,double,as.double,is.double
+K10__2,Deposit when traveling so I don’t carry cash,double,as.double,is.double
+K10__3,Fundraising,double,as.double,is.double
+K10__4,Buy airtime,double,as.double,is.double
+K10__5,"Gaming (Lottery, betting/ gambling )",double,as.double,is.double
+K10__98,Don’t know (DO NOT READ OUT),double,as.double,is.double
+K10__99,Refused to Answer  (DO NOT READ OUT),double,as.double,is.double
+K11,Mobile Transfer Keeping Purpose,factor,as.factor,is.factor
+K11i,Mobile Transfer Keeping Purpose-Other,character,as.character,is.character
+K12__1,Inability to transact due to system down time,double,as.double,is.double
+K12__2,Unclear/High transaction charges,double,as.double,is.double
+K12__3,Agent float unavailability,double,as.double,is.double
+K12__4,Being unable to get to an agent,double,as.double,is.double
+K12__5,Lost money / wrongly sent money,double,as.double,is.double
+K12__6,Fraud / attempted fraud ( eg recieved less money from the agent),double,as.double,is.double
+K12__7,Poor service received at branch / agent / customer care,double,as.double,is.double
+K12__8,Listed in CRB,double,as.double,is.double
+K13__1,Inability to transact due to system down time,double,as.double,is.double
+K13__2,Unclear/High transaction charges,double,as.double,is.double
+K13__3,Agent float unavailability,double,as.double,is.double
+K13__4,Being unable to get to an agent,double,as.double,is.double
+K13__5,Lost money / wrongly sent money,double,as.double,is.double
+K13__6,Fraud / attempted fraud ( eg recieved less money from the agent),double,as.double,is.double
+K13__7,Poor service received at branch / agent / customer care,double,as.double,is.double
+K13__8,Listed in CRB,double,as.double,is.double
+K14__1,Went to a mobile money shop / agent,double,as.double,is.double
+K14__2,Contacted the service provider,double,as.double,is.double
+K14__3,Went to a Government agency (e.g. CBK AntiFraud unit/DCI /Police),double,as.double,is.double
+K14__4,Called the person who I had sent the money to,double,as.double,is.double
+K14__5,"Posted on social media (e.g. Twitter, Facebook)",double,as.double,is.double
+K14__6,Other (SPECIFY),double,as.double,is.double
+K14__7,I did not try / No effort made(DO NOT READ OUT),double,as.double,is.double
+K14__98,Don’t know (DO NOT READ OUT),double,as.double,is.double
+K14__99,Refused to Answer  (DO NOT READ OUT),double,as.double,is.double
+K14i,Mobile Banking Services Redress - Other,character,as.character,is.character
+K15,Issue resolution,factor,as.factor,is.factor
+K16__1,Sent to the wrong number,double,as.double,is.double
+K16__2,Someone accessed my mobile money account,double,as.double,is.double
+K16__3,Through a hoax SMS/ malware,double,as.double,is.double
+K16__4,Through a hoax phone call,double,as.double,is.double
+K16__5,Recipient did not get the money but my account was deducted,double,as.double,is.double
+K16__6,Sender reversed genuine transaction,double,as.double,is.double
+K16__7,Sharing of pin (knowingly or unknowingly),double,as.double,is.double
+K16__8,Other (SPECIFY),double,as.double,is.double
+K16__9,Wrong Agent/Till  number,numeric,as.numeric,is.numeric
+K16__98,Don’t know (DO NOT READ OUT),double,as.double,is.double
+K16__99,Refused to Answer  (DO NOT READ OUT),double,as.double,is.double
+K16i,Other way lost money,character,as.character,is.character
+K17,Mobile Betting Amounts,factor,as.factor,is.factor
+K18,Mobile Betting Frequency,factor,as.factor,is.factor
+K18i,Mobile Betting Frequency - Other,character,as.character,is.character
+K19,Mobile money transactions during covid,factor,as.factor,is.factor
+K20,Reason for the change in use of mobile money,factor,as.factor,is.factor
+K22i,Reason for the change in use of mobile money - Other,character,as.character,is.character
+K21,Reason for transacting less,factor,as.factor,is.factor
+K21i,other reason for transacting less,character,as.character,is.character
+L1__1,Unexpected charges related to your loan,double,as.double,is.double
+L1__2,Poor customer service/ No or unreachable customer care,double,as.double,is.double
+L1__3,Delays in getting loan eg system down time/ slower approval process,double,as.double,is.double
+L1__4,Applied for a loan but did not get,double,as.double,is.double
+L1__5,Listing on the CRB,double,as.double,is.double
+L1__6,The digital loan service provider was fake,double,as.double,is.double
+L1__7,Harassment /Listing on social sites(Pushy messages / threats from provider ),double,as.double,is.double
+L1__8,Information shared without my consent,double,as.double,is.double
+L2__1,Unexpected charges related to your loan,double,as.double,is.double
+L2__2,Poor customer service/ No or unreachable customer care,double,as.double,is.double
+L2__3,Delays in getting loan eg system down time/ slower approval process,double,as.double,is.double
+L2__4,Applied for a loan but did not get,double,as.double,is.double
+L2__5,Listing on the CRB,double,as.double,is.double
+L2__6,The digital loan service provider was fake,double,as.double,is.double
+L2__7,Harassment /Listing on social sites(Pushy messages / threats from provider ),double,as.double,is.double
+L2__8,Information shared without my consent,double,as.double,is.double
+L3__1,Contact customer care,double,as.double,is.double
+L3__2,Send an SMS to customer care,double,as.double,is.double
+L3__3,Wrote an email or letter to customer care,double,as.double,is.double
+L3__4,"Write on Social media (e.g. Twitter, Facebook)",double,as.double,is.double
+L3__5,"Go to a Government agency (e.g. CBK AntiFraud unit, CID, Police)",double,as.double,is.double
+L3__6,Report to the  Digital Lenders Association,double,as.double,is.double
+L3__7,Other (SPECIFY),double,as.double,is.double
+L3__8,I would not do anything,double,as.double,is.double
+L3__98,Don’t know (DO NOT READ OUT),double,as.double,is.double
+L3__99,Refused to Answer  (DO NOT READ OUT),double,as.double,is.double
+L3i,Digital Loan App Redress - Other,character,as.character,is.character
+M1,Somebody Else's Mobile Bank Account,factor,as.factor,is.factor
+M2,Reason for NonUse Mobile Banking,factor,as.factor,is.factor
+M2i,Reason for NonUse Mobile Banking,character,as.character,is.character
+M3__1,MShwari,double,as.double,is.double
+M3__2,KCB MPesa,double,as.double,is.double
+M3__3,MCoop Cash,double,as.double,is.double
+M3__4,Equitel/ Eazzy loan,double,as.double,is.double
+M3__5,Timiza,double,as.double,is.double
+M3__6,HF Whizz,double,as.double,is.double
+M3__7,M-fanisi,double,as.double,is.double
+M3__8,Other (SPECIFY),double,as.double,is.double
+M3__98,Don’t know (DO NOT READ OUT),double,as.double,is.double
+M3__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+M3i,Mobile Bank Codes - Other,character,as.character,is.character
+M4,Mobile Banking Codes Frequency,factor,as.factor,is.factor
+M5,Most Frequent Channel,factor,as.factor,is.factor
+M6,3 months Mobile Banking,factor,as.factor,is.factor
+M7,Mobile Banking Frequency of Use,factor,as.factor,is.factor
+M8__1,Inability to transact due to system down time,double,as.double,is.double
+M8__2,Unexpected / unclear charges /fees/transactions,double,as.double,is.double
+M8__3,Lost money / wrongly sent money,double,as.double,is.double
+M8__4,Fraud / attempted fraud ( e.g. received less money from the agent),double,as.double,is.double
+M8__5,Poor service received at branch / agent / customer care,double,as.double,is.double
+M8__6,Hostile loan repayment collection,double,as.double,is.double
+M9__1,Phone fraud (third party took money from my account via mobile banking/mobile banking pin got into the wrong hands),double,as.double,is.double
+M9__2,Internal fraud (someone internal to the institution (bank) took money from my account),double,as.double,is.double
+M9__3,Identify theft (someone I don't know stole my identification details and took a loan under my name/withdrew money from my,double,as.double,is.double
+M9__4,someone I know used my identification details and took a loan under my name/withdrew money from my account,double,as.double,is.double
+M9__5,Cybercrime (my account was hacked),double,as.double,is.double
+M10,Consumer Protection  Mobile Banking,factor,as.factor,is.factor
+M11A__1,"""Went to the bank/mobile money provider relationship manager",double,as.double,is.double
+M11A__2,"Mobile Banking Services Redress:Called / Went to bank/mobile money provider agent""",double,as.double,is.double
+M11A__3,"""Contacted / went to Central Bank of Kenya (CBK)/ Communications Authority (CA)",double,as.double,is.double
+M11A__4,"Mobile Banking Services Redress:Contacted / went to another Government agency, not CBK (e.g. CID, Police, Kenya Deposit Insurance Corporation)""",double,as.double,is.double
+M11A__5,"""Posted on social media (e.g. Twitter, Facebook)",double,as.double,is.double
+M11A__6,"Mobile Banking Services Redress:Reported to the Kenya Bankers Association""",double,as.double,is.double
+M11A__7,Other (SPECIFY),double,as.double,is.double
+M11A__98,Don’t know (DO NOT READ OUT),double,as.double,is.double
+M11A__99,Refused to Answer  (DO NOT READ OUT),double,as.double,is.double
+M11Ai,Mobile Banking Services Redress - Other,character,as.character,is.character
+M11B__1,"""Went to the bank/mobile money provider relationship manager",double,as.double,is.double
+M11B__2,"Mobile Banking Services Redress:Called / Went to bank/mobile money provider agent""",double,as.double,is.double
+M11B__3,"""Contacted / went to Central Bank of Kenya (CBK)/ Communications Authority (CA)",double,as.double,is.double
+M11B__4,"Mobile Banking Services Redress:Contacted / went to another Government agency, not CBK (e.g. CID, Police, Kenya Deposit Insurance Corporation)""",double,as.double,is.double
+M11B__5,"""Posted on social media (e.g. Twitter, Facebook)",double,as.double,is.double
+M11B__6,"Mobile Banking Services Redress:Reported to the Kenya Bankers Association""",double,as.double,is.double
+M11B__7,Other (SPECIFY),double,as.double,is.double
+M11B__98,Don’t know (DO NOT READ OUT),double,as.double,is.double
+M11B__99,Refused to Answer  (DO NOT READ OUT),double,as.double,is.double
+M11Bi,Mobile Banking Services Redress - Other,character,as.character,is.character
+M12,Issue resolution,factor,as.factor,is.factor
+N1,Somebody Else's Chama Account,factor,as.factor,is.factor
+N2__1,You have an account in a bank or other formal institution,double,as.double,is.double
+N2__2,You don’t have any money,double,as.double,is.double
+N2__3,Lost money in the past/ Fear of losing money,double,as.double,is.double
+N2__4,You don’t know about them,double,as.double,is.double
+N2__5,You don’t need any service from them,double,as.double,is.double
+N2__6,You don’t trust them,double,as.double,is.double
+N2__7,Groups require too much time in meetings,double,as.double,is.double
+N2__8,Cultural/ religious/ social barriers,double,as.double,is.double
+N2__9,Unavailability of chama/groups within the area,double,as.double,is.double
+N2__10,Not eligible,double,as.double,is.double
+N2__11,Other (SPECIFY),double,as.double,is.double
+N2__13,Due Covid -19,numeric,as.numeric,is.numeric
+N2__14,Too young/student/too old,numeric,as.numeric,is.numeric
+N2__15,no longer a member (Withdraw),numeric,as.numeric,is.numeric
+N2__98,Don’t know (DO NOT READ OUT),double,as.double,is.double
+N2__99,Refused to Answer(DO NOT READ OUT),double,as.double,is.double
+N2i,Other reason for No Groups,character,as.character,is.character
+N3,Number Groups,double,as.double,is.double
+N4__1,"We collect money to help each other through life events e.g. funerals, weddings (Welfare clan / group)",double,as.double,is.double
+N4__2,We collect money and give to each member a lump sum (pot) or gift in turn,double,as.double,is.double
+N4__3,We save / lend money to members and nonmembers to be repaid with interest,double,as.double,is.double
+N4__4,We periodically distribute all monies held by the group to its members,double,as.double,is.double
+N4__5,Collect money in kind for common good (eg investment),double,as.double,is.double
+N4__6,Other (SPECIFY),double,as.double,is.double
+N4__98,Don’t know (DO NOT READ OUT),double,as.double,is.double
+N4__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+N4i,Groups’ Activities _ Other,character,as.character,is.character
+N5__1,"We collect money to help each other through life events e.g. funerals, weddings (Welfare clan / group)",double,as.double,is.double
+N5__2,We collect money and give to each member a lump sum (pot) or gift in turn,double,as.double,is.double
+N5__3,We save / lend money to members and nonmembers to be repaid with interest,double,as.double,is.double
+N5__4,We periodically distribute all monies held by the group to its members,double,as.double,is.double
+N5__5,Collect money in kind for common good (eg investment),double,as.double,is.double
+N5__6,Other (SPECIFY),double,as.double,is.double
+N5__98,Don’t know (DO NOT READ OUT),double,as.double,is.double
+N5__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+N5i,Main Group’s Activities _Other,character,as.character,is.character
+N6,Group Contribution Frequency,factor,as.factor,is.factor
+N6i,Group Contribution Frequency - Other,character,as.character,is.character
+N7,Most Frequent Group Contribution Channel,factor,as.factor,is.factor
+N7i,Most Frequent Group Contribution Channel - Other,character,as.character,is.character
+N8__1,Have a bank account in group's name,double,as.double,is.double
+N8__2,Have a Sacco/MFI account in group's name,double,as.double,is.double
+N8__3,Have a certificate of registration,double,as.double,is.double
+N8__4,Elect officials through voting,double,as.double,is.double
+N8__5,Have a written record of the money members have paid / received,double,as.double,is.double
+N8__6,"Borrow from government( eg youth fund, women fund, uwezo fund)",double,as.double,is.double
+N8__7,Have a constitution/ MOU,double,as.double,is.double
+N8__8,Have a mobile money account,double,as.double,is.double
+N9,Lost Money Groups,factor,as.factor,is.factor
+N10__1,Through theft or fraud by someone outside the group,double,as.double,is.double
+N10__2,Through theft or fraud by a committee member,double,as.double,is.double
+N10__3,Through bad investment of funds,double,as.double,is.double
+N10__4,Through dishonesty or default by members,double,as.double,is.double
+N10__5,Through acting as a guarantor,double,as.double,is.double
+N10__6,Other (SPECIFY),double,as.double,is.double
+N10__98,Don’t know (DO NOT READ OUT),double,as.double,is.double
+N10__99,Refused to Answer  (DO NOT READ OUT),double,as.double,is.double
+N10i,Reason Lost Money Groups - Other,character,as.character,is.character
+N11,Group Resolution,factor,as.factor,is.factor
+N11i,Group Resolution - Other,character,as.character,is.character
+N12A,Extra fees / charges,factor,as.factor,is.factor
+N12B,Reported to the chief/police,factor,as.factor,is.factor
+N12C,Property taken away by members,factor,as.factor,is.factor
+N12D,Contribution withheld by others,factor,as.factor,is.factor
+N12E,Others (specify),factor,as.factor,is.factor
+O1,Receive Financial Assistance,factor,as.factor,is.factor
+O2,Financial Assistance was in Cash or Kind,factor,as.factor,is.factor
+O3__1,Chama / Welfare groups,double,as.double,is.double
+O3__2,Church / Mosque / other faith based organisation,double,as.double,is.double
+O3__3,NGO,double,as.double,is.double
+O3__4,Welfare money from the government e.g. Social Protection Fund (Pesa Ya Wazee),double,as.double,is.double
+O3__5,County Government e.g. bursaries,double,as.double,is.double
+O3__6,Constituency Development Fund (CDF),double,as.double,is.double
+O3__7,Private Sector e.g. Equity Wings to Fly,double,as.double,is.double
+O3__8,Friend/Family/relatives outside kenya,double,as.double,is.double
+O3__9,Friend/Family within kenya outside the household,double,as.double,is.double
+O3__10,Household members,double,as.double,is.double
+O3__11,Neighbour/ well wishers,double,as.double,is.double
+O3__12,Colleagues,double,as.double,is.double
+O3__13,Employer (outside of salary),double,as.double,is.double
+O3__14,Covid19 relief,double,as.double,is.double
+O3__15,Other (SPECIFY),double,as.double,is.double
+O3__98,Don’t know (DO NOT READ OUT),double,as.double,is.double
+O3__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+O3i,Receive Financial Assistance - Other,character,as.character,is.character
+O4,Financial Assistance Channel,factor,as.factor,is.factor
+O4i,O4 .Financial Assistance Channel - Other,character,as.character,is.character
+O5,Financial Assistance Reason,factor,as.factor,is.factor
+O5i,Financial Assistance Reason - Other,character,as.character,is.character
+P1,How many businesses do you currently own or share with other individuals?,factor,as.factor,is.factor
+P1_1__1,Government restrictions,double,as.double,is.double
+P1_1__2,forced closure,double,as.double,is.double
+P1_1__3,Lack of customer demand / drop in sales,double,as.double,is.double
+P1_1__4,Could not get the supplies /stock required,double,as.double,is.double
+P1_1__5,Lack of capital to cover,double,as.double,is.double
+P1_1__6,operating expenses,double,as.double,is.double
+P1_1__7,"Other,specify",double,as.double,is.double
+P1_1i,Other Resons closed business,character,as.character,is.character
+P1_2,Economic activity,factor,as.factor,is.factor
+P2i,Year Started,factor,as.factor,is.factor
+P2ii,MAIN business area of operation- Before Feb 2020 (Precovid),factor,as.factor,is.factor
+P2iia,Other area of operation - Before Feb 2020 (Precovid),character,as.character,is.character
+P2iii,MAIN business area of operation- Lockdown (April to July 2020),factor,as.factor,is.factor
+P2iiia,Other area of operation - precovid,character,as.character,is.character
+P2iv,MAIN business area of operation- Currently,factor,as.factor,is.factor
+P2iva,Other area of operation - currently,character,as.character,is.character
+P3,County,factor,as.factor,is.factor
+P4__1,"Social media e.g facebook, instagram, Whatsapp",double,as.double,is.double
+P4__2,"Online stores/Market places/Catalogues such as jumia, masoko,copia,jiji, pigia me, twiga,kilimall,",double,as.double,is.double
+P4__3,Own websites,double,as.double,is.double
+P4__4,SMS/phone calls,double,as.double,is.double
+P4__5,Radio/ TV,double,as.double,is.double
+P5__1,limited access to credit/capital,double,as.double,is.double
+P5__2,Limited access to market/Fewer customers,double,as.double,is.double
+P5__3,High costs of licensing,double,as.double,is.double
+P5__4,Difficulty finding premises location/high cost,double,as.double,is.double
+P5__5,Difficulty getting license/permit,double,as.double,is.double
+P5__6,"Difficulty paying business expenses (rent, utilities, labour)",double,as.double,is.double
+P5__7,High/increased cost of supplies,double,as.double,is.double
+P5__8,Suppliers closed down/reduced opertaing hours/no stock,double,as.double,is.double
+P5__9,Uncertainity regarding business premises,double,as.double,is.double
+P5__10,Unreliable employees/Staff issues,double,as.double,is.double
+P5__11,Insecurity,double,as.double,is.double
+P5__12,Customers not paying on time,double,as.double,is.double
+P5__13,Increased competition due to selling similar products,double,as.double,is.double
+P5__14,High/Increased cost of supplies,double,as.double,is.double
+P5__15,Other (SPECIFY),double,as.double,is.double
+P5__16,Business closed/no challenges,numeric,as.numeric,is.numeric
+P5__18,climate related,numeric,as.numeric,is.numeric
+P5__98,Don’t know (DO NOT READ OUT),double,as.double,is.double
+P5__99,Refused to Answer  (DO NOT READ OUT),double,as.double,is.double
+P5i,Other specify,character,as.character,is.character
+P6,StartUp Capital,factor,as.factor,is.factor
+P6i,StartUp Capital - Other,character,as.character,is.character
+P7,P7.Main Source of Finance,factor,as.factor,is.factor
+P7i,Main Source of Finance - other,character,as.character,is.character
+P8,why that channel of finance,factor,as.factor,is.factor
+P8i,Main Source of Finance - Other,character,as.character,is.character
+P9,Reason Loan Business,factor,as.factor,is.factor
+P9i,Reason Loan Business - other,character,as.character,is.character
+P10,Record Keeping,factor,as.factor,is.factor
+P11,Record Keeping,factor,as.factor,is.factor
+P11a,Record Keeping - Other,character,as.character,is.character
+P12__1,"Till number (e.g. Lipa na MPesa, Equitel) for merchant payments",double,as.double,is.double
+P12__2,Card reader machine (e.g. POS device / PDQ),double,as.double,is.double
+P12__3,Bank account in your business name,double,as.double,is.double
+P12__4,Pay NHIF for employees,double,as.double,is.double
+P12__5,Registration from the registrar of companies,double,as.double,is.double
+P12__6,Single/ unified Business Permit,double,as.double,is.double
+P12__7,Membership to a business association,double,as.double,is.double
+P13,Number of paid Employees,factor,as.factor,is.factor
+P13_1,Number of employed paid staff 1 year ago,double,as.double,is.double
+P14,Number of unpaid Employees,factor,as.factor,is.factor
+P14_1,Number of unpaid Employees 1 year ago,factor,as.factor,is.factor
+P15__1,Bank transfer includes interent banking,double,as.double,is.double
+P15__2,"The Post Office (e.g  PostPay, Money order)",double,as.double,is.double
+P15__3,"A mobile money account (e.g  MPesa, Airtel Money)",double,as.double,is.double
+P15__4,A mobile banking account,double,as.double,is.double
+P15__5,"Pay bill  / Till number through mobile money (e.g  Lipa na MPesa, Pay Bill)",double,as.double,is.double
+P15__6,Cash,double,as.double,is.double
+P15__7,Cheque,double,as.double,is.double
+P15__8,Credit or Debit card,double,as.double,is.double
+P15__9,Hawala,double,as.double,is.double
+P15__10,"Money transfer service (e.g  Western Union, Money Gram)",double,as.double,is.double
+P15__11,"International mobile transfer (e.g  Wave, Transferwise)",double,as.double,is.double
+P15__12,"Courier e.g  Nation, Securicor SpeedPost G4S",double,as.double,is.double
+P15__13,Bus / Matatu,double,as.double,is.double
+P15__14,In kind / noncash (goods &amp; services),double,as.double,is.double
+P15__15,"Community currencies eg  Sarafu, Bangla Pesa",double,as.double,is.double
+P15__16,"Cryptourrency e g bitcoin, Etherium,",double,as.double,is.double
+P15__17,Other (SPECIFY)   ONLY MENTIONED IN G1A ),double,as.double,is.double
+P15__18,Did not do this (DO NOT READ OUT,double,as.double,is.double
+P15__98,Don't know(DO NOT READ OUT),double,as.double,is.double
+P15__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+P15i,Made payments - Other,character,as.character,is.character
+P16,most frequent payment mode,factor,as.factor,is.factor
+P16i,Made payments - Other,character,as.character,is.character
+P17,Offer credit services,factor,as.factor,is.factor
+P18,value of credit/goods,factor,as.factor,is.factor
+P19,Receive Credit,factor,as.factor,is.factor
+Q1__1,"Sell own produce from your farm (food crops e. g. beans, maize, cassava, sweet potatoes, mangoes, oranges)",double,as.double,is.double
+Q1__2,"Sell own produce from your farm (cash crops e.g. coffee, tea, pyrethrum, sisal, cotton, miraa)",double,as.double,is.double
+Q1__3,Fish farming/fishing including aquaculture,double,as.double,is.double
+Q1__4,"Sell products from your livestock (e.g. milk, beef, eggs, manure, honey)",double,as.double,is.double
+Q1__5,"Sell livestock (e.g. cattle, goat, sheep, chickens)",double,as.double,is.double
+Q1__6,Other (SPECIFY),double,as.double,is.double
+Q1__98,Don’t know (DO NOT READ OUT),double,as.double,is.double
+Q1__99,Refused to Answer  (DO NOT READ OUT),double,as.double,is.double
+Q1i,Agriculture Income - Other,character,as.character,is.character
+Q2a__1,Difficulty starting/financing because of lack of money (capital),double,as.double,is.double
+Q2a__2,Difficulty finding customers,double,as.double,is.double
+Q2a__3,Difficulty finding inputs (seeds etc.),double,as.double,is.double
+Q2a__4,Small land sizes,double,as.double,is.double
+Q2a__5,High labor costs,double,as.double,is.double
+Q2a__6,Difficulty getting paid for products sold on credit,double,as.double,is.double
+Q2a__7,Mobile payment platforms sometimes fail,double,as.double,is.double
+Q2a__8,Pests and diseases,double,as.double,is.double
+Q2a__9,Difficulty getting products to market  transport/road infrastructure,double,as.double,is.double
+Q2a__10,Unscrupulous middlemen,double,as.double,is.double
+Q2a__11,Lack of storage facilities,double,as.double,is.double
+Q2a__12,Drought,double,as.double,is.double
+Q2a__13,Theft,double,as.double,is.double
+Q2a__14,Invasion by wild animals,double,as.double,is.double
+Q2a__15,Floods,double,as.double,is.double
+Q2a__16,High/Increased cost of inputs,double,as.double,is.double
+Q2a__17,Other (SPECIFY),double,as.double,is.double
+Q2a__18,Harsh Weather conditions,numeric,as.numeric,is.numeric
+Q2a__19,Low prices,numeric,as.numeric,is.numeric
+Q2a__20,Low produce,numeric,as.numeric,is.numeric
+Q2a__98,Don’t know (DO NOT READ OUT),double,as.double,is.double
+Q2a__99,Refused to Answer  (DO NOT READ OUT),double,as.double,is.double
+Q2ai,Farming challenges - Other,character,as.character,is.character
+Q2b,Main challenge,factor,as.factor,is.factor
+Q3,Main Source of Finance,factor,as.factor,is.factor
+Q4,Main Source of Finance Reason,factor,as.factor,is.factor
+Q4i,Main Source of Finance Reason - Other,character,as.character,is.character
+Q5,Reason LoanAgriculture,factor,as.factor,is.factor
+Q6,Agriculture Market Information,factor,as.factor,is.factor
+Q7__1,Bank transfer includes interent banking,double,as.double,is.double
+Q7__2,"The Post Office (e.g  PostPay, Money order)",double,as.double,is.double
+Q7__3,"A mobile money account (e.g  MPesa, Airtel Money)",double,as.double,is.double
+Q7__4,A mobile banking account,double,as.double,is.double
+Q7__5,"Pay bill  / Till number through mobile money (e.g  Lipa na MPesa, Pay Bill)",double,as.double,is.double
+Q7__6,Cash,double,as.double,is.double
+Q7__7,Cheque,double,as.double,is.double
+Q7__8,Credit or Debit card,double,as.double,is.double
+Q7__9,Hawala,double,as.double,is.double
+Q7__10,"Money transfer service (e.g  Western Union, Money Gram)",double,as.double,is.double
+Q7__11,"International mobile transfer (e.g  Wave, Transferwise)",double,as.double,is.double
+Q7__12,"Courier e.g  Nation, Securicor SpeedPost G4S",double,as.double,is.double
+Q7__13,Bus / Matatu,double,as.double,is.double
+Q7__14,In kind / noncash (goods &amp; services),double,as.double,is.double
+Q7__15,"Community currencies eg  Sarafu, Bangla Pesa",double,as.double,is.double
+Q7__16,"Cryptourrency e g bitcoin, Etherium,",double,as.double,is.double
+Q7__17,Other (SPECIFY)   ONLY MENTIONED IN G1A ),double,as.double,is.double
+Q7__18,Did not do this (DO NOT READ OUT,double,as.double,is.double
+Q7__98,Don't know(DO NOT READ OUT),double,as.double,is.double
+Q7__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+Q7i,various Payment modes - Other,character,as.character,is.character
+Q8,Payment modes main,factor,as.factor,is.factor
+Q8i,various Payment modes - Other,character,as.character,is.character
+Q9,Green energy,factor,as.factor,is.factor
+Q10,Source of Financing Green energy,factor,as.factor,is.factor
+Q10i,Source of Financing Green energy - Other,character,as.character,is.character
+R1A,Liquidity Challenge,factor,as.factor,is.factor
+R1B,Severity,factor,as.factor,is.factor
+R1Ci__1,Borrowed from a bank / Sacco / microfinance,double,as.double,is.double
+R1Ci__2,"Borrowed from mobile banking (e.g. MShwari, KCB MPesa, MCoop Cash, Eazzy Loan, Timiza, HF Whizz)",double,as.double,is.double
+R1Ci__3,Borrowed from mobile money provider e.g Fuliza,double,as.double,is.double
+R1Ci__4,Borrowed from shylock / loan shark / money lender / money merchant (not from your phone),double,as.double,is.double
+R1Ci__5,Borrowed from group / chama,double,as.double,is.double
+R1Ci__6,Borrowed from a Government institution,double,as.double,is.double
+R1Ci__7,Took a loan / advance from my employer,double,as.double,is.double
+R1Ci__8,Borrowed from family / friends / community / church / mosque,double,as.double,is.double
+R1Ci__9,Took a loan from a shopkeeper,double,as.double,is.double
+R1Ci__10,"Borrowed from a digital appbased lender (e.g. Branch, Tala, Utunzi, KopaCredo, Haraka Loans)",double,as.double,is.double
+R1Ci__11,Used savings held at a bank / Post Bank / Sacco / microfinance,double,as.double,is.double
+R1Ci__12,"Used savings held in mobile banking (e.g. MShwari, KCB MPesa, MCoop Cash, Eazzy Loan, Timiza, HF Whizz)",double,as.double,is.double
+R1Ci__13,"Used savings held in a mobile money provider / wallet (e.g. MPESA, Airtel Money, TCash, Tangaza,  Equitel)",double,as.double,is.double
+R1Ci__14,Used savings held at a group / chama,double,as.double,is.double
+R1Ci__15,Used savings held with friends / family,double,as.double,is.double
+R1Ci__16,Used savings held in a secret hiding place,double,as.double,is.double
+R1Ci__17,Sold livestock,double,as.double,is.double
+R1Ci__18,"Sold other assets, not livestock (e.g. car, business,stock, household goods, land)",double,as.double,is.double
+R1Ci__19,Got assistance / gift from friends / family / community (which you did not have to repay),double,as.double,is.double
+R1Ci__20,Cut back on expenses/ adjust consumption patterns,double,as.double,is.double
+R1Ci__21,Got goods/items on credit,double,as.double,is.double
+R1Ci__22,Worked more / got additional jobs/farmed additional land,double,as.double,is.double
+R1Ci__23,Relocated,double,as.double,is.double
+R1Ci__24,Other (SPECIFY),double,as.double,is.double
+R1Ci__25,Did nothing,double,as.double,is.double
+R1Ci__98,Don't know(DO NOT READ OUT),double,as.double,is.double
+R1Ci__99,"Refused to Answer(DO NOT READ OUT)""",double,as.double,is.double
+R1Cia,Liquidity Distress All options Used - Other,character,as.character,is.character
+R1Cii,Liquidity Distress options Used  Most Important,factor,as.factor,is.factor
+R1Ciia,Liquidity Distress All options Used - Other,character,as.character,is.character
+R1D,Reason for Main Option,factor,as.factor,is.factor
+R1Di,Reason for Main Option - Other,character,as.character,is.character
+R2A__1,Major sickness/health problem/accident injury,double,as.double,is.double
+R2A__2,"Loss or damage due to flooding/unseasonal rainfall/drought/locusts or pests, fire or other natural disaster",double,as.double,is.double
+R2A__3,Death of main income earner,double,as.double,is.double
+R2A__4,Death of a family member or other relative (not main income earner),double,as.double,is.double
+R2A__5,Loss or damage due to theft or violence including political violence,double,as.double,is.double
+R2A__6,High costs related to a child birth,double,as.double,is.double
+R2A__7,Loss of a job or a source of income or a wage cut,double,as.double,is.double
+R2A__8,Cost of living,double,as.double,is.double
+R2A__9,Pest/ diseases (locust),double,as.double,is.double
+R2Ai__1,Major sickness/health problem/accident injury,double,as.double,is.double
+R2Ai__2,Experienced flooding/drought/climate related event,double,as.double,is.double
+R2Ai__3,Death of main income earner,double,as.double,is.double
+R2Ai__4,Death of a family member or other relative (not main income earner),double,as.double,is.double
+R2Ai__5,"Experienced non- climate related loss e.g. theft,fire",double,as.double,is.double
+R2Ai__6,High costs related to a child birth,double,as.double,is.double
+R2Ai__7,Loss of a job or a source of income or a wage cut,double,as.double,is.double
+R2Ai__8,Cost of living,double,as.double,is.double
+R2Ai__9,Pest/ diseases (locust),double,as.double,is.double
+R2B,Main Shock,factor,as.factor,is.factor
+R2C__1,Borrowed from a bank / Sacco / microfinance,double,as.double,is.double
+R2C__2,Borrowed from mobile money provider e.g Fuliza,double,as.double,is.double
+R2C__3,"Borrowed from mobile banking (e(e.g. MShwari, KCB MPesa, MCoop Cash, Eazzy Loan, Timiza, HF Whizz)",double,as.double,is.double
+R2C__4,Borrowed from shylock / loan shark / money lender / money merchant (not from your phone),double,as.double,is.double
+R2C__5,Borrowed from group / chama,double,as.double,is.double
+R2C__6,Borrowed from a Government institution,double,as.double,is.double
+R2C__7,Took a loan / advance from my employer,double,as.double,is.double
+R2C__8,Borrowed from family / friends / community / church / mosque,double,as.double,is.double
+R2C__9,Took a loan from a shopkeeper,double,as.double,is.double
+R2C__10,"Borrowed from a digital appbased lender (e.g. Branch, Tala, Utunzi, KopaCredo, Haraka Loans)",double,as.double,is.double
+R2C__11,Used savings held at a bank / Post Bank / Sacco / microfinance,double,as.double,is.double
+R2C__12,"Used savings held in mobile banking (e.g. MShwari, KCB MPesa, MCoop Cash, Eazzy Loan, Timiza, HF Whizz)",double,as.double,is.double
+R2C__13,"Used savings held in a mobile money provider / wallet (e.g. MPESA, Airtel Money, TCash, Tangaza, Equitel)",double,as.double,is.double
+R2C__14,Used savings held at a group / chama,double,as.double,is.double
+R2C__15,Used savings held with friends / family,double,as.double,is.double
+R2C__16,Used savings held in a secret hiding place,double,as.double,is.double
+R2C__17,Sold livestock,double,as.double,is.double
+R2C__18,"Sold other assets, not livestock (e.g. car, business, household goods, land)",double,as.double,is.double
+R2C__19,Got assistance / gift from friends / family / community (which you did not have to repay),double,as.double,is.double
+R2C__20,Cut back on expenses/ adjust consumption patterns,double,as.double,is.double
+R2C__21,Got goods/items on credit,double,as.double,is.double
+R2C__22,Claimed insurance,double,as.double,is.double
+R2C__23,Withdrew/ transfered child / children from school,double,as.double,is.double
+R2C__24,Relocated / changed place of residence,double,as.double,is.double
+R2C__25,Found a better job / additional jobs,double,as.double,is.double
+R2C__26,Do nothing,double,as.double,is.double
+R2C__27,Other(SPECIFY),double,as.double,is.double
+R2C__98,Don't know(DO NOT READ OUT),double,as.double,is.double
+R2C__99,Refused to Answer  (DO NOT READ OUT),double,as.double,is.double
+R2Ci,managing techniques - Other,character,as.character,is.character
+R2Di,Managing techniques,factor,as.factor,is.factor
+R2Dia,Managing techniques - other,character,as.character,is.character
+R2Dii,Additional Job,factor,as.factor,is.factor
+R2Diia,Additional Job,character,as.character,is.character
+R2E,Main Option Risk Reason,factor,as.factor,is.factor
+R2Ei,Main Option Risk Reason - Other,character,as.character,is.character
+R2F,Potential product for climate shock,factor,as.factor,is.factor
+R2Fi,Potential product for climate shock - Other,character,as.character,is.character
+R3A,Specific Goal,factor,as.factor,is.factor
+R3B,Important Goal,factor,as.factor,is.factor
+R3Bi,Important Goal - Other,character,as.character,is.character
+R3C__1,Borrowed from a bank / Sacco / microfinance,double,as.double,is.double
+R3C__2,"Borrowed from mobile banking (e(e.g. MShwari, KCB MPesa, MCoop Cash, Eazzy Loan, Timiza, HF Whizz)",double,as.double,is.double
+R3C__3a,Borrowed from mobile money provider (eg. Fuliza),numeric,as.numeric,is.numeric
+R3C__3b,Borrowed from shylock / loan shark / money lender / money merchant (not from your phone),numeric,as.numeric,is.numeric
+R3C__4,Borrowed from group / chama,double,as.double,is.double
+R3C__5,Borrowed from a Government institution,double,as.double,is.double
+R3C__6,Took a loan / advance from my employer,double,as.double,is.double
+R3C__7,Borrowed from family / friends / community / church / mosque,double,as.double,is.double
+R3C__8,Took a loan from a shopkeeper,double,as.double,is.double
+R3C__9,"Borrowed from a digital appbased lender (e.g. Branch, Tala, Utunzi, KopaCredo, Haraka Loans)",double,as.double,is.double
+R3C__10,Used savings held at a bank / Post Bank / Sacco / microfinance,double,as.double,is.double
+R3C__11,"Used/ accumulate savings held in mobile banking (e.g. MShwari, KCB MPesa, MCoop Cash, Eazzy Loan, Timiza, HF Whizz)",double,as.double,is.double
+R3C__12,"Used/ accumulate savings held in a mobile money provider / wallet (e.g. MPESA, Airtel Money, TCash, Tangaza, MobiKash, Equitel)",double,as.double,is.double
+R3C__13,Used/ accumulate savings held at a group / chama,double,as.double,is.double
+R3C__14,Used/ accumulate savings held with friends / family,double,as.double,is.double
+R3C__15,Used/ accumulate savings held in a secret hiding place,double,as.double,is.double
+R3C__16,Sold livestock,double,as.double,is.double
+R3C__17,"Sold other assets, not livestock (e.g. car, business, household goods, land)",double,as.double,is.double
+R3C__18,Got assistance / gift from friends / family / community (which you did not have to repay),double,as.double,is.double
+R3C__19,Cut back on expenses/ adjust consumption patterns,double,as.double,is.double
+R3C__20,Got goods/items on credit,double,as.double,is.double
+R3C__21,Worked more / got additional jobs,double,as.double,is.double
+R3C__22,Hire purchase,double,as.double,is.double
+R3C__23,Education insurance,double,as.double,is.double
+R3C__24,Other (SPECIFY),double,as.double,is.double
+R3C__98,Don't know(DO NOT READ OUT),double,as.double,is.double
+R3C__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+R3Ci,Options,character,as.character,is.character
+R3D,Important Option,factor,as.factor,is.factor
+R3Di,Options,character,as.character,is.character
+R3E,Main Option Main Goal Reason,factor,as.factor,is.factor
+R3Ei,Main Option Main Goal Reason - Other,character,as.character,is.character
+R3F,Challenges to meeting goal,factor,as.factor,is.factor
+R3G,Challenges goal,factor,as.factor,is.factor
+R3GI,Challenges goal -Other,character,as.character,is.character
+S1,Own Mobile,factor,as.factor,is.factor
+S2__1,can access internet,double,as.double,is.double
+S2__4,has a touch screen,double,as.double,is.double
+S2__5,can download and install applications on the phone,double,as.double,is.double
+S3,Internet 4 weeks,factor,as.factor,is.factor
+S3i,Other frequency of internet use,character,as.character,is.character
+S4,Used Internet Where,factor,as.factor,is.factor
+S4i,Used Internet Where - Other,character,as.character,is.character
+S5__1,"Activities relating to my business (online marketing, sourcing inputs etc.)",double,as.double,is.double
+S5__2,"Activities relating to my farm (comparing prices, sourcing inputs etc.)",double,as.double,is.double
+S5__3,"Educational activities (undertaking online courses, finding education-related materials online)",double,as.double,is.double
+S5__4,"Health related activities (seeking information/advice about medical conditions, finding hospitals etc.)",double,as.double,is.double
+S5__5,Employment and career related activities (searching for jobs/vacancies etc.),double,as.double,is.double
+S5__6,Accessing government services,double,as.double,is.double
+S5__7,"Accessing financial services (internet banking, investment etc.)",double,as.double,is.double
+T1,Nearest Financial Service Institution,factor,as.factor,is.factor
+T1i,Nearest Financial Service Institution - Other,character,as.character,is.character
+T2,Average Cost to Nearest Financial Advisor?,factor,as.factor,is.factor
+T2i,Average Cost to Nearest Financial Advisor- Other,character,as.character,is.character
+T3,Average Time to Financial Provider?,factor,as.factor,is.factor
+T3i,Average Time to Financial Provider - Other,character,as.character,is.character
+T4,Cost to Nearest Bank,factor,as.factor,is.factor
+T4i,Average Cost to Nearest Bank - Other,character,as.character,is.character
+T5,Average time to Walk to the Nearest Bank,factor,as.factor,is.factor
+T5i,Average time to Walk to the Nearest Bank - Other,character,as.character,is.character
+T6,Average Cost to the Nearest Mobile Money Agent,factor,as.factor,is.factor
+T6i,Average Cost to the Nearest Mobile Money Agent - Other,character,as.character,is.character
+T7,Average Time to Walk to the Nearest Mobile Money Agent,factor,as.factor,is.factor
+T7i,Average Time to Walk to the Nearest Mobile Money Agent - Other,character,as.character,is.character
+T8,Average Cost to Nearest Bank agent,factor,as.factor,is.factor
+T8i,Average Cost to Nearest Bank agent - Other,character,as.character,is.character
+T9,Average time to Walk to the Nearest Bank agent,factor,as.factor,is.factor
+T9i,Other Average time to Walk to the Nearest Bank agent,character,as.character,is.character
+U1,Residence Change,factor,as.factor,is.factor
+U2,Residence Change Reason,factor,as.factor,is.factor
+U2i,Residence Change Reason - Other,character,as.character,is.character
+U3,Religion,factor,as.factor,is.factor
+U4,Dwelling Type,factor,as.factor,is.factor
+U4i,Dwelling Type - Other,character,as.character,is.character
+U5,of Dwelling Units,double,as.double,is.double
+U6,of Habitable rooms,double,as.double,is.double
+U7A,Tenure Status of Main Dwelling Unit,factor,as.factor,is.factor
+U7B,Rented by,factor,as.factor,is.factor
+U8,Roof Type,factor,as.factor,is.factor
+U9,Floor Type,factor,as.factor,is.factor
+U10,Wall Type,factor,as.factor,is.factor
+U11,Cooking Fuel Type,factor,as.factor,is.factor
+U12,Light Type,factor,as.factor,is.factor
+U13,Water Source,factor,as.factor,is.factor
+U14a,Human waste disposal,factor,as.factor,is.factor
+U14b,If mode for diposal is shared,factor,as.factor,is.factor
+U15,Solid waste disposal,factor,as.factor,is.factor
+U16__1,Stand alone Radio,double,as.double,is.double
+U16__2,TV with Free to Air Set-top-box/Digital TV,double,as.double,is.double
+U16__3,TV with Pay TV Decoder,double,as.double,is.double
+U16__4,Internet protocol TV(IP TV),double,as.double,is.double
+U16__5,Analogue TV (With no connection/signal),double,as.double,is.double
+U16__6,Internet through mobile phone/Modem,double,as.double,is.double
+U16__7,"Fixed Internet at home e.g Fiber, Satellite dish, LAN, Wi-Fi",double,as.double,is.double
+U16__8,Desk Top Computer/Laptop/Tablet,double,as.double,is.double
+U16__9,Bicycle,double,as.double,is.double
+U16__10,Motor Cycle,double,as.double,is.double
+U16__11,Car,double,as.double,is.double
+U16__12,Truck/Lorry/Bus/Three Wheeler truck,double,as.double,is.double
+U16__13,Refrigerator,double,as.double,is.double
+U16__14,Motor boat,double,as.double,is.double
+U16__15,Animal Drawn cart,double,as.double,is.double
+U16__16,Canoes,double,as.double,is.double
+U16__17,Tuk Tuk,double,as.double,is.double
+U16__18,Tractor,double,as.double,is.double
+U16__19,Ox-plough,double,as.double,is.double
+U17i,Exotic cattle -Dairy,double,as.double,is.double
+U17ii,Exotic cattle -Beef,double,as.double,is.double
+U17iii,Indigenous cattle,double,as.double,is.double
+U17iv,Sheep,double,as.double,is.double
+U17v,Goats,double,as.double,is.double
+U18A,bread,factor,as.factor,is.factor
+U18B,meat or fish,factor,as.factor,is.factor
+U18C,ripe bananas,factor,as.factor,is.factor
+U18D,towels,factor,as.factor,is.factor
+U18E,thermos flasks,factor,as.factor,is.factor
+U19,Own Land,factor,as.factor,is.factor
+U20,Ownership document,factor,as.factor,is.factor
+U20i,Other type of Ownership document,character,as.character,is.character
+U21__1,Inherited from family,double,as.double,is.double
+U21__2,Used regular income to buy materials whenever possible,double,as.double,is.double
+U21__3,"Bought/Built using savings kept in bank, SACCO or MFI",double,as.double,is.double
+U21__4,Bought/Built using assets / savings kept elsewhere,double,as.double,is.double
+U21__5,"Bought/Built using credit/loan from bank, SACCO or MFI",double,as.double,is.double
+U21__6,Bought/Built using credit/loan from elsewhere,double,as.double,is.double
+U21__7,Contribution from community/family,double,as.double,is.double
+U21__8,Bought it already built,double,as.double,is.double
+U21__9,Used local materials – no cash needed,double,as.double,is.double
+U21__10,Other (SPECIFY),double,as.double,is.double
+U21__99,Refused to Answer (DO NOT READ OUT),double,as.double,is.double
+U21i,How Acquired-Other,character,as.character,is.character
+U22__1,National Identity Card (ID),factor,as.factor,is.factor
+U22__2,Passport,factor,as.factor,is.factor
+U22__3,Alien ID,factor,as.factor,is.factor
+U22__4,Huduma number,double,as.double,is.double
+U23,Approximately what is your total monthly expenditure,double,as.double,is.double
+U24a,U24a 1.0. Food Expenses,double,as.double,is.double
+U24b,Mobile airtime expenses,double,as.double,is.double
+U24c,Transport expenses,double,as.double,is.double
+U24d,Rent / mortgage on your home,double,as.double,is.double
+IndWeight,Individual Weights,numeric,as.numeric,is.numeric
+HhWeights,Household Weights,numeric,as.numeric,is.numeric
+gender,Selected Respondent Gender,factor,as.factor,is.factor
+cluster_type,Cluster Type (rural/urban),factor,as.factor,is.factor
+agegroup,Age Group,factor,as.factor,is.factor
+marital,Marital status of Respondent,factor,as.factor,is.factor
+education,Education level of Respondent,factor,as.factor,is.factor
+education_femHH,Education level of Female HH,factor,as.factor,is.factor
+education_anyHH,Education level of any HH member,factor,as.factor,is.factor
+savings_usage,Savings Usage overall,factor,as.factor,is.factor
+savings_formal,Savings usage:formal,factor,as.factor,is.factor
+savings_informal,Savings usage:informal,factor,as.factor,is.factor
+savings_excluded,Savings usage:Excluded,factor,as.factor,is.factor
+loan_usage,Loan Usage overall,factor,as.factor,is.factor
+loan_formal,Loan Usage formal,factor,as.factor,is.factor
+loan_informal,Loan Usage informal,factor,as.factor,is.factor
+loan_formal_2,Loan Currently and last 12 months: Formal,factor,as.factor,is.factor
+loan_mbanking_2,Loan Currently and last 12 months: mobile banking/ Fuliza,factor,as.factor,is.factor
+loan_fuliza_2,Loan Currently and last 12 months: fuliza,factor,as.factor,is.factor
+loan_app_2,Loan Currently and last 12 months: loan apps,factor,as.factor,is.factor
+savings_mbanking_2,Currently and last 12 months: savings from mobile banking,factor,as.factor,is.factor
+savings_mmoney_2,Currently and last 12 months: savings from mobile money,factor,as.factor,is.factor
+savings_formal2,Savings formal Currently or used last 12 months,factor,as.factor,is.factor
+tot_saving,Savings Category,factor,as.factor,is.factor
+defaulted,Defaulted on Loans/Debt,factor,as.factor,is.factor
+mobile,Mobile Ownership,factor,as.factor,is.factor
+bank_usage,All commecial banks (+MFBs)  + mobile bank providers  regulated by CBK + Post Bank,factor,as.factor,is.factor
+bank_usage1,Commercial Bank Usage excluding Postbank,factor,as.factor,is.factor
+bank_usage3,Commercial Bank Usage excluding Mshwari/KCB Mpesa,factor,as.factor,is.factor
+bank_usage2,Commercial Bank Usage excluding Mobile Banking and Postbank,factor,as.factor,is.factor
+insurance_usage,All users of insurance  regulated by IRA without NHIF,factor,as.factor,is.factor
+insurance_usage2,Insurance Companies (Regulated by IRA including NHIF) Usage,factor,as.factor,is.factor
+insurance_usage1,Insurance Usage Regulated by IRA including NHIF and NSSF,factor,as.factor,is.factor
+nhif_usage,NHIF usage,factor,as.factor,is.factor
+nssf_usage,NSSF usage,factor,as.factor,is.factor
+pension_usage,Pension usage,factor,as.factor,is.factor
+pension_usage_2,Pension usage less NSSF,factor,as.factor,is.factor
+mobile_bank_usage,Mobile Banking Usage,factor,as.factor,is.factor
+mobile_money_usage,Mobile Money Usage,factor,as.factor,is.factor
+digital_acc,Digital Account Usage,factor,as.factor,is.factor
+digital_app_loan,Digital App Loans,factor,as.factor,is.factor
+formal_digital_sav,Formal Digital Savings,factor,as.factor,is.factor
+formal_non_digital_sav,"Fomal Non Digital Savings from Commercial Banks, MFBs, SACCOs, MFIs",factor,as.factor,is.factor
+formal_digital_loan,Formal Digital Loans,factor,as.factor,is.factor
+formal_non_digital_loan,Formal Non Digital Loans,factor,as.factor,is.factor
+tot_formal_digit_loan_sav,Total Formal Digital Loans and Savings,factor,as.factor,is.factor
+tot_formal_non_digit_loan_sav,Total Non Formal Digital Loans and Savings,factor,as.factor,is.factor
+nonmfb_usage,nonmfb usage,factor,as.factor,is.factor
+mfi_amfi,Registered Microfinance Institutions,numeric,as.numeric,is.numeric
+mfi_amfi_1,Registered Microfinance Institutions,factor,as.factor,is.factor
+mfi_usage,MFI Usage,factor,as.factor,is.factor
+sacco_usage,SACCO Usage,factor,as.factor,is.factor
+online_curr,Online Account Usage,factor,as.factor,is.factor
+investment_usage,Investment Usage,factor,as.factor,is.factor
+infgp,informal group membership,numeric,as.numeric,is.numeric
+infgp_usage,"Informal Group Usage ASCA/ROSCA/CHAMA) including include group chama investments, savings with group of friends",factor,as.factor,is.factor
+infgp_overall_usage,Informal Group Usage overall,factor,as.factor,is.factor
+formal_prudential,"Formal Prudential - Commercial Banks, MFBs, DTSs, Insurance, Capital Markets, MShwari/KCB Mpesa",factor,as.factor,is.factor
+formal_non_prudential,"Formal Non-prudential - MFS, Postbank, NSSF, NHIF, DFI",factor,as.factor,is.factor
+formal_registered,"Formal Registered- non-DTM, non-DTS, Hire Purchase, Government, Digital Loans e.g. Tala, Branch",factor,as.factor,is.factor
+formal,Formal- Overall- Current,factor,as.factor,is.factor
+formal_other,Formal non prudential and formal registered combined- Current,factor,as.factor,is.factor
+informal,"Informal-financial service providers such as ASCAs, ROSCAs, shopkeepers/Merchants, employers, moneylenders, non bank online/phone app loan providers",factor,as.factor,is.factor
+access,Access - Current,factor,as.factor,is.factor
+overlap,Overlap - Current,factor,as.factor,is.factor
+dts_usage_1,Deposit Taking SACCO Usage,numeric,as.numeric,is.numeric
+dts_usage,Deposit Taking SACCO Usage,factor,as.factor,is.factor
+non_dts_usage_1,Non-Deposit Taking SACCO Usage,numeric,as.numeric,is.numeric
+non_dts,Non-Deposit Taking SACCO Usage,factor,as.factor,is.factor
+non_dts_usage,Non-Deposit Taking SACCO Usage,numeric,as.numeric,is.numeric
+filt,Filter for Adults,numeric,as.numeric,is.numeric
+Traditional_bank_users,All commecial banks regualted by CBK  (+MFBs) + post bank,factor,as.factor,is.factor
+Commercial_Bank_users,Commercial Bank users,factor,as.factor,is.factor
+Post_bank_users,Post bank users,factor,as.factor,is.factor
+Digital_credit,Non bank non-regulated digital credit usage,factor,as.factor,is.factor
+livelihoodcat,Livelihood,factor,as.factor,is.factor
+NHM,Number of household members.,numeric,as.numeric,is.numeric
+w_index,Scores for component 1,numeric,as.numeric,is.numeric
+quintile,Estimated Wealth Quintile,factor,as.factor,is.factor
+Classification_A_Liquidity,Device used to Meet Liquidity,factor,as.factor,is.factor
+Classification_A_Resilience,Device used for Resilience,factor,as.factor,is.factor
+Classification_A_Meeting_goals,Device used for Meeting goals,factor,as.factor,is.factor
+vul_index,Vulnerability Index,factor,as.factor,is.factor
+incomegp,Income group,factor,as.factor,is.factor
+prodsum1,Number of financial services used,numeric,as.numeric,is.numeric
+portfolio,Number of financial services used,factor,as.factor,is.factor
+mfhi_12,Plan for how to spend money,factor,as.factor,is.factor
+mfhi_11,No trouble making money last,numeric,as.numeric,is.numeric
+mfhi_13,Did not go without food,factor,as.factor,is.factor
+mfhi_21,Did not go without medicine,factor,as.factor,is.factor
+mfhi_22,Can access lumpsum,factor,as.factor,is.factor
+mfhi_23,Kept money aside for emergency,factor,as.factor,is.factor
+mfhi_31,Kept money aside for specific purpose,factor,as.factor,is.factor
+mfhi_32,savings/credit for productive assets,factor,as.factor,is.factor
+mfhi_33,"savings, pension, investment for old age",factor,as.factor,is.factor
+finhealthscore,finhealthscore,numeric,as.numeric,is.numeric
+finhealth,Financially healthy,factor,as.factor,is.factor
+manage_day2day1,Adults with ability to manage day to day,numeric,as.numeric,is.numeric
+manage_day2day,Adults with ability to manage day to day,factor,as.factor,is.factor
+risk,Risk,numeric,as.numeric,is.numeric
+risk_cope,Adults with ability to cope with risk,factor,as.factor,is.factor
+invest,Invest,numeric,as.numeric,is.numeric
+invest_score,Adults with ability to invest in livelihoods,factor,as.factor,is.factor
+mobile_access,Access a mobile phone (own or borrow),factor,as.factor,is.factor
+mobile_own,Own a mobile phone,factor,as.factor,is.factor
+full_service_acc,Full service registered account owners,factor,as.factor,is.factor
+active_full_service,Active Full service registered account owners,factor,as.factor,is.factor
+formal_service_use,Ever used formal financial services,factor,as.factor,is.factor
+formal_fullservice_use,Ever used formal full service financial services,factor,as.factor,is.factor
+digital_store,Ever used a digital stored value account,factor,as.factor,is.factor
+digital_acc_active,Actively use a digital stored-value account,factor,as.factor,is.factor
+digital_adv,Actively use a digital stored-value account and have used at least one advanced financial service,factor,as.factor,is.factor
+mobile_money_access,Have ever accessed mobile money,factor,as.factor,is.factor
+mobile_money_active,Active mobile money account (on a 90-day basis),factor,as.factor,is.factor
+advanced_dfs,Advanced DFS users,factor,as.factor,is.factor
+youth,Youth 18-35 yrs,factor,as.factor,is.factor
+noofloans,finhealthscore,numeric,as.numeric,is.numeric
+noofloans_new,Number of loans,factor,as.factor,is.factor
+currentloan,Current Loan,numeric,as.numeric,is.numeric
+paidlate,Paid Late,numeric,as.numeric,is.numeric
+defaultloan,Loans default,factor,as.factor,is.factor
+cashonly,cashonly,numeric,as.numeric,is.numeric
+noncash,noncash,numeric,as.numeric,is.numeric
+didnotdothis,Did not Transact,numeric,as.numeric,is.numeric
+neither_cash_nor_anyother,Neither used cash or any other way,numeric,as.numeric,is.numeric
+cash_payments,Transaction made in Cash only or both cash and non-cash,factor,as.factor,is.factor
+comp_noofloans,Those who applied for one loan,factor,as.factor,is.factor
+incomegpnew,Income group,factor,as.factor,is.factor
+formal_prudential_ever,Formal Prudential including Ever,factor,as.factor,is.factor
+formal_non_prudential_ever,Formal Non-prudential Ever,factor,as.factor,is.factor
+formal_registered_ever,Formal Registered Ever,factor,as.factor,is.factor
+formal_ever,Formal Ever,factor,as.factor,is.factor
+formal_other_ever,Formal non prudential ever and formal registered ever combined,factor,as.factor,is.factor
+informal_ever,Informal Ever,factor,as.factor,is.factor
+access_ever,Access Ever,factor,as.factor,is.factor
+overlap_ever,overlap_ever,factor,as.factor,is.factor
+excludedpop_ever,Excluded Population Ever,numeric,as.numeric,is.numeric
+E2Ci23,Paid late/ Missed a payment,numeric,as.numeric,is.numeric
+mobile_bank_usage1,Mobile Banking Usage including Fuliza,factor,as.factor,is.factor
+A17new,impact of COVID-19 on school return,factor,as.factor,is.factor
+shock,Experienced any shock,factor,as.factor,is.factor
+someone_else,Used Someone else account,factor,as.factor,is.factor

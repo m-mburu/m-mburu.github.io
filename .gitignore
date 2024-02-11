@@ -72,3 +72,8 @@ kaggle/climate_change/data/GlobalLandTemperaturesByCity.csv
 kaggle/climate_change/data/
 kaggle/climate_change/
 /.quarto/
+
+incomegpnew.csv
+posts/mnist_digits/data
+
+git rm --cached  inProcess/finaccess/incomegpnew_df.csv

@@ -1,0 +1,182 @@
+---
+title: "MNIST Digits Recognition"
+author: "Mburu"
+date: "7/10/2020"
+output:
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE, 
+                      warning = FALSE)
+```
+
+
+
+## Read data and Load libraries
+
+```{r }
+
+library(tidyverse)
+library(data.table)
+library(keras)
+library(caret)
+library(DT)
+library(caretEnsemble)
+library(tictoc)
+
+train_data <- fread("data/train.csv")
+set.seed(100)
+N = nrow(train_data)
+sample_one <- sample(N, 5000)
+train_data <- train_data[sample_one]
+test_data <- fread("data/test.csv")
+
+```
+
+## Frequency of digits
+
+```{r, fig.height=4.5}
+ggplot(train_data, aes(x = factor(label))) +
+    geom_bar()
+```
+
+## Randomly sample 12 digits
+
+```{r}
+#  image coordinates
+xy_axis <- data.frame(x = expand.grid(1:28, 28:1)[,1],
+                      y = expand.grid(1:28, 28:1)[,2])
+
+
+# get 12 images
+set.seed(100)
+sample_10 <- train_data[sample(1:.N, 12), -1] %>% as.matrix()
+
+datatable(sample_10, 
+          options = list(scrollX = TRUE))
+
+sample_10 <- t(sample_10)
+
+plot_data <- cbind(xy_axis, sample_10 )
+
+setDT(plot_data, keep.rownames = "pixel")
+
+# Observe the first records
+head(plot_data) %>% datatable()
+
+```
+
+## Plot 12 digits
+
+```{r}
+plot_data_m <- melt(plot_data, id.vars = c("pixel", "x", "y"))
+
+# Plot the image using ggplot()
+ggplot(plot_data_m, aes(x, y, fill = value)) +
+    geom_raster()+
+     facet_wrap(~variable)+
+    scale_fill_gradient(low = "white",
+                        high = "black", guide = "none")+
+    theme(axis.line = element_blank(),
+                  axis.text = element_blank(),
+                  axis.ticks = element_blank(),
+                  axis.title = element_blank(),
+                  panel.background = element_blank(),
+                  panel.border = element_blank(),
+                  panel.grid.major = element_blank(),
+                  panel.grid.minor = element_blank(),
+                  plot.background = element_blank())
+   
+```
+
+## Prepare data for model fitting
+
+-   Decided to have a self test set
+
+```{r }
+N = nrow(train_data)
+sample_train <- sample(N, size = round(0.75 *N ))
+test_own <- train_data[-sample_train]
+train_data2 <- train_data[sample_train, ]
+train_y <-to_categorical(train_data2$label, 10)
+
+train_x <- train_data2[, -1]
+#convert to matrix
+train_x <- train_x %>%
+    as.matrix()
+
+train_x <- train_x/255
+
+```
+
+## Construct model layers
+
+```{r }
+model <- keras_model_sequential() %>%
+  layer_dense(units = 784, activation = 'relu', input_shape = c(784)) %>%
+  layer_batch_normalization() %>%
+  layer_dropout(rate = 0.3) %>%
+  layer_dense(units = 784, activation = 'relu') %>%
+  layer_batch_normalization() %>%
+  layer_dropout(rate = 0.3) %>%
+  layer_dense(units = 392, activation = 'relu') %>%
+  layer_batch_normalization() %>%
+  layer_dropout(rate = 0.2) %>%
+  layer_dense(units = 10, activation = 'softmax')
+
+# Comp
+```
+
+## Compile model
+
+```{r}
+# Compile the model
+model %>% compile(
+  loss = 'categorical_crossentropy',
+  optimizer = optimizer_adam(lr = 0.001), # Start with a default learning rate
+  metrics = c('accuracy')
+)
+
+```
+
+## Fit model
+
+```{r}
+# Implement a learning rate scheduler
+lr_schedule <- function(epoch, lr) {
+  if (epoch < 10) {
+    return(lr)
+  } else {
+    return(lr * exp(-0.1))
+  }
+}
+
+# Add the callback for the learning rate scheduler
+callbacks_list <- list(callback_learning_rate_scheduler(schedule = lr_schedule))
+
+# Train the model
+hist <- model %>% fit(
+    train_x, train_y, 
+    epochs = 30,
+    batch_size = 128,
+    validation_split = 0.2,
+    callbacks = callbacks_list
+)
+plot(hist)
+
+
+```
+
+## Own test
+
+```{r}
+test_own_x <- test_own[, -1] %>% as.matrix()/255
+
+test_own_pred <- model %>% predict(test_own_x) 
+test_own_pred <- apply(test_own_pred, 1, which.max) - 1
+
+confusionMatrix(data = factor(test_own_pred), reference = factor(test_own$label))
+
+```
