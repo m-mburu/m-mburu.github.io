@@ -1,0 +1,443 @@
+---
+title: "Github Use in Africa using Maps"
+author: "Mburu"
+date: "2024-02-12"
+output:
+     html_document:
+         code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      warning = FALSE,
+                      message = FALSE)
+
+
+
+```
+
+## Introduction
+
+Analyzing developer activity through contributions, repositories, and pushes from the [GitHub Innovation Graph data](https://github.com/github/innovationgraph/tree/main)  can reveal valuable insights into technological engagement of various population. Especially when it comes to software development and data analytics. Although the data has it weaknesses as outlined at the limitations section, it is still a valuable source of information for analysis. For instance it can inform policy makers on where their country is lagging behind in certain technologies and come up with ways to improve the situation. I have always felt that data analytics and software development is a low hanging fruit for African countries to improve their economies. This is because it is a low cost investment that can have a high return. You only need a computer and internet connection to start coding.
+It's good to note that these datasets only contain data from public repositories and public contributions. This means that the data is not representative of the entire developer population activity in a country. It is only representative of the developers who have public repositories and public contributions. This is a limitation of the data that should be kept in mind when interpreting the results.
+
+```{r}
+#| code-fold: true
+library(tidyverse)
+library(data.table)
+library(janitor)
+library(tmap)
+library(patchwork)
+library(sf)
+library(ggiraph)
+library(viridis) # For scale_fill_viridis_c
+
+developers <- fread("https://raw.githubusercontent.com/github/innovationgraph/main/data/developers.csv")
+git_pushes <- fread("https://raw.githubusercontent.com/github/innovationgraph/main/data/git_pushes.csv")
+git_repos <- fread("https://raw.githubusercontent.com/github/innovationgraph/main/data/repositories.csv")
+programming_languages <- fread("https://raw.githubusercontent.com/github/innovationgraph/main/data/languages.csv")
+
+merge_by_devs <- c("iso2_code", "year", "quarter")
+merge_fun_devs <- function(devs, df, by.vars = merge_by_devs)  {
+    
+    merge(devs, df, by = by.vars)
+    
+}
+
+git_pushes <- merge_fun_devs(developers, git_pushes)
+git_repos <- merge_fun_devs(developers, git_repos)
+programming_languages <- merge_fun_devs(developers, programming_languages)
+
+github_data_name <- c("developers", "git_pushes", "git_repos", "programming_languages")
+
+iso3 <- fread("https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.csv") 
+iso3 <- iso3[, .(iso2_code = `alpha-2`, iso_a3 = `alpha-3`)]
+
+data("World") # from tmap
+
+# filter for africa
+africa <- World %>% 
+    left_join(iso3,by = "iso_a3") %>%
+    filter(continent == "Africa")
+setDT(africa)
+
+
+get_latest_year_and_quarter <- function(df, year_column, quarter_column, concactenate = TRUE) {
+    # Calculate the latest year with available data
+    latest_year <- max(df[[year_column]], na.rm = TRUE)
+    
+    # Calculate the latest quarter for the latest year
+    latest_quarter <- max(df[df[[year_column]] == latest_year][[quarter_column]], na.rm = TRUE)
+    
+    # Check if the user wants to return a concatenated contact string
+    if (concactenate) {
+        # Return the concatenated string of latest year and quarter
+        return(paste0(latest_year, "-", latest_quarter))
+    } else {
+        # Return a named list containing the latest year and quarter
+        return(list(latest_year = latest_year, latest_quarter = latest_quarter))
+    }
+}
+
+
+# Define the function
+process_df_to_sf <- function(df, spatial_df,
+                             iso2_column_name = "iso2_code", 
+                             year_column = "year",
+                             quarter_column = "quarter",
+                             pop_est_column = "pop_est", 
+                             freq_column = "developers",
+                             geometry_column = "geometry",
+                             group_col = NULL,
+                             per = 100000,
+                             round_digits = 0) {
+    # Convert df to a data.table
+    setDT(df)
+    
+    # Filter for the latest year and quarter
+    latest_year_quarter<- get_latest_year_and_quarter(df, year_column, quarter_column,  concactenate = FALSE)
+    latest_year <-latest_year_quarter$latest_year #  max(df[[year_column]], na.rm = TRUE)
+    latest_quarter <- latest_year_quarter$latest_quarter # max(df[get(year_column) == latest_year][[quarter_column]], na.rm = TRUE) get
+    #print(latest_year)
+    #print(latest_quarter)
+    latest_df <- df[get(year_column) == latest_year & get(quarter_column) == latest_quarter]
+    # print(head(latest_df))
+    # Join with the spatial data frame
+    
+    if(!is.null(group_col)) {
+        latest_df <- latest_df[!is.na(get(group_col)),]
+        dfs = split.data.frame(latest_df, f = latest_df[[group_col]])
+        #cat("length dfs:", length(dfs))
+        
+        ## right join by spacial df and rbindlist
+        latest_df_joined = rbindlist(lapply(dfs, function(x) {
+            uniqu_grp_col = unique(x[[group_col]])
+            x = x %>%
+                merge(spatial_df, by = iso2_column_name, all.y = TRUE)
+            x[, (group_col) :=uniqu_grp_col]
+            x
+        })) 
+        
+        #print(head(latest_df_joined))
+        
+    }else{
+        
+        latest_df_joined <- latest_df %>%
+            merge(spatial_df, by = iso2_column_name, all.y = TRUE)
+        
+    }
+    
+    latest_df_joined[is.na(get(freq_column)), (freq_column) := 0]
+    #latest_df_joined[is.na(get(pop_est_column)), (pop_est_column) := 0]
+    latest_df_joined[, devs_per_100k := round(.SD[[freq_column]] / .SD[[pop_est_column]] * per, digits = round_digits), .SDcols = c(freq_column, pop_est_column)]
+    latest_df_joined[is.na(devs_per_100k), devs_per_100k := 0]
+    # Ensure spatial_df is a data.frame or data.table with a geometry column
+    if(!"geometry" %in% colnames(spatial_df)) {
+        stop("The spatial data frame must have a geometry column.")
+    }
+    
+    # Convert to sf object, ensuring the geometry column is specified correctly
+    latest_df_sf <- st_set_geometry(latest_df_joined, value = geometry_column)
+    
+    # Return the sf object
+    return(latest_df_sf)
+}
+
+
+
+
+# Define the function with tidy evaluation for aes()
+create_interactive_map <- function(data_sf, 
+                                   fill_var, 
+                                   tooltip_var,
+                                   facet_var = NULL,
+                                   plot_title = "Developers per 100,000 people",
+                                   return_girafe = TRUE,
+                                   aspect_ratio = 1,
+                                   point_size = 9)  {
+    # Create the ggplot
+    p <- ggplot(data_sf, aes(fill = {{fill_var}}, tooltip = paste0({{tooltip_var}}, ":", {{fill_var}}) )) +
+        geom_sf_interactive() +
+        scale_fill_viridis_c() +
+        theme_void() +
+        theme(legend.position = "left",
+              legend.key.width = unit(0.1, 'cm'),
+              plot.title = element_text(size = 11),
+              aspect.ratio = aspect_ratio,
+              plot.margin = unit(c(0,0,0,0), "cm"))+
+        labs(title = plot_title, fill = "")
+    
+    # Dynamically add facets if a facet_var is provided
+    if (!is.null(facet_var)) {
+        # Use the .data pronoun to refer to variables for faceting
+        p <- p + facet_wrap(vars(.data[[facet_var]]))
+    }
+    
+    # Generate the interactive map
+    if (return_girafe){
+        girafe_code <- girafe(ggobj = p, pointsize = point_size)
+        return(girafe_code)
+    } else {
+        return(p)
+    }
+    
+}
+
+# Example usage:
+# Assuming 'latest_developers_sf' is your sf dataframe and has 'devs_per_100k' for fill and 'name' for tooltip
+# create_interactive_map(latest_developers_sf, fill_var = devs_per_100k, tooltip_var = paste0(name, ":", devs_per_100k))
+# To add facets, simply add the facet_var argument like facet_var = "region"
+
+
+
+library(ggplot2)
+library(ggiraph)
+library(stringr) # For str_wrap
+
+
+plot_interactive_bar <- function(data, x_var, y_var, 
+                                 fill_var, 
+                                 title = "Top programming languages by country",
+                                 xlab = "Country", 
+                                 ylab = "% Number of pushers") {
+  
+  # Create the plot
+  top_countries_plot <- ggplot(data, 
+                               aes(x = {{x_var}}, y = {{y_var}}, fill = {{fill_var}},
+                                   tooltip = paste0({{x_var}}, ", ", {{fill_var}}, " ", {{y_var}}))) +
+      
+      
+    geom_bar_interactive(stat = "identity", position = "dodge", width = 0.5) +
+    theme_minimal() +
+    labs(title = title,
+         fill = "",
+         y = ylab,
+         x = xlab) +
+    scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
+    scale_fill_brewer(type = "qual", palette = "Dark2") +
+    theme(legend.position = "bottom")
+  
+  # Return the interactive plot
+  girafe(ggobj = top_countries_plot, pointsize = 9)
+}
+
+
+## donhut chart
+
+donhunt_chart <- function(data, labelColumn, valueColumn, chartTitle) {
+    plot_ly(data, labels = ~get(labelColumn), values = ~get(valueColumn)) %>%
+        add_pie(hole = 0.6) %>%
+        layout(title = chartTitle,
+               xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+               yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+}
+
+
+```
+
+## Developers, Repositories, Gitpushes  `r  get_latest_year_and_quarter(developers, "year", "quarter")`
+
+###  Developers/GitHub users
+For the developers, we will use the [developers dataset](https://raw.githubusercontent.com/github/innovationgraph/main/data/developers.csv). The dataset contains the number of GitHub users in each country per quarter.I’ll use the latest year and quarter `r  get_latest_year_and_quarter(developers, "year", "quarter")` . I also use world spatial data from tmap package. The data set contains many variables but of interest to us is the spatial and population data. Plotting the number of developers per 100,000 people will give us a better understanding of the distribution of developers across the continent. Since plotting raw numbers of developers will be misleading due to the differences in population sizes across countries. This has a limitation but it’s a better metric.
+
+
+```{r, fig.width=4, fig.height=4}
+latest_developers_sf <- process_df_to_sf(developers, africa,
+                                         iso2_column_name = "iso2_code",
+                                         freq_column = "developers", 
+                                         pop_est_column = "pop_est")
+
+devs_100k <- create_interactive_map(data_sf = latest_developers_sf, 
+                                    fill_var = devs_per_100k,
+                                    tooltip_var = name,
+                                    return_girafe = TRUE,
+                                    aspect_ratio = 1,
+                                    point_size = 20)
+devs_100k
+```
+
+###  Git Pushes per Developer `r  get_latest_year_and_quarter(git_repos, "year", "quarter")`
+
+The [dataset](https://raw.githubusercontent.com/github/innovationgraph/main/data/git_pushes.csv) on git pushes offers a breakdown into the volume of Git pushes per quarter for each country. To facilitate a standardized comparison, I intend to calculate the average number of Git pushes per developer/GitHub user. However, it's crucial to acknowledge a significant limitation of this approach: a small contingent of exceptionally active developers can skew the average. This phenomenon, where a handful of super active developers disproportionately influence the overall metrics, may obscure the true distribution of coding activity across the broader GitHub community
+
+```{r, fig.width=4, fig.height=4}
+git_pushes_sf <- process_df_to_sf(git_pushes, africa,
+                                  iso2_column_name = "iso2_code",
+                                  freq_column = "git_pushes", 
+                                  pop_est_column = "developers",
+                                  per = 1)
+
+github_pushes_map <- create_interactive_map(data_sf = git_pushes_sf, 
+                                            fill_var = devs_per_100k,
+                                            tooltip_var = name,
+                                            plot_title = "Average GitHub pushes per developer",
+                                            return_girafe = TRUE,
+                                            aspect_ratio = 1,
+                                            point_size = 20)
+github_pushes_map
+```
+
+###  GitHub Repositories per Developer `r  get_latest_year_and_quarter(git_repos, "year", "quarter")`
+
+For this [GitHub repositories dataset](https://raw.githubusercontent.com/github/innovationgraph/main/data/repositories.csv). I will use the same method of standardisation as used in the previous section on Git pushes which is number of repositories per developer. 
+
+```{r, fig.width=5, fig.height=5}
+
+
+git_repos_sf <- process_df_to_sf(git_repos, africa,
+                                 iso2_column_name = "iso2_code",
+                                 freq_column = "repositories", 
+                                 pop_est_column = "developers",
+                                 per = 1)
+
+github_repos_map <- create_interactive_map(data_sf = git_repos_sf,
+                                           fill_var = devs_per_100k,
+                                           tooltip_var = name,
+                                           plot_title = "Average GitHub repositories  per developer",
+                                           return_girafe = TRUE,
+                                           aspect_ratio = 1,
+                                           point_size = 20)
+
+
+
+github_repos_map
+```
+
+
+
+
+
+
+
+## Programming languages `r  get_latest_year_and_quarter(programming_languages, "year", "quarter")`
+
+GitHub also provides [programming languages dataset](https://raw.githubusercontent.com/github/innovationgraph/main/data/languages.csv). The breakdown provided in the data set is based on the number of pushers per programming language per quarter.  The standardisation for this data set is % of developers(number per 100) that pushed any code in the language of interest  per quarter.
+
+
+### Top 10 programming languages
+
+It will be interesting to see the distribution of programming languages across the continent. Since there are so many of them. I'll visualize top 15 programming languages by the number of pushers for the latest quarter.  Java script is the most popular programming language in Africa, shows that of good number of public projects are largely related to web development.It also makes sense that shell scripting comes second as it is  very popular language for automating tasks/installing/system admin in the Linux environments. Python is also popular in Africa, which is not surprising given its popularity in the global programming community especially in data science & web applications. 
+
+
+- Top 10 programming languages by the number  pushers
+
+```{r, fig.width=5, fig.height=5}
+latest_developers_sf_top <- top_n(latest_developers_sf, 10, devs_per_100k)
+programming_languages_sf <- process_df_to_sf(programming_languages,
+                                             spatial_df = africa,
+                                             iso2_column_name = "iso2_code",
+                                             freq_column = "num_pushers", 
+                                             pop_est_column = "developers",
+                                             group_col = "language",
+                                             per = 100,
+                                             round_digits = 2)
+programming_languages_dt <- as.data.table(programming_languages_sf)
+programming_languages_dt[, geomety := NULL]
+programming_languages_dt[, name := as.character(name)]
+
+## top 10 programming languages by the number of pushers
+top_10 <- programming_languages_dt[,
+                                  .(num_pushers = sum(num_pushers)),
+                                  by = language][order(-num_pushers), .SD[1:15]]
+
+library(plotly)
+
+#plot pie chart for top_10
+top_lan <-donhunt_chart(data = top_10, 
+                        labelColumn = "language", 
+                        valueColumn = "num_pushers", 
+                        chartTitle = "Top 15 Programming Languages by number of pushers in Africa")
+
+htmltools ::div(top_lan, align = "center") 
+
+```
+
+
+### Top 3 programming languages
+
+- Top 3 programming languages by the number  pushers in each country
+- Presents only top ten countries by the number of developers per 100,000 people
+
+```{r, fig.width=8, fig.height=4.5}
+
+number_pushers_lan <- programming_languages_dt[
+    iso2_code %in% latest_developers_sf_top$iso2_code]
+
+number_pushers_lan <- number_pushers_lan[devs_per_100k != 0,]
+
+## get top 3 languages with highest number of developers per 100k per country
+top3_lan_per_country <- number_pushers_lan[order(-devs_per_100k), .SD[1:3],  by = name]
+
+
+plot_interactive_bar(data = top3_lan_per_country,
+                     x_var = name,
+                     y_var = devs_per_100k,
+                     fill_var = language,
+                     title = "Top 3 languages with highest % of developers that pushed code to GitHub",)
+
+
+```
+
+
+
+
+
+### Top 6 Programming Languages in Africa: Percentage of developers distribution pushing code to GitHub
+
+
+```{r, fig.width=7, fig.height=7}
+# Merge the programming languages data with the spatial data
+setorder(top_10, -num_pushers)
+programming_languages_sf_top6 <- programming_languages_sf %>%
+    filter(language %in% top_10$language[1:6])
+
+
+create_interactive_map(data_sf = programming_languages_sf_top6,
+                       fill_var = devs_per_100k,
+                       tooltip_var = name,
+                       facet_var = "language",
+                       plot_title = "Distribution of top 6 programming languages in Africa (% of developers that pushed code to GitHub)")
+
+```
+
+
+### A look at R: Used for analytics and statistics
+
+- Analytics/Data Science
+- Python presented on the map before this
+
+```{r}
+#"R", "Python", "Java",
+filter_sf_obj <- function(sf_obj, languages) {
+    sf_obj %>% 
+        filter(language %in% languages)
+}
+
+
+r_pyh <- filter_sf_obj(programming_languages_sf, 
+                       languages = c("R"))
+
+create_interactive_map(data_sf =r_pyh ,
+                       fill_var = num_pushers,
+                       tooltip_var = name,
+                       #facet_var = "language",
+                       plot_title = "Distribution of R users in Africa")
+
+```
+
+### Number of pushers; A look at Java & Swift : Languages  as a proxy  for mobile app development
+
+```{r}
+#"R", "Python", "Java",
+java_swift <- filter_sf_obj(programming_languages_sf,
+                            languages = c("Java", "Swift"))
+
+
+create_interactive_map(data_sf =java_swift ,
+                       fill_var = num_pushers,
+                       tooltip_var = name,
+                       facet_var = "language",
+                       plot_title = "Countries leading in Java or Swift")
+
+```
+

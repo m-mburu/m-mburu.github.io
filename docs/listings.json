@@ -2,6 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/github_use/github_use.html",
+      "/posts/github_use/africa_github_use.html",
       "/posts/cbk_data/kenya_income_exp.html",
       "/posts/welcome/index.html",
       "/posts/breast_cancer_prediction/shap_vals.html",

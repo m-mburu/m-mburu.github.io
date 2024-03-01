@@ -119,7 +119,7 @@ The graph reflects Kenya's recurrent expenditure categories, each revealing its 
 
 4.  **Foreign Interest:** As payments on foreign debt, these have not risen as sharply as domestic interest, but they remain a significant part of the expenditure. With the Kenyan shilling's depreciation against major currencies, the cost of servicing foreign debt in local currency terms increases, placing additional strain on government finances. This depreciation makes foreign interest payments more expensive and can exacerbate the debt burden, emphasizing the need for prudent foreign debt management.
 
-5.  **Recurrent Expenditure Other:** This category covers all other regular government operational costs, rising moderately without a direct impact on the debt cycle.
+5.  **Recurrent Expenditure Other:** This category covers all other regular government operational costs, rising steadily over the years.
 
 The substantial rise in domestic interest payments represents a double-edged sword: it directly feeds into the debt cycle, with the government potentially borrowing more, and risks economic vitality by crowding out private sector borrowers. This situation underscores the importance of a well-calibrated debt management strategy that considers the health of the private sector and the broader economy, especially in light of the challenges posed by the depreciation of the Kenyan shilling.
 
