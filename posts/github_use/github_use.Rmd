@@ -3,8 +3,10 @@ title: "GitHub Innovation Graph data"
 author: "Mburu"
 date: "2024-02-29"
 output:
-     html_document:
-         code_folding: hide
+    html_document:
+        include:
+            in_header: world.html
+
 ---
 
 ```{r setup, include=FALSE}
@@ -18,7 +20,7 @@ knitr::opts_chunk$set(echo = TRUE,
 
 ## Introduction
 
-I have done an analysis of [GitHub Innovation Graph data](https://github.com/github/innovationgraph/tree/main) for Africa and this is the same analysis for the world. It's a good thind to see where we are compared to the rest of the world.
+This is a similar analysis to my previous which looked into GitHub use in Africa. I used  [GitHub Innovation Graph data](https://github.com/github/innovationgraph/tree/main) to see how GitHub public repositories activity is distributed around the world.
 
 ```{r}
 #| code-fold: true
