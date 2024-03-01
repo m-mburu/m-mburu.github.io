@@ -346,7 +346,7 @@ htmltools ::div(top_lan, align = "center")
 -   Top 3 programming languages by the number pushers in each country
 -   Presents only top ten countries by the number of developers per 100,000 people
 
-```{r, fig.width=8, fig.height=4.5}
+```{r, fig.width=9, fig.height=5}
 
 number_pushers_lan <- programming_languages_dt[
     iso2_code %in% latest_developers_sf_top$iso2_code]
