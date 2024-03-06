@@ -1,0 +1,2622 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.549">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Mburu">
+<meta name="dcterms.date" content="2024-03-04">
+
+<title>Personal Blog - Introduction to Deep Learning with Keras</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../milkyway.jpeg" rel="icon" type="image/jpeg">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-BFNZ97VTLJ"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
+</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../../style.css">
+<meta property="og:title" content="Personal Blog - Introduction to Deep Learning with Keras">
+<meta property="og:site_name" content="Personal Blog">
+<meta name="twitter:title" content="Personal Blog - Introduction to Deep Learning with Keras">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Personal Blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../datacamp.html"> 
+<span class="menu-text">Data Camp Courses</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/m-mburu"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/mmburu_w"> <i class="bi bi-twitter" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introducing-keras" id="toc-introducing-keras" class="nav-link active" data-scroll-target="#introducing-keras">Introducing Keras</a>
+  <ul>
+  <li><a href="#hello-nets" id="toc-hello-nets" class="nav-link" data-scroll-target="#hello-nets">Hello nets!</a></li>
+  <li><a href="#counting-parameters" id="toc-counting-parameters" class="nav-link" data-scroll-target="#counting-parameters">Counting parameters</a>
+  <ul class="collapse">
+  <li><a href="#question" id="toc-question" class="nav-link" data-scroll-target="#question">Question</a></li>
+  </ul></li>
+  <li><a href="#build-as-shown" id="toc-build-as-shown" class="nav-link" data-scroll-target="#build-as-shown">Build as shown!</a></li>
+  <li><a href="#specifying-a-model" id="toc-specifying-a-model" class="nav-link" data-scroll-target="#specifying-a-model">Specifying a model</a></li>
+  <li><a href="#training" id="toc-training" class="nav-link" data-scroll-target="#training">Training</a></li>
+  <li><a href="#predicting-the-orbit" id="toc-predicting-the-orbit" class="nav-link" data-scroll-target="#predicting-the-orbit">Predicting the orbit!</a></li>
+  </ul></li>
+  <li><a href="#going-deeper" id="toc-going-deeper" class="nav-link" data-scroll-target="#going-deeper">Going Deeper</a>
+  <ul>
+  <li><a href="#exploring-dollar-bills" id="toc-exploring-dollar-bills" class="nav-link" data-scroll-target="#exploring-dollar-bills">Exploring dollar bills</a></li>
+  <li><a href="#a-binary-classification-model" id="toc-a-binary-classification-model" class="nav-link" data-scroll-target="#a-binary-classification-model">A binary classification model</a></li>
+  <li><a href="#is-this-dollar-bill-fake" id="toc-is-this-dollar-bill-fake" class="nav-link" data-scroll-target="#is-this-dollar-bill-fake">Is this dollar bill fake ?</a></li>
+  <li><a href="#a-multi-class-model" id="toc-a-multi-class-model" class="nav-link" data-scroll-target="#a-multi-class-model">A multi-class model</a></li>
+  <li><a href="#prepare-your-dataset" id="toc-prepare-your-dataset" class="nav-link" data-scroll-target="#prepare-your-dataset">Prepare your dataset</a></li>
+  <li><a href="#training-on-dart-throwers" id="toc-training-on-dart-throwers" class="nav-link" data-scroll-target="#training-on-dart-throwers">Training on dart throwers</a></li>
+  <li><a href="#softmax-predictions" id="toc-softmax-predictions" class="nav-link" data-scroll-target="#softmax-predictions">Softmax predictions</a></li>
+  <li><a href="#an-irrigation-machine" id="toc-an-irrigation-machine" class="nav-link" data-scroll-target="#an-irrigation-machine">An irrigation machine</a></li>
+  <li><a href="#training-with-multiple-labels" id="toc-training-with-multiple-labels" class="nav-link" data-scroll-target="#training-with-multiple-labels">Training with multiple labels</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Introduction to Deep Learning with Keras</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Mburu </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 4, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introducing-keras" class="level1">
+<h1>Introducing Keras</h1>
+<section id="hello-nets" class="level2">
+<h2 class="anchored" data-anchor-id="hello-nets">Hello nets!</h2>
+<p>You’re going to build a simple neural network to get a feeling of how quickly it is to accomplish this in Keras.</p>
+<p>You will build a network that takes two numbers as an input, passes them through a hidden layer of 10 neurons, and finally outputs a single non-constrained number.</p>
+<p>A non-constrained output can be obtained by avoiding setting an activation function in the output layer. This is useful for problems like regression, when we want our output to be able to take any non-constrained value.</p>
+<p>include hello.nets.png <img src="image/hello_nets.png" class="img-fluid"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import the Sequential model and Dense layer</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.models <span class="im">import</span> Sequential</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.layers <span class="im">import</span> Dense</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a Sequential model</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential()</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Add an input layer and a hidden layer with 10 neurons</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">10</span>, input_shape<span class="op">=</span>(<span class="dv">2</span>,), activation<span class="op">=</span><span class="st">"relu"</span>))</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a 1-neuron output layer</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">1</span>))</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarise your model</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>model.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Model: "sequential"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ dense (Dense)               (None, 10)                30        
+                                                                 
+ dense_1 (Dense)             (None, 1)                 11        
+                                                                 
+=================================================================
+Total params: 41 (164.00 Byte)
+Trainable params: 41 (164.00 Byte)
+Non-trainable params: 0 (0.00 Byte)
+_________________________________________________________________</code></pre>
+</div>
+</div>
+</section>
+<section id="counting-parameters" class="level2">
+<h2 class="anchored" data-anchor-id="counting-parameters">Counting parameters</h2>
+<p>You’ve just created a neural network. But you’re going to create a new one now, taking some time to think about the weights of each layer. The Keras Dense layer and the Sequential model are already loaded for you to use.</p>
+<p>This is the network you will be creating:</p>
+<p><img src="image/counting_parameters.png" class="img-fluid"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instantiate a new Sequential model</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a Dense layer with five neurons and three inputs</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">5</span>, input_shape<span class="op">=</span>(<span class="dv">3</span>,), activation<span class="op">=</span><span class="st">"relu"</span>))</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a final Dense layer with one neuron and no activation</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">1</span>))</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize your model</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>model.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Model: "sequential_1"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ dense_2 (Dense)             (None, 5)                 20        
+                                                                 
+ dense_3 (Dense)             (None, 1)                 6         
+                                                                 
+=================================================================
+Total params: 26 (104.00 Byte)
+Trainable params: 26 (104.00 Byte)
+Non-trainable params: 0 (0.00 Byte)
+_________________________________________________________________</code></pre>
+</div>
+</div>
+<section id="question" class="level3">
+<h3 class="anchored" data-anchor-id="question">Question</h3>
+<ul>
+<li><p>Given the model you just built, which answer is correct regarding the number of weights (parameters) in the hidden layer?</p></li>
+<li><p><strong><em>There are 20 parameters, 15 from the connections of our inputs to our hidden layer and 5 from the bias weight of each neuron in the hidden layer.</em></strong></p></li>
+</ul>
+</section>
+</section>
+<section id="build-as-shown" class="level2">
+<h2 class="anchored" data-anchor-id="build-as-shown">Build as shown!</h2>
+<p>You will take on a final challenge before moving on to the next lesson. Build the network shown in the picture below. Prove your mastered Keras basics in no time!</p>
+<p><img src="image/build_as_shown.png" class="img-fluid"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Instantiate a Sequential model</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential()</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the input and hidden layer</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">3</span>, input_shape <span class="op">=</span> (<span class="dv">2</span>,)))</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the ouput layer</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="specifying-a-model" class="level2">
+<h2 class="anchored" data-anchor-id="specifying-a-model">Specifying a model</h2>
+<p>You will build a simple regression model to predict the orbit of the meteor!</p>
+<p>Your training data consist of measurements taken at time steps from -10 minutes before the impact region to +10 minutes after. Each time step can be viewed as an X coordinate in our graph, which has an associated position Y for the meteor orbit at that time step.</p>
+<p>Note that you can view this problem as approximating a quadratic function via the use of neural networks.</p>
+<p><img src="image/meteor_orbit_3.jpg" class="img-fluid"></p>
+<p>This data is stored in two numpy arrays: one called time_steps , what we call features, and another called y_positions, with the labels. Go on and build your model! It should be able to predict the y positions for the meteor orbit at future time steps.</p>
+<p>Keras Sequential model and Dense layers are available for you to use.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instantiate a Sequential model</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential()</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a Dense layer with 50 neurons and an input of 1 neuron</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">50</span>, input_shape<span class="op">=</span>(<span class="dv">1</span>,), activation<span class="op">=</span><span class="st">'relu'</span>))</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Add two Dense layers with 50 neurons and relu activation</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">50</span>, activation<span class="op">=</span> <span class="st">"relu"</span>))</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">50</span>, activation<span class="op">=</span> <span class="st">"relu"</span>))</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># End your model with a Dense layer and no activation</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="training" class="level2">
+<h2 class="anchored" data-anchor-id="training">Training</h2>
+<p>You’re going to train your first model in this course, and for a good cause!</p>
+<p>Remember that before training your Keras models you need to compile them. This can be done with the .compile() method. The .compile() method takes arguments such as the optimizer, used for weight updating, and the loss function, which is what we want to minimize. Training your model is as easy as calling the .fit() method, passing on the features, labels and a number of epochs to train for.</p>
+<p>The regression model you built in the previous exercise is loaded for you to use, along with the time_steps and y_positions data. Train it and evaluate it on this very same data, let’s see if your model can learn the meteor’s trajectory.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>time_steps_script <span class="op">=</span> <span class="st">"time_steps.py"</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> <span class="st">'path_to_your_script.py'</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(time_steps_script, <span class="st">'r'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    script_content <span class="op">=</span> <span class="bu">file</span>.read()</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="bu">exec</span>(script_content)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile your model</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(optimizer <span class="op">=</span> <span class="st">"adam"</span>, loss <span class="op">=</span> <span class="st">"mse"</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Training started..., this can take a while:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Training started..., this can take a while:</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit your model on your data for 30 epochs</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>model.fit(time_steps,y_positions, epochs <span class="op">=</span> <span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Epoch 1/30
+
+ 1/63 [..............................] - ETA: 30s - loss: 2775.1909
+63/63 [==============================] - 1s 768us/step - loss: 1285.8424
+Epoch 2/30
+
+ 1/63 [..............................] - ETA: 0s - loss: 365.7159
+63/63 [==============================] - 0s 705us/step - loss: 180.0767
+Epoch 3/30
+
+ 1/63 [..............................] - ETA: 0s - loss: 115.6300
+63/63 [==============================] - 0s 684us/step - loss: 132.3570
+Epoch 4/30
+
+ 1/63 [..............................] - ETA: 0s - loss: 132.3903
+63/63 [==============================] - 0s 684us/step - loss: 114.4773
+Epoch 5/30
+
+ 1/63 [..............................] - ETA: 0s - loss: 132.3827
+63/63 [==============================] - 0s 696us/step - loss: 94.6175
+Epoch 6/30
+
+ 1/63 [..............................] - ETA: 0s - loss: 79.9037
+63/63 [==============================] - 0s 694us/step - loss: 71.6062
+Epoch 7/30
+
+ 1/63 [..............................] - ETA: 0s - loss: 51.0191
+63/63 [==============================] - 0s 662us/step - loss: 51.7562
+Epoch 8/30
+
+ 1/63 [..............................] - ETA: 0s - loss: 52.1241
+63/63 [==============================] - 0s 694us/step - loss: 32.2617
+Epoch 9/30
+
+ 1/63 [..............................] - ETA: 0s - loss: 25.0546
+63/63 [==============================] - 0s 685us/step - loss: 20.6228
+Epoch 10/30
+
+ 1/63 [..............................] - ETA: 0s - loss: 22.4749
+63/63 [==============================] - 0s 735us/step - loss: 12.3750
+Epoch 11/30
+
+ 1/63 [..............................] - ETA: 0s - loss: 7.5390
+63/63 [==============================] - 0s 697us/step - loss: 7.5316
+Epoch 12/30
+
+ 1/63 [..............................] - ETA: 0s - loss: 5.7643
+63/63 [==============================] - 0s 680us/step - loss: 4.9297
+Epoch 13/30
+
+ 1/63 [..............................] - ETA: 0s - loss: 3.6449
+63/63 [==============================] - 0s 684us/step - loss: 3.3641
+Epoch 14/30
+
+ 1/63 [..............................] - ETA: 0s - loss: 2.6024
+63/63 [==============================] - 0s 673us/step - loss: 2.4179
+Epoch 15/30
+
+ 1/63 [..............................] - ETA: 0s - loss: 1.2796
+63/63 [==============================] - 0s 691us/step - loss: 1.6749
+Epoch 16/30
+
+ 1/63 [..............................] - ETA: 0s - loss: 1.1638
+63/63 [==============================] - 0s 722us/step - loss: 1.3813
+Epoch 17/30
+
+ 1/63 [..............................] - ETA: 0s - loss: 1.6804
+63/63 [==============================] - 0s 688us/step - loss: 0.9672
+Epoch 18/30
+
+ 1/63 [..............................] - ETA: 0s - loss: 0.8118
+63/63 [==============================] - 0s 687us/step - loss: 0.8796
+Epoch 19/30
+
+ 1/63 [..............................] - ETA: 0s - loss: 1.0634
+63/63 [==============================] - 0s 670us/step - loss: 0.6549
+Epoch 20/30
+
+ 1/63 [..............................] - ETA: 0s - loss: 0.6729
+63/63 [==============================] - 0s 664us/step - loss: 0.4925
+Epoch 21/30
+
+ 1/63 [..............................] - ETA: 0s - loss: 0.8981
+63/63 [==============================] - 0s 681us/step - loss: 0.4287
+Epoch 22/30
+
+ 1/63 [..............................] - ETA: 0s - loss: 0.3971
+63/63 [==============================] - 0s 684us/step - loss: 0.3353
+Epoch 23/30
+
+ 1/63 [..............................] - ETA: 0s - loss: 0.1550
+63/63 [==============================] - 0s 671us/step - loss: 0.3501
+Epoch 24/30
+
+ 1/63 [..............................] - ETA: 0s - loss: 0.2447
+63/63 [==============================] - 0s 685us/step - loss: 0.3725
+Epoch 25/30
+
+ 1/63 [..............................] - ETA: 0s - loss: 0.1964
+63/63 [==============================] - 0s 685us/step - loss: 0.2469
+Epoch 26/30
+
+ 1/63 [..............................] - ETA: 0s - loss: 0.0927
+63/63 [==============================] - 0s 671us/step - loss: 0.2161
+Epoch 27/30
+
+ 1/63 [..............................] - ETA: 0s - loss: 0.3007
+63/63 [==============================] - 0s 687us/step - loss: 0.2065
+Epoch 28/30
+
+ 1/63 [..............................] - ETA: 0s - loss: 0.1872
+63/63 [==============================] - 0s 682us/step - loss: 0.1567
+Epoch 29/30
+
+ 1/63 [..............................] - ETA: 0s - loss: 0.2019
+63/63 [==============================] - 0s 664us/step - loss: 0.1577
+Epoch 30/30
+
+ 1/63 [..............................] - ETA: 0s - loss: 0.0871
+63/63 [==============================] - 0s 665us/step - loss: 0.1458
+&lt;keras.src.callbacks.History object at 0x7f862c74dea0&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate your model </span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Final loss value:"</span>,model.evaluate(time_steps, y_positions))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ 1/63 [..............................] - ETA: 4s - loss: 1.3479
+63/63 [==============================] - 0s 589us/step - loss: 0.1751
+Final loss value: 0.17512193322181702</code></pre>
+</div>
+</div>
+</section>
+<section id="predicting-the-orbit" class="level2">
+<h2 class="anchored" data-anchor-id="predicting-the-orbit">Predicting the orbit!</h2>
+<p>You’ve already trained a model that approximates the orbit of the meteor approaching Earth and it’s loaded for you to use.</p>
+<p>Since you trained your model for values between -10 and 10 minutes, your model hasn’t yet seen any other values for different time steps. You will now visualize how your model behaves on unseen data.</p>
+<p>If you want to check the source code of plot_orbit, paste show_code(plot_orbit) into the console.</p>
+<p>Hurry up, the Earth is running out of time!</p>
+<p>Remember np.arange(x,y) produces a range of values from x to y-1. That is the [x, y) interval.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict the twenty minutes orbit</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>twenty_min_orbit <span class="op">=</span> model.predict(np.arange(<span class="op">-</span><span class="dv">10</span>, <span class="dv">11</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+1/1 [==============================] - ETA: 0s
+1/1 [==============================] - 0s 57ms/step</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the twenty minute orbit </span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>plot_orbit(twenty_min_orbit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="intro_to_keras_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict the eighty minute orbit</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>eighty_min_orbit <span class="op">=</span> model.predict(np.arange(<span class="op">-</span><span class="dv">40</span>, <span class="dv">41</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+1/3 [=========&gt;....................] - ETA: 0s
+3/3 [==============================] - 0s 749us/step</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the eighty minute orbit </span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>plot_orbit(eighty_min_orbit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="intro_to_keras_files/figure-html/unnamed-chunk-7-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="going-deeper" class="level1">
+<h1>Going Deeper</h1>
+<section id="exploring-dollar-bills" class="level2">
+<h2 class="anchored" data-anchor-id="exploring-dollar-bills">Exploring dollar bills</h2>
+<p>You will practice building classification models in Keras with the Banknote Authentication dataset.</p>
+<p>Your goal is to distinguish between real and fake dollar bills. In order to do this, the dataset comes with 4 features: variance,skewness,kurtosis and entropy. These features are calculated by applying mathematical operations over the dollar bill images. The labels are found in the dataframe’s class column.</p>
+<p><img src="image/dollar_bills.png" class="img-fluid"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>banknotes <span class="op">=</span> pd.read_csv(<span class="st">"data/banknotes.csv"</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Import seaborn</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Use pairplot and set the hue to be our class column</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>sns.pairplot(banknotes, hue<span class="op">=</span> <span class="st">"class"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="intro_to_keras_files/figure-html/unnamed-chunk-8-5.png" class="img-fluid figure-img" width="527"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Describe the data</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Dataset stats: </span><span class="ch">\n</span><span class="st">'</span>,banknotes.describe())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Dataset stats: 
+            variace     skewness     curtosis      entropy        class
+count  1372.000000  1372.000000  1372.000000  1372.000000  1372.000000
+mean      0.433735     1.922353     1.397627    -1.191657     0.444606
+std       2.842763     5.869047     4.310030     2.101013     0.497103
+min      -7.042100   -13.773100    -5.286100    -8.548200     0.000000
+25%      -1.773000    -1.708200    -1.574975    -2.413450     0.000000
+50%       0.496180     2.319650     0.616630    -0.586650     0.000000
+75%       2.821475     6.814625     3.179250     0.394810     1.000000
+max       6.824800    12.951600    17.927400     2.449500     1.000000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count the number of observations per class</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Observations per class: </span><span class="ch">\n</span><span class="st">'</span>,banknotes[<span class="st">"class"</span>].value_counts())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Observations per class: 
+ class
+0    762
+1    610
+Name: count, dtype: int64</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="intro_to_keras_files/figure-html/unnamed-chunk-8-6.png" class="img-fluid figure-img" width="1016"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="a-binary-classification-model" class="level2">
+<h2 class="anchored" data-anchor-id="a-binary-classification-model">A binary classification model</h2>
+<p>Now that you know what the Banknote Authentication dataset looks like, we’ll build a simple model to distinguish between real and fake bills.</p>
+<p>You will perform binary classification by using a single neuron as an output. The input layer will have 4 neurons since we have 4 features in our dataset. The model’s output will be a value constrained between 0 and 1.</p>
+<p>We will interpret this output number as the probability of our input variables coming from a fake dollar bill, with 1 meaning we are certain it’s a fake bill.</p>
+<p><img src="image/model_chapter2_binary_classification.jpeg" class="img-fluid"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import the sequential model and dense layer</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.models <span class="im">import</span> Sequential</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.layers <span class="im">import</span> Dense</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a sequential model</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential()</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a dense layer </span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">1</span>, input_shape<span class="op">=</span>(<span class="dv">4</span>,), activation<span class="op">=</span> <span class="st">"sigmoid"</span>))</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile your model</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(loss<span class="op">=</span><span class="st">'binary_crossentropy'</span>, optimizer<span class="op">=</span><span class="st">"sgd"</span>, metrics<span class="op">=</span>[<span class="st">'accuracy'</span>])</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Display a summary of your model</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>model.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Model: "sequential_4"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ dense_10 (Dense)            (None, 1)                 5         
+                                                                 
+=================================================================
+Total params: 5 (20.00 Byte)
+Trainable params: 5 (20.00 Byte)
+Non-trainable params: 0 (0.00 Byte)
+_________________________________________________________________</code></pre>
+</div>
+</div>
+</section>
+<section id="is-this-dollar-bill-fake" class="level2">
+<h2 class="anchored" data-anchor-id="is-this-dollar-bill-fake">Is this dollar bill fake ?</h2>
+<p>You are now ready to train your model and check how well it performs when classifying new bills! The dataset has already been partitioned into features: X_train &amp; X_test, and labels: y_train &amp; y_test.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Separate features and labels</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> banknotes.drop(<span class="st">'class'</span>, axis<span class="op">=</span><span class="dv">1</span>)  <span class="co"># Features</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> banknotes[<span class="st">'class'</span>]  <span class="co"># Labels</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the dataset into training and testing sets</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Train your model for 20 epochs</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>model.fit(X_train, y_train, epochs <span class="op">=</span> <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Epoch 1/20
+
+ 1/35 [..............................] - ETA: 6s - loss: 1.5712 - accuracy: 0.5312
+35/35 [==============================] - 0s 642us/step - loss: 1.6142 - accuracy: 0.5324
+Epoch 2/20
+
+ 1/35 [..............................] - ETA: 0s - loss: 1.6116 - accuracy: 0.5625
+35/35 [==============================] - 0s 606us/step - loss: 0.9921 - accuracy: 0.6418
+Epoch 3/20
+
+ 1/35 [..............................] - ETA: 0s - loss: 0.8690 - accuracy: 0.5938
+35/35 [==============================] - 0s 651us/step - loss: 0.6737 - accuracy: 0.7101
+Epoch 4/20
+
+ 1/35 [..............................] - ETA: 0s - loss: 0.6955 - accuracy: 0.7188
+35/35 [==============================] - 0s 759us/step - loss: 0.4869 - accuracy: 0.7794
+Epoch 5/20
+
+ 1/35 [..............................] - ETA: 0s - loss: 0.5855 - accuracy: 0.6875
+35/35 [==============================] - 0s 695us/step - loss: 0.3778 - accuracy: 0.8195
+Epoch 6/20
+
+ 1/35 [..............................] - ETA: 0s - loss: 0.2276 - accuracy: 0.9688
+35/35 [==============================] - 0s 566us/step - loss: 0.3102 - accuracy: 0.8450
+Epoch 7/20
+
+ 1/35 [..............................] - ETA: 0s - loss: 0.4247 - accuracy: 0.7812
+35/35 [==============================] - 0s 574us/step - loss: 0.2661 - accuracy: 0.8742
+Epoch 8/20
+
+ 1/35 [..............................] - ETA: 0s - loss: 0.2014 - accuracy: 0.9375
+35/35 [==============================] - 0s 559us/step - loss: 0.2358 - accuracy: 0.8943
+Epoch 9/20
+
+ 1/35 [..............................] - ETA: 0s - loss: 0.2287 - accuracy: 0.9062
+35/35 [==============================] - 0s 582us/step - loss: 0.2132 - accuracy: 0.9098
+Epoch 10/20
+
+ 1/35 [..............................] - ETA: 0s - loss: 0.2015 - accuracy: 0.9688
+35/35 [==============================] - 0s 558us/step - loss: 0.1961 - accuracy: 0.9225
+Epoch 11/20
+
+ 1/35 [..............................] - ETA: 0s - loss: 0.1588 - accuracy: 0.9688
+35/35 [==============================] - 0s 561us/step - loss: 0.1828 - accuracy: 0.9325
+Epoch 12/20
+
+ 1/35 [..............................] - ETA: 0s - loss: 0.1421 - accuracy: 0.9688
+35/35 [==============================] - 0s 603us/step - loss: 0.1721 - accuracy: 0.9389
+Epoch 13/20
+
+ 1/35 [..............................] - ETA: 0s - loss: 0.1316 - accuracy: 0.9688
+35/35 [==============================] - 0s 611us/step - loss: 0.1631 - accuracy: 0.9426
+Epoch 14/20
+
+ 1/35 [..............................] - ETA: 0s - loss: 0.1159 - accuracy: 1.0000
+35/35 [==============================] - 0s 602us/step - loss: 0.1557 - accuracy: 0.9435
+Epoch 15/20
+
+ 1/35 [..............................] - ETA: 0s - loss: 0.1163 - accuracy: 0.9688
+35/35 [==============================] - 0s 603us/step - loss: 0.1492 - accuracy: 0.9480
+Epoch 16/20
+
+ 1/35 [..............................] - ETA: 0s - loss: 0.1498 - accuracy: 0.9375
+35/35 [==============================] - 0s 691us/step - loss: 0.1438 - accuracy: 0.9508
+Epoch 17/20
+
+ 1/35 [..............................] - ETA: 0s - loss: 0.1222 - accuracy: 0.9375
+35/35 [==============================] - 0s 724us/step - loss: 0.1389 - accuracy: 0.9508
+Epoch 18/20
+
+ 1/35 [..............................] - ETA: 0s - loss: 0.0910 - accuracy: 1.0000
+35/35 [==============================] - 0s 707us/step - loss: 0.1344 - accuracy: 0.9526
+Epoch 19/20
+
+ 1/35 [..............................] - ETA: 0s - loss: 0.1292 - accuracy: 0.9688
+35/35 [==============================] - 0s 671us/step - loss: 0.1306 - accuracy: 0.9526
+Epoch 20/20
+
+ 1/35 [..............................] - ETA: 0s - loss: 0.0769 - accuracy: 1.0000
+35/35 [==============================] - 0s 594us/step - loss: 0.1270 - accuracy: 0.9535
+&lt;keras.src.callbacks.History object at 0x7f85caaf9720&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate your model accuracy on the test set</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>accuracy <span class="op">=</span> model.evaluate(X_test, y_test)[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+1/9 [==&gt;...........................] - ETA: 0s - loss: 0.1532 - accuracy: 0.9375
+9/9 [==============================] - 0s 788us/step - loss: 0.1499 - accuracy: 0.9455</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print accuracy</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Accuracy:'</span>, accuracy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Accuracy: 0.9454545378684998</code></pre>
+</div>
+</div>
+</section>
+<section id="a-multi-class-model" class="level2">
+<h2 class="anchored" data-anchor-id="a-multi-class-model">A multi-class model</h2>
+<p>You’re going to build a model that predicts who threw which dart only based on where that dart landed! (That is the dart’s x and y coordinates on the board.)</p>
+<p>This problem is a multi-class classification problem since each dart can only be thrown by one of 4 competitors. So classes/labels are mutually exclusive, and therefore we can build a neuron with as many output as competitors and use the softmax activation function to achieve a total sum of probabilities of 1 over all competitors.</p>
+<p>The Sequential model and Dense layers are already imported for you to use.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instantiate a sequential model</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential()</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Add 3 dense layers of 128, 64 and 32 neurons each</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">128</span>, input_shape<span class="op">=</span>(<span class="dv">2</span>,), activation<span class="op">=</span><span class="st">'relu'</span>))</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">64</span>, activation<span class="op">=</span><span class="st">'relu'</span>))</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">32</span>, activation<span class="op">=</span><span class="st">'relu'</span>))</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a dense layer with as many neurons as competitors</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">4</span>, activation<span class="op">=</span> <span class="st">"softmax"</span>))</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile your model using categorical_crossentropy loss</span></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(loss<span class="op">=</span> <span class="st">"categorical_crossentropy"</span>,</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>              optimizer<span class="op">=</span><span class="st">'adam'</span>,</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>              metrics<span class="op">=</span>[<span class="st">'accuracy'</span>])</span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>              </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="prepare-your-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="prepare-your-dataset">Prepare your dataset</h2>
+<p>In the console you can check that your labels, darts.competitor are not yet in a format to be understood by your network. They contain the names of the competitors as strings. You will first turn these competitors into unique numbers,then use the to_categorical() function from keras.utils to turn these numbers into their one-hot encoded representation.</p>
+<p>This is useful for multi-class classification problems, since there are as many output neurons as classes and for every observation in our dataset we just want one of the neurons to be activated.</p>
+<p>The dart’s dataset is loaded as darts. Pandas is imported as pd. Let’s prepare this dataset!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>darts <span class="op">=</span> pd.read_csv(<span class="st">"data/darts.csv"</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform into a categorical variable</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>darts.competitor <span class="op">=</span> pd.Categorical(darts.competitor)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign a number to each category (label encoding)</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>darts.competitor <span class="op">=</span> darts.competitor.cat.codes </span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Import to_categorical from keras utils module</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.utils <span class="im">import</span> to_categorical</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>coordinates <span class="op">=</span> darts.drop([<span class="st">'competitor'</span>], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Use to_categorical on your labels</span></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>competitors <span class="op">=</span> to_categorical(darts.competitor)</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Now print the one-hot encoded labels</span></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'One-hot encoded competitors: </span><span class="ch">\n</span><span class="st">'</span>,competitors)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>One-hot encoded competitors: 
+ [[0. 0. 1. 0.]
+ [0. 0. 0. 1.]
+ [0. 1. 0. 0.]
+ ...
+ [0. 1. 0. 0.]
+ [0. 1. 0. 0.]
+ [0. 0. 0. 1.]]</code></pre>
+</div>
+</div>
+</section>
+<section id="training-on-dart-throwers" class="level2">
+<h2 class="anchored" data-anchor-id="training-on-dart-throwers">Training on dart throwers</h2>
+<p>Your model is now ready, just as your dataset. It’s time to train!</p>
+<p>The coordinates features and competitors labels you just transformed have been partitioned into coord_train,coord_test and competitors_train,competitors_test.</p>
+<p>Your model is also loaded. Feel free to visualize your training data or model.summary() in the console.</p>
+<p>Let’s find out who threw which dart just by looking at the board!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now, split the datasets into training and testing sets</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>coord_train, coord_test, competitors_train, competitors_test <span class="op">=</span> train_test_split(</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    coordinates,  <span class="co"># features</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    competitors,  <span class="co"># target</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    test_size<span class="op">=</span><span class="fl">0.2</span>,  <span class="co"># proportion of the dataset to include in the test split</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span>  <span class="co"># seed used by the random number generator for reproducibility</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit your model to the training data for 200 epochs</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>model.fit(coord_train, competitors_train, epochs<span class="op">=</span> <span class="dv">200</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Epoch 1/200
+
+ 1/20 [&gt;.............................] - ETA: 7s - loss: 1.3725 - accuracy: 0.2812
+20/20 [==============================] - 0s 883us/step - loss: 1.3713 - accuracy: 0.2531
+Epoch 2/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 1.3243 - accuracy: 0.4375
+20/20 [==============================] - 0s 773us/step - loss: 1.3271 - accuracy: 0.3391
+Epoch 3/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 1.2922 - accuracy: 0.4375
+20/20 [==============================] - 0s 869us/step - loss: 1.2668 - accuracy: 0.4656
+Epoch 4/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 1.2200 - accuracy: 0.5000
+20/20 [==============================] - 0s 787us/step - loss: 1.1846 - accuracy: 0.5359
+Epoch 5/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 1.2673 - accuracy: 0.2500
+20/20 [==============================] - 0s 754us/step - loss: 1.0961 - accuracy: 0.5453
+Epoch 6/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 1.0408 - accuracy: 0.6562
+20/20 [==============================] - 0s 721us/step - loss: 1.0048 - accuracy: 0.5719
+Epoch 7/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.9799 - accuracy: 0.5000
+20/20 [==============================] - 0s 771us/step - loss: 0.9301 - accuracy: 0.5922
+Epoch 8/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.9100 - accuracy: 0.6562
+20/20 [==============================] - 0s 783us/step - loss: 0.8843 - accuracy: 0.6047
+Epoch 9/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.7804 - accuracy: 0.5625
+20/20 [==============================] - 0s 737us/step - loss: 0.8588 - accuracy: 0.6344
+Epoch 10/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.9239 - accuracy: 0.5938
+20/20 [==============================] - 0s 732us/step - loss: 0.8356 - accuracy: 0.6406
+Epoch 11/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.8339 - accuracy: 0.6562
+20/20 [==============================] - 0s 728us/step - loss: 0.8172 - accuracy: 0.6750
+Epoch 12/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.9550 - accuracy: 0.6562
+20/20 [==============================] - 0s 751us/step - loss: 0.8036 - accuracy: 0.6828
+Epoch 13/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.7873 - accuracy: 0.7500
+20/20 [==============================] - 0s 754us/step - loss: 0.7910 - accuracy: 0.6984
+Epoch 14/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.8380 - accuracy: 0.6562
+20/20 [==============================] - 0s 752us/step - loss: 0.7793 - accuracy: 0.6969
+Epoch 15/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.8720 - accuracy: 0.6875
+20/20 [==============================] - 0s 783us/step - loss: 0.7701 - accuracy: 0.7078
+Epoch 16/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.7379 - accuracy: 0.6562
+20/20 [==============================] - 0s 766us/step - loss: 0.7644 - accuracy: 0.7172
+Epoch 17/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6247 - accuracy: 0.8125
+20/20 [==============================] - 0s 745us/step - loss: 0.7660 - accuracy: 0.7063
+Epoch 18/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.7223 - accuracy: 0.6250
+20/20 [==============================] - 0s 773us/step - loss: 0.7539 - accuracy: 0.7219
+Epoch 19/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.8046 - accuracy: 0.7500
+20/20 [==============================] - 0s 736us/step - loss: 0.7413 - accuracy: 0.7437
+Epoch 20/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.7905 - accuracy: 0.5625
+20/20 [==============================] - 0s 764us/step - loss: 0.7336 - accuracy: 0.7391
+Epoch 21/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5564 - accuracy: 0.8125
+20/20 [==============================] - 0s 752us/step - loss: 0.7344 - accuracy: 0.7469
+Epoch 22/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 1.0000 - accuracy: 0.6875
+20/20 [==============================] - 0s 775us/step - loss: 0.7302 - accuracy: 0.7547
+Epoch 23/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5852 - accuracy: 0.8125
+20/20 [==============================] - 0s 834us/step - loss: 0.7426 - accuracy: 0.7172
+Epoch 24/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.7394 - accuracy: 0.8438
+20/20 [==============================] - 0s 751us/step - loss: 0.7220 - accuracy: 0.7453
+Epoch 25/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.9753 - accuracy: 0.6250
+20/20 [==============================] - 0s 749us/step - loss: 0.7152 - accuracy: 0.7469
+Epoch 26/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.9725 - accuracy: 0.6562
+20/20 [==============================] - 0s 827us/step - loss: 0.7103 - accuracy: 0.7469
+Epoch 27/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5227 - accuracy: 0.8750
+20/20 [==============================] - 0s 751us/step - loss: 0.7029 - accuracy: 0.7547
+Epoch 28/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5440 - accuracy: 0.9062
+20/20 [==============================] - 0s 765us/step - loss: 0.7181 - accuracy: 0.7344
+Epoch 29/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6307 - accuracy: 0.7500
+20/20 [==============================] - 0s 734us/step - loss: 0.7116 - accuracy: 0.7547
+Epoch 30/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.7490 - accuracy: 0.7188
+20/20 [==============================] - 0s 770us/step - loss: 0.7041 - accuracy: 0.7484
+Epoch 31/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6056 - accuracy: 0.8125
+20/20 [==============================] - 0s 720us/step - loss: 0.7098 - accuracy: 0.7406
+Epoch 32/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4688 - accuracy: 0.8438
+20/20 [==============================] - 0s 768us/step - loss: 0.6895 - accuracy: 0.7750
+Epoch 33/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5389 - accuracy: 0.8438
+20/20 [==============================] - 0s 785us/step - loss: 0.6834 - accuracy: 0.7641
+Epoch 34/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.3775 - accuracy: 0.9688
+20/20 [==============================] - 0s 869us/step - loss: 0.6850 - accuracy: 0.7688
+Epoch 35/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.7702 - accuracy: 0.7812
+20/20 [==============================] - 0s 796us/step - loss: 0.6927 - accuracy: 0.7578
+Epoch 36/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.8221 - accuracy: 0.7812
+20/20 [==============================] - 0s 771us/step - loss: 0.6756 - accuracy: 0.7594
+Epoch 37/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4633 - accuracy: 0.8125
+20/20 [==============================] - 0s 776us/step - loss: 0.6855 - accuracy: 0.7641
+Epoch 38/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6683 - accuracy: 0.7500
+20/20 [==============================] - 0s 757us/step - loss: 0.6734 - accuracy: 0.7781
+Epoch 39/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6938 - accuracy: 0.8125
+20/20 [==============================] - 0s 786us/step - loss: 0.6675 - accuracy: 0.7734
+Epoch 40/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5357 - accuracy: 0.7500
+20/20 [==============================] - 0s 881us/step - loss: 0.6654 - accuracy: 0.7688
+Epoch 41/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5591 - accuracy: 0.8438
+20/20 [==============================] - 0s 791us/step - loss: 0.6664 - accuracy: 0.7719
+Epoch 42/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4389 - accuracy: 0.9062
+20/20 [==============================] - 0s 762us/step - loss: 0.6579 - accuracy: 0.7922
+Epoch 43/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6167 - accuracy: 0.7812
+20/20 [==============================] - 0s 749us/step - loss: 0.6585 - accuracy: 0.7703
+Epoch 44/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5024 - accuracy: 0.8125
+20/20 [==============================] - 0s 771us/step - loss: 0.6608 - accuracy: 0.7812
+Epoch 45/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4689 - accuracy: 0.8125
+20/20 [==============================] - 0s 872us/step - loss: 0.6507 - accuracy: 0.7844
+Epoch 46/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.7312 - accuracy: 0.7500
+20/20 [==============================] - 0s 759us/step - loss: 0.6481 - accuracy: 0.7859
+Epoch 47/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.7361 - accuracy: 0.6875
+20/20 [==============================] - 0s 775us/step - loss: 0.6516 - accuracy: 0.7844
+Epoch 48/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4754 - accuracy: 0.8438
+20/20 [==============================] - 0s 751us/step - loss: 0.6525 - accuracy: 0.7719
+Epoch 49/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5798 - accuracy: 0.8438
+20/20 [==============================] - 0s 733us/step - loss: 0.6439 - accuracy: 0.8016
+Epoch 50/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.8112 - accuracy: 0.7500
+20/20 [==============================] - 0s 737us/step - loss: 0.6419 - accuracy: 0.7734
+Epoch 51/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6898 - accuracy: 0.7812
+20/20 [==============================] - 0s 765us/step - loss: 0.6433 - accuracy: 0.7797
+Epoch 52/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.7544 - accuracy: 0.8125
+20/20 [==============================] - 0s 742us/step - loss: 0.6330 - accuracy: 0.7906
+Epoch 53/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6092 - accuracy: 0.8125
+20/20 [==============================] - 0s 808us/step - loss: 0.6285 - accuracy: 0.7984
+Epoch 54/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6168 - accuracy: 0.7812
+20/20 [==============================] - 0s 868us/step - loss: 0.6307 - accuracy: 0.7906
+Epoch 55/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5402 - accuracy: 0.7188
+20/20 [==============================] - 0s 750us/step - loss: 0.6317 - accuracy: 0.7781
+Epoch 56/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.7139 - accuracy: 0.8750
+20/20 [==============================] - 0s 775us/step - loss: 0.6208 - accuracy: 0.7937
+Epoch 57/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4328 - accuracy: 0.8438
+20/20 [==============================] - 0s 783us/step - loss: 0.6176 - accuracy: 0.7937
+Epoch 58/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5094 - accuracy: 0.7812
+20/20 [==============================] - 0s 776us/step - loss: 0.6249 - accuracy: 0.7875
+Epoch 59/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5097 - accuracy: 0.8750
+20/20 [==============================] - 0s 762us/step - loss: 0.6187 - accuracy: 0.7859
+Epoch 60/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.7394 - accuracy: 0.8125
+20/20 [==============================] - 0s 760us/step - loss: 0.6182 - accuracy: 0.7844
+Epoch 61/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.8696 - accuracy: 0.6875
+20/20 [==============================] - 0s 738us/step - loss: 0.6232 - accuracy: 0.7781
+Epoch 62/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5590 - accuracy: 0.7188
+20/20 [==============================] - 0s 739us/step - loss: 0.6269 - accuracy: 0.7750
+Epoch 63/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6403 - accuracy: 0.7812
+20/20 [==============================] - 0s 810us/step - loss: 0.6195 - accuracy: 0.7844
+Epoch 64/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.7219 - accuracy: 0.7188
+20/20 [==============================] - 0s 816us/step - loss: 0.6037 - accuracy: 0.7906
+Epoch 65/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6093 - accuracy: 0.7188
+20/20 [==============================] - 0s 824us/step - loss: 0.6023 - accuracy: 0.7937
+Epoch 66/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6107 - accuracy: 0.9062
+20/20 [==============================] - 0s 781us/step - loss: 0.6045 - accuracy: 0.7891
+Epoch 67/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6593 - accuracy: 0.7188
+20/20 [==============================] - 0s 787us/step - loss: 0.6063 - accuracy: 0.7766
+Epoch 68/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4779 - accuracy: 0.8750
+20/20 [==============================] - 0s 814us/step - loss: 0.6030 - accuracy: 0.8000
+Epoch 69/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4576 - accuracy: 0.8125
+20/20 [==============================] - 0s 767us/step - loss: 0.5981 - accuracy: 0.7844
+Epoch 70/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6970 - accuracy: 0.6562
+20/20 [==============================] - 0s 781us/step - loss: 0.6023 - accuracy: 0.7891
+Epoch 71/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.7317 - accuracy: 0.7500
+20/20 [==============================] - 0s 763us/step - loss: 0.5977 - accuracy: 0.7953
+Epoch 72/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4831 - accuracy: 0.8125
+20/20 [==============================] - 0s 769us/step - loss: 0.5980 - accuracy: 0.7984
+Epoch 73/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4891 - accuracy: 0.8125
+20/20 [==============================] - 0s 782us/step - loss: 0.5889 - accuracy: 0.7937
+Epoch 74/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.7935 - accuracy: 0.8438
+20/20 [==============================] - 0s 777us/step - loss: 0.5900 - accuracy: 0.7859
+Epoch 75/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4771 - accuracy: 0.7188
+20/20 [==============================] - 0s 780us/step - loss: 0.5888 - accuracy: 0.7937
+Epoch 76/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5414 - accuracy: 0.8125
+20/20 [==============================] - 0s 779us/step - loss: 0.5904 - accuracy: 0.8000
+Epoch 77/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5872 - accuracy: 0.8438
+20/20 [==============================] - 0s 775us/step - loss: 0.5866 - accuracy: 0.7922
+Epoch 78/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5322 - accuracy: 0.8438
+20/20 [==============================] - 0s 757us/step - loss: 0.5948 - accuracy: 0.7953
+Epoch 79/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6119 - accuracy: 0.6875
+20/20 [==============================] - 0s 746us/step - loss: 0.5784 - accuracy: 0.8000
+Epoch 80/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4613 - accuracy: 0.8125
+20/20 [==============================] - 0s 743us/step - loss: 0.5822 - accuracy: 0.7969
+Epoch 81/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.7000 - accuracy: 0.7812
+20/20 [==============================] - 0s 737us/step - loss: 0.5715 - accuracy: 0.7937
+Epoch 82/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4584 - accuracy: 0.8125
+20/20 [==============================] - 0s 774us/step - loss: 0.5825 - accuracy: 0.7969
+Epoch 83/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6600 - accuracy: 0.7812
+20/20 [==============================] - 0s 755us/step - loss: 0.5855 - accuracy: 0.7828
+Epoch 84/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.8102 - accuracy: 0.6562
+20/20 [==============================] - 0s 768us/step - loss: 0.5686 - accuracy: 0.8000
+Epoch 85/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6513 - accuracy: 0.7812
+20/20 [==============================] - 0s 723us/step - loss: 0.5766 - accuracy: 0.7922
+Epoch 86/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.7754 - accuracy: 0.7500
+20/20 [==============================] - 0s 754us/step - loss: 0.5818 - accuracy: 0.7844
+Epoch 87/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.3756 - accuracy: 0.8438
+20/20 [==============================] - 0s 736us/step - loss: 0.5720 - accuracy: 0.8000
+Epoch 88/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5708 - accuracy: 0.7812
+20/20 [==============================] - 0s 736us/step - loss: 0.5826 - accuracy: 0.7969
+Epoch 89/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.3741 - accuracy: 0.9062
+20/20 [==============================] - 0s 792us/step - loss: 0.5688 - accuracy: 0.7953
+Epoch 90/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.7080 - accuracy: 0.7500
+20/20 [==============================] - 0s 756us/step - loss: 0.5882 - accuracy: 0.7875
+Epoch 91/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4535 - accuracy: 0.8750
+20/20 [==============================] - 0s 752us/step - loss: 0.5627 - accuracy: 0.8031
+Epoch 92/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4225 - accuracy: 0.8125
+20/20 [==============================] - 0s 740us/step - loss: 0.5825 - accuracy: 0.7844
+Epoch 93/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5586 - accuracy: 0.8438
+20/20 [==============================] - 0s 747us/step - loss: 0.5770 - accuracy: 0.7828
+Epoch 94/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.3543 - accuracy: 0.9375
+20/20 [==============================] - 0s 812us/step - loss: 0.5634 - accuracy: 0.7984
+Epoch 95/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.7397 - accuracy: 0.7188
+20/20 [==============================] - 0s 755us/step - loss: 0.5699 - accuracy: 0.8000
+Epoch 96/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5102 - accuracy: 0.8438
+20/20 [==============================] - 0s 755us/step - loss: 0.5629 - accuracy: 0.8016
+Epoch 97/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6815 - accuracy: 0.7500
+20/20 [==============================] - 0s 769us/step - loss: 0.5559 - accuracy: 0.8000
+Epoch 98/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6716 - accuracy: 0.7812
+20/20 [==============================] - 0s 753us/step - loss: 0.5524 - accuracy: 0.8031
+Epoch 99/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.7973 - accuracy: 0.7188
+20/20 [==============================] - 0s 763us/step - loss: 0.5742 - accuracy: 0.7859
+Epoch 100/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4922 - accuracy: 0.7812
+20/20 [==============================] - 0s 756us/step - loss: 0.5500 - accuracy: 0.8078
+Epoch 101/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.3892 - accuracy: 0.9062
+20/20 [==============================] - 0s 798us/step - loss: 0.5548 - accuracy: 0.7984
+Epoch 102/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6485 - accuracy: 0.7500
+20/20 [==============================] - 0s 749us/step - loss: 0.5502 - accuracy: 0.7984
+Epoch 103/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6588 - accuracy: 0.8438
+20/20 [==============================] - 0s 726us/step - loss: 0.5518 - accuracy: 0.8000
+Epoch 104/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5118 - accuracy: 0.9062
+20/20 [==============================] - 0s 884us/step - loss: 0.5620 - accuracy: 0.7984
+Epoch 105/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4105 - accuracy: 0.8125
+20/20 [==============================] - 0s 848us/step - loss: 0.5686 - accuracy: 0.7937
+Epoch 106/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5219 - accuracy: 0.8438
+20/20 [==============================] - 0s 755us/step - loss: 0.5899 - accuracy: 0.7688
+Epoch 107/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.3480 - accuracy: 0.9062
+20/20 [==============================] - 0s 760us/step - loss: 0.5544 - accuracy: 0.7969
+Epoch 108/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5228 - accuracy: 0.7812
+20/20 [==============================] - 0s 807us/step - loss: 0.5539 - accuracy: 0.7969
+Epoch 109/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5632 - accuracy: 0.8125
+20/20 [==============================] - 0s 888us/step - loss: 0.5456 - accuracy: 0.8062
+Epoch 110/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.7403 - accuracy: 0.6250
+20/20 [==============================] - 0s 795us/step - loss: 0.5487 - accuracy: 0.7969
+Epoch 111/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4368 - accuracy: 0.8438
+20/20 [==============================] - 0s 795us/step - loss: 0.5420 - accuracy: 0.8062
+Epoch 112/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5379 - accuracy: 0.8125
+20/20 [==============================] - 0s 801us/step - loss: 0.5468 - accuracy: 0.8078
+Epoch 113/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5876 - accuracy: 0.7188
+20/20 [==============================] - 0s 795us/step - loss: 0.5574 - accuracy: 0.7937
+Epoch 114/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6206 - accuracy: 0.7812
+20/20 [==============================] - 0s 761us/step - loss: 0.5489 - accuracy: 0.8062
+Epoch 115/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6180 - accuracy: 0.7812
+20/20 [==============================] - 0s 778us/step - loss: 0.5724 - accuracy: 0.7906
+Epoch 116/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4623 - accuracy: 0.7812
+20/20 [==============================] - 0s 733us/step - loss: 0.5489 - accuracy: 0.7937
+Epoch 117/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.3357 - accuracy: 0.9375
+20/20 [==============================] - 0s 729us/step - loss: 0.5395 - accuracy: 0.8031
+Epoch 118/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.2168 - accuracy: 0.9688
+20/20 [==============================] - 0s 751us/step - loss: 0.5391 - accuracy: 0.8031
+Epoch 119/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4313 - accuracy: 0.8438
+20/20 [==============================] - 0s 781us/step - loss: 0.5467 - accuracy: 0.8016
+Epoch 120/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4576 - accuracy: 0.8438
+20/20 [==============================] - 0s 756us/step - loss: 0.5369 - accuracy: 0.8047
+Epoch 121/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4948 - accuracy: 0.9062
+20/20 [==============================] - 0s 826us/step - loss: 0.5449 - accuracy: 0.8094
+Epoch 122/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6021 - accuracy: 0.8125
+20/20 [==============================] - 0s 855us/step - loss: 0.5549 - accuracy: 0.7937
+Epoch 123/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.3389 - accuracy: 0.8750
+20/20 [==============================] - 0s 779us/step - loss: 0.5619 - accuracy: 0.7828
+Epoch 124/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.8941 - accuracy: 0.6562
+20/20 [==============================] - 0s 812us/step - loss: 0.5565 - accuracy: 0.7953
+Epoch 125/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5056 - accuracy: 0.7812
+20/20 [==============================] - 0s 817us/step - loss: 0.5382 - accuracy: 0.7984
+Epoch 126/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5116 - accuracy: 0.8125
+20/20 [==============================] - 0s 765us/step - loss: 0.5302 - accuracy: 0.8109
+Epoch 127/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.3438 - accuracy: 0.9688
+20/20 [==============================] - 0s 791us/step - loss: 0.5450 - accuracy: 0.8047
+Epoch 128/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6009 - accuracy: 0.7188
+20/20 [==============================] - 0s 776us/step - loss: 0.5343 - accuracy: 0.8125
+Epoch 129/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5299 - accuracy: 0.8438
+20/20 [==============================] - 0s 788us/step - loss: 0.5350 - accuracy: 0.8047
+Epoch 130/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4436 - accuracy: 0.8438
+20/20 [==============================] - 0s 764us/step - loss: 0.5439 - accuracy: 0.8031
+Epoch 131/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.3804 - accuracy: 0.8438
+20/20 [==============================] - 0s 744us/step - loss: 0.5389 - accuracy: 0.8125
+Epoch 132/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4563 - accuracy: 0.8125
+20/20 [==============================] - 0s 792us/step - loss: 0.5389 - accuracy: 0.8141
+Epoch 133/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4528 - accuracy: 0.8750
+20/20 [==============================] - 0s 862us/step - loss: 0.5265 - accuracy: 0.8109
+Epoch 134/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5003 - accuracy: 0.7188
+20/20 [==============================] - 0s 814us/step - loss: 0.5452 - accuracy: 0.7969
+Epoch 135/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.2804 - accuracy: 0.9375
+20/20 [==============================] - 0s 750us/step - loss: 0.5605 - accuracy: 0.7906
+Epoch 136/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.3582 - accuracy: 0.9062
+20/20 [==============================] - 0s 775us/step - loss: 0.5282 - accuracy: 0.8078
+Epoch 137/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.8198 - accuracy: 0.7812
+20/20 [==============================] - 0s 767us/step - loss: 0.5378 - accuracy: 0.8000
+Epoch 138/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5237 - accuracy: 0.7500
+20/20 [==============================] - 0s 747us/step - loss: 0.5332 - accuracy: 0.7969
+Epoch 139/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4570 - accuracy: 0.8750
+20/20 [==============================] - 0s 759us/step - loss: 0.5303 - accuracy: 0.8016
+Epoch 140/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6301 - accuracy: 0.8125
+20/20 [==============================] - 0s 742us/step - loss: 0.5366 - accuracy: 0.8078
+Epoch 141/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4126 - accuracy: 0.8750
+20/20 [==============================] - 0s 750us/step - loss: 0.5428 - accuracy: 0.8016
+Epoch 142/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4283 - accuracy: 0.8125
+20/20 [==============================] - 0s 758us/step - loss: 0.5477 - accuracy: 0.7906
+Epoch 143/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5417 - accuracy: 0.8125
+20/20 [==============================] - 0s 737us/step - loss: 0.5318 - accuracy: 0.8031
+Epoch 144/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.3359 - accuracy: 0.8750
+20/20 [==============================] - 0s 804us/step - loss: 0.5392 - accuracy: 0.8031
+Epoch 145/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6539 - accuracy: 0.7500
+20/20 [==============================] - 0s 790us/step - loss: 0.5371 - accuracy: 0.8078
+Epoch 146/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.7147 - accuracy: 0.7500
+20/20 [==============================] - 0s 758us/step - loss: 0.5222 - accuracy: 0.8172
+Epoch 147/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.3023 - accuracy: 0.8750
+20/20 [==============================] - 0s 746us/step - loss: 0.5300 - accuracy: 0.8094
+Epoch 148/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4385 - accuracy: 0.9062
+20/20 [==============================] - 0s 752us/step - loss: 0.5270 - accuracy: 0.8094
+Epoch 149/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5707 - accuracy: 0.8438
+20/20 [==============================] - 0s 761us/step - loss: 0.5203 - accuracy: 0.7937
+Epoch 150/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5513 - accuracy: 0.7812
+20/20 [==============================] - 0s 768us/step - loss: 0.5245 - accuracy: 0.8125
+Epoch 151/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5349 - accuracy: 0.8125
+20/20 [==============================] - 0s 768us/step - loss: 0.5192 - accuracy: 0.8125
+Epoch 152/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.3589 - accuracy: 0.8750
+20/20 [==============================] - 0s 777us/step - loss: 0.5315 - accuracy: 0.8016
+Epoch 153/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4438 - accuracy: 0.8125
+20/20 [==============================] - 0s 768us/step - loss: 0.5419 - accuracy: 0.7984
+Epoch 154/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4459 - accuracy: 0.8750
+20/20 [==============================] - 0s 774us/step - loss: 0.5179 - accuracy: 0.8219
+Epoch 155/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4099 - accuracy: 0.8750
+20/20 [==============================] - 0s 757us/step - loss: 0.5229 - accuracy: 0.8109
+Epoch 156/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.3150 - accuracy: 0.9062
+20/20 [==============================] - 0s 739us/step - loss: 0.5211 - accuracy: 0.8000
+Epoch 157/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.2965 - accuracy: 0.9062
+20/20 [==============================] - 0s 832us/step - loss: 0.5148 - accuracy: 0.8094
+Epoch 158/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5690 - accuracy: 0.8125
+20/20 [==============================] - 0s 765us/step - loss: 0.5184 - accuracy: 0.8172
+Epoch 159/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4338 - accuracy: 0.8125
+20/20 [==============================] - 0s 782us/step - loss: 0.5151 - accuracy: 0.8156
+Epoch 160/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4635 - accuracy: 0.8438
+20/20 [==============================] - 0s 917us/step - loss: 0.5444 - accuracy: 0.7969
+Epoch 161/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4579 - accuracy: 0.8125
+20/20 [==============================] - 0s 832us/step - loss: 0.5188 - accuracy: 0.8031
+Epoch 162/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4380 - accuracy: 0.7812
+20/20 [==============================] - 0s 836us/step - loss: 0.5087 - accuracy: 0.8172
+Epoch 163/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4543 - accuracy: 0.8438
+20/20 [==============================] - 0s 878us/step - loss: 0.5198 - accuracy: 0.8094
+Epoch 164/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6766 - accuracy: 0.8750
+20/20 [==============================] - 0s 878us/step - loss: 0.5192 - accuracy: 0.8094
+Epoch 165/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4408 - accuracy: 0.8750
+20/20 [==============================] - 0s 866us/step - loss: 0.5199 - accuracy: 0.8031
+Epoch 166/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4761 - accuracy: 0.8438
+20/20 [==============================] - 0s 903us/step - loss: 0.5168 - accuracy: 0.8188
+Epoch 167/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4363 - accuracy: 0.9062
+20/20 [==============================] - 0s 997us/step - loss: 0.5071 - accuracy: 0.8172
+Epoch 168/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.7876 - accuracy: 0.6875
+20/20 [==============================] - 0s 1ms/step - loss: 0.5142 - accuracy: 0.8141
+Epoch 169/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6792 - accuracy: 0.7500
+20/20 [==============================] - 0s 915us/step - loss: 0.5172 - accuracy: 0.8047
+Epoch 170/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5197 - accuracy: 0.8125
+20/20 [==============================] - 0s 870us/step - loss: 0.5140 - accuracy: 0.8094
+Epoch 171/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.3123 - accuracy: 0.9062
+20/20 [==============================] - 0s 910us/step - loss: 0.5141 - accuracy: 0.8141
+Epoch 172/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6248 - accuracy: 0.7812
+20/20 [==============================] - 0s 825us/step - loss: 0.5188 - accuracy: 0.8125
+Epoch 173/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.7826 - accuracy: 0.6562
+20/20 [==============================] - 0s 853us/step - loss: 0.5236 - accuracy: 0.8172
+Epoch 174/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6733 - accuracy: 0.7188
+20/20 [==============================] - 0s 859us/step - loss: 0.5164 - accuracy: 0.7984
+Epoch 175/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4314 - accuracy: 0.8750
+20/20 [==============================] - 0s 871us/step - loss: 0.5158 - accuracy: 0.8078
+Epoch 176/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4350 - accuracy: 0.8125
+20/20 [==============================] - 0s 878us/step - loss: 0.5199 - accuracy: 0.8141
+Epoch 177/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5293 - accuracy: 0.7812
+20/20 [==============================] - 0s 950us/step - loss: 0.5111 - accuracy: 0.8109
+Epoch 178/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.3208 - accuracy: 0.8750
+20/20 [==============================] - 0s 891us/step - loss: 0.5102 - accuracy: 0.8078
+Epoch 179/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5308 - accuracy: 0.8125
+20/20 [==============================] - 0s 779us/step - loss: 0.5068 - accuracy: 0.8172
+Epoch 180/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6906 - accuracy: 0.7812
+20/20 [==============================] - 0s 796us/step - loss: 0.5147 - accuracy: 0.8062
+Epoch 181/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4647 - accuracy: 0.8125
+20/20 [==============================] - 0s 836us/step - loss: 0.5101 - accuracy: 0.8094
+Epoch 182/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5291 - accuracy: 0.6875
+20/20 [==============================] - 0s 887us/step - loss: 0.5117 - accuracy: 0.8109
+Epoch 183/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.3674 - accuracy: 0.8438
+20/20 [==============================] - 0s 865us/step - loss: 0.5142 - accuracy: 0.8047
+Epoch 184/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.3678 - accuracy: 0.8438
+20/20 [==============================] - 0s 874us/step - loss: 0.5047 - accuracy: 0.8047
+Epoch 185/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4049 - accuracy: 0.9062
+20/20 [==============================] - 0s 853us/step - loss: 0.5047 - accuracy: 0.8094
+Epoch 186/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6026 - accuracy: 0.8125
+20/20 [==============================] - 0s 1ms/step - loss: 0.5136 - accuracy: 0.8109
+Epoch 187/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.7365 - accuracy: 0.7812
+20/20 [==============================] - 0s 925us/step - loss: 0.5099 - accuracy: 0.8125
+Epoch 188/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4317 - accuracy: 0.8750
+20/20 [==============================] - 0s 985us/step - loss: 0.5080 - accuracy: 0.8078
+Epoch 189/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.3909 - accuracy: 0.8125
+20/20 [==============================] - 0s 1ms/step - loss: 0.5084 - accuracy: 0.8109
+Epoch 190/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.3896 - accuracy: 0.8750
+20/20 [==============================] - 0s 804us/step - loss: 0.5016 - accuracy: 0.8141
+Epoch 191/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4609 - accuracy: 0.9062
+20/20 [==============================] - 0s 824us/step - loss: 0.5046 - accuracy: 0.8125
+Epoch 192/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.3853 - accuracy: 0.9062
+20/20 [==============================] - 0s 884us/step - loss: 0.4964 - accuracy: 0.8109
+Epoch 193/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5801 - accuracy: 0.7500
+20/20 [==============================] - 0s 891us/step - loss: 0.5062 - accuracy: 0.8078
+Epoch 194/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4029 - accuracy: 0.9062
+20/20 [==============================] - 0s 925us/step - loss: 0.5155 - accuracy: 0.8031
+Epoch 195/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5405 - accuracy: 0.7812
+20/20 [==============================] - 0s 785us/step - loss: 0.5162 - accuracy: 0.7937
+Epoch 196/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4040 - accuracy: 0.8750
+20/20 [==============================] - 0s 816us/step - loss: 0.4956 - accuracy: 0.8203
+Epoch 197/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.4749 - accuracy: 0.7812
+20/20 [==============================] - 0s 872us/step - loss: 0.4931 - accuracy: 0.8156
+Epoch 198/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.6305 - accuracy: 0.8125
+20/20 [==============================] - 0s 914us/step - loss: 0.4973 - accuracy: 0.8172
+Epoch 199/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.3824 - accuracy: 0.9062
+20/20 [==============================] - 0s 943us/step - loss: 0.4976 - accuracy: 0.8109
+Epoch 200/200
+
+ 1/20 [&gt;.............................] - ETA: 0s - loss: 0.5595 - accuracy: 0.8125
+20/20 [==============================] - 0s 880us/step - loss: 0.5062 - accuracy: 0.8047
+&lt;keras.src.callbacks.History object at 0x7f85f9362860&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate your model accuracy on the test data</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>accuracy <span class="op">=</span> model.evaluate(coord_test, competitors_test)[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+1/5 [=====&gt;........................] - ETA: 0s - loss: 0.9508 - accuracy: 0.6875
+5/5 [==============================] - 0s 1ms/step - loss: 0.6646 - accuracy: 0.7875</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print accuracy</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Accuracy:'</span>, accuracy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Accuracy: 0.7875000238418579</code></pre>
+</div>
+</div>
+</section>
+<section id="softmax-predictions" class="level2">
+<h2 class="anchored" data-anchor-id="softmax-predictions">Softmax predictions</h2>
+<p>Your recently trained model is loaded for you. This model is generalizing well!, that’s why you got a high accuracy on the test set.</p>
+<p>Since you used the softmax activation function, for every input of 2 coordinates provided to your model there’s an output vector of 4 numbers. Each of these numbers encodes the probability of a given dart being thrown by one of the 4 possible competitors.</p>
+<p>When computing accuracy with the model’s .evaluate() method, your model takes the class with the highest probability as the prediction. np.argmax() can help you do this since it returns the index with the highest value in an array.</p>
+<p>Use the collection of test throws stored in coords_small_test and np.argmax()to check this out!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict on coords_small_test</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>coords_small_test <span class="op">=</span> coord_test.iloc[:<span class="dv">5</span>, :]</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>competitors_small_test <span class="op">=</span> competitors_test[:<span class="dv">5</span>, :]</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>preds <span class="op">=</span> model.predict(coords_small_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+1/1 [==============================] - ETA: 0s
+1/1 [==============================] - 0s 38ms/step</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print preds vs true values</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="sc">{:45}</span><span class="st"> | </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(<span class="st">'Raw Model Predictions'</span>,<span class="st">'True labels'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Raw Model Predictions                         | True labels</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i,pred <span class="kw">in</span> <span class="bu">enumerate</span>(preds):</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"</span><span class="sc">{}</span><span class="st"> | </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(pred,competitors_small_test[i]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[0.23888092 0.018391   0.7371136  0.00561445] | [0. 0. 1. 0.]
+[7.0279196e-04 9.9750048e-01 1.2444201e-03 5.5234547e-04] | [0. 1. 0. 0.]
+[0.58676606 0.03197646 0.3748549  0.00640259] | [1. 0. 0. 0.]
+[0.11661202 0.01226262 0.85948086 0.0116444 ] | [1. 0. 0. 0.]
+[0.2005365  0.01400808 0.78194964 0.00350576] | [0. 0. 0. 1.]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the position of highest probability from each pred vector</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>preds_chosen <span class="op">=</span> [np.argmax(pred) <span class="cf">for</span> pred <span class="kw">in</span> preds]</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print preds vs true values</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="sc">{:10}</span><span class="st"> | </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(<span class="st">'Rounded Model Predictions'</span>,<span class="st">'True labels'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rounded Model Predictions | True labels</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i,pred <span class="kw">in</span> <span class="bu">enumerate</span>(preds_chosen):</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"</span><span class="sc">{:25}</span><span class="st"> | </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(pred,competitors_small_test[i]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                        2 | [0. 0. 1. 0.]
+                        1 | [0. 1. 0. 0.]
+                        0 | [1. 0. 0. 0.]
+                        2 | [1. 0. 0. 0.]
+                        2 | [0. 0. 0. 1.]</code></pre>
+</div>
+</div>
+</section>
+<section id="an-irrigation-machine" class="level2">
+<h2 class="anchored" data-anchor-id="an-irrigation-machine">An irrigation machine</h2>
+<p>You’re going to automate the watering of farm parcels by making an intelligent irrigation machine. Multi-label classification problems differ from multi-class problems in that each observation can be labeled with zero or more classes. So classes/labels are not mutually exclusive, you could water all, none or any combination of farm parcels based on the inputs.</p>
+<p>To account for this behavior what we do is have an output layer with as many neurons as classes but this time, unlike in multi-class problems, each output neuron has a sigmoid activation function. This makes each neuron in the output layer able to output a number between 0 and 1 independently.</p>
+<p>The Sequential() model and Dense() layers are ready to be used. It’s time to build an intelligent irrigation machine!</p>
+<p><img src="image/mutilabel_dataset.jpg" class="img-fluid"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instantiate a Sequential model</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential()</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a hidden layer of 64 neurons and a 20 neuron's input</span></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">64</span>, input_shape <span class="op">=</span>(<span class="dv">20</span>,),  activation<span class="op">=</span><span class="st">'relu'</span>))</span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Add an output layer of 3 neurons with sigmoid activation</span></span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>model.add(Dense(<span class="dv">3</span>,   activation<span class="op">=</span><span class="st">'sigmoid'</span>))</span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Compile your model with binary crossentropy loss</span></span>
+<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">'adam'</span>,</span>
+<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a>           loss <span class="op">=</span> <span class="st">"binary_crossentropy"</span> ,</span>
+<span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a>           metrics<span class="op">=</span>[<span class="st">'accuracy'</span>])</span>
+<span id="cb51-15"><a href="#cb51-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-16"><a href="#cb51-16" aria-hidden="true" tabindex="-1"></a>model.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Model: "sequential_6"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ dense_15 (Dense)            (None, 64)                1344      
+                                                                 
+ dense_16 (Dense)            (None, 3)                 195       
+                                                                 
+=================================================================
+Total params: 1539 (6.01 KB)
+Trainable params: 1539 (6.01 KB)
+Non-trainable params: 0 (0.00 Byte)
+_________________________________________________________________</code></pre>
+</div>
+</div>
+</section>
+<section id="training-with-multiple-labels" class="level2">
+<h2 class="anchored" data-anchor-id="training-with-multiple-labels">Training with multiple labels</h2>
+<p>An output of your multi-label model could look like this: [0.76 , 0.99 , 0.66 ]. If we round up probabilities higher than 0.5, this observation will be classified as containing all 3 possible labels [1,1,1]. For this particular problem, this would mean watering all 3 parcels in your farm is the right thing to do, according to the network, given the input sensor measurements.</p>
+<p>You will now train and predict with the model you just built. sensors_train, parcels_train, sensors_test and parcels_test are already loaded for you to use.</p>
+<p>Let’s see how well your intelligent machine performs!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>irrigation_df <span class="op">=</span> pd.read_csv(<span class="st">'data/irrigation_machine.csv'</span>, index_col<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define lists of column names for sensors and parcels</span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>sensor_columns <span class="op">=</span> [col <span class="cf">for</span> col <span class="kw">in</span> irrigation_df.columns <span class="cf">if</span> <span class="st">'sensor_'</span> <span class="kw">in</span> col]</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>parcel_columns <span class="op">=</span> [col <span class="cf">for</span> col <span class="kw">in</span> irrigation_df .columns <span class="cf">if</span> <span class="st">'parcel_'</span> <span class="kw">in</span> col]</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Separate sensor readings and parcel indicators</span></span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>sensors <span class="op">=</span> irrigation_df[sensor_columns] <span class="co"># Sensor readings columns</span></span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>parcels <span class="op">=</span> irrigation_df[parcel_columns]  <span class="co"># Parcel indicators columns</span></span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the datasets into training and testing sets</span></span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a>sensors_train, sensors_test, parcels_train, parcels_test <span class="op">=</span> train_test_split(</span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a>    sensors, parcels, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span></span>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-16"><a href="#cb53-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Checking the shapes of the resulting datasets to confirm successful split</span></span>
+<span id="cb53-17"><a href="#cb53-17" aria-hidden="true" tabindex="-1"></a>sensors_train.shape, sensors_test.shape, parcels_train.shape, parcels_test.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>((1600, 20), (400, 20), (1600, 3), (400, 3))</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Train for 100 epochs using a validation split of 0.2</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>model.fit(sensors_train, parcels_train, epochs <span class="op">=</span> <span class="dv">100</span>, validation_split <span class="op">=</span> <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Epoch 1/100
+
+ 1/40 [..............................] - ETA: 10s - loss: 0.7557 - accuracy: 0.2500
+40/40 [==============================] - 0s 4ms/step - loss: 0.5792 - accuracy: 0.5531 - val_loss: 0.4783 - val_accuracy: 0.5625
+Epoch 2/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.4715 - accuracy: 0.6250
+40/40 [==============================] - 0s 1ms/step - loss: 0.4315 - accuracy: 0.6203 - val_loss: 0.3883 - val_accuracy: 0.5750
+Epoch 3/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.4350 - accuracy: 0.6875
+40/40 [==============================] - 0s 1ms/step - loss: 0.3702 - accuracy: 0.6219 - val_loss: 0.3421 - val_accuracy: 0.5625
+Epoch 4/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.2875 - accuracy: 0.6875
+40/40 [==============================] - 0s 1ms/step - loss: 0.3345 - accuracy: 0.6195 - val_loss: 0.3152 - val_accuracy: 0.6031
+Epoch 5/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.3095 - accuracy: 0.5625
+40/40 [==============================] - 0s 1ms/step - loss: 0.3131 - accuracy: 0.6227 - val_loss: 0.2979 - val_accuracy: 0.5625
+Epoch 6/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.3021 - accuracy: 0.6562
+40/40 [==============================] - 0s 1ms/step - loss: 0.2995 - accuracy: 0.6172 - val_loss: 0.2843 - val_accuracy: 0.6438
+Epoch 7/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.2682 - accuracy: 0.7812
+40/40 [==============================] - 0s 1ms/step - loss: 0.2844 - accuracy: 0.6422 - val_loss: 0.2773 - val_accuracy: 0.5969
+Epoch 8/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.2209 - accuracy: 0.6875
+40/40 [==============================] - 0s 1ms/step - loss: 0.2769 - accuracy: 0.6328 - val_loss: 0.2640 - val_accuracy: 0.5813
+Epoch 9/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.3098 - accuracy: 0.6250
+40/40 [==============================] - 0s 1ms/step - loss: 0.2700 - accuracy: 0.6344 - val_loss: 0.2608 - val_accuracy: 0.5688
+Epoch 10/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.2625 - accuracy: 0.6875
+40/40 [==============================] - 0s 1ms/step - loss: 0.2642 - accuracy: 0.6352 - val_loss: 0.2522 - val_accuracy: 0.6375
+Epoch 11/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1976 - accuracy: 0.7500
+40/40 [==============================] - 0s 1ms/step - loss: 0.2531 - accuracy: 0.6305 - val_loss: 0.2458 - val_accuracy: 0.6000
+Epoch 12/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.2181 - accuracy: 0.5938
+40/40 [==============================] - 0s 1ms/step - loss: 0.2478 - accuracy: 0.6406 - val_loss: 0.2386 - val_accuracy: 0.5906
+Epoch 13/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.2779 - accuracy: 0.7500
+40/40 [==============================] - 0s 1ms/step - loss: 0.2445 - accuracy: 0.6273 - val_loss: 0.2375 - val_accuracy: 0.6031
+Epoch 14/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.2743 - accuracy: 0.4688
+40/40 [==============================] - 0s 1ms/step - loss: 0.2377 - accuracy: 0.6438 - val_loss: 0.2308 - val_accuracy: 0.6094
+Epoch 15/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1787 - accuracy: 0.5000
+40/40 [==============================] - 0s 1ms/step - loss: 0.2334 - accuracy: 0.6258 - val_loss: 0.2279 - val_accuracy: 0.5844
+Epoch 16/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.3906 - accuracy: 0.7188
+40/40 [==============================] - 0s 1ms/step - loss: 0.2271 - accuracy: 0.6242 - val_loss: 0.2266 - val_accuracy: 0.6125
+Epoch 17/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.2308 - accuracy: 0.6875
+40/40 [==============================] - 0s 1ms/step - loss: 0.2251 - accuracy: 0.6406 - val_loss: 0.2202 - val_accuracy: 0.5813
+Epoch 18/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1810 - accuracy: 0.7812
+40/40 [==============================] - 0s 1ms/step - loss: 0.2225 - accuracy: 0.6320 - val_loss: 0.2204 - val_accuracy: 0.6000
+Epoch 19/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1406 - accuracy: 0.6250
+40/40 [==============================] - 0s 1ms/step - loss: 0.2205 - accuracy: 0.6258 - val_loss: 0.2162 - val_accuracy: 0.5750
+Epoch 20/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.2254 - accuracy: 0.5625
+40/40 [==============================] - 0s 1ms/step - loss: 0.2170 - accuracy: 0.6398 - val_loss: 0.2157 - val_accuracy: 0.5625
+Epoch 21/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1574 - accuracy: 0.4375
+40/40 [==============================] - 0s 1ms/step - loss: 0.2132 - accuracy: 0.6148 - val_loss: 0.2133 - val_accuracy: 0.5688
+Epoch 22/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.2025 - accuracy: 0.3750
+40/40 [==============================] - 0s 1ms/step - loss: 0.2107 - accuracy: 0.6375 - val_loss: 0.2115 - val_accuracy: 0.5500
+Epoch 23/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1888 - accuracy: 0.5625
+40/40 [==============================] - 0s 1ms/step - loss: 0.2083 - accuracy: 0.6219 - val_loss: 0.2152 - val_accuracy: 0.5906
+Epoch 24/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.3385 - accuracy: 0.6562
+40/40 [==============================] - 0s 1ms/step - loss: 0.2060 - accuracy: 0.6320 - val_loss: 0.2091 - val_accuracy: 0.5875
+Epoch 25/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1950 - accuracy: 0.6250
+40/40 [==============================] - 0s 1ms/step - loss: 0.2047 - accuracy: 0.6266 - val_loss: 0.2087 - val_accuracy: 0.5906
+Epoch 26/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.2060 - accuracy: 0.7812
+40/40 [==============================] - 0s 1ms/step - loss: 0.2018 - accuracy: 0.6344 - val_loss: 0.2065 - val_accuracy: 0.5969
+Epoch 27/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.2339 - accuracy: 0.5625
+40/40 [==============================] - 0s 1ms/step - loss: 0.2010 - accuracy: 0.6203 - val_loss: 0.2121 - val_accuracy: 0.5094
+Epoch 28/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1760 - accuracy: 0.5938
+40/40 [==============================] - 0s 1ms/step - loss: 0.1989 - accuracy: 0.6250 - val_loss: 0.2076 - val_accuracy: 0.5625
+Epoch 29/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.2008 - accuracy: 0.7188
+40/40 [==============================] - 0s 1ms/step - loss: 0.1984 - accuracy: 0.6148 - val_loss: 0.2089 - val_accuracy: 0.6062
+Epoch 30/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1726 - accuracy: 0.7188
+40/40 [==============================] - 0s 1ms/step - loss: 0.1968 - accuracy: 0.6281 - val_loss: 0.2057 - val_accuracy: 0.5406
+Epoch 31/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1181 - accuracy: 0.5938
+40/40 [==============================] - 0s 1ms/step - loss: 0.1967 - accuracy: 0.6305 - val_loss: 0.2032 - val_accuracy: 0.5437
+Epoch 32/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1690 - accuracy: 0.5000
+40/40 [==============================] - 0s 1ms/step - loss: 0.1938 - accuracy: 0.6336 - val_loss: 0.2040 - val_accuracy: 0.5500
+Epoch 33/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.2187 - accuracy: 0.7188
+40/40 [==============================] - 0s 1ms/step - loss: 0.1920 - accuracy: 0.6148 - val_loss: 0.2025 - val_accuracy: 0.5719
+Epoch 34/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.3376 - accuracy: 0.5625
+40/40 [==============================] - 0s 1ms/step - loss: 0.1898 - accuracy: 0.6320 - val_loss: 0.2038 - val_accuracy: 0.5750
+Epoch 35/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1607 - accuracy: 0.6250
+40/40 [==============================] - 0s 1ms/step - loss: 0.1902 - accuracy: 0.6195 - val_loss: 0.2019 - val_accuracy: 0.6094
+Epoch 36/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1864 - accuracy: 0.5938
+40/40 [==============================] - 0s 1ms/step - loss: 0.1884 - accuracy: 0.6289 - val_loss: 0.2029 - val_accuracy: 0.5875
+Epoch 37/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1648 - accuracy: 0.7812
+40/40 [==============================] - 0s 1ms/step - loss: 0.1879 - accuracy: 0.6242 - val_loss: 0.2005 - val_accuracy: 0.5594
+Epoch 38/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1184 - accuracy: 0.5625
+40/40 [==============================] - 0s 2ms/step - loss: 0.1850 - accuracy: 0.6195 - val_loss: 0.2031 - val_accuracy: 0.5469
+Epoch 39/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1864 - accuracy: 0.5938
+40/40 [==============================] - 0s 1ms/step - loss: 0.1886 - accuracy: 0.6289 - val_loss: 0.2017 - val_accuracy: 0.5813
+Epoch 40/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1460 - accuracy: 0.5938
+40/40 [==============================] - 0s 1ms/step - loss: 0.1832 - accuracy: 0.6281 - val_loss: 0.2057 - val_accuracy: 0.5906
+Epoch 41/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1708 - accuracy: 0.6875
+40/40 [==============================] - 0s 1ms/step - loss: 0.1845 - accuracy: 0.6125 - val_loss: 0.2014 - val_accuracy: 0.6375
+Epoch 42/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1809 - accuracy: 0.7500
+40/40 [==============================] - 0s 1ms/step - loss: 0.1806 - accuracy: 0.6398 - val_loss: 0.2025 - val_accuracy: 0.6219
+Epoch 43/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.2752 - accuracy: 0.7188
+40/40 [==============================] - 0s 1ms/step - loss: 0.1806 - accuracy: 0.6297 - val_loss: 0.2041 - val_accuracy: 0.5625
+Epoch 44/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1772 - accuracy: 0.5625
+40/40 [==============================] - 0s 1ms/step - loss: 0.1810 - accuracy: 0.6273 - val_loss: 0.2008 - val_accuracy: 0.6281
+Epoch 45/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1555 - accuracy: 0.6250
+40/40 [==============================] - 0s 1ms/step - loss: 0.1775 - accuracy: 0.6180 - val_loss: 0.2017 - val_accuracy: 0.6062
+Epoch 46/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1436 - accuracy: 0.5625
+40/40 [==============================] - 0s 1ms/step - loss: 0.1771 - accuracy: 0.6180 - val_loss: 0.1999 - val_accuracy: 0.5938
+Epoch 47/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1636 - accuracy: 0.5625
+40/40 [==============================] - 0s 1ms/step - loss: 0.1743 - accuracy: 0.6211 - val_loss: 0.2012 - val_accuracy: 0.6375
+Epoch 48/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1514 - accuracy: 0.7188
+40/40 [==============================] - 0s 1ms/step - loss: 0.1768 - accuracy: 0.6273 - val_loss: 0.2052 - val_accuracy: 0.6125
+Epoch 49/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1550 - accuracy: 0.5938
+40/40 [==============================] - 0s 1ms/step - loss: 0.1764 - accuracy: 0.6320 - val_loss: 0.2014 - val_accuracy: 0.6156
+Epoch 50/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1573 - accuracy: 0.6562
+40/40 [==============================] - 0s 2ms/step - loss: 0.1727 - accuracy: 0.6273 - val_loss: 0.2048 - val_accuracy: 0.5625
+Epoch 51/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.2517 - accuracy: 0.6562
+35/40 [=========================&gt;....] - ETA: 0s - loss: 0.1731 - accuracy: 0.6286
+40/40 [==============================] - 0s 2ms/step - loss: 0.1716 - accuracy: 0.6258 - val_loss: 0.2025 - val_accuracy: 0.5562
+Epoch 52/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1572 - accuracy: 0.4688
+40/40 [==============================] - 0s 2ms/step - loss: 0.1700 - accuracy: 0.6102 - val_loss: 0.2080 - val_accuracy: 0.5625
+Epoch 53/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.0848 - accuracy: 0.7188
+40/40 [==============================] - 0s 1ms/step - loss: 0.1777 - accuracy: 0.6383 - val_loss: 0.2075 - val_accuracy: 0.5906
+Epoch 54/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1005 - accuracy: 0.6562
+40/40 [==============================] - 0s 1ms/step - loss: 0.1696 - accuracy: 0.6172 - val_loss: 0.2041 - val_accuracy: 0.5938
+Epoch 55/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1086 - accuracy: 0.6875
+40/40 [==============================] - 0s 1ms/step - loss: 0.1692 - accuracy: 0.6352 - val_loss: 0.2039 - val_accuracy: 0.5562
+Epoch 56/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.2453 - accuracy: 0.6250
+40/40 [==============================] - 0s 1ms/step - loss: 0.1675 - accuracy: 0.6250 - val_loss: 0.2098 - val_accuracy: 0.6000
+Epoch 57/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1735 - accuracy: 0.6250
+40/40 [==============================] - 0s 1ms/step - loss: 0.1710 - accuracy: 0.6289 - val_loss: 0.2091 - val_accuracy: 0.5469
+Epoch 58/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1002 - accuracy: 0.5312
+40/40 [==============================] - 0s 1ms/step - loss: 0.1666 - accuracy: 0.6078 - val_loss: 0.2048 - val_accuracy: 0.5781
+Epoch 59/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1418 - accuracy: 0.6562
+40/40 [==============================] - 0s 1ms/step - loss: 0.1640 - accuracy: 0.6352 - val_loss: 0.2118 - val_accuracy: 0.6125
+Epoch 60/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1514 - accuracy: 0.5312
+40/40 [==============================] - 0s 1ms/step - loss: 0.1664 - accuracy: 0.6438 - val_loss: 0.2079 - val_accuracy: 0.5344
+Epoch 61/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1510 - accuracy: 0.5625
+40/40 [==============================] - 0s 1ms/step - loss: 0.1629 - accuracy: 0.6297 - val_loss: 0.2056 - val_accuracy: 0.5906
+Epoch 62/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.2999 - accuracy: 0.5312
+40/40 [==============================] - 0s 1ms/step - loss: 0.1620 - accuracy: 0.6172 - val_loss: 0.2102 - val_accuracy: 0.5719
+Epoch 63/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1908 - accuracy: 0.5625
+40/40 [==============================] - 0s 1ms/step - loss: 0.1612 - accuracy: 0.6133 - val_loss: 0.2048 - val_accuracy: 0.6187
+Epoch 64/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1094 - accuracy: 0.6562
+40/40 [==============================] - 0s 1ms/step - loss: 0.1604 - accuracy: 0.6242 - val_loss: 0.2077 - val_accuracy: 0.5875
+Epoch 65/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1252 - accuracy: 0.6875
+40/40 [==============================] - 0s 1ms/step - loss: 0.1598 - accuracy: 0.6117 - val_loss: 0.2062 - val_accuracy: 0.6656
+Epoch 66/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1717 - accuracy: 0.5312
+40/40 [==============================] - 0s 1ms/step - loss: 0.1590 - accuracy: 0.6422 - val_loss: 0.2065 - val_accuracy: 0.5500
+Epoch 67/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1192 - accuracy: 0.7188
+40/40 [==============================] - 0s 1ms/step - loss: 0.1576 - accuracy: 0.6305 - val_loss: 0.2114 - val_accuracy: 0.5656
+Epoch 68/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1446 - accuracy: 0.6875
+40/40 [==============================] - 0s 1ms/step - loss: 0.1570 - accuracy: 0.6125 - val_loss: 0.2075 - val_accuracy: 0.5750
+Epoch 69/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1812 - accuracy: 0.5312
+40/40 [==============================] - 0s 1ms/step - loss: 0.1567 - accuracy: 0.6383 - val_loss: 0.2098 - val_accuracy: 0.6313
+Epoch 70/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1157 - accuracy: 0.5312
+40/40 [==============================] - 0s 1ms/step - loss: 0.1557 - accuracy: 0.6336 - val_loss: 0.2080 - val_accuracy: 0.6250
+Epoch 71/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.0925 - accuracy: 0.7500
+40/40 [==============================] - 0s 1ms/step - loss: 0.1530 - accuracy: 0.6187 - val_loss: 0.2105 - val_accuracy: 0.6156
+Epoch 72/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.2774 - accuracy: 0.6562
+40/40 [==============================] - 0s 1ms/step - loss: 0.1541 - accuracy: 0.6242 - val_loss: 0.2120 - val_accuracy: 0.6281
+Epoch 73/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1549 - accuracy: 0.6562
+40/40 [==============================] - 0s 2ms/step - loss: 0.1534 - accuracy: 0.6187 - val_loss: 0.2094 - val_accuracy: 0.6000
+Epoch 74/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.0898 - accuracy: 0.6562
+40/40 [==============================] - 0s 1ms/step - loss: 0.1531 - accuracy: 0.6227 - val_loss: 0.2097 - val_accuracy: 0.6281
+Epoch 75/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1023 - accuracy: 0.6875
+40/40 [==============================] - 0s 1ms/step - loss: 0.1523 - accuracy: 0.6203 - val_loss: 0.2121 - val_accuracy: 0.6094
+Epoch 76/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.0688 - accuracy: 0.7812
+40/40 [==============================] - 0s 1ms/step - loss: 0.1517 - accuracy: 0.6180 - val_loss: 0.2103 - val_accuracy: 0.6000
+Epoch 77/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1370 - accuracy: 0.6250
+40/40 [==============================] - 0s 1ms/step - loss: 0.1488 - accuracy: 0.6102 - val_loss: 0.2152 - val_accuracy: 0.6656
+Epoch 78/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1134 - accuracy: 0.6250
+40/40 [==============================] - 0s 1ms/step - loss: 0.1493 - accuracy: 0.6500 - val_loss: 0.2130 - val_accuracy: 0.6594
+Epoch 79/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1760 - accuracy: 0.6250
+40/40 [==============================] - 0s 1ms/step - loss: 0.1469 - accuracy: 0.6187 - val_loss: 0.2138 - val_accuracy: 0.6156
+Epoch 80/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.0641 - accuracy: 0.6250
+40/40 [==============================] - 0s 1ms/step - loss: 0.1465 - accuracy: 0.6195 - val_loss: 0.2099 - val_accuracy: 0.6094
+Epoch 81/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.0728 - accuracy: 0.5625
+40/40 [==============================] - 0s 1ms/step - loss: 0.1489 - accuracy: 0.6125 - val_loss: 0.2118 - val_accuracy: 0.6219
+Epoch 82/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.0813 - accuracy: 0.7500
+40/40 [==============================] - 0s 1ms/step - loss: 0.1447 - accuracy: 0.6406 - val_loss: 0.2130 - val_accuracy: 0.6562
+Epoch 83/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1113 - accuracy: 0.6875
+40/40 [==============================] - 0s 1ms/step - loss: 0.1471 - accuracy: 0.6242 - val_loss: 0.2108 - val_accuracy: 0.5875
+Epoch 84/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.0619 - accuracy: 0.6875
+40/40 [==============================] - 0s 1ms/step - loss: 0.1494 - accuracy: 0.6148 - val_loss: 0.2144 - val_accuracy: 0.6375
+Epoch 85/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1195 - accuracy: 0.6250
+40/40 [==============================] - 0s 1ms/step - loss: 0.1457 - accuracy: 0.6219 - val_loss: 0.2124 - val_accuracy: 0.6531
+Epoch 86/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1106 - accuracy: 0.6875
+40/40 [==============================] - 0s 1ms/step - loss: 0.1415 - accuracy: 0.6242 - val_loss: 0.2155 - val_accuracy: 0.6406
+Epoch 87/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1467 - accuracy: 0.7188
+40/40 [==============================] - 0s 1ms/step - loss: 0.1436 - accuracy: 0.6445 - val_loss: 0.2150 - val_accuracy: 0.6844
+Epoch 88/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1434 - accuracy: 0.7188
+40/40 [==============================] - 0s 1ms/step - loss: 0.1428 - accuracy: 0.5977 - val_loss: 0.2167 - val_accuracy: 0.6562
+Epoch 89/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1161 - accuracy: 0.7500
+40/40 [==============================] - 0s 1ms/step - loss: 0.1414 - accuracy: 0.6328 - val_loss: 0.2150 - val_accuracy: 0.6500
+Epoch 90/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1934 - accuracy: 0.5938
+40/40 [==============================] - 0s 1ms/step - loss: 0.1400 - accuracy: 0.6258 - val_loss: 0.2161 - val_accuracy: 0.6344
+Epoch 91/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1382 - accuracy: 0.6875
+40/40 [==============================] - 0s 1ms/step - loss: 0.1407 - accuracy: 0.6367 - val_loss: 0.2201 - val_accuracy: 0.6000
+Epoch 92/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1087 - accuracy: 0.5312
+40/40 [==============================] - 0s 1ms/step - loss: 0.1393 - accuracy: 0.6086 - val_loss: 0.2124 - val_accuracy: 0.6219
+Epoch 93/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1661 - accuracy: 0.8125
+40/40 [==============================] - 0s 1ms/step - loss: 0.1377 - accuracy: 0.6391 - val_loss: 0.2154 - val_accuracy: 0.6250
+Epoch 94/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.2218 - accuracy: 0.5625
+40/40 [==============================] - 0s 1ms/step - loss: 0.1378 - accuracy: 0.6148 - val_loss: 0.2223 - val_accuracy: 0.5594
+Epoch 95/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1612 - accuracy: 0.4375
+40/40 [==============================] - 0s 1ms/step - loss: 0.1376 - accuracy: 0.6219 - val_loss: 0.2158 - val_accuracy: 0.6187
+Epoch 96/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1079 - accuracy: 0.7188
+40/40 [==============================] - 0s 1ms/step - loss: 0.1362 - accuracy: 0.6219 - val_loss: 0.2169 - val_accuracy: 0.6375
+Epoch 97/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1866 - accuracy: 0.7500
+40/40 [==============================] - 0s 1ms/step - loss: 0.1350 - accuracy: 0.6086 - val_loss: 0.2171 - val_accuracy: 0.6594
+Epoch 98/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.0644 - accuracy: 0.5000
+40/40 [==============================] - 0s 1ms/step - loss: 0.1360 - accuracy: 0.6266 - val_loss: 0.2180 - val_accuracy: 0.5906
+Epoch 99/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1507 - accuracy: 0.5312
+40/40 [==============================] - 0s 1ms/step - loss: 0.1364 - accuracy: 0.6289 - val_loss: 0.2208 - val_accuracy: 0.5625
+Epoch 100/100
+
+ 1/40 [..............................] - ETA: 0s - loss: 0.1958 - accuracy: 0.4688
+40/40 [==============================] - 0s 1ms/step - loss: 0.1345 - accuracy: 0.6234 - val_loss: 0.2229 - val_accuracy: 0.5688
+&lt;keras.src.callbacks.History object at 0x7f85ca4d7ee0&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict on sensors_test and round up the predictions</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>preds <span class="op">=</span> model.predict(sensors_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ 1/13 [=&gt;............................] - ETA: 0s
+13/13 [==============================] - 0s 578us/step</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>preds_rounded <span class="op">=</span> np.<span class="bu">round</span>(preds)</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Print rounded preds</span></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Rounded Predictions: </span><span class="ch">\n</span><span class="st">'</span>, preds_rounded)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rounded Predictions: 
+ [[1. 1. 1.]
+ [0. 0. 0.]
+ [1. 1. 0.]
+ ...
+ [0. 0. 0.]
+ [1. 1. 0.]
+ [0. 1. 0.]]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate your model's accuracy on the test data</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>accuracy <span class="op">=</span> model.evaluate(sensors_test, parcels_test)[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ 1/13 [=&gt;............................] - ETA: 0s - loss: 0.3273 - accuracy: 0.5000
+13/13 [==============================] - 0s 859us/step - loss: 0.2463 - accuracy: 0.5500</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print accuracy</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Accuracy:'</span>, accuracy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Accuracy: 0.550000011920929</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

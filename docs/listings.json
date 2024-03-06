@@ -16,6 +16,7 @@
   {
     "listing": "/datacamp.html",
     "items": [
+      "/datacamp/Introduction_to_Deep_Learning_with_Keras/intro_to_keras.html",
       "/datacamp/working_with_the_OpenAI_API/working_with_the_OpenAI_API.html",
       "/datacamp/introduction_to_shell/intoroduction_shell.html",
       "/datacamp/Python_Data_Science_Toolbox_Part_1/python_data_science_toolbox_part_1.html",
