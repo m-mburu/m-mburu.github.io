@@ -476,3 +476,190 @@ You will plot the results stored in history with plot_accuracy() and plot_loss()
 Let's see the behind the scenes of our training!
 
 
+```{python}
+
+# Create a sequential model
+model = Sequential()
+
+# Add a dense layer 
+model.add(Dense(1, input_shape=(4,), activation= "sigmoid"))
+
+# Compile your model
+model.compile(loss='binary_crossentropy', optimizer="sgd", metrics=['accuracy'])
+
+
+# Train your model and save its history
+h_callback = model.fit(X_train, y_train, epochs = 100,
+               validation_data=(X_test, y_test))
+
+# Plot train vs test loss during training
+plot_loss(h_callback.history['loss'], h_callback.history['val_loss'])
+
+# Plot train vs test accuracy during training
+plot_accuracy(h_callback.history['accuracy'], h_callback.history['val_accuracy'])
+```
+
+
+
+
+## Early stopping your model
+The early stopping callback is useful since it allows for you to stop the model training if it no longer improves after a given number of epochs. To make use of this functionality you need to pass the callback inside a list to the model's callback parameter in the .fit() method.
+
+The model you built to detect fake dollar bills is loaded for you to train, this time with early stopping. X_train, y_train, X_test and y_test are also available for your use.
+
+
+```{python}
+
+# Create a sequential model
+model = Sequential()
+
+# Add a dense layer 
+model.add(Dense(1, input_shape=(4,), activation= "sigmoid"))
+
+# Compile your model
+model.compile(loss='binary_crossentropy', optimizer="sgd", metrics=['accuracy'])
+
+
+# Import the early stopping callback
+from tensorflow.keras.callbacks import EarlyStopping
+# Define a callback to monitor val_accuracy
+monitor_val_acc = EarlyStopping(monitor= 'val_accuracy', patience=5)
+
+# Create a sequential model
+model = Sequential()
+
+# Add a dense layer 
+model.add(Dense(1, input_shape=(4,), activation= "sigmoid"))
+
+# Compile your model
+model.compile(loss='binary_crossentropy', optimizer="sgd", metrics=['accuracy'])
+
+# Train your model using the early stopping callback
+model.fit(X_train, y_train, epochs = 100, 
+    validation_data=(X_test, y_test),
+    callbacks = [monitor_val_acc])
+
+```
+
+## A combination of callbacks
+
+
+```{python}
+# Import the EarlyStopping and ModelCheckpoint callbacks
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+
+# Early stop on validation accuracy
+monitor_val_acc = EarlyStopping(monitor = 'val_accuracy', patience = 3)
+
+# Save the best model as best_banknote_model.hdf5
+model_checkpoint = ModelCheckpoint("best_banknote_model.hdf5", save_best_only = True)
+
+# Create a sequential model
+model = Sequential()
+
+# Add a dense layer 
+model.add(Dense(1, input_shape=(4,), activation= "sigmoid"))
+
+# Compile your model
+model.compile(loss='binary_crossentropy', optimizer="sgd", metrics=['accuracy'])
+
+# Fit your model for a stupid amount of epochs
+h_callback = model.fit(X_train, y_train,
+                    epochs = 1000000000000,
+                    callbacks = [monitor_val_acc, model_checkpoint],
+                    validation_data = (X_test, y_test))
+```
+
+#  Improving Your Model Performance
+
+## Learning the digits
+You're going to build a model on the digits dataset, a sample dataset that comes pre-loaded with scikit learn. The digits dataset consist of 8x8 pixel handwritten digits from 0 to 9:
+
+ ![](image/digits_dataset_sample.png)
+You want to distinguish between each of the 10 possible digits given an image, so we are dealing with multi-class classification.
+The dataset has already been partitioned into X_train, y_train, X_test, and y_test, using 30% of the data as testing data. The labels are already one-hot encoded vectors, so you don't need to use Keras to_categorical() function.
+
+Let's build this new model!
+
+```{python}
+import numpy as np
+from tensorflow.keras.utils import to_categorical
+digits_pixels =  np.load("data/Digits/digits_pixels.npy")
+digits_target =  np.load("data/Digits/digits_target.npy")
+digits_target_binary = to_categorical(digits_target)
+X_train, X_test, y_train, y_test = train_test_split(digits_pixels, digits_target_binary, test_size=0.25, random_state=42)
+
+## instantiate the model
+model = Sequential()
+
+# Input and hidden layer with input_shape, 16 neurons, and relu 
+model.add(Dense(16, input_shape = (64,), activation = "relu"))
+
+# Output layer with 10 neurons (one per digit) and softmax
+model.add(Dense(10, activation = "softmax"))
+
+# Compile your model
+model.compile(optimizer = "adam", loss = "categorical_crossentropy", metrics = ["accuracy"])
+
+# Test if your model is well assembled by predicting before training
+print(model.predict(X_train))
+```
+
+## Is the model overfitting?
+ Let's train the model you just built and plot its learning curve to check out if it's overfitting! You can make use of the loaded function plot_loss() to plot training loss against validation loss, you can get both from the history callback.
+
+
+```{python}
+# Train your model for 60 epochs, using X_test and y_test as validation data
+h_callback = model.fit(X_train, y_train, epochs = 60, validation_data = (X_test, y_test), verbose=0)
+
+# Extract from the h_callback object loss and val_loss to plot the learning curve
+plot_loss(h_callback.history['loss'], h_callback.history['val_loss'])
+```
+
+- This graph doesn't show overfitting but convergence. It looks like your model has learned all it could from the data and it no longer improves. The test loss, although higher than the training loss, is not getting worse, so we aren't overfitting to the training data.
+If you want to inspect the plot_loss() function code, paste this in the console: show_code(plot_loss)
+
+
+## Do we need more data?
+It's time to check whether the digits dataset model you built benefits from more training examples!
+
+In order to keep code to a minimum, various things are already initialized and ready to use:
+
+- The model you just built.
+- X_train,y_train,X_test, and y_test.
+- The initial_weights of your model, saved after using model.get_weights().
+- A pre-defined list of training sizes: training_sizes.
+- A pre-defined early stopping callback monitoring loss: early_stop.
+- Two empty lists to store the evaluation results: train_accs and test_accs.
+Train your model on the different training sizes and evaluate the results on X_test. End by plotting the results with plot_results().
+
+The full code for this exercise can be found on the slides!
+
+```{python}
+# Create the list of training sizes
+# Store initial model weights
+init_weights = model.get_weights()
+training_sizes = np.array([ 125,  502,  879, 1255])
+train_accs = []
+test_accs = []
+for size in training_sizes:
+  	# Get a fraction of training data (we only care about the training data)
+    X_train_frac, y_train_frac = X_train[:size], y_train[:size]
+
+    # Reset the model to the initial weights and train it on the new training data fraction
+    model.set_weights(init_weights)
+    model.fit(X_train_frac, y_train_frac, epochs = 50, callbacks = [early_stop])
+
+    # Evaluate and store both: the training data fraction and the complete test set results
+    train_accs.append(model.evaluate(X_train_frac, y_train_frac)[1])
+    test_accs.append(model.evaluate(X_test, y_test)[1])
+    
+# Plot train vs test accuracies
+plot_results(train_accs, test_accs)
+
+import inspect
+inspect.getsource(plot_results)
+
+```
+

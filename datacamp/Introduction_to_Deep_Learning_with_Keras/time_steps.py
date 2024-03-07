@@ -1018,3 +1018,32 @@ def plot_orbit(model_preds):
     plt.legend(["Scientist's Orbit", 'Your orbit'],loc="lower left")
     plt.title("Predicted orbit vs Scientist\'s Orbit")
     plt.show()
+    
+    
+    
+    
+# Plot training & validation accuracy values
+
+def plot_loss(loss,val_loss):
+    plt.figure()
+    plt.plot(loss)
+    plt.plot(val_loss)
+    plt.title('Model loss')
+    plt.ylabel('Loss')
+    plt.xlabel('Epoch')
+    plt.legend(['Train', 'Test'], loc='upper right')
+    plt.show()
+
+
+
+def plot_accuracy(acc,val_acc):  
+    plt.figure()
+    plt.plot(acc)
+    plt.plot(val_acc)
+    plt.title('Model accuracy')
+    plt.ylabel('Accuracy')
+    plt.xlabel('Epoch')
+    plt.legend(['Train', 'Test'], loc='upper left')
+    plt.show()
+
+
