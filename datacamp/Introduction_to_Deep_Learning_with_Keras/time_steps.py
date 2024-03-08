@@ -1047,3 +1047,58 @@ def plot_accuracy(acc,val_acc):
     plt.show()
 
 
+def plot_results(train_accs,test_accs):
+  plt.plot(training_sizes, train_accs, 'o-', label="Training Accuracy")
+  plt.plot(training_sizes, test_accs, 'o-', label="Test Accuracy")
+  plt.title('Accuracy vs Number of training samples')
+  plt.xlabel('# of training samples')
+  plt.ylabel('Accuracy')
+  plt.legend(loc="best")
+  plt.show()
+  
+  
+# Activation functions to try
+
+
+
+
+
+
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, LeakyReLU
+
+class ModelWrapper:
+    def __init__(self, act_function):
+        self.model = self.build_model(act_function)
+
+    def build_model(self, act_function):
+        # Validate activation function
+        if act_function not in ['relu', 'leaky_relu', 'sigmoid', 'tanh']:
+            raise ValueError('Make sure your activation functions are named correctly!')
+
+        # Instantiate a Sequential model
+        model = Sequential()
+
+        # Add a hidden layer of 64 neurons and a 20 neuron's input
+        if act_function == 'leaky_relu':
+            model.add(Dense(64, input_shape=(20,)))
+            model.add(LeakyReLU(alpha=0.01))
+        else:
+            model.add(Dense(64, input_shape=(20,), activation=act_function))
+
+        # Add an output layer of 3 neurons with sigmoid activation
+        model.add(Dense(3, activation='sigmoid'))
+
+        # Compile your model with binary crossentropy loss
+        model.compile(optimizer='adam',
+                      loss="binary_crossentropy",
+                      metrics=['accuracy'])
+
+        return model
+
+
+def get_model(act_function):
+  if act_function not in ['relu', 'leaky_relu', 'sigmoid', 'tanh']:
+    raise ValueError('Make sure your activation functions are named correctly!')
+  print("Finishing with",act_function,"...")
+  return ModelWrapper(act_function).model
