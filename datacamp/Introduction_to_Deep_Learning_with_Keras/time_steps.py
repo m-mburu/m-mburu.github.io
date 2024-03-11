@@ -1102,3 +1102,52 @@ def get_model(act_function):
     raise ValueError('Make sure your activation functions are named correctly!')
   print("Finishing with",act_function,"...")
   return ModelWrapper(act_function).model
+
+
+
+
+def bank_note_model():
+  model = Sequential()
+  # Add a dense layer 
+  model.add(Dense(1, input_shape=(4,), activation= "sigmoid"))
+  # Compile your model
+  model.compile(loss='binary_crossentropy', optimizer="sgd", metrics=['accuracy'])
+  return model
+
+
+def compare_histories_acc(h1,h2):
+  plt.plot(h1.history['accuracy'])
+  plt.plot(h1.history['val_accuracy'])
+  plt.plot(h2.history['accuracy'])
+  plt.plot(h2.history['val_accuracy'])
+  plt.title("Batch Normalization Effects")
+  plt.xlabel('Epoch')
+  plt.ylabel('Accuracy')
+  plt.legend(['Train', 'Test', 'Train with Batch Normalization', 'Test with Batch Normalization'], loc='best')
+  plt.show()
+  
+
+
+def digits_model():
+    ## instantiate the model
+    model = Sequential()
+    # Input and hidden layer with input_shape, 16 neurons, and relu 
+    model.add(Dense(16, input_shape = (64,), activation = "relu"))
+    
+    # Output layer with 10 neurons (one per digit) and softmax
+    model.add(Dense(10, activation = "softmax"))
+    
+    # Compile your model
+    model.compile(optimizer = "sgd", loss = "categorical_crossentropy", metrics = ["accuracy"])
+    
+    return model
+
+
+
+def show_results():
+    print("Best: \n0.975395 using {learning_rate: 0.001, epochs: 50, batch_size: 128, activation: relu} \nOther: \n0.956063 (0.013236) with: {learning_rate: 0.1, epochs: 200, batch_size: 32, activation: tanh} \n0.970123 (0.019838) with: {learning_rate: 0.1, epochs: 50, batch_size: 256, activation: tanh} \n0.971880 (0.006524) with: {learning_rate: 0.01, epochs: 100, batch_size: 128, activation: tanh} \n0.724077 (0.072993) with: {learning_rate: 0.1, epochs: 50, batch_size: 32, activation: relu} \n0.588752 (0.281793) with: {learning_rate: 0.1, epochs: 100, batch_size: 256, activation: relu} \n0.966608 (0.004892) with: {learning_rate: 0.001, epochs: 100, batch_size: 128, activation: tanh} \n0.952548 (0.019734) with: {learning_rate: 0.1, epochs: 50, batch_size: 256, activation: relu} \n0.971880 (0.006524) with: {learning_rate: 0.001, epochs: 200, batch_size: 128, activation: relu}\n0.968366 (0.004239) with: {learning_rate: 0.01, epochs: 100, batch_size: 32, activation: relu}\n0.910369 (0.055824) with: {learning_rate: 0.1, epochs: 100, batch_size: 128, activation: relu}")
+  
+  
+  
+def cross_val_score(model,X,y,cv):
+    return np.array([0.9736842 , 0.96842105, 0.97354497]) 
