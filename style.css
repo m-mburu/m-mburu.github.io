@@ -110,3 +110,21 @@ div.quarto-post h3 a {
 }
 
 
+
+.shiny-main-container {
+  max-width: 100% !important;
+  margin: auto;
+  height: auto !important;
+}
+
+.shiny-plot-output .ggiraph-svg{
+  max-width: auto !important;
+  margin:auto;
+  max-height: 400px;
+  width: 100% !important;
+  height: auto !important;
+  position: relative !important;
+  aspect-ratio: 9/ 5 !important;
+}
+
+

@@ -1,0 +1,13 @@
+---
+title: "Malnutrition Prevalence in Africa"
+author: "Mburu"
+date: "2024-04-04"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+<iframe src="https://mmburu.shinyapps.io/maln_prev_africa/" style="width: 100% !important; height: 800px;" frameborder="0"></iframe>

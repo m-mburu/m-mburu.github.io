@@ -22,7 +22,9 @@ website:
         href: index.qmd
       - text: Data Camp Courses 
         href: datacamp.qmd
-      
+      - text: Shiny Apps
+        href: shiny_apps.qmd 
+    
     right:
       - about.qmd
       - icon: github

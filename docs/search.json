@@ -1888,5 +1888,89 @@
     "title": "Introduction to Deep Learning with Keras",
     "section": "Training with cross-validation",
     "text": "Training with cross-validation\nTime to train your model with the best parameters found: 0.001 for the learning rate, 50 epochs, a 128 batch_size and relu activations.\nThe create_model() function from the previous exercise is ready for you to use. X and y are loaded as features and labels.\nUse the best values found for your model when creating your KerasClassifier object so that they are used when performing cross_validation.\nEnd this chapter by training an awesome tuned model on the breast cancer dataset!\n\nfrom sklearn.datasets import load_breast_cancer\n\n# Load the breast cancer dataset\nbreast_cancer = load_breast_cancer()\nX = breast_cancer.data\ny = breast_cancer.target\n\n\n# Create a KerasClassifier\nmodel = KerasClassifier(build_fn = create_model(learning_rate = 0.001, activation = \"relu\"), epochs = 50, \n             batch_size = 128, verbose = 0)\n\n# Calculate the accuracy score for each fold\nkfolds = cross_val_score(model, X, y, cv = 3)\n\n# Print the mean accuracy\nprint('The mean accuracy was:', kfolds.mean())\n\nThe mean accuracy was: 0.9718834066666666\n\n# Print the accuracy standard deviation\nprint('With a standard deviation of:', kfolds.std())\n\nWith a standard deviation of: 0.002448915612216046"
+  },
+  {
+    "objectID": "shiny_apps.html",
+    "href": "shiny_apps.html",
+    "title": "Personal Blog",
+    "section": "",
+    "text": "Malnutrition Prevalence in Africa\n\n\n\n\n\n\n\n\n\n\n\nApr 4, 2024\n\n\nMburu\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "cv/cv_mburu.html",
+    "href": "cv/cv_mburu.html",
+    "title": "EMPLOYMENT HISTORY",
+    "section": "",
+    "text": "Data Analyst, with substantial experience in data management, statistical analysis and machine learning. I have worked in healthcare with a bias towards malnutrition, financial diaries research in low income areas and agricultural research. I have gained in-depth knowledge of using statistical/programming languages such as R, Python and SQL for analysis. I enjoy using data to solve problems and I’m always researching on new methods/tools/skills to help me become efficient in my work."
+  },
+  {
+    "objectID": "cv/cv_mburu.html#data-analyst",
+    "href": "cv/cv_mburu.html#data-analyst",
+    "title": "EMPLOYMENT HISTORY",
+    "section": "",
+    "text": "Data Analyst, with substantial experience in data management, statistical analysis and machine learning. I have worked in healthcare with a bias towards malnutrition, financial diaries research in low income areas and agricultural research. I have gained in-depth knowledge of using statistical/programming languages such as R, Python and SQL for analysis. I enjoy using data to solve problems and I’m always researching on new methods/tools/skills to help me become efficient in my work."
+  },
+  {
+    "objectID": "cv/cv_mburu.html#data-scientist-foundation-for-innovative-new-diagnostics-2022-june---present",
+    "href": "cv/cv_mburu.html#data-scientist-foundation-for-innovative-new-diagnostics-2022-june---present",
+    "title": "EMPLOYMENT HISTORY",
+    "section": "Data Scientist, Foundation for Innovative new Diagnostics 2022-June - present",
+    "text": "Data Scientist, Foundation for Innovative new Diagnostics 2022-June - present\n\nData Management:\n\nDeveloping R scripts for cleaning data sets and characterization of specimens as per algorithms provided by scientists.\nIn Charge of Find LIMS systems and making sure that data entry is upto date and sites are well trained to use our LIMS system\n\n\n\nData Visualization/Reporting:\n\nData analysis in terms of tables, graphs and Rmarkdown reports,Shiny Dashboards to better inform scientists on the status of Biobank related data\n\n\n\nStatistical Analysis\n\nWorked on one project to find out the sensitivity of diagnostics tools"
+  },
+  {
+    "objectID": "cv/cv_mburu.html#data-manager-kemri-wellcome-trust-may-2019-present",
+    "href": "cv/cv_mburu.html#data-manager-kemri-wellcome-trust-may-2019-present",
+    "title": "EMPLOYMENT HISTORY",
+    "section": "Data Manager, KEMRI WELLCOME TRUST May 2019 – present:",
+    "text": "Data Manager, KEMRI WELLCOME TRUST May 2019 – present:\n\nRole covers a mixture of data management, data analysis and machine learning. In my current role I work under the CHAIN Network where we are focused on optimizing the management and care of the sick and undernourished children in resource-limited settings to improve survival, growth and development. CHAIN study has 9 sites in Africa and Asia.\n\n\nData Management:\n\nI was in a team that developed dashboards for data management using R programming and shiny server. This was achieved by creating automated scripts that were connected to MySQL database and Redcap to check spurious values and for reporting. This ensured that we had an automated way to flag outliers, validation and automation of report generation. This led to a very low data entry error rate of less than 2%. It also helped in that we had a continuous process for data cleaning which made it easier to catch most of the errors early.\n\n\n\nManagement/Mentorship:\n\nTaught data clerks and lab technicians on using dashboards to double check entry outlier values or generate reports. I also encouraged them to use project management software to raise tasks to the data team which led us to know early when problems occurred.\n\n\n\nData Visualization:\n\nCreate maps to display malnutrition patterns/prevalence in study countries to see the most vulnerable communities, using R packages such as sf, raster, ggplot2, leaflet and tmap.\nUsed plotly and ggplot2, shiny to visualize various study variables patterns and trends. This helped us to dedicate more time to discuss results, research more and try different models for fitting data.\n\n\n\nData Mining:\n\nExtraction of data sets from various health demographic data bases such as demographic and health surveys database, world population database, National Oceanic and Atmospheric Administration to derive various processed variables. This was useful in finding patterns between weather and hospital visits, how diseases are distributed spatially, how spatial distribution of diseases has changed over years.\n\n\n\nMachine Learning:\n\nWorking closely with clinicians to create models that predict high risk children using clinical features, water sanitation and hygiene variables. Clustering methods such as k means clustering was used to group patients that are similar given clinical measurements of features such as complete blood count, blood biochemistry and symptoms. This is important as it helped identify features of high-risk groups.\n\n\n\nSpatial Statistics:\n\nWorking closely with the population health unit to model travel times and travel distances to hospitals for study participants."
+  },
+  {
+    "objectID": "cv/cv_mburu.html#data-analyststatistician-low-income-financial-transformation-june-2016-may-2019",
+    "href": "cv/cv_mburu.html#data-analyststatistician-low-income-financial-transformation-june-2016-may-2019",
+    "title": "EMPLOYMENT HISTORY",
+    "section": "Data Analyst/Statistician, Low Income Financial Transformation June 2016 – May 2019:",
+    "text": "Data Analyst/Statistician, Low Income Financial Transformation June 2016 – May 2019:\n\nLow-Income Financial Transformation (L-IFT) is a for-profit social business. The company specializes in a diaries research methodology that can be applied to a range of purposes, such as impact measurement, product development, customer satisfaction gauging, and programme design. L-IFT is primarily focused on financial inclusion, digital finance and strengthening the financial sector of the countries where it works. L-IFT also has expertise and is building data in the fields of energy, livelihoods, youth, entrepreneurship, SME development and the intersection of health and financial management.\nAt L-IFT I received a lot of experience in finances of low-income areas. How fluctuating the finances are, savings patterns and how calamities affect they lives.\n\n\nData Management:\n\nThis is important step in research as it ensured that the data used in analysis is of the highest quality. This is was achieved by creating data collection databases and reviewing each question with the data collection teams. Monitoring of surveys, flagging inconsistencies in the data entry and raising any queries with the researchers in the field.\n\n\n\nData Mining/Statistical Computation:\n\nOur surveys were done after every two weeks with a follow up period of more than 6 months. This meant that the data sets produced were large, complex and messy. I Introduced R programming in our company to solve this. This helped with the analysis as we could do more complex analysis for instance digging into passed data and making comparisons to see the trends. R being an open source meant that we had access to actively developed packages for all kinds of analysis. It also meant we had power to do tasks such as visualizing all data variables using frameworks such as shiny.\n\n\n\nData Analysis/Machine Learning:\n\nThis was my day to day job. I worked with the IT department to have shiny server installed in our servers which meant that we could produce come up with dashboards. We were able to stream twitter data in real time. This enabled us to advise on the trending topics that our company could take advantage of in terms of advertising.\nAnalysing twitter data to see the impact of influencers by using metrics such as follower’s quotient, interactions to user tweets for instance the summary statistics of number of retweets or favourites a user has received over a duration of time.\nUsed text analysis methods such as sentiment analysis, topic modelling on open ended questions from surveys.\nI researched extensively on the best ways to visualize and analyse different kind of data sets. This helped us use methods such clustering to identify groups of clients for microfinance institutions in low income settings."
+  },
+  {
+    "objectID": "cv/cv_mburu.html#qualifications",
+    "href": "cv/cv_mburu.html#qualifications",
+    "title": "EMPLOYMENT HISTORY",
+    "section": "QUALIFICATIONS",
+    "text": "QUALIFICATIONS\n\nBachelor of Science in Statistics, University of Nairobi, 2012 – 2016:\n\nArea of study included Exploratory data analysis, Statistical modelling, computation and data analysis, analysis and design of experiments, Time series analysis\n\n\n\nSpatial Data: Data Camp\n\nArea of study included visualizing spatial data using ggplot2, tmap and leaflet, spatial analysis with sf and raster, interactive maps with leaflet and spatial statistics, such as point pattern analysis, areal statistics and geo-statistics\n\n\n\nMachine Learning: Coursera\n\nArea of study included supervised learning methods such as regression methods such linear regression, tree-based methods, classification, logistic regression support vector machines tree-based methods neural networks, dimension reduction with pca, clustering methods such k means clustering.\n\n\n\nR certification track - Package creation: Think R France\n\nArea of study; creating functions in the R language and to distribute these in the form of a package according to best development practices so that it can be used by other R users.\n\n\n\nPublications\n\nPeter Gachoki, Moses Mburu, and Moses Muraya, “Predictive Modelling of Benign and Malignant Tumors Using Binary Logistic, Support Vector Machine and Extreme Gradient Boosting Models.” American Journal of Applied Mathematics and Statistics, vol. 7, no. 6 (2019): 196-204. doi: 10.12691/ajams-7-6-2\nMaleche-Obimbo, E., Odhiambo, M. A., Njeri, L., Mburu, M., Jaoko, W., Were, F., & Graham, S. M. (n.d.). Magnitude and factors associated with post-tuberculosis lung disease in low- and middle-income countries: A systematic review and meta-analysis. PLOS Global Public Health. Retrieved May 2, 2023, from https://journals.plos.org/globalpublichealth/article?id=10.1371%2Fjournal.pgph.0000805"
+  },
+  {
+    "objectID": "cv/resume.html",
+    "href": "cv/resume.html",
+    "title": "Curriculum Vitae",
+    "section": "",
+    "text": "Moses Mburu\nLocation: Kilifi, Kenya\nLinkedIn: https://www.linkedin.com/in/mmburu/\nBlog: https://m-mburu.github.io/\nGithub: https://github.com/m-mburu"
+  },
+  {
+    "objectID": "cv/resume.html#professional-summary",
+    "href": "cv/resume.html#professional-summary",
+    "title": "Curriculum Vitae",
+    "section": "Professional Summary",
+    "text": "Professional Summary\nA seasoned Data Analyst with extensive experience in data management, statistical analysis, and machine learning. Having worked across healthcare, financial research, and agricultural sectors, I possess a robust understanding of various analytical methodologies and tools, including R, Python, and SQL. My career is marked by a keen focus on leveraging data to address complex issues, complemented by a continuous pursuit of emerging technologies to enhance efficiency in data-driven decision-making."
+  },
+  {
+    "objectID": "cv/resume.html#employment-history",
+    "href": "cv/resume.html#employment-history",
+    "title": "Curriculum Vitae",
+    "section": "Employment History",
+    "text": "Employment History\n\nData Scientist, The Foundation for Innovative New Diagnostics (June 2022 – Present)\n\nManaging and ensuring the integrity of biobank data through the development of reproducible data management processes and R scripts.\nDeveloping and deploying interactive Shiny and Power BI dashboards for internal and external stakeholders, integrated within the company’s SharePoint wiki page.\nLeading the coordination with external partners and consultants to enhance data management and biobank activities, ensuring project objectives are met timely and effectively.\nCollaborating with the Data Science team to author R packages and enhance data science operations through strategic use of GitHub for code management.\nContributing to scientific publications and reports, assisting with data analysis and presentation for internal and external audiences.\n\n\n\nData Manager, KEMRI WELLCOME TRUST (May 2019 – May 2022)\n\nCarry out data review, validation including discrepancy checking, and cleaning.\nManage data entry staff (permanent or casual) in collaboration with Administration and PIs and monitor performance.\nDesign database for capturing and storing data.\nPrepare performance indicator reports on data status as study project progress. Co-ordinate data for all study sites projects.\nConduct preliminary analysis and generate study progress reports.\nParticipate in the development, review and translation of research tools; Participate in the pre-testing of data collection platforms;\nData cleaning including doing all required consistency checks for project data;\nDocument project data sets according to the Centre’s guidelines on data documentation, archiving and sharing;\nExtract data and prepare analytical files;\nDevelop template syntax files for research staff to use in creating various data sets;\nPerform basic and advanced statistical analysis of data using tools such as STATA and R.\n\n\n\nData Analyst/Statistician, Low Income Financial Transformation (June 2016 – May 2019)\n\nPreparing all ‘R’ scripts in a way that they are usable by others (documenting and standardizing code)\nSupporting publications such as blogs, Research Pearls and larger projects with data analysis\nIdentifying interesting patterns in the data and making suggestions for publications, e.g. differences between diaries-and-non-diaries respondents, differences between baseline and endline\nVoicing any data discrepancies and suggest solutions to any problems these might cause\nSuggesting improvements on data processing or analysis techniques\nSupporting others on methodological issues such as sample design, sample selection\nWorking together with Maria Helmrich on working out data tasks, e.g. correlations analyses\nSupporting any project with sampling and other statistical expertise"
+  },
+  {
+    "objectID": "cv/resume.html#qualifications",
+    "href": "cv/resume.html#qualifications",
+    "title": "Curriculum Vitae",
+    "section": "Qualifications",
+    "text": "Qualifications\n\nEducation\n\nBachelor of Science in Statistics, University of Nairobi, 2012 – 2016\n\nSpecialized in Statistical Modelling, Data Analysis, and Time Series Analysis.\n\n\n\n\nCertifications\n\nSpatial Data, Data Camp: Focused on visualizing and analyzing spatial data using modern tools and techniques.\nMachine Learning, Coursera: Mastered both supervised and unsupervised learning methods, encompassing various regression, classification, and clustering techniques.\n**"
+  },
+  {
+    "objectID": "cv/resume.html#publications",
+    "href": "cv/resume.html#publications",
+    "title": "Curriculum Vitae",
+    "section": "Publications",
+    "text": "Publications\n\nGachoki, P., Mburu, M., & Muraya, M. (2019). “Predictive Modelling of Benign and Malignant Tumors Using Binary Logistic, Support Vector Machine and Extreme Gradient Boosting Models.” American Journal of Applied Mathematics and Statistics, 7(6), 196-204. DOI: 10.12691/ajams-7-6-2\nMaleche-Obimbo, E., et al. (No date). “Magnitude and factors associated with post-tuberculosis lung disease in low- and middle-income countries: A systematic review and meta-analysis.” PLOS Global Public Health. Available at: https://journals.plos.org/globalpublichealth/article?id=10.1371%2Fjournal.pgph.0000805 (Accessed: 09 October 2023)."
   }
 ]

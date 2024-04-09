@@ -43,5 +43,11 @@
       "/datacamp/string-manipulation-with-stringr-in-r/stringR.html",
       "/datacamp/ml_tree_methods_r/ml_tree_methods.html"
     ]
+  },
+  {
+    "listing": "/shiny_apps.html",
+    "items": [
+      "/shiny/ihme_maln/malnutrition_africa.html"
+    ]
   }
 ]
