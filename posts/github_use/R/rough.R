@@ -1,5 +1,6 @@
 
-
+library(tidyverse)
+library(ggiraph)
 interactive_points <- function(data,x, y,  fill_var, tooltip_var, facet_var = NULL) {
     # Create the ggplot
     p <- ggplot(data, aes(x = {{x}}, y = {{y}} , col = {{fill_var}}, tooltip = {{tooltip_var}})) +
@@ -118,4 +119,5 @@ library(plotly)
 # Define a more generic function for plotting
 
 ke <- programming_languages[language ==  "Jupyter Notebook" & iso2_code == "KE"] 
+
 
