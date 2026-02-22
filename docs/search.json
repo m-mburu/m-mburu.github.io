@@ -1,0 +1,30 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Personal Blog",
+    "section": "",
+    "text": "Welcome To My New Blog\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nFeb 22, 2026\n\n\nAuthor Name\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this blog"
+  },
+  {
+    "objectID": "posts/welcome/index.html",
+    "href": "posts/welcome/index.html",
+    "title": "Welcome To My New Blog",
+    "section": "",
+    "text": "This is the first post in a brand new blog."
+  },
+  {
+    "objectID": "posts/welcome/index.html#welcome",
+    "href": "posts/welcome/index.html#welcome",
+    "title": "Welcome To My New Blog",
+    "section": "Welcome",
+    "text": "Welcome\nWelcome to the new blog!"
+  }
+]
