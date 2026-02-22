@@ -5,14 +5,15 @@
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   line-height: 1.6;
-  color: #2c3e50;
+  /* color: #2c3e50;  Removed to let theme handle text color */
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
-  color: #1a252f;
+  /* color: #1a252f; Removed to let theme handle text color */
   margin-top: 1.5em;
 }
+
 
 /* Navbar Tweaks */
 .navbar {
@@ -57,11 +58,21 @@ h1, h2, h3, h4, h5, h6 {
   text-align: center;
 }
 
+/* Dark mode banner */
+body.quarto-dark .hero-banner {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+}
+
 .hero-title {
   font-size: 2.5rem;
   font-weight: 800;
   color: #2c3e50;
   margin-bottom: 0.5rem;
+}
+
+/* Dark mode title */
+body.quarto-dark .hero-title {
+  color: #ecf0f1;
 }
 
 .hero-subtitle {
@@ -70,6 +81,17 @@ h1, h2, h3, h4, h5, h6 {
   max-width: 600px;
   margin: 0 auto;
 }
+
+/* Dark mode subtitle */
+body.quarto-dark .hero-subtitle {
+  color: #bdc3c7;
+}
+
+/* Dark mode grid borders */
+body.quarto-dark .quarto-grid-item {
+  border-color: #444;
+}
+
 
 
 /* Clean up old overrides */
