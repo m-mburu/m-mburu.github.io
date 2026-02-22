@@ -12,7 +12,7 @@ website:
   page-navigation: true
   reader-mode: true  
   navbar:
-    title: "M. Mburu | Data Science"
+    title: "Data Science"
     search: true
     background: primary
     collapse-below: lg
@@ -29,7 +29,9 @@ website:
         href: https://twitter.com/mmburu_w
 format:
     html:
-        theme: flatly
+        theme: 
+          light: flatly
+          dark: darkly
         toc: true
         toc-depth: 4 
         smooth-scroll: true

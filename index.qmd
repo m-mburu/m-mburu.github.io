@@ -12,15 +12,14 @@ page-layout: full
 title-block-banner: false
 ---
 
-::: {.hero-banner}
-::: {.hero-title}
+::::: hero-banner
+::: hero-title
 Statistical Methods & Data Science
 :::
-::: {.hero-subtitle}
+
+::: hero-subtitle
 Exploring the intersection of data, algorithms, and real-world problems.
 :::
-:::
+:::::
 
 ## Latest Experiments
-
-
