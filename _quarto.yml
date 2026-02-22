@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "Personal Blog"
+  title: "Data Science & Stats Lab"
   site-url: https://m-mburu.github.io/
   favicon: "milkyway.jpeg"
   google-analytics: "G-BFNZ97VTLJ"
@@ -12,23 +12,24 @@ website:
   page-navigation: true
   reader-mode: true  
   navbar:
+    title: "M. Mburu | Data Science"
     search: true
-    background: dark
+    background: primary
     collapse-below: lg
-    type: overlay 
-    alignment: center
     left:
       - text: Home
         href: index.qmd
     
     right:
-      - about.qmd
+      - text: About
+        href: about.qmd
       - icon: github
         href: https://github.com/m-mburu
       - icon: twitter
         href: https://twitter.com/mmburu_w
 format:
     html:
+        theme: flatly
         toc: true
         toc-depth: 4 
         smooth-scroll: true

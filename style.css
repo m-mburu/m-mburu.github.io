@@ -1,71 +1,92 @@
-nav ul li:hover{
-  background-color:#088;
-  border-color: #111;
-}
 
-.navbar {
-  border-style: solid;
-  border-width: 0 1px 1px 1px;
-  border-color: black;
-  color: white !important;
-  background-color:#000;/* #2c3e50;*/
-  padding: 10px 15px;
-  margin-bottom: 10px;
-  text-align: center;
-  font-size: 20px;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  border-radius: 4px;
-  transition: all 0.2s ease-in-out;
-  position: relative;
-}
+/* Modern Data Science Blog Styles */
 
-
+/* Improved Typography */
 body {
-	background-color: white;
-	color: #345151 !important;
-	font-family: Georgia, Times, serif, Bookman;
-	font-size: 16px !important;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  color: #2c3e50;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  color: #1a252f;
+  margin-top: 1.5em;
+}
+
+/* Navbar Tweaks */
+.navbar {
+  padding: 0.8rem 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.navbar-brand {
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+/* Post Grid Enhancements for 'Flatly' Feel */
+.quarto-grid-item {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+}
+
+.quarto-grid-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.quarto-grid-item .card-body {
+  padding: 1.25rem;
+}
+
+.listing-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+/* Hero Section on Index */
+.hero-banner {
+  padding: 3rem 1rem;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  color: #7f8c8d;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 
- 
-#quarto-header {
-    display: inline-block;
-    text-decoration-color: #088  !important;
-    list-style-type: none;
-    font-size: 24px !important;
-    border: none;
+/* Clean up old overrides */
+h1, h2, h3, h4, h5, h6 {
+  color: #2c3e50; /* Matches Flatly primary/secondary */
 }
 
-
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	font-family: Lato, Helvetica, Arial, sans-serif;
-	margin: .75em 0;
-	text-transform: none;
-	font-weight: 200;
-	color: #00a2ab !important;
-}
-h1,
-h2 {
-	margin: .5em 0;
-}
-h5,
-h6 {
-	text-transform: uppercase;
+/* Links in post titles */
+div.quarto-post .listing-title a {
+    color: #2c3e50;
+    text-decoration: none;
 }
 
-div.quarto-post h3 a {
-    color: #00a2ab !important;
-    text-decoration: none; /* Or any other decoration you prefer */
+div.quarto-post .listing-title a:hover {
+    color: #18bc9c; /* Flatly teal */
 }
+
 
 
 .ggiraph-svg, .girafe{
