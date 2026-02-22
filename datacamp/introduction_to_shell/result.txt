@@ -1,3 +1,0 @@
-Date,Tooth
-2017-01-03,bicuspid
-2017-01-05,incisor

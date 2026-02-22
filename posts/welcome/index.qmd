@@ -1,12 +1,12 @@
 ---
-title: "Welcome To My Blog"
-author: "Mburu"
-date: "2023-02-08"
+title: "Welcome To My New Blog"
+author: "Author Name"
+date: "2026-02-22"
 categories: [news]
 ---
 
+This is the first post in a brand new blog.
 
-![](thumbnail.jpg)
+## Welcome
 
-
-Okay I'm excited to finally sit down and work on my blog!. I hope to continually add interesting. 
+Welcome to the new blog!
