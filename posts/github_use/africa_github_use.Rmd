@@ -1,7 +1,7 @@
 ---
 title: "Github Use in Africa using Maps"
 author: "Mburu"
-date: "2024-02-12"
+date: "2026-02-22"
 output:
      html_document:
         include:
@@ -13,6 +13,11 @@ output:
 knitr::opts_chunk$set(echo = TRUE,
                       warning = FALSE,
                       message = FALSE)
+
+# Fix PROJ database mismatch (common when R runs inside Conda)
+# This prevents sf/ggplot2 CRS-related errors during rendering.
+Sys.setenv(PROJ_DATA = "/usr/share/proj")
+Sys.unsetenv("PROJ_LIB")
 
 
 
@@ -34,10 +39,14 @@ library(sf)
 library(ggiraph)
 library(viridis) # For scale_fill_viridis_c
 
-developers <- fread("https://raw.githubusercontent.com/github/innovationgraph/main/data/developers.csv")
-git_pushes <- fread("https://raw.githubusercontent.com/github/innovationgraph/main/data/git_pushes.csv")
-git_repos <- fread("https://raw.githubusercontent.com/github/innovationgraph/main/data/repositories.csv")
-programming_languages <- fread("https://raw.githubusercontent.com/github/innovationgraph/main/data/languages.csv")
+# Load the pre-downloaded data
+github_data <- readRDS("data/github_innovation_data.rds")
+
+developers <- github_data$developers
+git_pushes <- github_data$git_pushes
+git_repos <- github_data$git_repos
+programming_languages <- github_data$programming_languages
+iso3 <- github_data$iso3
 
 merge_by_devs <- c("iso2_code", "year", "quarter")
 merge_fun_devs <- function(devs, df, by.vars = merge_by_devs)  {
@@ -52,7 +61,7 @@ programming_languages <- merge_fun_devs(developers, programming_languages)
 
 github_data_name <- c("developers", "git_pushes", "git_repos", "programming_languages")
 
-iso3 <- fread("https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.csv") 
+# iso3 data is already loaded from the RDS file
 iso3 <- iso3[, .(iso2_code = `alpha-2`, iso_a3 = `alpha-3`)]
 
 data("World") # from tmap
@@ -61,7 +70,12 @@ data("World") # from tmap
 africa <- World %>% 
     left_join(iso3,by = "iso_a3") %>%
     filter(continent == "Africa")
-setDT(africa)
+
+# Keep africa as an sf object (do NOT convert to data.table).
+# Converting to data.table strips sf attributes like CRS.
+if (is.na(sf::st_crs(africa))) {
+    sf::st_crs(africa) <- 4326
+}
 
 
 get_latest_year_and_quarter <- function(df, year_column, quarter_column, concactenate = TRUE) {
@@ -81,70 +95,64 @@ get_latest_year_and_quarter <- function(df, year_column, quarter_column, concact
     }
 }
 
-
 # Define the function
 process_df_to_sf <- function(df, spatial_df,
-                             iso2_column_name = "iso2_code", 
+                             iso2_column_name = "iso2_code",
                              year_column = "year",
                              quarter_column = "quarter",
-                             pop_est_column = "pop_est", 
+                             pop_est_column = "pop_est",
                              freq_column = "developers",
                              geometry_column = "geometry",
                              group_col = NULL,
                              per = 100000,
                              round_digits = 0) {
-    # Convert df to a data.table
-    setDT(df)
-    
+    # Ensure spatial_df is sf so CRS/geometry are preserved through joins
+    if (!inherits(spatial_df, "sf")) {
+        spatial_df <- sf::st_as_sf(spatial_df)
+    }
+
+    # Convert df to a data.table (for fast filtering)
+    data.table::setDT(df)
+
     # Filter for the latest year and quarter
-    latest_year_quarter<- get_latest_year_and_quarter(df, year_column, quarter_column,  concactenate = FALSE)
-    latest_year <-latest_year_quarter$latest_year #  max(df[[year_column]], na.rm = TRUE)
+    latest_year_quarter <- get_latest_year_and_quarter(df, year_column, quarter_column, concactenate = FALSE)
+    latest_year <- latest_year_quarter$latest_year #  max(df[[year_column]], na.rm = TRUE)
     latest_quarter <- latest_year_quarter$latest_quarter # max(df[get(year_column) == latest_year][[quarter_column]], na.rm = TRUE) get
-    #print(latest_year)
-    #print(latest_quarter)
+    # print(latest_year)
+    # print(latest_quarter)
     latest_df <- df[get(year_column) == latest_year & get(quarter_column) == latest_quarter]
     # print(head(latest_df))
-    # Join with the spatial data frame
-    
-    if(!is.null(group_col)) {
-        latest_df <- latest_df[!is.na(get(group_col)),]
-        dfs = split.data.frame(latest_df, f = latest_df[[group_col]])
-        #cat("length dfs:", length(dfs))
-        
-        ## right join by spacial df and rbindlist
-        latest_df_joined = rbindlist(lapply(dfs, function(x) {
-            uniqu_grp_col = unique(x[[group_col]])
-            x = x %>%
-                merge(spatial_df, by = iso2_column_name, all.y = TRUE)
-            x[, (group_col) :=uniqu_grp_col]
-            x
-        })) 
-        
-        #print(head(latest_df_joined))
-        
-    }else{
-        
-        latest_df_joined <- latest_df %>%
-            merge(spatial_df, by = iso2_column_name, all.y = TRUE)
-        
+    # Join with the spatial data frame (use sf-preserving joins)
+    latest_df <- as.data.frame(latest_df)
+
+    if (!is.null(group_col)) {
+        latest_df <- latest_df[!is.na(latest_df[[group_col]]), , drop = FALSE]
+        dfs <- split(latest_df, latest_df[[group_col]])
+
+        latest_df_sf <- dplyr::bind_rows(lapply(names(dfs), function(group_value) {
+            x <- dfs[[group_value]]
+            out <- dplyr::left_join(spatial_df, x, by = stats::setNames(iso2_column_name, iso2_column_name))
+            out[[group_col]] <- group_value
+            out
+        }))
+    } else {
+        latest_df_sf <- dplyr::left_join(spatial_df, latest_df, by = stats::setNames(iso2_column_name, iso2_column_name))
     }
-    
-    latest_df_joined[is.na(get(freq_column)), (freq_column) := 0]
-    #latest_df_joined[is.na(get(pop_est_column)), (pop_est_column) := 0]
-    latest_df_joined[, devs_per_100k := round(.SD[[freq_column]] / .SD[[pop_est_column]] * per, digits = round_digits), .SDcols = c(freq_column, pop_est_column)]
-    latest_df_joined[is.na(devs_per_100k), devs_per_100k := 0]
-    # Ensure spatial_df is a data.frame or data.table with a geometry column
-    if(!"geometry" %in% colnames(spatial_df)) {
-        stop("The spatial data frame must have a geometry column.")
+
+    # Fill missing values and compute per-capita metric
+    if (!freq_column %in% names(latest_df_sf)) {
+        stop(paste0("Expected column '", freq_column, "' not found after join."))
     }
-    
-    # Convert to sf object, ensuring the geometry column is specified correctly
-    latest_df_sf <- st_set_geometry(latest_df_joined, value = geometry_column)
-    
-    # Return the sf object
+
+    latest_df_sf[[freq_column]][is.na(latest_df_sf[[freq_column]])] <- 0
+    latest_df_sf$devs_per_100k <- round(
+        (latest_df_sf[[freq_column]] / latest_df_sf[[pop_est_column]]) * per,
+        digits = round_digits
+    )
+    latest_df_sf$devs_per_100k[is.na(latest_df_sf$devs_per_100k)] <- 0
+
     return(latest_df_sf)
 }
-
 
 
 
@@ -191,47 +199,51 @@ create_interactive_map <- function(data_sf,
 # To add facets, simply add the facet_var argument like facet_var = "region"
 
 
-
 library(ggplot2)
 library(ggiraph)
 library(stringr) # For str_wrap
 
 
-plot_interactive_bar <- function(data, x_var, y_var, 
-                                 fill_var, 
+plot_interactive_bar <- function(data, x_var, y_var,
+                                 fill_var,
                                  title = "Top programming languages by country",
-                                 xlab = "Country", 
+                                 xlab = "Country",
                                  ylab = "% Number of pushers") {
-  
-  # Create the plot
-  top_countries_plot <- ggplot(data, 
-                               aes(x = {{x_var}}, y = {{y_var}}, fill = {{fill_var}},
-                                   tooltip = paste0({{x_var}}, ", ", {{fill_var}}, " ", {{y_var}}))) +
-      
-      
-    geom_bar_interactive(stat = "identity", position = "dodge", width = 0.5) +
-    theme_minimal() +
-    labs(title = title,
-         fill = "",
-         y = ylab,
-         x = xlab) +
-    scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
-    scale_fill_brewer(type = "qual", palette = "Dark2") +
-    theme(legend.position = "bottom")
-  
-  # Return the interactive plot
-  girafe(ggobj = top_countries_plot, pointsize = 9)
+    # Create the plot
+    top_countries_plot <- ggplot(
+        data,
+        aes(
+            x = {{ x_var }}, y = {{ y_var }}, fill = {{ fill_var }},
+            tooltip = paste0({{ x_var }}, ", ", {{ fill_var }}, " ", {{ y_var }})
+        )
+    ) +
+        geom_bar_interactive(stat = "identity", position = "dodge", width = 0.5) +
+        theme_minimal() +
+        labs(
+            title = title,
+            fill = "",
+            y = ylab,
+            x = xlab
+        ) +
+        scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
+        scale_fill_brewer(type = "qual", palette = "Dark2") +
+        theme(legend.position = "bottom")
+
+    # Return the interactive plot
+    girafe(ggobj = top_countries_plot, pointsize = 9)
 }
 
 
 ## donhut chart
 
 donhunt_chart <- function(data, labelColumn, valueColumn, chartTitle) {
-    plot_ly(data, labels = ~get(labelColumn), values = ~get(valueColumn)) %>%
+    plot_ly(data, labels = ~ get(labelColumn), values = ~ get(valueColumn)) %>%
         add_pie(hole = 0.6) %>%
-        layout(title = chartTitle,
-               xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
-               yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+        layout(
+            title = chartTitle,
+            xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+            yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE)
+        )
 }
 
 
@@ -243,7 +255,7 @@ donhunt_chart <- function(data, labelColumn, valueColumn, chartTitle) {
 For the developers, we will use the [developers dataset](https://raw.githubusercontent.com/github/innovationgraph/main/data/developers.csv). The dataset contains the number of GitHub users in each country per quarter.I’ll use the latest year and quarter `r  get_latest_year_and_quarter(developers, "year", "quarter")` . I also use world spatial data from tmap package. The data set contains many variables but of interest to us is the spatial and population data. Plotting the number of developers per 100,000 people will give us a better understanding of the distribution of developers across the continent. Since plotting raw numbers of developers will be misleading due to the differences in population sizes across countries. This has a limitation but it’s a better metric.
 
 
-```{r, fig.width=4, fig.height=4}
+```{r process_df-to-sf, fig.width=4, fig.height=4}
 latest_developers_sf <- process_df_to_sf(developers, africa,
                                          iso2_column_name = "iso2_code",
                                          freq_column = "developers", 
@@ -269,13 +281,15 @@ git_pushes_sf <- process_df_to_sf(git_pushes, africa,
                                   pop_est_column = "developers",
                                   per = 1)
 
-github_pushes_map <- create_interactive_map(data_sf = git_pushes_sf, 
-                                            fill_var = devs_per_100k,
-                                            tooltip_var = name,
-                                            plot_title = "Average GitHub pushes per developer",
-                                            return_girafe = TRUE,
-                                            aspect_ratio = 1,
-                                            point_size = 20)
+github_pushes_map <- create_interactive_map(
+    data_sf = git_pushes_sf,
+    fill_var = devs_per_100k,
+    tooltip_var = name,
+    plot_title = "Average GitHub pushes per developer",
+    return_girafe = TRUE,
+    aspect_ratio = 1,
+    point_size = 20
+)
 github_pushes_map
 ```
 
