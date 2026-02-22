@@ -47,12 +47,9 @@ git_pushes <- github_data$git_pushes
 git_repos <- github_data$git_repos
 programming_languages <- github_data$programming_languages
 iso3 <- github_data$iso3
-
 merge_by_devs <- c("iso2_code", "year", "quarter")
-merge_fun_devs <- function(devs, df, by.vars = merge_by_devs)  {
-    
+merge_fun_devs <- function(devs, df, by.vars = merge_by_devs) {
     merge(devs, df, by = by.vars)
-    
 }
 
 git_pushes <- merge_fun_devs(developers, git_pushes)

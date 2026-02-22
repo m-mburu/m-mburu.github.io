@@ -1,0 +1,254 @@
+---
+title: "Bootstrap Crab Data Analysis: When Classical Tests and Resampling Disagree"
+format: html
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+
+library(tidyverse)
+library(broom)
+library(kableExtra)
+library(glm2)
+
+data(crabs)
+crabs <- na.omit(crabs)
+
+set.seed(12345)
+B <- 1000
+
+format_ci <- function(ci, digits = 3) {
+  sprintf("[%.*f, %.*f]", digits, ci[1], digits, ci[2])
+}
+
+options(scipen = 999)
+```
+
+### Introduction
+
+
+When we estimate a statistic from a sample, like a mean, a median, or a regression coefficient, that estimate comes with uncertainty. The reason is simple: our sample is not the whole population. If we took a different sample from the same population, we would not get exactly the same answer.
+
+So most of the time we want two things:
+
+1. the estimate itself, for example ($\bar{x}$) for a mean, or ($\hat\beta_2$) for the shell colour effect in the crab model, and
+2. uncertainty around it: standard errors, confidence intervals, and p-values.
+
+The usual uncertainty formulas often rely on large samples. That often works, but sometimes the data is messy (small $n$, many zeros, or results that are not nicely symmetric). In those cases, resampling can help. The bootstrap is a simple idea: treat your sample as the best version of the population you have, resample from it many times, and see how much your estimate changes. That spread gives you the uncertainty.
+
+Here is a small example before we go to the crabs. Suppose you have a sample $x_1,\dots,x_n$ and you want the mean ($\bar x$) and the standard error of the mean. Bootstrap does this by sampling $n$ values with replacement, computing the mean, and repeating that many times.
+
+```{r}
+set.seed(1)
+
+# Example sample (pretend these are measurements)
+x <- c(12.1, 10.4, 11.7, 9.9, 10.8, 13.2, 11.0, 10.6, 12.5, 9.8)
+n <- length(x)
+B <- 2000
+
+# Observed mean
+x_bar <- mean(x)
+
+# Storage for bootstrap means
+boot_means <- numeric(B)
+
+# Bootstrap loop
+for (b in 1:B) {
+  x_star <- sample(x, size = n, replace = TRUE)  # resample with replacement
+  boot_means[b] <- mean(x_star)                  # mean in the resample
+}
+
+# Bootstrap SE of the mean = SD of bootstrap means
+se_boot <- sd(boot_means)
+
+# 95% percentile CI for the mean
+ci_boot <- quantile(boot_means, c(0.025, 0.975))
+
+x_bar
+se_boot
+ci_boot
+```
+
+With that mindset, the crab question is the same idea but inside a regression model. We ask whether larger female crabs tend to have more satellite males, and whether shell colour still matters after we account for shell width. Bootstrap helps us see if the usual Poisson regression conclusions still hold when we estimate uncertainty by resampling the crabs.
+
+
+### Data
+
+This post uses the horseshoe crab dataset that comes with the `glm2` package in R. The data are from a study of female horseshoe crabs. For each female crab, the dataset records the number of “satellite” males attached to her, plus measurements such as her shell width and shell colour.
+
+If you want to read more about the dataset and the variables, see the help page in R, or check this short reference online: (Horseshoe crab dataset in `glm2`)[[https://search.r-project.org/CRAN/refmans/glm2/html/crabs.html](https://search.r-project.org/CRAN/refmans/glm2/html/crabs.html)].
+
+Our outcome is the number of satellites, so it is a count. A simple starting point for count data is Poisson regression with a log link. Here we model the expected number of satellites as a function of shell width, and then check whether adding shell colour improves the model.
+
+
+$$
+\log(\mu_i) = \beta_0 + \beta_1 \text{Width}_i. + \beta_2 \text{Dark}_i
+$$
+
+
+
+#### First look: width vs satellites
+
+```{r}
+#| label: fig-crabs-plot
+#| fig-cap: "Width vs satellites: larger crabs tend to have more satellites, but variability is high and many counts are zero."
+#| fig-width: 6
+#| fig-height: 3.5
+
+ggplot(crabs, aes(x = Width, y = Satellites)) +
+  geom_point() +
+  labs(
+    title = "Horseshoe Crab Data: Width vs Satellites",
+    x = "Width",
+    y = "Number of Satellites"
+  ) +
+  theme_minimal()
+```
+
+The relationship isn’t clean or linear-looking. It’s noisy, with many zeros across the width range. Still, there’s a visible tendency for larger widths to have higher counts.
+
+## Does shell colour matter after adjusting for width?
+
+### Likelihood ratio test (classical)
+
+```{r}
+#| label: tbl-crabs-poisson-lrt
+#| tbl-cap: "Likelihood ratio test comparing reduced vs full Poisson regression."
+#| tbl-pos: "H"
+
+fit_full <- glm(Satellites ~ Width + Dark,
+                family = poisson(link = "log"),
+                data = crabs)
+
+fit_red <- glm(Satellites ~ Width,
+               family = poisson(link = "log"),
+               data = crabs)
+
+lr_crabs <- anova(fit_red, fit_full, test = "Chisq") |>
+  tidy()
+
+lr_crabs |>
+  kable(
+    format = "html",
+    booktabs = TRUE,
+    align = "lccccc",
+    escape = FALSE,
+    col.names = c("Model", "Resid. Df", "Resid. Dev.", "Df", "$\\chi^2$", "$p$-value")
+  ) |>
+  kable_styling(latex_options = c("scale_down", "hold_position"),
+                font_size = 9, full_width = TRUE) |>
+  column_spec(1, width = "5cm")
+```
+
+Interpretation: the LRT p-value (here (p=0.0085)) suggests that adding **Dark** improves the fit, so we reject (H_0) at the 5% level. Under this approach, colour looks associated with satellite counts after accounting for width.
+
+### Parametric bootstrap p-value (model-based)
+
+The LRT relies on a chi-square approximation that is often good, but it *is* an approximation. A parametric bootstrap checks the same null using simulation:
+
+* Fit the reduced model (null)
+* Simulate many datasets from the fitted null
+* Refit both models each time
+* Recompute the LRT statistic each time
+* Compare the observed statistic to this simulated null distribution
+
+```{r}
+#| label: crabs-parametric-bootstrap
+
+T_obs <- lr_crabs$deviance[2]
+
+mu_hat0 <- fitted(fit_red)
+n <- nrow(crabs)
+
+T_boot_par <- numeric(B)
+
+for (b in 1:B) {
+  y_star <- rpois(n = n, lambda = mu_hat0)
+  dat_star <- crabs
+  dat_star$Satellites <- y_star
+
+  fit_red_b <- glm(Satellites ~ Width,
+                   family = poisson(link = "log"),
+                   data = dat_star)
+  fit_full_b <- glm(Satellites ~ Width + Dark,
+                    family = poisson(link = "log"),
+                    data = dat_star)
+
+  T_boot_par[b] <- as.numeric(2 * (logLik(fit_full_b) - logLik(fit_red_b)))
+}
+
+p_par <- (1 + sum(T_boot_par >= T_obs)) / (B + 1)
+p_par <- round(p_par, 4)
+```
+
+The parametric bootstrap p-value is $p \approx `r p_par`$. In this dataset, it leads to the same practical conclusion as the classical LRT: colour still matters after width is included.
+
+### Bootstrap intervals for predictions (more tangible than coefficients)
+
+Rather than only talking about $\beta_2$ (a log-scale parameter), we can bootstrap **predicted mean satellite counts** at specific widths for dark vs non-dark shells.
+
+```{r}
+#| label: tbl-crabs-bootstrap-ci
+#| tbl-cap: "Percentile bootstrap 95\\% CIs for predicted mean satellites at selected widths."
+#| tbl-pos: "H"
+
+newdat <- expand.grid(Width = c(23, 25, 27),
+                      Dark = levels(crabs$Dark))
+
+beta2_boot <- numeric(B)
+mu_boot <- matrix(NA_real_, nrow = B, ncol = nrow(newdat))
+
+for (b in 1:B) {
+  idx <- sample.int(n, n, replace = TRUE)
+  dat_b <- crabs[idx, ]
+
+  fit_b <- glm(Satellites ~ Width + Dark,
+               family = poisson(link = "log"),
+               data = dat_b)
+
+  beta2_boot[b] <- coef(fit_b)["Darkyes"]
+  mu_boot[b, ] <- predict(fit_b, newdata = newdat, type = "response")
+}
+
+ci_beta2 <- quantile(beta2_boot, probs = c(0.025, 0.975), na.rm = TRUE) |> format_ci()
+ci_mu <- apply(mu_boot, 2, quantile, probs = c(0.025, 0.975), na.rm = TRUE)
+
+results_table <- newdat |>
+  mutate(CI = apply(t(ci_mu), 1, format_ci))
+
+results_table |>
+  kable(format = "html",
+        booktabs = TRUE,
+        align = "c",
+        col.names = c("Width", "Dark", "95\\% CI"),
+        escape = FALSE) |>
+  kable_styling(latex_options = c("hold_position"),
+                font_size = 9, full_width = TRUE)
+```
+
+What this says in plain language:
+
+* Predicted mean satellites increase with width (as expected).
+* At the same width, the predicted mean for **Dark = yes** tends to be **lower** than for **Dark = no** (your table usually shows this clearly).
+
+Predictions are often easier to communicate than coefficients because they live on the natural count scale.
+
+### The interesting part: why might a bootstrap CI and an LRT disagree?
+
+You computed a percentile bootstrap 95% CI for $\beta_2$: `r ci_beta2`.
+
+Sometimes you’ll see this kind of situation:
+
+* LRT (and parametric bootstrap test) says significant
+* a simple percentile bootstrap CI looks like it touches or crosses 0
+
+That isn’t magical contradiction; it’s usually about *how the uncertainty is being approximated*:
+
+* The **percentile bootstrap CI** for a regression coefficient can be a bit crude if the bootstrap distribution is skewed.
+* The LRT is testing a **different object** (deviance difference), and often behaves better in GLMs.
+* If you want bootstrap intervals for coefficients that align better with hypothesis testing, the usual upgrade is **BCa intervals** (bias-corrected and accelerated), or using a bootstrap test directly on $\beta_2$.
+
+
+The tests (LRT and parametric bootstrap) consistently reject $H_0$. The simple percentile bootstrap CI for $\beta_2$ is closer to the boundary and may include 0 due to skew and the limitations of percentile intervals for GLM coefficients. 
+
