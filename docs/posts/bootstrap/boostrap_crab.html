@@ -7,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="dcterms.date" content="2026-02-23">
-<meta name="description" content="A practical walk-through of bootstrap confidence intervals and hypothesis tests, with an end-to-end R case study using the built-in crab dataset.">
 
 <title>Bootstrap in Practice: CIs, Hypothesis Tests, and a Crab-Data Case Study – Data Science &amp; Stats Lab</title>
 <style>
@@ -425,11 +424,6 @@ window.Quarto = {
 <h1 class="title">Bootstrap in Practice: CIs, Hypothesis Tests, and a Crab-Data Case Study</h1>
 </div>
 
-<div>
-  <div class="description">
-    A practical walk-through of bootstrap confidence intervals and hypothesis tests, with an end-to-end R case study using the built-in crab dataset.
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
@@ -460,6 +454,16 @@ window.Quarto = {
 <li>Recompute the statistic on each dataset.</li>
 <li>Use the spread of those bootstrap replicates to approximate uncertainty.</li>
 </ul>
+<p>This post is organized as:</p>
+<ol type="1">
+<li>what bootstrap is,</li>
+<li>parametric vs nonparametric bootstrap,</li>
+<li>how to construct bootstrap estimates and confidence intervals,</li>
+<li>bootstrap hypothesis tests (one-sample <span class="math inline">\(t\)</span> as the simplest example),</li>
+<li>an advanced likelihood-ratio bootstrap test on crab data,</li>
+<li>bootstrap prediction intervals,</li>
+<li>conclusion.</li>
+</ol>
 </section>
 <section id="the-two-most-common-bootstrap-types" class="level2">
 <h2 class="anchored" data-anchor-id="the-two-most-common-bootstrap-types">2. The two most common bootstrap types</h2>

@@ -29,6 +29,7 @@ website:
         href: https://twitter.com/mmburu_w
 format:
     html:
+        html-math-method: mathjax
         theme: 
           light: flatly
           dark: darkly
