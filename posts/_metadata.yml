@@ -1,0 +1,5 @@
+# Shared options for all posts
+
+# Freeze computational output by default so old posts remain reproducible
+# and full-site renders stay fast.
+freeze: true

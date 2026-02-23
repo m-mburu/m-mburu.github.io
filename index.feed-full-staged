@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>Data Science &amp; Stats Lab</title>
+<link>https://m-mburu.github.io/</link>
+<atom:link href="https://m-mburu.github.io/index.xml" rel="self" type="application/rss+xml"/>
+<description>A personal lab notebook on statistics, data science, and reproducible analysis.</description>
+<image>
+<url>https://m-mburu.github.io/milkyway.jpeg</url>
+<title>Data Science &amp; Stats Lab</title>
+<link>https://m-mburu.github.io/</link>
+</image>
+<generator>quarto-1.8.27</generator>
+<lastBuildDate>Sun, 22 Feb 2026 21:00:00 GMT</lastBuildDate>
+<item>
+  <title>{B4F502887207:/posts/bootstrap/boostrap_crab.html}</title>
+  <link>https://m-mburu.github.io/posts/bootstrap/boostrap_crab.html</link>
+  <description>{B4F502887207:/posts/bootstrap/boostrap_crab.html}</description>
+  <category>statistics</category>
+  <category>bootstrap</category>
+  <category>inference</category>
+  <category>r</category>
+  <guid>https://m-mburu.github.io/posts/bootstrap/boostrap_crab.html</guid>
+  <pubDate>Sun, 22 Feb 2026 21:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>{B4F502887207:/posts/github_use/africa_github_use.html}</title>
+  <dc:creator>Mburu </dc:creator>
+  <link>https://m-mburu.github.io/posts/github_use/africa_github_use.html</link>
+  <description>{B4F502887207:/posts/github_use/africa_github_use.html}</description>
+  <category>data-viz</category>
+  <category>github</category>
+  <category>africa</category>
+  <category>r</category>
+  <guid>https://m-mburu.github.io/posts/github_use/africa_github_use.html</guid>
+  <pubDate>Sat, 21 Feb 2026 21:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>
