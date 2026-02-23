@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://m-mburu.github.io/index.html</loc>
-    <lastmod>2026-02-22T08:54:10.990Z</lastmod>
-  </url>
-  <url>
-    <loc>https://m-mburu.github.io/posts/bootstrap/boostrap_crab.html</loc>
-    <lastmod>2026-02-23T09:23:32.806Z</lastmod>
-  </url>
-  <url>
-    <loc>https://m-mburu.github.io/about.html</loc>
-    <lastmod>2026-02-22T07:57:56.673Z</lastmod>
+    <loc>https://m-mburu.github.io/DEV_NOTES.html</loc>
+    <lastmod>2026-02-23T12:55:55.923Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/posts/github_use/africa_github_use.html</loc>
     <lastmod>2026-02-23T04:23:20.071Z</lastmod>
+  </url>
+  <url>
+    <loc>https://m-mburu.github.io/about.html</loc>
+    <lastmod>2026-02-23T12:55:55.923Z</lastmod>
+  </url>
+  <url>
+    <loc>https://m-mburu.github.io/posts/bootstrap/boostrap_crab.html</loc>
+    <lastmod>2026-02-23T12:22:49.810Z</lastmod>
+  </url>
+  <url>
+    <loc>https://m-mburu.github.io/index.html</loc>
+    <lastmod>2026-02-22T08:54:10.990Z</lastmod>
   </url>
 </urlset>

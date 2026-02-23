@@ -15,4 +15,14 @@ about:
       href:  https://github.com/m-mburu
 ---
 
-About this blog
+## About this blog
+
+This is a personal lab notebook for **statistics and data science**: short write-ups, experiments, and explanations that are meant to be practical and reproducible.
+
+What you’ll usually find here:
+
+-   Applied statistics topics (e.g., resampling, regression, inference)
+-   Data analysis workflows in R (and occasionally other tools)
+-   Visualizations and small case studies with real datasets
+
+Most posts aim to balance intuition (“what does this mean?”) with code (“how do I do it?”). If you’re reading along and something is unclear, feel free to reach out via the links above.
