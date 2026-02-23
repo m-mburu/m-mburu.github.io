@@ -1,6 +1,7 @@
 ---
 title: "Bootstrap in Practice: CIs, Hypothesis Tests, and a Crab-Data Case Study"
 format: html
+date: "2024-06-19"
 ---
 
 ```{r setup, include=FALSE}

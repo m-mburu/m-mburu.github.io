@@ -12,7 +12,7 @@ website:
   page-navigation: true
   reader-mode: true  
   navbar:
-    title: "Data Science"
+    title: "Data Science & Stats Lab"
     search: true
     background: primary
     collapse-below: lg

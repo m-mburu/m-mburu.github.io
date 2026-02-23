@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Science &amp; Stats Lab</title>
+<title>dev_notes – Data Science &amp; Stats Lab</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,8 +31,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./milkyway.jpeg" rel="icon" type="image/jpeg">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -75,35 +73,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-image','listing-date','listing-title','listing-reading-time','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-BFNZ97VTLJ"></script>
 
 <script type="text/javascript">
@@ -115,40 +84,11 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
 </script>
 <style>html{ scroll-behavior: smooth; }</style>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="style.css">
-<meta property="og:title" content="– Data Science &amp; Stats Lab">
+<meta property="og:title" content="Data Science &amp; Stats Lab">
 <meta property="og:site_name" content="Data Science &amp; Stats Lab">
-<meta name="twitter:title" content="– Data Science &amp; Stats Lab">
+<meta name="twitter:title" content="Data Science &amp; Stats Lab">
 <meta name="twitter:card" content="summary">
 </head>
 
@@ -334,7 +274,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
 </ul>
@@ -367,7 +307,7 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -375,77 +315,37 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#latest-experiments" id="toc-latest-experiments" class="nav-link active" data-scroll-target="#latest-experiments">Latest Experiments</a></li>
+  <li><a href="#dev-notes" id="toc-dev-notes" class="nav-link active" data-scroll-target="#dev-notes">Dev notes</a>
+  <ul>
+  <li><a href="#layout-polish-dark-mode-branding" id="toc-layout-polish-dark-mode-branding" class="nav-link" data-scroll-target="#layout-polish-dark-mode-branding">2026-02-23 — Layout polish (dark mode + branding)</a></li>
+  </ul></li>
   </ul>
 </nav>
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(2)</span></div></div></div>
+    </div>
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
 
 
-<div class="hero-banner">
-<div class="hero-title">
-<p>Statistical Methods &amp; Data Science</p>
-</div>
-<div class="hero-subtitle">
-<p>Exploring the intersection of data, algorithms, and real-world problems.</p>
-</div>
-</div>
-<section id="latest-experiments" class="level2">
-<h2 class="anchored" data-anchor-id="latest-experiments">Latest Experiments</h2>
-
+<section id="dev-notes" class="level1">
+<h1>Dev notes</h1>
+<section id="layout-polish-dark-mode-branding" class="level2">
+<h2 class="anchored" data-anchor-id="layout-polish-dark-mode-branding">2026-02-23 — Layout polish (dark mode + branding)</h2>
+<p>Changes made on branch <code>layout-fixes-2026-02-23</code>:</p>
+<ul>
+<li><strong>Dark-mode typography fix</strong>: Updated <code>style.css</code> so hard-coded heading and listing-title link colors apply only in light mode, and dark mode inherits colors from the Quarto <code>darkly</code> theme. This prevents low-contrast headings/links in dark mode.</li>
+<li><strong>Navbar shadow in dark mode</strong>: Increased the shadow alpha for <code>.navbar</code> in dark mode to avoid a washed-out/light haze.</li>
+<li><strong>Branding consistency</strong>: Aligned <code>website.navbar.title</code> with <code>website.title</code> in <code>_quarto.yml</code>.</li>
+<li><strong>About page content</strong>: Expanded <code>about.qmd</code> with a short description of the blog and what readers can expect.</li>
+</ul>
 
 
 </section>
+</section>
 
-<div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
-<div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-listing-date-sort="1771707600000" data-listing-file-modified-sort="1771820600071" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="25" data-listing-word-count-sort="4842">
-<a href="./posts/github_use/africa_github_use.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Github Use in Africa using Maps
-</h5>
-<div class="listing-reading-time card-text text-muted">25 min</div>
-<div class="card-text listing-description delink">
-Analyzing developer activity through contributions, repositories, and pushes from the GitHub Innovation Graph data can reveal valuable insights into technological engagement…
-</div>
-<div class="card-attribution card-text-small end">
-<div class="listing-date">
-Feb 22, 2026
-</div>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="1" data-listing-date-sort="1718744400000" data-listing-file-modified-sort="1771849369810" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13" data-listing-word-count-sort="2480">
-<a href="./posts/bootstrap/boostrap_crab.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top"><img src="posts/bootstrap/boostrap_crab_files/figure-html/fig-lrt-null-1.png" style="height: 150px;"  class="thumbnail-image card-img"/></p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Bootstrap in Practice: CIs, Hypothesis Tests, and a Crab-Data Case Study
-</h5>
-<div class="listing-reading-time card-text text-muted">13 min</div>
-<div class="card-text listing-description delink">
-Any statistic we compute from a sample (a mean, a median, a regression coefficient, a predicted value) has <strong>sampling uncertainty</strong>: if we repeated the data collection, we would…
-</div>
-<div class="card-attribution card-text-small end">
-<div class="listing-date">
-Jun 19, 2024
-</div>
-</div>
-</div>
-</div></a>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
