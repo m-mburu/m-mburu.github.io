@@ -56,6 +56,10 @@ git_pushes <- merge_fun_devs(developers, git_pushes)
 git_repos <- merge_fun_devs(developers, git_repos)
 programming_languages <- merge_fun_devs(developers, programming_languages)
 
+# filter of HTML, CSS, Shell
+
+programming_languages <- programming_languages[!language %in% c("HTML", "CSS", "Shell")]
+
 github_data_name <- c("developers", "git_pushes", "git_repos", "programming_languages")
 
 # iso3 data is already loaded from the RDS file
