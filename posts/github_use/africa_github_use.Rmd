@@ -457,4 +457,3 @@ create_interactive_map(data_sf =java_swift ,
                        plot_title = "Countries leading in Java or Swift")
 
 ```
-

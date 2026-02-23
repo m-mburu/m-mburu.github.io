@@ -2,11 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.25">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2024-06-19">
+<meta name="dcterms.date" content="2026-02-23">
+<meta name="description" content="A practical walk-through of bootstrap confidence intervals and hypothesis tests, with an end-to-end R case study using the built-in crab dataset.">
 
 <title>Bootstrap in Practice: CIs, Hypothesis Tests, and a Crab-Data Case Study – Data Science &amp; Stats Lab</title>
 <style>
@@ -74,9 +75,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap-d9e5892db49aebcabe19a3723013d9db.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
@@ -336,8 +337,6 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
-    </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Data Science &amp; Stats Lab</span>
     </a>
@@ -426,6 +425,11 @@ window.Quarto = {
 <h1 class="title">Bootstrap in Practice: CIs, Hypothesis Tests, and a Crab-Data Case Study</h1>
 </div>
 
+<div>
+  <div class="description">
+    A practical walk-through of bootstrap confidence intervals and hypothesis tests, with an end-to-end R case study using the built-in crab dataset.
+  </div>
+</div>
 
 
 <div class="quarto-title-meta">
@@ -434,7 +438,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 19, 2024</p>
+      <p class="date">February 23, 2026</p>
     </div>
   </div>
   
@@ -448,34 +452,24 @@ window.Quarto = {
 
 <section id="introduction-what-bootstrap-is" class="level2">
 <h2 class="anchored" data-anchor-id="introduction-what-bootstrap-is">1. Introduction: what bootstrap is</h2>
-<p>Any statistic we compute from a sample (a mean, a median, a regression coefficient, a predicted value) has <strong>sampling uncertainty</strong>: if we repeated the data collection, we would get a slightly different estimate.</p>
-<p>The <strong>bootstrap</strong> is a general, simulation-based way to measure that uncertainty.</p>
+<p>Any statistic we compute from a sample (a mean, a median, a regression coefficient, a predicted value) has sampling uncertainty: if we repeated the data collection, we would get a slightly different estimate.</p>
+<p>The bootstrap is a general, simulation-based way to measure that uncertainty.</p>
 <ul>
 <li>Treat the observed data as our best stand-in for the population.</li>
 <li>Generate many new datasets from it.</li>
 <li>Recompute the statistic on each dataset.</li>
 <li>Use the spread of those bootstrap replicates to approximate uncertainty.</li>
 </ul>
-<p>This post is organized as:</p>
-<ol type="1">
-<li>what bootstrap is,</li>
-<li>parametric vs nonparametric bootstrap,</li>
-<li>how to construct bootstrap estimates and confidence intervals,</li>
-<li>bootstrap hypothesis tests (one-sample <span class="math inline">\(t\)</span> as the simplest example),</li>
-<li>an advanced likelihood-ratio bootstrap test on crab data,</li>
-<li>bootstrap prediction intervals,</li>
-<li>conclusion.</li>
-</ol>
 </section>
 <section id="the-two-most-common-bootstrap-types" class="level2">
 <h2 class="anchored" data-anchor-id="the-two-most-common-bootstrap-types">2. The two most common bootstrap types</h2>
 <section id="nonparametric-bootstrap-resample-the-data" class="level3">
 <h3 class="anchored" data-anchor-id="nonparametric-bootstrap-resample-the-data">2.1 Nonparametric bootstrap (resample the data)</h3>
-<p>Resample the observed data <strong>with replacement</strong>. For i.i.d. data, that usually means resampling rows.</p>
+<p>Resample the observed data with replacement. For i.i.d. data, that usually means resampling rows.</p>
 <ul>
 <li>Makes minimal distributional assumptions.</li>
 <li>Very broadly applicable.</li>
-<li>For hypothesis tests, you still need a way to generate samples <strong>under the null</strong> (often via centering/transformations, or residual-based bootstraps).</li>
+<li>For hypothesis tests, you still need a way to generate samples under the null (often via centering/transformations, or residual-based bootstraps).</li>
 </ul>
 </section>
 <section id="parametric-bootstrap-simulate-from-a-fitted-model" class="level3">
@@ -484,7 +478,7 @@ window.Quarto = {
 <ul>
 <li>Stronger assumptions.</li>
 <li>Particularly natural for likelihood-based models and likelihood-ratio tests.</li>
-<li>Often excellent for generating <strong>null distributions</strong>.</li>
+<li>Often excellent for generating null distributions.</li>
 </ul>
 </section>
 </section>
@@ -554,7 +548,7 @@ $median_boot_ci_95
 [1] 10.25 12.10</code></pre>
 </div>
 </div>
-<p><strong>How to interpret this output</strong></p>
+<p>How to interpret this output</p>
 <ul>
 <li>The observed sample mean is $x = $ 11.2 and the observed median is 10.9.</li>
 <li>The bootstrap SE (<code>mean_boot_se</code>) is the typical sampling fluctuation of the mean across repeated samples of size 10.</li>
@@ -591,7 +585,7 @@ $mean_boot_ci_95_parametric
 [1] 10.51292 11.92034</code></pre>
 </div>
 </div>
-<p><strong>How to interpret this output</strong></p>
+<p>How to interpret this output</p>
 <ul>
 <li>This CI answers the same question as the nonparametric CI, but <em>under the Normal model assumption</em>.</li>
 <li>The parametric bootstrap 95% CI for the mean is (10.51, 11.92).</li>
@@ -610,7 +604,7 @@ $mean_boot_ci_95_parametric
 <li>Compute <span class="math inline">\(T^{*(b)}\)</span> each time.</li>
 <li>Approximate the p-value by how often <span class="math inline">\(T^{*(b)}\)</span> is as extreme as <span class="math inline">\(T_{obs}\)</span>.</li>
 </ol>
-<p>In the lecture notes, this is called a <strong>Monte Carlo p-value</strong>. The standard small-sample correction is to use</p>
+<p>In the lecture notes, this is called a Monte Carlo p-value. The standard small-sample correction is to use</p>
 <p><span class="math display">\[
 \hat p = \frac{1 + \#\{T^* \ge T_{obs}\}}{B+1},
 \]</span></p>
@@ -621,13 +615,13 @@ $mean_boot_ci_95_parametric
 <p>We’ll compare:</p>
 <ul>
 <li>classical <code>t.test()</code>,</li>
-<li>a <strong>nonparametric bootstrap test</strong> under <span class="math inline">\(H_0\)</span> (by <em>recentering</em> the data),</li>
-<li>a <strong>parametric bootstrap test</strong> under <span class="math inline">\(H_0\)</span> (simulate Normal samples with mean <span class="math inline">\(\mu_0\)</span>).</li>
+<li>a nonparametric bootstrap test under <span class="math inline">\(H_0\)</span> (by <em>recentering</em> the data),</li>
+<li>a parametric bootstrap test under <span class="math inline">\(H_0\)</span> (simulate Normal samples with mean <span class="math inline">\(\mu_0\)</span>).</li>
 </ul>
 <p>These two bootstraps differ only in how they generate samples under <span class="math inline">\(H_0\)</span>:</p>
 <ul>
-<li><strong>Nonparametric under <span class="math inline">\(H_0\)</span></strong>: recenter the data so it has mean <span class="math inline">\(\mu_0\)</span>, then resample with replacement.</li>
-<li><strong>Parametric under <span class="math inline">\(H_0\)</span></strong>: assume <span class="math inline">\(X \sim \mathcal{N}(\mu, \sigma^2)\)</span>, estimate <span class="math inline">\(\sigma\)</span> from the data, then simulate samples from <span class="math inline">\(\mathcal{N}(\mu_0, \hat\sigma^2)\)</span>.</li>
+<li>Nonparametric under <span class="math inline">\(H_0\)</span>: recenter the data so it has mean <span class="math inline">\(\mu_0\)</span>, then resample with replacement.</li>
+<li>Parametric under <span class="math inline">\(H_0\)</span>: assume <span class="math inline">\(X \sim \mathcal{N}(\mu, \sigma^2)\)</span>, estimate <span class="math inline">\(\sigma\)</span> from the data, then simulate samples from <span class="math inline">\(\mathcal{N}(\mu_0, \hat\sigma^2)\)</span>.</li>
 </ul>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mu0 <span class="ot">&lt;-</span> <span class="dv">11</span></span>
@@ -666,7 +660,7 @@ $mean_boot_ci_95_parametric
               0.5910512               0.5772114               0.5922039 </code></pre>
 </div>
 </div>
-<p><strong>How to interpret this output</strong></p>
+<p>How to interpret this output</p>
 <ul>
 <li>All three numbers are p-values for the same null, $H_0: = $ 11, using the same <span class="math inline">\(t\)</span>-statistic.</li>
 <li>The observed test statistic is $t_{obs} = $ 0.557. The bootstrap p-values estimate <span class="math inline">\(\Pr(|T^*| \ge |t_{obs}| \mid H_0)\)</span> by simulation.</li>
@@ -679,9 +673,9 @@ $mean_boot_ci_95_parametric
 <section id="advanced-bootstrap-likelihood-ratio-testing-on-crab-data" class="level2">
 <h2 class="anchored" data-anchor-id="advanced-bootstrap-likelihood-ratio-testing-on-crab-data">5. Advanced bootstrap: likelihood-ratio testing on crab data</h2>
 <p>This section uses the horseshoe crab dataset in <code>glm2</code> (a classic example for count regression). Reference: <a href="https://search.r-project.org/CRAN/refmans/glm2/html/crabs.html">Horseshoe crab dataset in glm2</a></p>
-<p>In this study, each row corresponds to a <strong>female horseshoe crab</strong>. The main variables we use are:</p>
+<p>In this study, each row corresponds to a female horseshoe crab. The main variables we use are:</p>
 <ul>
-<li><code>Satellites</code>: the number of <strong>satellite males</strong> observed with that female (a count outcome, often with many zeros),</li>
+<li><code>Satellites</code>: the number of satellite males observed with that female (a count outcome, often with many zeros),</li>
 <li><code>Width</code>: the female’s carapace width (a size measure),</li>
 <li><code>Dark</code>: an indicator of shell colour (dark vs not).</li>
 </ul>
@@ -694,8 +688,8 @@ $mean_boot_ci_95_parametric
 <section id="hypotheses-in-words" class="level3">
 <h3 class="anchored" data-anchor-id="hypotheses-in-words">Hypotheses (in words)</h3>
 <ul>
-<li><strong>Null hypothesis (<span class="math inline">\(H_0\)</span>)</strong>: after adjusting for female size (<code>Width</code>), shell colour (<code>Dark</code>) has <strong>no association</strong> with the expected number of satellite males. In other words, adding <code>Dark</code> does not improve the model.</li>
-<li><strong>Alternative hypothesis (<span class="math inline">\(H_1\)</span>)</strong>: after adjusting for <code>Width</code>, shell colour (<code>Dark</code>) <strong>is associated</strong> with the expected number of satellite males (so adding <code>Dark</code> improves the model).</li>
+<li>Null hypothesis (<span class="math inline">\(H_0\)</span>): after adjusting for female size (<code>Width</code>), shell colour (<code>Dark</code>) has no association with the expected number of satellite males. In other words, adding <code>Dark</code> does not improve the model.</li>
+<li>Alternative hypothesis (<span class="math inline">\(H_1\)</span>): after adjusting for <code>Width</code>, shell colour (<code>Dark</code>) is associated with the expected number of satellite males (so adding <code>Dark</code> improves the model).</li>
 </ul>
 <p>In model terms, this is the same as testing whether the <code>Dark</code> coefficient is zero (for the appropriate coding of <code>Dark</code>), typically written as <span class="math inline">\(H_0: \beta_{Dark} = 0\)</span> versus <span class="math inline">\(H_1: \beta_{Dark} \ne 0\)</span>.</p>
 </section>
@@ -772,7 +766,7 @@ Table&nbsp;1: Classical likelihood ratio test (chi-square reference).
 </figure>
 </div>
 </div>
-<p><strong>How to interpret this table</strong></p>
+<p>How to interpret this table</p>
 <ul>
 <li>The LRT statistic is <span class="math inline">\(T = 2(\ell_{full} - \ell_{red})\)</span>, reported here as <code>$\\chi^2$</code>. For these data, $T_{obs} = $ 6.921.</li>
 <li>The chi-square p-value (0.00852) is based on a large-sample reference distribution (<span class="math inline">\(T \overset{approx}{\sim} \chi^2_{df}\)</span>).</li>
@@ -782,13 +776,13 @@ Table&nbsp;1: Classical likelihood ratio test (chi-square reference).
 <section id="parametric-bootstrap-lrt-p-value-null-simulation" class="level3">
 <h3 class="anchored" data-anchor-id="parametric-bootstrap-lrt-p-value-null-simulation">5.2 Parametric bootstrap LRT p-value (null simulation)</h3>
 <p>Generate bootstrap datasets under <span class="math inline">\(H_0\)</span> by simulating new counts from the reduced model.</p>
-<p><strong>Assumptions under <span class="math inline">\(H_0\)</span> (parametric bootstrap):</strong></p>
+<p>Assumptions under <span class="math inline">\(H_0\)</span> (parametric bootstrap):</p>
 <ul>
 <li>The reduced Poisson GLM is correctly specified under the null: conditional on <code>Width</code>, satellite counts follow a Poisson distribution with mean <span class="math inline">\(\mu_i\)</span> and log link.</li>
 <li>Observations are independent (each crab is an independent sampling unit).</li>
 <li>The covariates (<code>Width</code>, <code>Dark</code>) are treated as fixed (or we condition on them). Under <span class="math inline">\(H_0\)</span> the distribution of <span class="math inline">\(Y\)</span> depends on <code>Width</code> but not on <code>Dark</code>.</li>
 </ul>
-<p>This is <strong>not</strong> a permutation/exchangeability argument: we are not shuffling <code>Dark</code> labels. We are simulating <span class="math inline">\(Y\)</span> from an assumed model <span class="math inline">\(Y \mid X \sim \text{Poisson}(\hat\mu_0(X))\)</span>.</p>
+<p>This is not a permutation/exchangeability argument: we are not shuffling <code>Dark</code> labels. We are simulating <span class="math inline">\(Y\)</span> from an assumed model <span class="math inline">\(Y \mid X \sim \text{Poisson}(\hat\mu_0(X))\)</span>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>n_crabs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(crabs)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>mu_hat0 <span class="ot">&lt;-</span> <span class="fu">fitted</span>(fit_red)</span>
@@ -811,7 +805,7 @@ Table&nbsp;1: Classical likelihood ratio test (chi-square reference).
 <pre><code>[1] 0.009495252</code></pre>
 </div>
 </div>
-<p><strong>How to interpret this result</strong></p>
+<p>How to interpret this result</p>
 <ul>
 <li>This p-value estimates <span class="math inline">\(\Pr(T^* \ge T_{obs} \mid H_0)\)</span> where <span class="math inline">\(T^*\)</span> is generated by simulating new outcomes from the reduced (null) Poisson GLM.</li>
 <li>Here, <span class="math inline">\(\hat p \approx\)</span> 0.0095. If it’s close to the chi-square p-value, that suggests the asymptotic reference is adequate.</li>
@@ -820,8 +814,8 @@ Table&nbsp;1: Classical likelihood ratio test (chi-square reference).
 </section>
 <section id="permutation-test-shuffling-dark-keeping-y-and-width-fixed" class="level3">
 <h3 class="anchored" data-anchor-id="permutation-test-shuffling-dark-keeping-y-and-width-fixed">5.3 Permutation test (shuffling <code>Dark</code>, keeping <code>Y</code> and <code>Width</code> fixed)</h3>
-<p>If you want a <strong>fully nonparametric</strong> way to get a null distribution for the <code>Dark</code> effect, a natural option is a <strong>permutation test</strong>.</p>
-<p>Idea: under <span class="math inline">\(H_0\)</span> (<code>Dark</code> has no association with satellites after adjusting for width), the <code>Dark</code> labels should be <strong>exchangeable</strong> <em>given <code>Width</code></em>. To make given <code>Width</code> more concrete, we do a <strong>stratified permutation</strong>: bin <code>Width</code> and only shuffle <code>Dark</code> within bins.</p>
+<p>If you want a fully nonparametric way to get a null distribution for the <code>Dark</code> effect, a natural option is a permutation test.</p>
+<p>Idea: under <span class="math inline">\(H_0\)</span> (<code>Dark</code> has no association with satellites after adjusting for width), the <code>Dark</code> labels should be exchangeable <em>given <code>Width</code></em>. To make given <code>Width</code> more concrete, we do a stratified permutation: bin <code>Width</code> and only shuffle <code>Dark</code> within bins.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -852,7 +846,7 @@ Table&nbsp;1: Classical likelihood ratio test (chi-square reference).
 <pre><code>[1] 0.133933</code></pre>
 </div>
 </div>
-<p><strong>How to interpret this result</strong></p>
+<p>How to interpret this result</p>
 <ul>
 <li>This p-value answers a different “null world” than the parametric bootstrap: it treats the outcome model as unknown and instead tests whether the <code>Dark</code> labels are (approximately) exchangeable within <code>Width</code> bins under <span class="math inline">\(H_0\)</span>.</li>
 <li>Here, <span class="math inline">\(\hat p \approx\)</span> 0.134. If this is small, then shuffling <code>Dark</code> (while preserving the <code>Width</code> structure) rarely produces an LRT statistic as large as the observed one.</li>
@@ -887,11 +881,11 @@ Figure&nbsp;1: Null distributions for the LRT statistic (parametric-bootstrap nu
 </section>
 <section id="prediction-intervals-with-bootstrap" class="level2">
 <h2 class="anchored" data-anchor-id="prediction-intervals-with-bootstrap">6. Prediction intervals with bootstrap</h2>
-<p>Confidence intervals quantify uncertainty for an unknown parameter (or mean prediction). <strong>Prediction intervals</strong> are wider because they must also include the randomness of a <em>new observation</em>.</p>
+<p>Confidence intervals quantify uncertainty for an unknown parameter (or mean prediction). Prediction intervals are wider because they must also include the randomness of a <em>new observation</em>.</p>
 <p>We’ll build a bootstrap prediction interval for the number of satellites for a new crab with a chosen width and shell color.</p>
 <ul>
-<li><strong>CI for the mean</strong>: uncertainty in <span class="math inline">\(\mu(x)\)</span>.</li>
-<li><strong>Prediction interval</strong>: uncertainty in a future <span class="math inline">\(Y\)</span> at that <span class="math inline">\(x\)</span> (mean uncertainty + Poisson noise).</li>
+<li>CI for the mean: uncertainty in <span class="math inline">\(\mu(x)\)</span>.</li>
+<li>Prediction interval: uncertainty in a future <span class="math inline">\(Y\)</span> at that <span class="math inline">\(x\)</span> (mean uncertainty + Poisson noise).</li>
 </ul>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>new_crab <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Width =</span> <span class="dv">26</span>, <span class="at">Dark =</span> <span class="fu">factor</span>(<span class="st">"yes"</span>, <span class="at">levels =</span> <span class="fu">levels</span>(crabs<span class="sc">$</span>Dark)))</span>
@@ -925,7 +919,7 @@ $prediction_interval_95
 [1] 0 5</code></pre>
 </div>
 </div>
-<p><strong>How to interpret this output</strong></p>
+<p>How to interpret this output</p>
 <ul>
 <li>The 95% CI for the mean (<code>mean_CI_95</code>) is for the <em>expected</em> number of satellites for a crab with <code>Width = 26</code> and <code>Dark = yes</code>.</li>
 <li>The 95% prediction interval (<code>prediction_interval_95</code>) is for a <em>single future crab’s observed count</em> at that same <span class="math inline">\((Width, Dark)\)</span>. It is wider because it includes both parameter uncertainty and Poisson outcome noise.</li>
@@ -936,7 +930,7 @@ $prediction_interval_95
 <h2 class="anchored" data-anchor-id="conclusion">7. Conclusion</h2>
 <ul>
 <li>Bootstrap is a general-purpose tool for uncertainty when analytic formulas are fragile or inconvenient.</li>
-<li><strong>Nonparametric bootstrap</strong> resamples the observed data; <strong>parametric bootstrap</strong> simulates from a fitted model.</li>
+<li>Nonparametric bootstrap resamples the observed data; parametric bootstrap simulates from a fitted model.</li>
 <li>For confidence intervals, percentile bootstrap is a simple baseline; for hypothesis tests, bootstrap samples must reflect <span class="math inline">\(H_0\)</span>.</li>
 <li>For GLMs and likelihood ratios, parametric (null) bootstrap is a natural way to avoid relying only on asymptotic chi-square approximations.</li>
 <li>Prediction intervals via bootstrap are often the most directly useful output because they live on the outcome scale.</li>
