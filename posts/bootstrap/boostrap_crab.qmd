@@ -1,7 +1,7 @@
 ---
 title: "Bootstrap in Practice: CIs, Hypothesis Tests, and a Crab-Data Case Study"
 format: html
-date: "2024-06-19"
+date: "2026-02-23"
 ---
 
 ```{r setup, include=FALSE}
@@ -36,9 +36,9 @@ options(scipen = 999)
 
 ## 1. Introduction: what bootstrap is
 
-Any statistic we compute from a sample (a mean, a median, a regression coefficient, a predicted value) has **sampling uncertainty**: if we repeated the data collection, we would get a slightly different estimate.
+Any statistic we compute from a sample (a mean, a median, a regression coefficient, a predicted value) has sampling uncertainty: if we repeated the data collection, we would get a slightly different estimate.
 
-The **bootstrap** is a general, simulation-based way to measure that uncertainty.
+The bootstrap is a general, simulation-based way to measure that uncertainty.
 
 -   Treat the observed data as our best stand-in for the population.
 -   Generate many new datasets from it.
@@ -59,11 +59,11 @@ This post is organized as:
 
 ### 2.1 Nonparametric bootstrap (resample the data)
 
-Resample the observed data **with replacement**. For i.i.d. data, that usually means resampling rows.
+Resample the observed data with replacement. For i.i.d. data, that usually means resampling rows.
 
 -   Makes minimal distributional assumptions.
 -   Very broadly applicable.
--   For hypothesis tests, you still need a way to generate samples **under the null** (often via centering/transformations, or residual-based bootstraps).
+-   For hypothesis tests, you still need a way to generate samples under the null (often via centering/transformations, or residual-based bootstraps).
 
 ### 2.2 Parametric bootstrap (simulate from a fitted model)
 
@@ -71,7 +71,7 @@ Assume a parametric model is a reasonable approximation, fit it, then simulate n
 
 -   Stronger assumptions.
 -   Particularly natural for likelihood-based models and likelihood-ratio tests.
--   Often excellent for generating **null distributions**.
+-   Often excellent for generating null distributions.
 
 ## 3. Constructing bootstrap estimates and confidence intervals
 
@@ -119,7 +119,7 @@ list(
 )
 ```
 
-**How to interpret this output**
+How to interpret this output
 
 - The observed sample mean is $\bar x = $ `r round(t_obs_mean, 2)` and the observed median is `r round(t_obs_median, 2)`.
 - The bootstrap SE (`mean_boot_se`) is the typical sampling fluctuation of the mean across repeated samples of size `r n`.
@@ -150,7 +150,7 @@ list(
 )
 ```
 
-**How to interpret this output**
+How to interpret this output
 
 - This CI answers the same question as the nonparametric CI, but *under the Normal model assumption*.
 - The parametric bootstrap 95% CI for the mean is (`r round(ci_mean_par[1], 2)`, `r round(ci_mean_par[2], 2)`).
@@ -168,7 +168,7 @@ General recipe:
 4.  Compute $T^{*(b)}$ each time.
 5.  Approximate the p-value by how often $T^{*(b)}$ is as extreme as $T_{obs}$.
 
-In the lecture notes, this is called a **Monte Carlo p-value**. The standard small-sample correction is to use
+In the lecture notes, this is called a Monte Carlo p-value. The standard small-sample correction is to use
 
 $$
 \hat p = \frac{1 + \#\{T^* \ge T_{obs}\}}{B+1},
@@ -183,13 +183,13 @@ We test $H_0: \mu = \mu_0$ using the usual t-statistic: $$T = \frac{\bar x - \mu
 We’ll compare:
 
 -   classical `t.test()`,
--   a **nonparametric bootstrap test** under $H_0$ (by *recentering* the data),
--   a **parametric bootstrap test** under $H_0$ (simulate Normal samples with mean $\mu_0$).
+-   a nonparametric bootstrap test under $H_0$ (by *recentering* the data),
+-   a parametric bootstrap test under $H_0$ (simulate Normal samples with mean $\mu_0$).
 
 These two bootstraps differ only in how they generate samples under $H_0$:
 
-- **Nonparametric under $H_0$**: recenter the data so it has mean $\mu_0$, then resample with replacement.
-- **Parametric under $H_0$**: assume $X \sim \mathcal{N}(\mu, \sigma^2)$, estimate $\sigma$ from the data, then simulate samples from $\mathcal{N}(\mu_0, \hat\sigma^2)$.
+- Nonparametric under $H_0$: recenter the data so it has mean $\mu_0$, then resample with replacement.
+- Parametric under $H_0$: assume $X \sim \mathcal{N}(\mu, \sigma^2)$, estimate $\sigma$ from the data, then simulate samples from $\mathcal{N}(\mu_0, \hat\sigma^2)$.
 
 ```{r}
 mu0 <- 11
@@ -225,7 +225,7 @@ c(
 )
 ```
 
-**How to interpret this output**
+How to interpret this output
 
 - All three numbers are p-values for the same null, $H_0: \mu = $ `r mu0`, using the same $t$-statistic.
 - The observed test statistic is $t_{obs} = $ `r round(t_obs, 3)`. The bootstrap p-values estimate $\Pr(|T^*| \ge |t_{obs}| \mid H_0)$ by simulation.
@@ -237,9 +237,9 @@ c(
 
 This section uses the horseshoe crab dataset in `glm2` (a classic example for count regression). Reference: [Horseshoe crab dataset in glm2](https://search.r-project.org/CRAN/refmans/glm2/html/crabs.html)
 
-In this study, each row corresponds to a **female horseshoe crab**. The main variables we use are:
+In this study, each row corresponds to a female horseshoe crab. The main variables we use are:
 
-- `Satellites`: the number of **satellite males** observed with that female (a count outcome, often with many zeros),
+- `Satellites`: the number of satellite males observed with that female (a count outcome, often with many zeros),
 - `Width`: the female’s carapace width (a size measure),
 - `Dark`: an indicator of shell colour (dark vs not).
 
@@ -252,8 +252,8 @@ The outcome (`Satellites`) is a count, so we fit a Poisson GLM:
 
 ### Hypotheses (in words)
 
-- **Null hypothesis ($H_0$)**: after adjusting for female size (`Width`), shell colour (`Dark`) has **no association** with the expected number of satellite males. In other words, adding `Dark` does not improve the model.
-- **Alternative hypothesis ($H_1$)**: after adjusting for `Width`, shell colour (`Dark`) **is associated** with the expected number of satellite males (so adding `Dark` improves the model).
+- Null hypothesis ($H_0$): after adjusting for female size (`Width`), shell colour (`Dark`) has no association with the expected number of satellite males. In other words, adding `Dark` does not improve the model.
+- Alternative hypothesis ($H_1$): after adjusting for `Width`, shell colour (`Dark`) is associated with the expected number of satellite males (so adding `Dark` improves the model).
 
 In model terms, this is the same as testing whether the `Dark` coefficient is zero (for the appropriate coding of `Dark`), typically written as $H_0: \beta_{Dark} = 0$ versus $H_1: \beta_{Dark} \ne 0$.
 
@@ -295,7 +295,7 @@ lrt_table |>
   column_spec(1, width = "5cm")
 ```
 
-**How to interpret this table**
+How to interpret this table
 
 - The LRT statistic is $T = 2(\ell_{full} - \ell_{red})$, reported here as `$\\chi^2$`. For these data, $T_{obs} = $ `r round(T_obs, 3)`.
 - The chi-square p-value (`r signif(p_lrt_classical, 3)`) is based on a large-sample reference distribution ($T \overset{approx}{\sim} \chi^2_{df}$).
@@ -305,13 +305,13 @@ lrt_table |>
 
 Generate bootstrap datasets under $H_0$ by simulating new counts from the reduced model.
 
-**Assumptions under $H_0$ (parametric bootstrap):**
+Assumptions under $H_0$ (parametric bootstrap):
 
 - The reduced Poisson GLM is correctly specified under the null: conditional on `Width`, satellite counts follow a Poisson distribution with mean $\mu_i$ and log link.
 - Observations are independent (each crab is an independent sampling unit).
 - The covariates (`Width`, `Dark`) are treated as fixed (or we condition on them). Under $H_0$ the distribution of $Y$ depends on `Width` but not on `Dark`.
 
-This is **not** a permutation/exchangeability argument: we are not shuffling `Dark` labels. We are simulating $Y$ from an assumed model $Y \mid X \sim \text{Poisson}(\hat\mu_0(X))$.
+This is not a permutation/exchangeability argument: we are not shuffling `Dark` labels. We are simulating $Y$ from an assumed model $Y \mid X \sim \text{Poisson}(\hat\mu_0(X))$.
 
 ```{r}
 n_crabs <- nrow(crabs)
@@ -333,7 +333,7 @@ p_lrt_parametric <- bootstrap_p_value(T_boot_parametric, T_obs, two_sided = FALS
 p_lrt_parametric
 ```
 
-**How to interpret this result**
+How to interpret this result
 
 - This p-value estimates $\Pr(T^* \ge T_{obs} \mid H_0)$ where $T^*$ is generated by simulating new outcomes from the reduced (null) Poisson GLM.
 - Here, $\hat p \approx$ `r signif(p_lrt_parametric, 3)`. If it’s close to the chi-square p-value, that suggests the asymptotic reference is adequate.
@@ -341,10 +341,10 @@ p_lrt_parametric
 
 ### 5.3 Permutation test (shuffling `Dark`, keeping `Y` and `Width` fixed)
 
-If you want a **fully nonparametric** way to get a null distribution for the `Dark` effect, a natural option is a **permutation test**.
+If you want a fully nonparametric way to get a null distribution for the `Dark` effect, a natural option is a permutation test.
 
-Idea: under $H_0$ (`Dark` has no association with satellites after adjusting for width), the `Dark` labels should be **exchangeable** *given `Width`*.
-To make given `Width` more concrete, we do a **stratified permutation**: bin `Width` and only shuffle `Dark` within bins.
+Idea: under $H_0$ (`Dark` has no association with satellites after adjusting for width), the `Dark` labels should be exchangeable *given `Width`*.
+To make given `Width` more concrete, we do a stratified permutation: bin `Width` and only shuffle `Dark` within bins.
 
 ```{r}
 set.seed(123)
@@ -374,7 +374,7 @@ p_perm <- bootstrap_p_value(T_boot_perm, T_obs, two_sided = FALSE)
 p_perm
 ```
 
-**How to interpret this result**
+How to interpret this result
 
 - This p-value answers a different “null world” than the parametric bootstrap: it treats the outcome model as unknown and instead tests whether the `Dark` labels are (approximately) exchangeable within `Width` bins under $H_0$.
 - Here, $\hat p \approx$ `r signif(p_perm, 3)`. If this is small, then shuffling `Dark` (while preserving the `Width` structure) rarely produces an LRT statistic as large as the observed one.
@@ -401,12 +401,12 @@ ggplot(df_plot, aes(x = T)) +
 
 ## 6. Prediction intervals with bootstrap
 
-Confidence intervals quantify uncertainty for an unknown parameter (or mean prediction). **Prediction intervals** are wider because they must also include the randomness of a *new observation*.
+Confidence intervals quantify uncertainty for an unknown parameter (or mean prediction). Prediction intervals are wider because they must also include the randomness of a *new observation*.
 
 We’ll build a bootstrap prediction interval for the number of satellites for a new crab with a chosen width and shell color.
 
--   **CI for the mean**: uncertainty in $\mu(x)$.
--   **Prediction interval**: uncertainty in a future $Y$ at that $x$ (mean uncertainty + Poisson noise).
+-   CI for the mean: uncertainty in $\mu(x)$.
+-   Prediction interval: uncertainty in a future $Y$ at that $x$ (mean uncertainty + Poisson noise).
 
 ```{r}
 new_crab <- tibble(Width = 26, Dark = factor("yes", levels = levels(crabs$Dark)))
@@ -434,7 +434,7 @@ list(
 )
 ```
 
-**How to interpret this output**
+How to interpret this output
 
 - The 95% CI for the mean (`mean_CI_95`) is for the *expected* number of satellites for a crab with `Width = 26` and `Dark = yes`.
 - The 95% prediction interval (`prediction_interval_95`) is for a *single future crab’s observed count* at that same $(Width, Dark)$. It is wider because it includes both parameter uncertainty and Poisson outcome noise.
@@ -443,7 +443,7 @@ list(
 ## 7. Conclusion
 
 -   Bootstrap is a general-purpose tool for uncertainty when analytic formulas are fragile or inconvenient.
--   **Nonparametric bootstrap** resamples the observed data; **parametric bootstrap** simulates from a fitted model.
+-   Nonparametric bootstrap resamples the observed data; parametric bootstrap simulates from a fitted model.
 -   For confidence intervals, percentile bootstrap is a simple baseline; for hypothesis tests, bootstrap samples must reflect $H_0$.
 -   For GLMs and likelihood ratios, parametric (null) bootstrap is a natural way to avoid relying only on asymptotic chi-square approximations.
 -   Prediction intervals via bootstrap are often the most directly useful output because they live on the outcome scale.
