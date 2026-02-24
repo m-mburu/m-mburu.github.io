@@ -137,6 +137,28 @@ body.quarto-dark div.quarto-post .listing-title a:hover {
   text-decoration: underline;
 }
 
+/* DataTables (DT) — improve gridline visibility in dark mode
+   DT uses its own CSS defaults (light gray borders) which get lost on dark backgrounds.
+   These overrides only apply in Quarto dark mode. */
+body.quarto-dark table.dataTable.cell-border > thead > tr > th,
+body.quarto-dark table.dataTable.cell-border > thead > tr > td {
+  border-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+body.quarto-dark table.dataTable.cell-border > tbody > tr > th,
+body.quarto-dark table.dataTable.cell-border > tbody > tr > td {
+  border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+body.quarto-dark table.dataTable {
+  border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+body.quarto-dark .dataTables_wrapper .dataTables_filter input,
+body.quarto-dark .dataTables_wrapper .dataTables_length select {
+  border-color: rgba(255, 255, 255, 0.25) !important;
+}
+
 
 
 .ggiraph-svg, .girafe{

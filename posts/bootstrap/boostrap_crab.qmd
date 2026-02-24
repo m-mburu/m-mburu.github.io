@@ -11,7 +11,7 @@ library(tidyverse)
 library(broom)
 library(kableExtra)
 library(glm2)
-
+library(data.table)
 data(crabs)
 crabs <- na.omit(crabs)
 
@@ -20,7 +20,14 @@ B <- 2000
 
 percentile_ci <- function(x, level = 0.95) {
   alpha <- (1 - level) / 2
-  unname(quantile(x, probs = c(alpha, 1 - alpha), na.rm = TRUE))
+  qs <- unname(quantile(x, probs = c(alpha, 1 - alpha), na.rm = TRUE))
+  paste0("[", paste(round(qs, 3), collapse = ", "), "]")
+}
+
+stat_with_ci <- function(x, stat = mean, level = 0.95) {
+  stat <- match.fun(stat)
+  est <- stat(x, na.rm = TRUE)
+  paste0(round(est, 3), " ", percentile_ci(x, level = level))
 }
 
 bootstrap_p_value <- function(t_boot, t_obs, two_sided = TRUE) {
@@ -32,6 +39,19 @@ bootstrap_p_value <- function(t_boot, t_obs, two_sided = TRUE) {
 }
 
 options(scipen = 999)
+
+library(DT)
+data_table <- function(df, pageLength = 50){
+  n_col = ncol(df)-1
+  datatable(df,
+            rownames = FALSE,
+            style = "bootstrap4", class = 'cell-border stripe',
+            options = list(scrollX = TRUE,
+                           pageLength = pageLength,
+                           columnDefs = list(list(className = 'dt-center', targets = 0:n_col))
+            )
+  )
+}
 ```
 
 ## 1. Introduction: what bootstrap is
@@ -45,15 +65,6 @@ The bootstrap is a general, simulation-based way to measure that uncertainty.
 -   Recompute the statistic on each dataset.
 -   Use the spread of those bootstrap replicates to approximate uncertainty.
 
-This post is organized as:
-
-1)  what bootstrap is,
-2)  parametric vs nonparametric bootstrap,
-3)  how to construct bootstrap estimates and confidence intervals,
-4)  bootstrap hypothesis tests (one-sample $t$ as the simplest example),
-5)  an advanced likelihood-ratio bootstrap test on crab data,
-6)  bootstrap prediction intervals,
-7)  conclusion.
 
 ## 2. The two most common bootstrap types
 
@@ -71,7 +82,7 @@ Assume a parametric model is a reasonable approximation, fit it, then simulate n
 
 -   Stronger assumptions.
 -   Particularly natural for likelihood-based models and likelihood-ratio tests.
--   Often excellent for generating null distributions.
+-   Often excellent for generating null distributions during hypothesis testing, because you can simulate directly under $H_0$. A null distribution is the assumption that the model is correct under $H_0$, so simulating from it gives you a direct way to get a null distribution for your test statistic. eg when doing an independent two-sample t-test, you can simulate a new data set using $N(\hat\mu, \hat\sigma^2)$ under $H_0$.
 
 ## 3. Constructing bootstrap estimates and confidence intervals
 
@@ -86,6 +97,8 @@ Let $T$ be a statistic (e.g., $T(x) = \bar x$). The bootstrap procedure is:
 ### 3.1 Nonparametric bootstrap for a mean (and a median)
 
 ```{r}
+#| label: tbl-bootstrap-mean-median
+#| tbl-cap: "Bootstrap estimates for the mean and median of the crab widths, with nonparametric resampling."
 set.seed(1)
 
 x <- c(12.1, 10.4, 11.7, 9.9, 10.8, 13.2, 11.0, 10.6, 12.5, 9.8)
@@ -98,9 +111,9 @@ boot_mean_np <- numeric(B)
 boot_median_np <- numeric(B)
 
 for (b in seq_len(B)) {
-  x_star <- sample(x, size = n, replace = TRUE)
-  boot_mean_np[b] <- mean(x_star)
-  boot_median_np[b] <- median(x_star)
+    x_star <- sample(x, size = n, replace = TRUE)
+    boot_mean_np[b] <- mean(x_star)
+    boot_median_np[b] <- median(x_star)
 }
 
 se_mean_np <- sd(boot_mean_np)
@@ -109,29 +122,44 @@ bias_mean_np <- mean(boot_mean_np) - t_obs_mean
 ci_mean_np <- percentile_ci(boot_mean_np)
 ci_median_np <- percentile_ci(boot_median_np)
 
-list(
-  mean = t_obs_mean,
-  mean_boot_se = se_mean_np,
-  mean_boot_bias = bias_mean_np,
-  mean_boot_ci_95 = ci_mean_np,
-  median = t_obs_median,
-  median_boot_ci_95 = ci_median_np
+stats_df <- data.table(
+    "Mean" = t_obs_mean,
+  "Bootstrap Mean" = stat_with_ci(boot_mean_np, stat = mean),
+    "Bootstrap SE (Mean)" = se_mean_np,
+    "Bootstrap Bias (Mean)" = bias_mean_np,
+    "Median" = t_obs_median,
+  "Bootstrap Median" = stat_with_ci(boot_median_np, stat = mean)
 )
+
+# round only nums
+stats_df <- stats_df %>%
+    mutate(across(where(is.numeric), ~ round(., 3)))
+
+# melt
+stats_df <- melt(stats_df,
+    measure.vars = names(stats_df),
+    variable.name = "statistic",
+    value.name = "value"
+)
+## put this in a table
+
+data_table(stats_df, pageLength = 10)
 ```
 
-How to interpret this output
 
 - The observed sample mean is $\bar x = $ `r round(t_obs_mean, 2)` and the observed median is `r round(t_obs_median, 2)`.
 - The bootstrap SE (`mean_boot_se`) is the typical sampling fluctuation of the mean across repeated samples of size `r n`.
 - The bootstrap bias estimate (`mean_boot_bias`) is `r round(bias_mean_np, 3)`. With finite $B$, this is a noisy estimate; if it’s small relative to the SE, you typically wouldn’t worry about bias.
-- The 95% percentile bootstrap CI for the mean is (`r round(ci_mean_np[1], 2)`, `r round(ci_mean_np[2], 2)`). Interpreted literally: if we repeated the whole sampling process many times, about 95% of such intervals would contain the true population mean.
-- The 95% percentile bootstrap CI for the median is (`r round(ci_median_np[1], 2)`, `r round(ci_median_np[2], 2)`). Comparing the widths of the mean vs median CIs gives you a feel for which statistic is more variable for this sample size.
+- The 95% percentile bootstrap CI for the mean is `r ci_mean_np`. Interpreted literally: if we repeated the whole sampling process many times, about 95% of such intervals would contain the true population mean.
+- The 95% percentile bootstrap CI for the median is `r ci_median_np`. Comparing the widths of the mean vs median CIs gives you a feel for which statistic is more variable for this sample size.
 
 ### 3.2 Parametric bootstrap for a mean (Normal model)
 
 If we’re comfortable assuming the data are approximately Normal, we can bootstrap by simulating $x^* \sim \mathcal{N}(\hat\mu, \hat\sigma)$.
 
 ```{r}
+#| label: tbl-bootstrap-mean-parametric
+#| tbl-cap: "Bootstrap estimates for the mean of the crab widths, with parametric resampling under a Normal model."
 mu_hat <- mean(x)
 sigma_hat <- sd(x)
 
@@ -141,19 +169,20 @@ for (b in seq_len(B)) {
   boot_mean_par[b] <- mean(x_star)
 }
 
-se_mean_par <- sd(boot_mean_par)
-ci_mean_par <- percentile_ci(boot_mean_par)
+se_mean_par <- sd(boot_mean_par) |> round(3)
+ci_mean_par <- percentile_ci(boot_mean_par) 
 
-list(
-  mean_boot_se_parametric = se_mean_par,
-  mean_boot_ci_95_parametric = ci_mean_par
-)
+data.table(
+  `Bootstrap SE (mean)` = se_mean_par,
+  `Bootstrap 95% CI (mean)` = ci_mean_par
+) |>
+data_table()
 ```
 
 How to interpret this output
 
 - This CI answers the same question as the nonparametric CI, but *under the Normal model assumption*.
-- The parametric bootstrap 95% CI for the mean is (`r round(ci_mean_par[1], 2)`, `r round(ci_mean_par[2], 2)`).
+- The parametric bootstrap 95% CI for the mean is `r ci_mean_par`
 - If the parametric and nonparametric CIs are very similar here, it suggests the Normal approximation is not doing something wildly different from what the data-driven resampling is doing (at least for the mean).
 
 ## 4. Bootstrap hypothesis testing
@@ -236,6 +265,18 @@ How to interpret this output
 ## 5. Advanced bootstrap: likelihood-ratio testing on crab data
 
 This section uses the horseshoe crab dataset in `glm2` (a classic example for count regression). Reference: [Horseshoe crab dataset in glm2](https://search.r-project.org/CRAN/refmans/glm2/html/crabs.html)
+
+```{r}
+#| label: tbl-crabs-head
+#| tbl-cap: "First few rows of the horseshoe crab dataset."
+#| 
+data(crabs)
+
+head(crabs) |>
+  data_table()
+```
+
+
 
 In this study, each row corresponds to a female horseshoe crab. The main variables we use are:
 
