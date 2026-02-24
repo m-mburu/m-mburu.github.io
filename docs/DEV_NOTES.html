@@ -316,6 +316,7 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
   <li><a href="#dev-notes" id="toc-dev-notes" class="nav-link active" data-scroll-target="#dev-notes">Dev notes</a>
   <ul>
   <li><a href="#layout-polish-dark-mode-branding" id="toc-layout-polish-dark-mode-branding" class="nav-link" data-scroll-target="#layout-polish-dark-mode-branding">2026-02-23 — Layout polish (dark mode + branding)</a></li>
+  <li><a href="#datatables-gridlines-in-dark-mode" id="toc-datatables-gridlines-in-dark-mode" class="nav-link" data-scroll-target="#datatables-gridlines-in-dark-mode">2026-02-24 — DataTables gridlines in dark mode</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -337,6 +338,13 @@ gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
 <li><strong>Navbar shadow in dark mode</strong>: Increased the shadow alpha for <code>.navbar</code> in dark mode to avoid a washed-out/light haze.</li>
 <li><strong>Branding consistency</strong>: Aligned <code>website.navbar.title</code> with <code>website.title</code> in <code>_quarto.yml</code>.</li>
 <li><strong>About page content</strong>: Expanded <code>about.qmd</code> with a short description of the blog and what readers can expect.</li>
+</ul>
+</section>
+<section id="datatables-gridlines-in-dark-mode" class="level2">
+<h2 class="anchored" data-anchor-id="datatables-gridlines-in-dark-mode">2026-02-24 — DataTables gridlines in dark mode</h2>
+<ul>
+<li><strong>DT table borders</strong>: Updated <code>style.css</code> with dark-mode-only overrides for DataTables <code>cell-border</code> tables so gridlines/row separators remain visible on dark backgrounds.</li>
+<li><strong>DT controls</strong>: Added matching border contrast for the DataTables search input and page-length select in dark mode.</li>
 </ul>
 
 
