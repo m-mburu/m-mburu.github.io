@@ -31,8 +31,8 @@ format:
     html:
         html-math-method: mathjax
         theme: 
-          light: flatly
           dark: darkly
+          light: flatly
         toc: true
         toc-depth: 4 
         smooth-scroll: true
