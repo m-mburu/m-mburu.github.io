@@ -8,3 +8,8 @@ Changes made on branch `layout-fixes-2026-02-23`:
 - **Navbar shadow in dark mode**: Increased the shadow alpha for `.navbar` in dark mode to avoid a washed-out/light haze.
 - **Branding consistency**: Aligned `website.navbar.title` with `website.title` in `_quarto.yml`.
 - **About page content**: Expanded `about.qmd` with a short description of the blog and what readers can expect.
+
+## 2026-02-24 — DataTables gridlines in dark mode
+
+- **DT table borders**: Updated `style.css` with dark-mode-only overrides for DataTables `cell-border` tables so gridlines/row separators remain visible on dark backgrounds.
+- **DT controls**: Added matching border contrast for the DataTables search input and page-length select in dark mode.
