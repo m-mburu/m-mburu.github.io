@@ -159,6 +159,26 @@ body.quarto-dark .dataTables_wrapper .dataTables_length select {
   border-color: rgba(255, 255, 255, 0.25) !important;
 }
 
+/* DataTables pagination in dark mode
+   Bootstrap theme styles `.page-link` with a filled accent background by default.
+   For DT pagination this makes "Next"/"Previous" look like active buttons.
+   Keep only the active page highlighted. */
+body.quarto-dark .dataTables_wrapper .dataTables_paginate .page-item:not(.active):not(.disabled) .page-link {
+  background-color: transparent !important;
+  color: inherit !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+}
+
+body.quarto-dark .dataTables_wrapper .dataTables_paginate .page-item.disabled .page-link {
+  background-color: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  opacity: 0.6;
+}
+
+body.quarto-dark .dataTables_wrapper .dataTables_paginate .page-item.active .page-link {
+  border: 1px solid transparent !important;
+}
+
 
 
 .ggiraph-svg, .girafe{
