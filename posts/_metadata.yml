@@ -3,3 +3,14 @@
 # Freeze computational output by default so old posts remain reproducible
 # and full-site renders stay fast.
 freeze: true
+
+# Social sharing buttons under posts
+filters:
+  - schochastics/social-share
+
+share:
+  twitter: true
+  linkedin: true
+  facebook: true
+  email: true
+  location: after-body

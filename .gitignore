@@ -79,3 +79,5 @@ posts/mnist_digits/data
 git rm --cached  inProcess/finaccess/incomegpnew_df.csv
 
 **/*.quarto_ipynb
+
+/.luarc.json
