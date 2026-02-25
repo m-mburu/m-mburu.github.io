@@ -619,11 +619,29 @@ Table&nbsp;2: Bootstrap estimates for the mean of the crab widths, with parametr
 <li>Compute <span class="math inline">\(T^{*(b)}\)</span> each time.</li>
 <li>Approximate the p-value by how often <span class="math inline">\(T^{*(b)}\)</span> is as extreme as <span class="math inline">\(T_{obs}\)</span>.</li>
 </ol>
-<p>In the lecture notes, this is called a Monte Carlo p-value. The standard small-sample correction is to use</p>
+<p>This is called a Monte Carlo p-value. The usual small-sample correction (it also avoids getting a p-value of exactly 0) is</p>
 <p><span class="math display">\[
 \hat p = \frac{1 + \#\{T^* \ge T_{obs}\}}{B+1},
 \]</span></p>
-<p>and for a two-sided test replace <span class="math inline">\(T\)</span> by <span class="math inline">\(|T|\)</span>.</p>
+<ul>
+<li>You generate <span class="math inline">\(B\)</span> bootstrap datasets under the null hypothesis <span class="math inline">\(H_0\)</span> (using a resampling/simulation method that makes the null true).</li>
+<li>You compute the test statistic on each null dataset, giving <span class="math inline">\(T^{*(1)},\dots,T^{*(B)}\)</span>.</li>
+</ul>
+<p>Right-tailed, left-tailed, and two-sided tests</p>
+<ul>
+<li><p>Right-tailed (large <span class="math inline">\(T\)</span> is evidence against <span class="math inline">\(H_0\)</span>):</p>
+<p><span class="math display">\[
+\hat p = \frac{1 + \#\{T^* \ge T_{obs}\}}{B+1}.
+\]</span></p></li>
+<li><p>Left-tailed (small <span class="math inline">\(T\)</span> is evidence against <span class="math inline">\(H_0\)</span>):</p>
+<p><span class="math display">\[
+\hat p = \frac{1 + \#\{T^* \le T_{obs}\}}{B+1}.
+\]</span></p></li>
+<li><p>Two-sided (far from the null target is evidence against <span class="math inline">\(H_0\)</span>): pick the null target value <span class="math inline">\(T_0\)</span> (often 0), and count how often you get something at least as far from <span class="math inline">\(T_0\)</span> as the observed statistic:</p>
+<p><span class="math display">\[
+\hat p = \frac{1 + \#\{|T^* - T_0| \ge |T_{obs} - T_0|\}}{B+1}.
+\]</span></p></li>
+</ul>
 <section id="one-sample-mean-bootstrap-version-of-a-t-test" class="level3">
 <h3 class="anchored" data-anchor-id="one-sample-mean-bootstrap-version-of-a-t-test">4.1 One-sample mean: bootstrap version of a <span class="math inline">\(t\)</span> test</h3>
 <p>We test <span class="math inline">\(H_0: \mu = \mu_0\)</span> using the usual t-statistic: <span class="math display">\[T = \frac{\bar x - \mu_0}{s/\sqrt{n}}.\]</span></p>

@@ -197,13 +197,37 @@ General recipe:
 4.  Compute $T^{*(b)}$ each time.
 5.  Approximate the p-value by how often $T^{*(b)}$ is as extreme as $T_{obs}$.
 
-In the lecture notes, this is called a Monte Carlo p-value. The standard small-sample correction is to use
+This is called a Monte Carlo p-value. The usual small-sample correction (it also avoids getting a p-value of exactly 0) is
 
 $$
 \hat p = \frac{1 + \#\{T^* \ge T_{obs}\}}{B+1},
 $$
 
-and for a two-sided test replace $T$ by $|T|$.
+
+- You generate $B$ bootstrap datasets under the null hypothesis $H_0$ (using a resampling/simulation method that makes the null true).
+- You compute the test statistic on each null dataset, giving $T^{*(1)},\dots,T^{*(B)}$.
+
+Right-tailed, left-tailed, and two-sided tests
+
+- Right-tailed (large $T$ is evidence against $H_0$):
+
+  $$
+  \hat p = \frac{1 + \#\{T^* \ge T_{obs}\}}{B+1}.
+  $$
+
+- Left-tailed (small $T$ is evidence against $H_0$):
+
+  $$
+  \hat p = \frac{1 + \#\{T^* \le T_{obs}\}}{B+1}.
+  $$
+
+- Two-sided (far from the null target is evidence against $H_0$): pick the null target value $T_0$ (often 0), and count how often you get something at least as far from $T_0$ as the observed statistic:
+
+  $$
+  \hat p = \frac{1 + \#\{|T^* - T_0| \ge |T_{obs} - T_0|\}}{B+1}.
+  $$
+
+
 
 ### 4.1 One-sample mean: bootstrap version of a $t$ test
 
