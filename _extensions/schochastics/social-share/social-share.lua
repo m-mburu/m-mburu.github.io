@@ -9,8 +9,24 @@ local function ensureHtmlDeps()
     })
 end
 
+local function get_share_url(m)
+    if m.share ~= nil and m.share.permalink ~= nil then
+        return pandoc.utils.stringify(m.share.permalink)
+    end
+    if m["share-permalink"] ~= nil then
+        return pandoc.utils.stringify(m["share-permalink"])
+    end
+    if m.permalink ~= nil then
+        return pandoc.utils.stringify(m.permalink)
+    end
+    return ""
+end
+
 function Meta(m)
     ensureHtmlDeps()
+    if m.share == nil then
+        return nil
+    end
     local share_start = '<div class= "page-columns page-rows-contents page-layout-article"><div class="social-share">'
     if m.share.divclass then
         local divclass = pandoc.utils.stringify(m.share.divclass)
@@ -19,7 +35,7 @@ function Meta(m)
     local share_end = '</div></div>'
     local share_text = share_start
 
-    local share_url = pandoc.utils.stringify(m.share.permalink)
+    local share_url = get_share_url(m)
     if m.share.description ~= nil then
         post_title = pandoc.utils.stringify(m.share.description)
     else

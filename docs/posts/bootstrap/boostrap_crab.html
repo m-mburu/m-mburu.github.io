@@ -80,6 +80,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap-d9e5892db49aebcabe19a3723013d9db.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark-1fa674bfce25c573fe0d56861d8d2a2d.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/quarto-contrib/social-share-0.1.0/social-share.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/social-share-0.1.0/all.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -412,7 +414,6 @@ window.Quarto = {
   </ul></li>
   <li><a href="#advanced-bootstrap-likelihood-ratio-testing-on-crab-data" id="toc-advanced-bootstrap-likelihood-ratio-testing-on-crab-data" class="nav-link" data-scroll-target="#advanced-bootstrap-likelihood-ratio-testing-on-crab-data">5. Advanced bootstrap: likelihood-ratio testing on crab data</a>
   <ul>
-  <li><a href="#hypotheses-in-words" id="toc-hypotheses-in-words" class="nav-link" data-scroll-target="#hypotheses-in-words">Hypotheses (in words)</a></li>
   <li><a href="#classical-lrt-chi-square-reference" id="toc-classical-lrt-chi-square-reference" class="nav-link" data-scroll-target="#classical-lrt-chi-square-reference">5.1 Classical LRT (chi-square reference)</a></li>
   <li><a href="#parametric-bootstrap-lrt-p-value-null-simulation" id="toc-parametric-bootstrap-lrt-p-value-null-simulation" class="nav-link" data-scroll-target="#parametric-bootstrap-lrt-p-value-null-simulation">5.2 Parametric bootstrap LRT p-value (null simulation)</a></li>
   <li><a href="#permutation-test-shuffling-dark-keeping-y-and-width-fixed" id="toc-permutation-test-shuffling-dark-keeping-y-and-width-fixed" class="nav-link" data-scroll-target="#permutation-test-shuffling-dark-keeping-y-and-width-fixed">5.3 Permutation test (shuffling <code>Dark</code>, keeping <code>Y</code> and <code>Width</code> fixed)</a></li>
@@ -693,7 +694,6 @@ Table&nbsp;2: Bootstrap estimates for the mean of the crab widths, with parametr
               0.5910512               0.5772114               0.5922039 </code></pre>
 </div>
 </div>
-<p>How to interpret this output</p>
 <ul>
 <li>All three numbers are p-values for the same null, $H_0: = $ 11, using the same <span class="math inline">\(t\)</span>-statistic.</li>
 <li>The observed test statistic is $t_{obs} = $ 0.557. The bootstrap p-values estimate <span class="math inline">\(\Pr(|T^*| \ge |t_{obs}| \mid H_0)\)</span> by simulation.</li>
@@ -734,17 +734,12 @@ Table&nbsp;3: First few rows of the horseshoe crab dataset.
 <p>The scientific question is: after accounting for size (<code>Width</code>), does shell colour (<code>Dark</code>) still help explain how many satellites a female has?</p>
 <p>The outcome (<code>Satellites</code>) is a count, so we fit a Poisson GLM:</p>
 <ul>
-<li>Reduced (null) model: <code>Satellites ~ Width</code></li>
-<li>Full model: <code>Satellites ~ Width + Dark</code></li>
-</ul>
-<section id="hypotheses-in-words" class="level3">
-<h3 class="anchored" data-anchor-id="hypotheses-in-words">Hypotheses (in words)</h3>
-<ul>
-<li>Null hypothesis (<span class="math inline">\(H_0\)</span>): after adjusting for female size (<code>Width</code>), shell colour (<code>Dark</code>) has no association with the expected number of satellite males. In other words, adding <code>Dark</code> does not improve the model.</li>
-<li>Alternative hypothesis (<span class="math inline">\(H_1\)</span>): after adjusting for <code>Width</code>, shell colour (<code>Dark</code>) is associated with the expected number of satellite males (so adding <code>Dark</code> improves the model).</li>
+<li><p>Reduced (null) model: <code>Satellites ~ Width</code></p></li>
+<li><p>Full model: <code>Satellites ~ Width + Dark</code></p></li>
+<li><p>Null hypothesis (<span class="math inline">\(H_0\)</span>): after adjusting for female size (<code>Width</code>), shell colour (<code>Dark</code>) has no association with the expected number of satellite males. In other words, adding <code>Dark</code> does not improve the model.</p></li>
+<li><p>Alternative hypothesis (<span class="math inline">\(H_1\)</span>): after adjusting for <code>Width</code>, shell colour (<code>Dark</code>) is associated with the expected number of satellite males (so adding <code>Dark</code> improves the model).</p></li>
 </ul>
 <p>In model terms, this is the same as testing whether the <code>Dark</code> coefficient is zero (for the appropriate coding of <code>Dark</code>), typically written as <span class="math inline">\(H_0: \beta_{Dark} = 0\)</span> versus <span class="math inline">\(H_1: \beta_{Dark} \ne 0\)</span>.</p>
-</section>
 <section id="classical-lrt-chi-square-reference" class="level3">
 <h3 class="anchored" data-anchor-id="classical-lrt-chi-square-reference">5.1 Classical LRT (chi-square reference)</h3>
 <div class="cell">
@@ -818,7 +813,6 @@ Table&nbsp;4: Classical likelihood ratio test (chi-square reference).
 </figure>
 </div>
 </div>
-<p>How to interpret this table</p>
 <ul>
 <li>The LRT statistic is <span class="math inline">\(T = 2(\ell_{full} - \ell_{red})\)</span>, reported here as <code>$\\chi^2$</code>. For these data, $T_{obs} = $ 6.921.</li>
 <li>The chi-square p-value (0.00852) is based on a large-sample reference distribution (<span class="math inline">\(T \overset{approx}{\sim} \chi^2_{df}\)</span>).</li>
@@ -857,7 +851,6 @@ Table&nbsp;4: Classical likelihood ratio test (chi-square reference).
 <pre><code>[1] 0.009495252</code></pre>
 </div>
 </div>
-<p>How to interpret this result</p>
 <ul>
 <li>This p-value estimates <span class="math inline">\(\Pr(T^* \ge T_{obs} \mid H_0)\)</span> where <span class="math inline">\(T^*\)</span> is generated by simulating new outcomes from the reduced (null) Poisson GLM.</li>
 <li>Here, <span class="math inline">\(\hat p \approx\)</span> 0.0095. If it’s close to the chi-square p-value, that suggests the asymptotic reference is adequate.</li>
@@ -898,7 +891,6 @@ Table&nbsp;4: Classical likelihood ratio test (chi-square reference).
 <pre><code>[1] 0.133933</code></pre>
 </div>
 </div>
-<p>How to interpret this result</p>
 <ul>
 <li>This p-value answers a different “null world” than the parametric bootstrap: it treats the outcome model as unknown and instead tests whether the <code>Dark</code> labels are (approximately) exchangeable within <code>Width</code> bins under <span class="math inline">\(H_0\)</span>.</li>
 <li>Here, <span class="math inline">\(\hat p \approx\)</span> 0.134. If this is small, then shuffling <code>Dark</code> (while preserving the <code>Width</code> structure) rarely produces an LRT statistic as large as the observed one.</li>
@@ -971,7 +963,6 @@ $prediction_interval_95
 [1] "[0, 5]"</code></pre>
 </div>
 </div>
-<p>How to interpret this output</p>
 <ul>
 <li>The 95% CI for the mean (<code>mean_CI_95</code>) is for the <em>expected</em> number of satellites for a crab with <code>Width = 26</code> and <code>Dark = yes</code>.</li>
 <li>The 95% prediction interval (<code>prediction_interval_95</code>) is for a <em>single future crab’s observed count</em> at that same <span class="math inline">\((Width, Dark)\)</span>. It is wider because it includes both parameter uncertainty and Poisson outcome noise.</li>
@@ -1406,6 +1397,7 @@ $prediction_interval_95
   });
   </script>
 </div> <!-- /content -->
+<div class="page-columns page-rows-contents page-layout-article"><div class="social-share"><a href="https://twitter.com/share?url=https://m-mburu.github.io/posts/bootstrap/boostrap_crab.html&amp;text=Bootstrap in Practice: CIs, Hypothesis Tests, and a Crab-Data Case Study" target="_blank" class="twitter"><i class="fab fa-twitter fa-fw fa-lg"></i></a><a href="https://www.linkedin.com/shareArticle?url=https://m-mburu.github.io/posts/bootstrap/boostrap_crab.html&amp;title=Bootstrap in Practice: CIs, Hypothesis Tests, and a Crab-Data Case Study" target="_blank" class="linkedin"><i class="fa-brands fa-linkedin-in fa-fw fa-lg"></i></a>  <a href="mailto:?subject=Bootstrap in Practice: CIs, Hypothesis Tests, and a Crab-Data Case Study&amp;body=Check out this link:https://m-mburu.github.io/posts/bootstrap/boostrap_crab.html" target="_blank" class="email"><i class="fa-solid fa-envelope fa-fw fa-lg"></i></a><a href="https://www.facebook.com/sharer.php?u=https://m-mburu.github.io/posts/bootstrap/boostrap_crab.html" target="_blank" class="facebook"><i class="fab fa-facebook-f fa-fw fa-lg"></i></a></div></div>
 
 
 
