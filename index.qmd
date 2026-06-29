@@ -1,25 +1,124 @@
 ---
-title: ""
+title: "Mburu M"
+toc: false
 listing:
   contents: posts
   sort: "date desc"
-  type: grid
-  categories: true
+  type: table
+  categories: false
   sort-ui: false
   filter-ui: false
-  fields: [image, date, title, reading-time, description]
-page-layout: full
+  fields: [date, title, description, reading-time]
+page-layout: article
 title-block-banner: false
 ---
 
-::::: hero-banner
-::: hero-title
-Statistical Methods & Data Science
+:::::: profile-hero
+:::: profile-side
+![](milkyway.jpeg){fig-alt="Moses Mburu"}
+
+::: profile-links
+[<i class="bi bi-github"></i>](https://github.com/m-mburu){aria-label="GitHub"} [<i class="bi bi-twitter-x"></i>](https://twitter.com/mmburu_w){aria-label="Twitter"} [<i class="bi bi-linkedin"></i>](https://www.linkedin.com/in/mmburu/){aria-label="LinkedIn"} [About](about.qmd)
+:::
+::::
+
+::: profile-copy
+# Mburu M
+
+Hello! I write to think about data, health, technology, institutions, markets, books, and ordinary life.
+
+My formal home is statistics and data science, especially public health evidence and messy real-world data. This site is a personal archive for technical notes, learning notes, book thoughts, and the ordinary questions that make me stop and think.
+:::
+::::::
+
+## Writing
+
+::: topic-pills
+<button type="button" class="active" data-topic="all">
+
+Selected
+
+</button>
+
+<button type="button" data-topic="Data &amp; Evidence">
+
+Data & Evidence
+
+</button>
+
+<button type="button" data-topic="Technology">
+
+Technology
+
+</button>
+
+<button type="button" data-topic="Institutions">
+
+Institutions
+
+</button>
+
+<button type="button" data-topic="Life &amp; Books">
+
+Life & Books
+
+</button>
 :::
 
-::: hero-subtitle
-Exploring the intersection of data, algorithms, and real-world problems.
+::: {.topic-empty hidden=""}
+No articles in this topic yet.
 :::
-:::::
 
-## Latest Experiments
+```{=html}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const controls = document.querySelectorAll(".topic-pills button[data-topic]");
+  const rows = document.querySelectorAll("#listing-listing tbody tr");
+  const emptyMessage = document.querySelector(".topic-empty");
+
+  if (!controls.length || !rows.length) return;
+
+  const decodeCategories = (value) => {
+    if (!value) return [];
+
+    try {
+      return decodeURIComponent(atob(value))
+        .split(",")
+        .map((category) => category.trim())
+        .filter(Boolean);
+    } catch {
+      return [];
+    }
+  };
+
+  const categoriesByRow = new Map(
+    Array.from(rows, (row) => [row, decodeCategories(row.dataset.categories)])
+  );
+
+  const applyFilter = (topic) => {
+    let visibleCount = 0;
+
+    rows.forEach((row) => {
+      const visible = topic === "all" || categoriesByRow.get(row).includes(topic);
+      row.hidden = !visible;
+      if (visible) visibleCount += 1;
+    });
+
+    controls.forEach((control) => {
+      const active = control.dataset.topic === topic;
+      control.classList.toggle("active", active);
+      control.setAttribute("aria-pressed", String(active));
+    });
+
+    if (emptyMessage) {
+      emptyMessage.hidden = visibleCount !== 0;
+    }
+  };
+
+  controls.forEach((control) => {
+    control.setAttribute("aria-pressed", String(control.classList.contains("active")));
+    control.addEventListener("click", () => applyFilter(control.dataset.topic));
+  });
+});
+</script>
+```

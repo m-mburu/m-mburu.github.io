@@ -1,143 +1,381 @@
+/* Personal homepage and notes site */
 
-/* Modern Data Science Blog Styles */
+:root {
+  --home-accent: #5b1a78;
+  --home-ink: #2f2f35;
+  --home-muted: #74747d;
+  --home-line: #e6e1e8;
+  --home-bg: #fbfafb;
+  --home-card: #ffffff;
+}
 
-/* Improved Typography */
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  line-height: 1.6;
-  /* color: #2c3e50;  Removed to let theme handle text color */
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.65;
+  font-size: 16px;
+}
+
+body:has(.profile-hero) {
+  background: var(--home-bg);
+  color: var(--home-ink);
+}
+
+body:has(.profile-hero) #quarto-header {
+  display: none;
+}
+
+body:has(.profile-hero) #quarto-content {
+  max-width: none;
+  padding: 0;
+}
+
+body:has(.profile-hero) main.content {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 1.35rem 4rem;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
-  /* color: #1a252f; Removed to let theme handle text color */
-  margin-top: 1.5em;
+  letter-spacing: 0;
 }
 
-
-/* Navbar Tweaks */
 .navbar {
-  padding: 0.8rem 1rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  min-height: 44px;
+  padding: 0.38rem 1rem;
+  background: #fff !important;
+  border-bottom: 1px solid #e8e2ea;
+  box-shadow: none;
 }
 
-/* Dark mode: reduce the "glow" from the navbar shadow */
+.navbar .navbar-brand,
+.navbar .navbar-nav .nav-link,
+.navbar #quarto-search,
+.navbar .quarto-color-scheme-toggle {
+  color: #4d4d57 !important;
+}
+
+.navbar .navbar-brand {
+  font-size: 0.96rem;
+  font-weight: 650;
+  letter-spacing: 0;
+}
+
+.navbar .navbar-nav .nav-link {
+  font-size: 0.84rem;
+}
+
+.navbar .navbar-nav .nav-link:hover,
+.navbar .navbar-brand:hover,
+.navbar #quarto-search:hover,
+.navbar .quarto-color-scheme-toggle:hover {
+  color: var(--home-accent) !important;
+}
+
 body.quarto-dark .navbar {
-  box-shadow: 0 2px 4px rgba(0,0,0,0.25);
+  background: #18151b !important;
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+  box-shadow: none;
 }
 
-.navbar-brand {
-  font-weight: 800;
-  letter-spacing: -0.5px;
+body.quarto-dark .navbar .navbar-brand,
+body.quarto-dark .navbar .navbar-nav .nav-link,
+body.quarto-dark .navbar #quarto-search,
+body.quarto-dark .navbar .quarto-color-scheme-toggle {
+  color: #d6d0da !important;
 }
 
-/* Post Grid Enhancements for 'Flatly' Feel */
-.quarto-grid-item {
-  border: 1px solid #eee;
-  border-radius: 8px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  overflow: hidden;
+.page-layout-article .page-columns {
+  display: block;
 }
 
-.quarto-grid-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+#title-block-header:has(+ .profile-hero) {
+  display: none;
 }
 
-.quarto-grid-item .card-body {
-  padding: 1.25rem;
+.profile-hero {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 2.4rem;
+  align-items: start;
+  padding: 3.2rem 0 3.7rem;
 }
 
-.listing-title {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-/* Hero Section on Index */
-.hero-banner {
-  padding: 3rem 1rem;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  border-radius: 8px;
-  margin-bottom: 2rem;
+.profile-side {
   text-align: center;
 }
 
-/* Dark mode banner */
-body.quarto-dark .hero-banner {
-  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+.profile-side p {
+  margin: 0;
 }
 
-.hero-title {
-  font-size: 2.5rem;
+.profile-side img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 1rem;
+}
+
+.profile-side figure,
+.profile-side .quarto-figure,
+.profile-side .figure {
+  margin: 0;
+}
+
+.profile-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.62rem;
+  flex-wrap: wrap;
+  font-size: 1.05rem;
+}
+
+.profile-links a {
+  color: #707078;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.profile-links a:hover {
+  color: var(--home-accent);
+}
+
+.profile-copy h1 {
+  margin: 0 0 1.1rem;
+  font-size: 2.15rem;
+  line-height: 1.1;
+  color: var(--home-ink);
+}
+
+.profile-copy p {
+  max-width: 560px;
+  margin: 0 0 0.72rem;
+  font-size: 0.98rem;
+}
+
+.profile-copy strong,
+.profile-copy a {
+  color: var(--home-accent);
+}
+
+body:has(.profile-hero) main h2 {
+  margin: 0 0 1.35rem;
+  padding-top: 2.2rem;
+  border-top: 1px solid var(--home-line);
+  font-size: 1.45rem;
+  color: var(--home-ink);
+}
+
+.topic-pills {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+  margin: -0.3rem 0 1.5rem;
+  color: var(--home-muted);
+  font-size: 0.78rem;
+}
+
+.topic-pills::before {
+  content: "TOPIC:";
   font-weight: 800;
-  color: #2c3e50;
-  margin-bottom: 0.5rem;
+  font-size: 0.72rem;
+  color: var(--home-muted);
+  margin-right: 0.1rem;
 }
 
-/* Dark mode title */
-body.quarto-dark .hero-title {
-  color: #ecf0f1;
-}
-
-.hero-subtitle {
-  font-size: 1.2rem;
-  color: #7f8c8d;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-/* Dark mode subtitle */
-body.quarto-dark .hero-subtitle {
-  color: #bdc3c7;
-}
-
-/* Dark mode grid borders */
-body.quarto-dark .quarto-grid-item {
-  border-color: #444;
-}
-
-
-/* Heading color: keep the Flatly-like look in light mode, but let dark mode inherit from the theme */
-body:not(.quarto-dark) h1,
-body:not(.quarto-dark) h2,
-body:not(.quarto-dark) h3,
-body:not(.quarto-dark) h4,
-body:not(.quarto-dark) h5,
-body:not(.quarto-dark) h6 {
-  color: #2c3e50; /* Matches Flatly primary/secondary */
-}
-
-body.quarto-dark h1,
-body.quarto-dark h2,
-body.quarto-dark h3,
-body.quarto-dark h4,
-body.quarto-dark h5,
-body.quarto-dark h6 {
+.topic-pills button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.45rem;
+  padding: 0.12rem 0.72rem;
+  border: 1px solid var(--home-line);
+  border-radius: 999px;
+  background: #fff;
   color: inherit;
+  font: inherit;
+  line-height: 1;
+  cursor: pointer;
 }
 
-/* Links in post titles */
+.topic-pills button:hover,
+.topic-pills button:focus-visible {
+  border-color: var(--home-accent);
+  color: var(--home-accent);
+}
+
+.topic-pills button:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--home-accent), transparent 55%);
+  outline-offset: 2px;
+}
+
+.topic-pills button.active {
+  background: var(--home-accent);
+  border-color: var(--home-accent);
+  color: #fff;
+  font-weight: 700;
+}
+
+.topic-pills button.active:hover,
+.topic-pills button.active:focus-visible {
+  color: #fff;
+}
+
+#listing-listing {
+  margin-top: 0;
+}
+
+#listing-listing table,
+#listing-listing tbody,
+#listing-listing tr,
+#listing-listing td {
+  display: block;
+}
+
+#listing-listing table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 0;
+}
+
+#listing-listing thead {
+  display: none;
+}
+
+
+#listing-listing tr[hidden],
+.topic-empty[hidden] {
+  display: none !important;
+}
+#listing-listing tr {
+  margin: 0 0 0.95rem;
+  padding: 1rem 1.05rem 0.95rem;
+  border: 1px solid var(--home-line);
+  border-radius: 6px;
+  background: var(--home-card);
+}
+
+#listing-listing td {
+  border: 0;
+  padding: 0;
+}
+
+#listing-listing td:first-child {
+  color: var(--home-muted);
+  font-size: 0.78rem;
+  margin-bottom: 0.22rem;
+}
+
+#listing-listing td:nth-child(2) {
+  margin-bottom: 0.35rem;
+}
+
+#listing-listing td:nth-child(4) {
+  margin-top: 0.52rem;
+}
+
+#listing-listing a,
 div.quarto-post .listing-title a {
-    color: #2c3e50;
-    text-decoration: none;
+  color: var(--home-ink);
+  text-decoration: none;
 }
 
-/* Dark mode: use theme link colors for listing titles */
-body.quarto-dark div.quarto-post .listing-title a {
-  color: inherit;
-}
-
+#listing-listing a:hover,
 div.quarto-post .listing-title a:hover {
-    color: #18bc9c; /* Flatly teal */
-}
-
-body.quarto-dark div.quarto-post .listing-title a:hover {
-  color: inherit;
+  color: var(--home-accent);
   text-decoration: underline;
 }
 
-/* DataTables (DT) — improve gridline visibility in dark mode
+.listing-title,
+#listing-listing .listing-title {
+  font-size: 1rem;
+  line-height: 1.35;
+  font-weight: 750;
+}
+
+.listing-description {
+  display: block;
+  color: #8a8a94;
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+.listing-date,
+.listing-reading-time {
+  color: var(--home-muted);
+  font-size: 0.78rem;
+}
+
+.listing-reading-time::before {
+  content: "Read: ";
+}
+
+.listing-categories {
+  display: none;
+}
+
+.topic-empty {
+  margin: -0.35rem 0 1.2rem;
+  color: var(--home-muted);
+  font-size: 0.86rem;
+}
+
+body.quarto-dark:has(.profile-hero) {
+  --home-ink: #f1eef4;
+  --home-muted: #b8b0bf;
+  --home-line: rgba(255, 255, 255, 0.14);
+  --home-bg: #17141a;
+  --home-card: #211d25;
+}
+
+body.quarto-dark .profile-copy h1,
+body.quarto-dark #listing-listing a,
+body.quarto-dark div.quarto-post .listing-title a {
+  color: var(--home-ink);
+}
+
+body.quarto-dark .topic-pills button {
+  background: #211d25;
+}
+
+@media (max-width: 700px) {
+  body:has(.profile-hero) main.content {
+    padding-inline: 1.1rem;
+  }
+
+  .profile-hero {
+    grid-template-columns: 1fr;
+    gap: 1.55rem;
+    padding: 2.2rem 0 2.6rem;
+  }
+
+  .profile-side {
+    text-align: left;
+  }
+
+  .profile-side img {
+    width: 132px;
+    height: 132px;
+    margin-left: 0;
+  }
+
+  .profile-links {
+    justify-content: flex-start;
+  }
+
+  .profile-copy h1 {
+    font-size: 2rem;
+  }
+
+  .topic-pills {
+    gap: 0.4rem;
+  }
+}
+/* DataTables (DT) - improve gridline visibility in dark mode
    DT uses its own CSS defaults (light gray borders) which get lost on dark backgrounds.
    These overrides only apply in Quarto dark mode. */
 body.quarto-dark table.dataTable.cell-border > thead > tr > th,
@@ -239,5 +477,3 @@ body.quarto-dark .dataTables_wrapper .dataTables_paginate .page-item.active .pag
   position: relative !important;
   aspect-ratio: 9/ 5 !important;
 }
-
-

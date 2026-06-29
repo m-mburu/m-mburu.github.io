@@ -17,12 +17,15 @@ about:
 
 ## About this blog
 
-This is a personal lab notebook for **statistics and data science**: short write-ups, experiments, and explanations that are meant to be practical and reproducible.
+This is a personal archive of notes and essays. I write to think through statistics, mathematics, data science, technology, books, institutions, markets, health, and ordinary life.
 
-What you’ll usually find here:
+My formal home is statistics and data science. I work with health data, public health evidence, inequality methods, statistical models, and practical systems for turning messy records into usable evidence. But the curiosity here is wider than that.
 
--   Applied statistics topics (e.g., resampling, regression, inference)
--   Data analysis workflows in R (and occasionally other tools)
--   Visualizations and small case studies with real datasets
+What you will usually find here:
 
-Most posts aim to balance intuition (“what does this mean?”) with code (“how do I do it?”). If you’re reading along and something is unclear, feel free to reach out via the links above.
+- Notes on statistics, mathematics, modelling, and public health evidence
+- Thoughts on AI, computation, technology, and tools
+- Observations about institutions, development, markets, and life in Kenya
+- Reading notes, learning notes, and questions I am still working through
+
+Some posts are practical and reproducible. Others are more reflective. The common thread is trying to understand how things work, and writing clearly enough that the thought can be revisited later.
