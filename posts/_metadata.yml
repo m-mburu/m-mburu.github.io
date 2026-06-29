@@ -1,5 +1,9 @@
 # Shared options for all posts
 
+title-block-banner: false
+title-block-style: default
+page-layout: article
+
 # Freeze computational output by default so old posts remain reproducible
 # and full-site renders stay fast.
 freeze: true

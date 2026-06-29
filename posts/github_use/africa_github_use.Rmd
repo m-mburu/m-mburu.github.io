@@ -2,6 +2,8 @@
 title: "Github Use in Africa using Maps"
 author: "Mburu"
 date: "2026-02-22"
+description: "A map-based look at GitHub activity across Africa and what public developer data can and cannot tell us."
+categories: ["Technology"]
 output:
      html_document:
         include:
@@ -253,7 +255,7 @@ donhunt_chart <- function(data, labelColumn, valueColumn, chartTitle) {
 ## Developers, Repositories, Gitpushes  `r  get_latest_year_and_quarter(developers, "year", "quarter")`
 
 ###  Developers/GitHub users
-For the developers, we will use the [developers dataset](https://raw.githubusercontent.com/github/innovationgraph/main/data/developers.csv). The dataset contains the number of GitHub users in each country per quarter.I’ll use the latest year and quarter `r  get_latest_year_and_quarter(developers, "year", "quarter")` . I also use world spatial data from tmap package. The data set contains many variables but of interest to us is the spatial and population data. Plotting the number of developers per 100,000 people will give us a better understanding of the distribution of developers across the continent. Since plotting raw numbers of developers will be misleading due to the differences in population sizes across countries. This has a limitation but it’s a better metric.
+For the developers, we will use the [developers dataset](https://raw.githubusercontent.com/github/innovationgraph/main/data/developers.csv). The dataset contains the number of GitHub users in each country per quarter.I'll use the latest year and quarter `r  get_latest_year_and_quarter(developers, "year", "quarter")` . I also use world spatial data from tmap package. The data set contains many variables but of interest to us is the spatial and population data. Plotting the number of developers per 100,000 people will give us a better understanding of the distribution of developers across the continent. Since plotting raw numbers of developers will be misleading due to the differences in population sizes across countries. This has a limitation but it's a better metric.
 
 
 ```{r process_df-to-sf, fig.width=4, fig.height=4}
