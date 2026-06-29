@@ -110,8 +110,8 @@ body.quarto-dark .navbar .quarto-color-scheme-toggle {
 }
 
 .profile-side img {
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   object-fit: cover;
   display: block;
@@ -358,8 +358,8 @@ body.quarto-dark .topic-pills button {
   }
 
   .profile-side img {
-    width: 132px;
-    height: 132px;
+    width: 112px;
+    height: 112px;
     margin-left: 0;
   }
 

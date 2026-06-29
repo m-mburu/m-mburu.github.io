@@ -15,7 +15,7 @@ title-block-banner: false
 
 :::::: profile-hero
 :::: profile-side
-![](milkyway.jpeg){fig-alt="Moses Mburu"}
+![](milkyway.jpeg){fig-alt="Milky Way over a mountain lake" width=120}
 
 ::: profile-links
 [<i class="bi bi-github"></i>](https://github.com/m-mburu){aria-label="GitHub"} [<i class="bi bi-twitter-x"></i>](https://twitter.com/mmburu_w){aria-label="Twitter"} [<i class="bi bi-linkedin"></i>](https://www.linkedin.com/in/mmburu/){aria-label="LinkedIn"} [About](about.qmd)
