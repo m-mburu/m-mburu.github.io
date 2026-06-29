@@ -1,6 +1,8 @@
 project:
   type: website
   output-dir: docs
+  resources:
+    - style.css
 
 website:
   title: "Mburu M"
@@ -35,7 +37,7 @@ format:
         toc: true
         toc-depth: 4 
         smooth-scroll: true
-        css: style.css
+        include-in-header: _includes/cache-bust-css.html
         warning: false
         error: false
         lang: en
