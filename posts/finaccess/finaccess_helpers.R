@@ -1,4 +1,4 @@
-# Helper functions for posts/finaccess/mapping-financial-lives.qmd
+# Helper functions for posts/finaccess/food-vulnerability-kenya.qmd
 
 as_label <- function(x) {
   if (inherits(x, "haven_labelled")) {
