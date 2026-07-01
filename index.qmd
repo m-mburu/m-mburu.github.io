@@ -25,9 +25,10 @@ title-block-banner: false
 ::: profile-copy
 # Mburu M
 
-Hello! I write to think about data, health, technology, institutions, markets, books, and ordinary life.
+I write to think through questions across data, health, technology, institutions, markets, books, and ordinary life.
 
-My formal home is statistics and data science, especially public health evidence and messy real-world data. This site is a personal archive for technical notes, learning notes, book thoughts, and the ordinary questions that make me stop and think.
+My formal home is statistics and data science. The wider thread is representation: how reality becomes data, models, categories, stories, maps, institutions, and decisions. This site is a personal archive of technical notes, learning notes, book thoughts, and small observations that help me understand how things work.
+
 :::
 ::::::
 

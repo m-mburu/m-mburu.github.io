@@ -28,55 +28,6 @@
     "text": "Programming languages 2025-3\nGitHub also provides programming languages dataset. The breakdown provided in the data set is based on the number of pushers per programming language per quarter. The standardisation for this data set is % of developers(number per 100) that pushed any code in the language of interest per quarter.\n\nTop 10 programming languages\nIt will be interesting to see the distribution of programming languages across the continent. Since there are so many of them. I’ll visualize top 15 programming languages by the number of pushers for the latest quarter. Java script is the most popular programming language in Africa, shows that of good number of public projects are largely related to web development.It also makes sense that shell scripting comes second as it is very popular language for automating tasks/installing/system admin in the Linux environments. Python is also popular in Africa, which is not surprising given its popularity in the global programming community especially in data science & web applications.\n\nTop 10 programming languages by the number pushers\n\n\nlatest_developers_sf_top &lt;- top_n(latest_developers_sf, 10, devs_per_100k)\nprogramming_languages_sf &lt;- process_df_to_sf(programming_languages,\n                                             spatial_df = africa,\n                                             iso2_column_name = \"iso2_code\",\n                                             freq_column = \"num_pushers\", \n                                             pop_est_column = \"developers\",\n                                             group_col = \"language\",\n                                             per = 100,\n                                             round_digits = 2)\nprogramming_languages_dt &lt;- as.data.table(programming_languages_sf)\nprogramming_languages_dt[, geomety := NULL]\nprogramming_languages_dt[, name := as.character(name)]\n\n## top 10 programming languages by the number of pushers\ntop_10 &lt;- programming_languages_dt[,\n                                  .(num_pushers = sum(num_pushers)),\n                                  by = language][order(-num_pushers), .SD[1:15]]\n\nlibrary(plotly)\n\n#plot pie chart for top_10\ntop_lan &lt;-donhunt_chart(data = top_10, \n                        labelColumn = \"language\", \n                        valueColumn = \"num_pushers\", \n                        chartTitle = \"Top 15 Programming Languages by number of pushers in Africa\")\n\nhtmltools ::div(top_lan, align = \"center\") \n\n\n\n\n\n\n\n\n\nTop 3 programming languages\n\nTop 3 programming languages by the number pushers in each country\nPresents only top ten countries by the number of developers per 100,000 people\n\n\nnumber_pushers_lan &lt;- programming_languages_dt[\n    iso2_code %in% latest_developers_sf_top$iso2_code]\n\nnumber_pushers_lan &lt;- number_pushers_lan[devs_per_100k != 0,]\n\n## get top 3 languages with highest number of developers per 100k per country\ntop3_lan_per_country &lt;- number_pushers_lan[order(-devs_per_100k), .SD[1:3],  by = name]\n\n\nplot_interactive_bar(data = top3_lan_per_country,\n                     x_var = name,\n                     y_var = devs_per_100k,\n                     fill_var = language,\n                     title = \"Top 3 languages with highest % of developers that pushed code to GitHub\",)\n\n\n\n\n\n\n\nTop 6 Programming Languages in Africa: Percentage of developers distribution pushing code to GitHub\n\n# Merge the programming languages data with the spatial data\nsetorder(top_10, -num_pushers)\nprogramming_languages_sf_top6 &lt;- programming_languages_sf %&gt;%\n    filter(language %in% top_10$language[1:6])\n\n\ncreate_interactive_map(data_sf = programming_languages_sf_top6,\n                       fill_var = devs_per_100k,\n                       tooltip_var = name,\n                       facet_var = \"language\",\n                       plot_title = \"Distribution of top 6 programming languages in Africa (% of developers that pushed code to GitHub)\")\n\n\n\n\n\n\n\nA look at R: Used for analytics and statistics\n\nAnalytics/Data Science\nPython presented on the map before this\n\n\n#\"R\", \"Python\", \"Java\",\nfilter_sf_obj &lt;- function(sf_obj, languages) {\n    sf_obj %&gt;% \n        filter(language %in% languages)\n}\n\n\nr_pyh &lt;- filter_sf_obj(programming_languages_sf, \n                       languages = c(\"R\"))\n\ncreate_interactive_map(data_sf =r_pyh ,\n                       fill_var = num_pushers,\n                       tooltip_var = name,\n                       #facet_var = \"language\",\n                       plot_title = \"Distribution of R users in Africa\")\n\n\n\n\n\n\n\nNumber of pushers; A look at Java & Swift : Languages as a proxy for mobile app development\n\n#\"R\", \"Python\", \"Java\",\njava_swift &lt;- filter_sf_obj(programming_languages_sf,\n                            languages = c(\"Java\", \"Swift\"))\n\n\ncreate_interactive_map(data_sf =java_swift ,\n                       fill_var = num_pushers,\n                       tooltip_var = name,\n                       facet_var = \"language\",\n                       plot_title = \"Countries leading in Java or Swift\")"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Mburu M",
-    "section": "",
-    "text": "About\n\n\n\n\nHello! I write to think about data, health, technology, institutions, markets, books, and ordinary life.\nMy formal home is statistics and data science, especially public health evidence and messy real-world data. This site is a personal archive for technical notes, learning notes, book thoughts, and the ordinary questions that make me stop and think."
-  },
-  {
-    "objectID": "index.html#writing",
-    "href": "index.html#writing",
-    "title": "Mburu M",
-    "section": "Writing",
-    "text": "Writing\n\n\nSelected\n\n\nData & Evidence\n\n\nTechnology\n\n\nInstitutions\n\n\nLife & Books\n\n\n\nNo articles in this topic yet."
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "This is a personal archive of notes and essays. I write to think through statistics, mathematics, data science, technology, books, institutions, markets, health, and ordinary life.\nMy formal home is statistics and data science. I work with health data, public health evidence, inequality methods, statistical models, and practical systems for turning messy records into usable evidence. But the curiosity here is wider than that.\nWhat you will usually find here:\n\nNotes on statistics, mathematics, modelling, and public health evidence\nThoughts on AI, computation, technology, and tools\nObservations about institutions, development, markets, and life in Kenya\nReading notes, learning notes, and questions I am still working through\n\nSome posts are practical and reproducible. Others are more reflective. The common thread is trying to understand how things work, and writing clearly enough that the thought can be revisited later."
-  },
-  {
-    "objectID": "about.html#about-this-blog",
-    "href": "about.html#about-this-blog",
-    "title": "About",
-    "section": "",
-    "text": "This is a personal archive of notes and essays. I write to think through statistics, mathematics, data science, technology, books, institutions, markets, health, and ordinary life.\nMy formal home is statistics and data science. I work with health data, public health evidence, inequality methods, statistical models, and practical systems for turning messy records into usable evidence. But the curiosity here is wider than that.\nWhat you will usually find here:\n\nNotes on statistics, mathematics, modelling, and public health evidence\nThoughts on AI, computation, technology, and tools\nObservations about institutions, development, markets, and life in Kenya\nReading notes, learning notes, and questions I am still working through\n\nSome posts are practical and reproducible. Others are more reflective. The common thread is trying to understand how things work, and writing clearly enough that the thought can be revisited later."
-  },
-  {
-    "objectID": "DEV_NOTES.html",
-    "href": "DEV_NOTES.html",
-    "title": "Dev notes",
-    "section": "",
-    "text": "Changes made on branch layout-fixes-2026-02-23:\n\nDark-mode typography fix: Updated style.css so hard-coded heading and listing-title link colors apply only in light mode, and dark mode inherits colors from the Quarto darkly theme. This prevents low-contrast headings/links in dark mode.\nNavbar shadow in dark mode: Increased the shadow alpha for .navbar in dark mode to avoid a washed-out/light haze.\nBranding consistency: Aligned website.navbar.title with website.title in _quarto.yml.\nAbout page content: Expanded about.qmd with a short description of the blog and what readers can expect.\n\n\n\n\n\nDT table borders: Updated style.css with dark-mode-only overrides for DataTables cell-border tables so gridlines/row separators remain visible on dark backgrounds.\nDT controls: Added matching border contrast for the DataTables search input and page-length select in dark mode."
-  },
-  {
-    "objectID": "DEV_NOTES.html#layout-polish-dark-mode-branding",
-    "href": "DEV_NOTES.html#layout-polish-dark-mode-branding",
-    "title": "Dev notes",
-    "section": "",
-    "text": "Changes made on branch layout-fixes-2026-02-23:\n\nDark-mode typography fix: Updated style.css so hard-coded heading and listing-title link colors apply only in light mode, and dark mode inherits colors from the Quarto darkly theme. This prevents low-contrast headings/links in dark mode.\nNavbar shadow in dark mode: Increased the shadow alpha for .navbar in dark mode to avoid a washed-out/light haze.\nBranding consistency: Aligned website.navbar.title with website.title in _quarto.yml.\nAbout page content: Expanded about.qmd with a short description of the blog and what readers can expect."
-  },
-  {
-    "objectID": "DEV_NOTES.html#datatables-gridlines-in-dark-mode",
-    "href": "DEV_NOTES.html#datatables-gridlines-in-dark-mode",
-    "title": "Dev notes",
-    "section": "",
-    "text": "DT table borders: Updated style.css with dark-mode-only overrides for DataTables cell-border tables so gridlines/row separators remain visible on dark backgrounds.\nDT controls: Added matching border contrast for the DataTables search input and page-length select in dark mode."
-  },
-  {
     "objectID": "posts/bootstrap/boostrap_crab.html",
     "href": "posts/bootstrap/boostrap_crab.html",
     "title": "Bootstrap in Practice: CIs, Hypothesis Tests, and a Crab-Data Case Study",
@@ -131,5 +82,89 @@
     "title": "Bootstrap in Practice: CIs, Hypothesis Tests, and a Crab-Data Case Study",
     "section": "7. Conclusion",
     "text": "7. Conclusion\n\nBootstrap is a general-purpose tool for uncertainty when analytic formulas are fragile or inconvenient.\nNonparametric bootstrap resamples the observed data; parametric bootstrap simulates from a fitted model.\nFor confidence intervals, percentile bootstrap is a simple baseline; for hypothesis tests, bootstrap samples must reflect \\(H_0\\).\nFor GLMs and likelihood ratios, parametric (null) bootstrap is a natural way to avoid relying only on asymptotic chi-square approximations.\nPrediction intervals via bootstrap are often the most directly useful output because they live on the outcome scale."
+  },
+  {
+    "objectID": "DEV_NOTES.html",
+    "href": "DEV_NOTES.html",
+    "title": "Dev notes",
+    "section": "",
+    "text": "Changes made on branch layout-fixes-2026-02-23:\n\nDark-mode typography fix: Updated style.css so hard-coded heading and listing-title link colors apply only in light mode, and dark mode inherits colors from the Quarto darkly theme. This prevents low-contrast headings/links in dark mode.\nNavbar shadow in dark mode: Increased the shadow alpha for .navbar in dark mode to avoid a washed-out/light haze.\nBranding consistency: Aligned website.navbar.title with website.title in _quarto.yml.\nAbout page content: Expanded about.qmd with a short description of the blog and what readers can expect.\n\n\n\n\n\nDT table borders: Updated style.css with dark-mode-only overrides for DataTables cell-border tables so gridlines/row separators remain visible on dark backgrounds.\nDT controls: Added matching border contrast for the DataTables search input and page-length select in dark mode."
+  },
+  {
+    "objectID": "DEV_NOTES.html#layout-polish-dark-mode-branding",
+    "href": "DEV_NOTES.html#layout-polish-dark-mode-branding",
+    "title": "Dev notes",
+    "section": "",
+    "text": "Changes made on branch layout-fixes-2026-02-23:\n\nDark-mode typography fix: Updated style.css so hard-coded heading and listing-title link colors apply only in light mode, and dark mode inherits colors from the Quarto darkly theme. This prevents low-contrast headings/links in dark mode.\nNavbar shadow in dark mode: Increased the shadow alpha for .navbar in dark mode to avoid a washed-out/light haze.\nBranding consistency: Aligned website.navbar.title with website.title in _quarto.yml.\nAbout page content: Expanded about.qmd with a short description of the blog and what readers can expect."
+  },
+  {
+    "objectID": "DEV_NOTES.html#datatables-gridlines-in-dark-mode",
+    "href": "DEV_NOTES.html#datatables-gridlines-in-dark-mode",
+    "title": "Dev notes",
+    "section": "",
+    "text": "DT table borders: Updated style.css with dark-mode-only overrides for DataTables cell-border tables so gridlines/row separators remain visible on dark backgrounds.\nDT controls: Added matching border contrast for the DataTables search input and page-length select in dark mode."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "This is a personal archive of notes and essays. I write to think through statistics, mathematics, data science, technology, books, institutions, markets, health, and ordinary life.\nMy formal home is statistics and data science. I work with health data, public health evidence, inequality methods, statistical models, and practical systems for turning messy records into usable evidence. But the curiosity here is wider than that.\nWhat you will usually find here:\n\nNotes on statistics, mathematics, modelling, and public health evidence\nThoughts on AI, computation, technology, and tools\nObservations about institutions, development, markets, and life in Kenya\nReading notes, learning notes, and questions I am still working through\n\nSome posts are practical and reproducible. Others are more reflective. The common thread is trying to understand how things work, and writing clearly enough that the thought can be revisited later."
+  },
+  {
+    "objectID": "about.html#about-this-blog",
+    "href": "about.html#about-this-blog",
+    "title": "About",
+    "section": "",
+    "text": "This is a personal archive of notes and essays. I write to think through statistics, mathematics, data science, technology, books, institutions, markets, health, and ordinary life.\nMy formal home is statistics and data science. I work with health data, public health evidence, inequality methods, statistical models, and practical systems for turning messy records into usable evidence. But the curiosity here is wider than that.\nWhat you will usually find here:\n\nNotes on statistics, mathematics, modelling, and public health evidence\nThoughts on AI, computation, technology, and tools\nObservations about institutions, development, markets, and life in Kenya\nReading notes, learning notes, and questions I am still working through\n\nSome posts are practical and reproducible. Others are more reflective. The common thread is trying to understand how things work, and writing clearly enough that the thought can be revisited later."
+  },
+  {
+    "objectID": "analysis_points.html",
+    "href": "analysis_points.html",
+    "title": "Mburu M",
+    "section": "",
+    "text": "This fits you strongly. FinAccess is almost a perfect bridge between your data scientist side and your wanderer / representation-learning side.\nIt is not just a finance dataset. It is a dataset about how Kenyans are represented through access, usage, quality, welfare, mobile money, credit, savings, county, age, gender, rural/urban life, disability, shocks, and financial health. The official FinAccess site has the 2024 report plus questionnaire, manual, and anonymised weighted datasets in SPSS, Stata, and Excel formats. (finaccess.knbs.or.ke)\nThe report itself frames FinAccess around four dimensions: Access, Usage, Quality, and Impact/Welfare, and says the 2024 survey tracks financial inclusion nationally and at county level. That is already a representation system: it turns messy financial lives into measurable categories.\nFor your blog, I would make this a flagship series."
+  },
+  {
+    "objectID": "analysis_points.html#the-angle-that-fits-you",
+    "href": "analysis_points.html#the-angle-that-fits-you",
+    "title": "Mburu M",
+    "section": "The angle that fits you",
+    "text": "The angle that fits you\nNot:\n\n“Analysis of FinAccess 2024”\n\nBetter:\n\nHow Kenyans’ financial lives are represented in survey data\n\nThat connects to your interest in representation learning.\nThe survey asks: who is included, excluded, borrowing, saving, defaulting, betting, using mobile money, using SACCOs, facing fraud, financially healthy, investing in green assets, or coping with shocks. The 2024 headline findings include 84.8% formal financial access, 9.9% exclusion, daily mobile-money use at 52.6%, credit usage at 64.0%, savers declining to 68.1%, and financial health remaining low at 18.3%. (Kenya National Bureau of Statistics)\nThe real question for you is:\n\nWhat hidden structure sits underneath these categories?"
+  },
+  {
+    "objectID": "analysis_points.html#possible-blog-series",
+    "href": "analysis_points.html#possible-blog-series",
+    "title": "Mburu M",
+    "section": "Possible blog series",
+    "text": "Possible blog series\n\n1. FinAccess as a representation problem\nStart with the idea that surveys do not merely “collect data.” They create a way of seeing the country.\nQuestions:\nWhat does FinAccess choose to measure?\nWhat does it leave out?\nHow does it represent inclusion, exclusion, health, risk, and welfare?\nThis fits your public participation / Taleb / ground-knowledge interests.\n\n\n2. Mapping financial lives, not just financial access\nUse clustering or dimension reduction.\nPossible methods:\nMCA for categorical variables\nPCA for constructed scores\nUMAP for visual exploration\nclustering for financial-life typologies\ndecision trees for interpretable segmentation\nPossible groups you may discover:\nmobile-money-dependent\nbanked but financially stressed\nSACCO/resilience group\nexcluded rural youth\ndigital-credit-exposed\nhigh-access but low-health urban borrowers\ninformal-only network users\nThat is representation learning in a Kenyan social dataset.\n\n\n3. The geography of financial inclusion\nCounty-level maps are natural here. The report says Kiambu, Nairobi, Kirinyaga, Nyeri, Isiolo, and Mandera are among the most included counties, while Turkana, West Pokot, Elgeyo Marakwet, Trans-Nzoia, Migori, and Narok are among the most excluded. (Kenya National Bureau of Statistics)\nYou could ask:\nAre excluded counties simply poor, or are there different types of exclusion?\nIs mobile money flattening geography?\nDo some counties have access without financial health?\n\n\n4. Mobile money as infrastructure\nThis is very you. Mobile money is not just a product. It is a layer of national infrastructure.\nThe report says mobile money remains an equalizer across demographics, while also noting consumer protection problems such as system downtime, fraud, hidden charges, and money loss.\nPossible post title:\nMobile Money as Kenya’s Hidden Public Infrastructure\n\n\n5. Financial access versus financial health\nThis may be the strongest analytical question.\nAccess can rise while financial health remains weak. That is a serious development-policy issue. The report says formal access rose to 84.8%, but only 18.3% of Kenyans were financially healthy. (Kenya National Bureau of Statistics)\nPossible title:\nKenya Is Financially Included. But Is It Financially Healthy?\nThat is clean, public-facing, and analytical."
+  },
+  {
+    "objectID": "analysis_points.html#how-this-can-fit-your-homepage-intro",
+    "href": "analysis_points.html#how-this-can-fit-your-homepage-intro",
+    "title": "Mburu M",
+    "section": "How this can fit your homepage intro",
+    "text": "How this can fit your homepage intro\nThis is exactly why your intro should mention representation. Something like:\nI write to think through questions across data, health, technology,\ninstitutions, markets, books, and ordinary life.\n\nMy formal home is statistics and data science. The wider thread is\nrepresentation: how reality becomes data, models, categories, maps,\ninstitutions, and decisions. This site is a personal archive of technical\nnotes, learning notes, book thoughts, and small observations that help me\nunderstand how things work.\nFinAccess is a perfect example of that sentence. It turns Kenyan financial life into categories, indicators, maps, scores, and policy decisions.\nYour first post could be:\nWhy I Want to Analyze FinAccess\nWith a thesis like:\nFinAccess is not only a financial inclusion survey. It is a map of how\nKenyans interact with money, institutions, technology, risk, and the future.\nFor me, the interesting question is not only who is included, but what kind\nof financial lives the data allows us to see."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Mburu M",
+    "section": "",
+    "text": "About\n\n\n\n\nI write to think through questions across data, health, technology, institutions, markets, books, and ordinary life.\nMy formal home is statistics and data science. The wider thread is representation: how reality becomes data, models, categories, stories, maps, institutions, and decisions. This site is a personal archive of technical notes, learning notes, book thoughts, and small observations that help me understand how things work."
+  },
+  {
+    "objectID": "index.html#writing",
+    "href": "index.html#writing",
+    "title": "Mburu M",
+    "section": "Writing",
+    "text": "Writing\n\n\nSelected\n\n\nData & Evidence\n\n\nTechnology\n\n\nInstitutions\n\n\nLife & Books\n\n\n\nNo articles in this topic yet."
+  },
+  {
+    "objectID": "posts/finaccess/food-vulnerability-kenya.html",
+    "href": "posts/finaccess/food-vulnerability-kenya.html",
+    "title": "Kenya’s Financial Lives Mapped: Food Vulnerability in FinAccess 2024",
+    "section": "",
+    "text": "Recently, I learned that nearly four in ten Kenyan adults in the FinAccess 2024 survey reported going without enough food in the previous month. I had expected food pressure to appear in the data, but not at that scale. The national number is high, but it is also useful to look at which subgroups in the country are more disadvantaged: food vulnerability is not spread evenly. It is concentrated among particular households, in particular counties, and around particular life conditions: casual work, weak credit options, limited education, and more dependents. This post uses the public FinAccess data to ask a more practical question: who is most exposed to food vulnerability, and where are those profiles concentrated?\n\n\n\n\n\n\n\n\n\nCounty food vulnerability ranges from about 12% in Bomet to 87% in Turkana. Turkana, Tana River, and West Pokot sit at the high end, while Bomet, Trans Nzoia, and Kitui sit at the low end. Most counties fall between 30% and 40%, but a sizeable group is above 50%, so the 39.2% national figure is not experienced evenly across Kenya.\n\n\n\n\nCounty share of adults reporting food vulnerability in the past month\n\n\nBut geography is only part of the story, which is representing underlying household characteristics. A county map can show where food vulnerability is high; it does not show the household profiles behind it. For that, I fitted a simple decision tree to group adults into recognizable risk profiles.\n\n\n\n\n\nClean tree for food vulnerability in FinAccess 2024\n\n\n\n\nThe tree shows that food vulnerability is not only about where someone lives, but also about how they survive economically. The first split is livelihood: adults relying on casual or seasonal work are immediately separated from everyone else. The tree then picks up combinations of credit exposure, partnership status, education, subsistence farming, and own-business activity. I read these combinations as risk profiles, not as causes by themselves.\nTo map the tree, I treated its highest-risk terminal leaves as risk profiles. A profile was counted as high-risk if its food vulnerability rate was at least 25% higher than the national average and it represented at least 2% of the weighted adult population. Each adult was then assigned back to their tree leaf, and each county was summarised by the share of adults who matched one of these high-risk profiles.\n\n\n\n\nRisk profiles are terminal leaves from the decision tree with lift &gt;= 1.25 and weighted population share &gt;= 2%.\n\n\nThis map does not simply repeat the food vulnerability map. It shows where the risk profiles identified by the tree are more common. In other words, it moves from “where are people food vulnerable?” to “where are the conditions linked to higher food vulnerability concentrated?”"
   }
 ]

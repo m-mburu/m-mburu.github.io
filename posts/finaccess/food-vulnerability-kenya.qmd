@@ -1,0 +1,1097 @@
+---
+title: "Kenya's Financial Lives Mapped: Food Vulnerability in FinAccess 2024"
+date: "2026-06-29"
+description: "This post uses the FinAccess 2024 public data to explore food vulnerability in Kenya.It builds a decision tree model to identify subgroups where food vulnerability is most pronounced."
+categories: ["Data & Evidence", "Institutions"]
+format: html
+execute:
+  warning: false
+  message: false
+  echo: false
+---
+
+
+```{r setup, echo=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  fig.width = 10,
+  fig.height = 6,
+  dpi = 500,
+  dev = "png"
+)
+
+required_packages <- c(
+  "haven",
+  "data.table",
+  "digest",
+  "sf",
+  "ggiraph",
+  "ggplot2",
+  "forcats",
+  "grid",
+  "stringr",
+  "knitr",
+  "partykit",
+  "ineqTrees",
+  "rpart",
+  "tidymodels"
+)
+
+missing_packages <- required_packages[
+  !vapply(
+    required_packages,
+    requireNamespace,
+    logical(1),
+    quietly = TRUE
+  )
+]
+if (length(missing_packages) > 0) {
+  stop(
+    "Install required packages before rendering: ",
+    paste(missing_packages, collapse = ", ")
+  )
+}
+
+library(haven)
+library(data.table)
+library(sf)
+library(ggiraph)
+library(ggplot2)
+library(forcats)
+library(grid)
+library(stringr)
+library(knitr)
+library(partykit)
+library(ineqTrees)
+library(rpart)
+library(tidymodels)
+tidymodels_prefer(quiet = TRUE)
+
+helper_path <- "finaccess_helpers.R"
+if (!file.exists(helper_path)) {
+  helper_path <- file.path("posts", "finaccess", "finaccess_helpers.R")
+}
+source(helper_path)
+
+plot_base_family <- "Segoe UI"
+plot_base_size <- 12
+plot_tooltip_css <- paste(
+  "font-family:'Segoe UI',system-ui,-apple-system,BlinkMacSystemFont,sans-serif;",
+  "background-color:white;color:#18212f;padding:8px;",
+  "border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,0.18);"
+)
+
+normalise_county_key <- function(x) {
+  x <- str_to_lower(as.character(x))
+  x <- str_replace_all(x, "&", "and")
+  x <- str_replace_all(x, "[^a-z0-9]+", " ")
+  x <- str_squish(x)
+
+  x[x == "homabay"] <- "homa bay"
+  x[x == "elgeyo marakwet"] <- "keiyo marakwet"
+  x[x == "nairobi city"] <- "nairobi"
+  x[x == "taita taveta"] <- "taita taveta"
+  x[x == "tharaka nithi"] <- "tharaka"
+  x
+}
+```
+
+
+```{r read-data}
+data_path <- "2024_Finaccess_Publicdata.dta"
+if (!file.exists(data_path)) {
+    data_path <- file.path("posts", "finaccess", "2024_Finaccess_Publicdata.dta")
+}
+
+stopifnot(file.exists(data_path))
+
+selected_vars <- c(
+    "interview__key",
+    "county",
+    "A07",
+    "indWeight",
+    "Quintiles",
+    "A08",
+    "Sex",
+    "Age",
+    "A20",
+    "A21",
+    "A22i",
+    "A22ii",
+    "A22iii",
+    "A23",
+    "A24i",
+    "A24ii",
+    "A24iii",
+    "A24iv",
+    "A24v",
+    "A24vi",
+    "B1C2",
+    "B1C3",
+    "B1C4",
+    "B1Di",
+    "B1Dii",
+    "B1Diii",
+    "B1G",
+    "B1H",
+    "B1Ii",
+    "B1N1",
+    "B1N2",
+    "B3A__1",
+    "B3A__2",
+    "B3A__3",
+    "B3A__4",
+    "B3A__5",
+    "B3A__6",
+    "B3A__7",
+    "B3A__8",
+    "B3A__9",
+    "B3A__11",
+    "B3B",
+    "B3C",
+    "B3Ci",
+    "C1_10",
+    "C1_11",
+    "C1_12",
+    "C1_12a",
+    "C1_12b",
+    "C1_1a",
+    "C1_1b",
+    "C1_2",
+    "C1_3",
+    "C1_4",
+    "C1_5",
+    "C1_6",
+    "C1_8",
+    "C1_9",
+    "C1_13a",
+    "C1_15",
+    "C1_16",
+    "C1_17",
+    "C1_19",
+    "C1_20",
+    "C1_21",
+    "C1_23",
+    "C1_25",
+    "C1_26",
+    "C1_27",
+    "C1_36",
+    "C1_37",
+    "C1_38",
+    "C1_39",
+    "C1_40",
+    "C1_41",
+    "C1_42"
+)
+
+raw <- read_dta(
+    data_path,
+    col_select = any_of(selected_vars)
+)
+setDT(raw)
+
+# data.table(
+#     rows = nrow(raw),
+#     columns = ncol(raw)
+# )
+```
+
+
+```{r clean-data}
+fin <- copy(raw)
+
+fin[
+    ,
+    weight := fifelse(
+        !is.na(indWeight) & indWeight > 0,
+        as.numeric(indWeight),
+        1
+    )
+]
+
+fin[
+    ,
+    cluster_id := as.integer(num_value(A07))
+]
+
+fin[
+    ,
+    county_map := as.character(as_label(county))
+]
+
+fin[, `:=`(
+    food_poor_1m = yes_no(B1Di),
+    food_poor_12m_direct = yes_no(B1Diii),
+    food_frequency = num_value(B1Dii),
+    county = fct_lump_n(county_map, n = 15),
+    residence = as_label(A08),
+    sex = as_label(Sex),
+    age_group = as_label(Age),
+    education = fct_lump_n(as_label(A20), n = 7),
+    marital_status = as_label(A21),
+    wealth_quintile = as_label(Quintiles),
+    children = count_value(A22i),
+    children_under5 = count_value(A22ii),
+    children_in_school = count_value(A22iii),
+    chronic_disease = yes_no(A23),
+    disability = any_disability(
+        num_value(A24i),
+        num_value(A24ii),
+        num_value(A24iii),
+        num_value(A24iv),
+        num_value(A24v),
+        num_value(A24vi)
+    ),
+    farming = selected_binary(B3A__1),
+    employed = selected_binary(B3A__2),
+    casual_work = selected_binary(B3A__3),
+    own_business = selected_binary(B3A__4),
+    gov_support = selected_binary(B3A__5),
+    rental_income = selected_binary(B3A__6),
+    investment_income = selected_binary(B3A__7),
+    pension_income = selected_binary(B3A__8),
+    remittances = selected_binary(B3A__9),
+    no_income_source = selected_binary(B3A__11),
+    main_livelihood = fct_lump_n(as_label(B3B), n = 8),
+    subsistence_farming = yes_no(B3C),
+    digital_work = fifelse(
+        num_value(B3Ci) == 1,
+        1L,
+        fifelse(
+            num_value(B3Ci) %in% c(2, 3, 4),
+            0L,
+            NA_integer_
+        )
+    ),
+    mobile_money = current_use(C1_10),
+    mobile_bank = current_use(C1_11),
+    bank = current_use(C1_12),
+    sacco_member = current_use(C1_12a),
+    chama_member = current_use(C1_12b),
+    save_bank = current_use(C1_1a),
+    save_mfi = current_use(C1_1b),
+    save_mobile_bank = current_use(C1_2),
+    save_mobile_money = current_use(C1_3),
+    save_sacco = current_use(C1_4),
+    save_chama = current_use(C1_5),
+    save_group = current_use(C1_6),
+    save_secret_place = current_use(C1_8),
+    save_digital_app = current_use(C1_9),
+    loan_bank = current_use(C1_13a),
+    loan_mobile_bank = current_use(C1_15),
+    loan_mobile_provider = current_use(C1_16),
+    loan_sacco = current_use(C1_17),
+    loan_digital = current_use(C1_19),
+    loan_shylock = current_use(C1_20),
+    loan_chama = current_use(C1_21),
+    loan_hustler = current_use(C1_23),
+    loan_family_friend = current_use(C1_25),
+    loan_shopkeeper_cash = current_use(C1_26),
+    loan_shopkeeper_goods = current_use(C1_27),
+    motor_insurance = current_use(C1_36),
+    nhif_shif = current_use(C1_37),
+    other_health_insurance = current_use(C1_38),
+    other_insurance = current_use(C1_39),
+    nssf = current_use(C1_40),
+    occupational_pension = current_use(C1_41),
+    other_pension = current_use(C1_42),
+    can_keep_money_aside = agree_binary(B1C2),
+    has_spending_plan = agree_binary(B1C3),
+    can_handle_large_expense = agree_binary(B1C4),
+    owes_money = fifelse(
+        num_value(B1G) == 1,
+        1L,
+        fifelse(
+            num_value(B1G) %in% c(2, 3),
+            0L,
+            NA_integer_
+        )
+    ),
+    emergency_source = as_label(B1H),
+    difficult_13000_30d = difficulty_binary(B1Ii),
+    worried_daily_needs = worried_binary(B1N1),
+    worried_debt = worried_binary(B1N2)
+)]
+
+fin[
+    ,
+    food_poor_12m := fcase(
+        food_poor_1m == 1L, 1L,
+        food_poor_1m == 0L & food_poor_12m_direct == 1L, 1L,
+        food_poor_1m == 0L & food_poor_12m_direct == 0L, 0L,
+        default = NA_integer_
+    )
+]
+
+fin[
+    ,
+    emergency_unable := as.integer(
+        grepl(
+            "couldn't come up",
+            text_value(emergency_source)
+        )
+    )
+]
+
+fin[, `:=`(
+    children_band = cut(
+        children,
+        breaks = c(-Inf, 0, 2, 4, Inf),
+        labels = c("none", "1-2", "3-4", "5+")
+    ),
+    under5_any = factor(fifelse(children_under5 > 0, "yes", "no")),
+    school_children_any = factor(fifelse(children_in_school > 0, "yes", "no")),
+    chronic_disease = factor(chronic_disease, levels = c(0, 1), labels = c("no", "yes")),
+    disability = factor(disability, levels = c(0, 1), labels = c("no", "yes")),
+    farming = factor(farming, levels = c(0, 1), labels = c("no", "yes")),
+    employed = factor(employed, levels = c(0, 1), labels = c("no", "yes")),
+    casual_work = factor(casual_work, levels = c(0, 1), labels = c("no", "yes")),
+    own_business = factor(own_business, levels = c(0, 1), labels = c("no", "yes")),
+    gov_support = factor(gov_support, levels = c(0, 1), labels = c("no", "yes")),
+    remittances = factor(remittances, levels = c(0, 1), labels = c("no", "yes")),
+    subsistence_farming = factor(subsistence_farming, levels = c(0, 1), labels = c("no", "yes")),
+    digital_work = factor(digital_work, levels = c(0, 1), labels = c("no", "yes"))
+)]
+
+formal_access_vars <- c(
+    "bank",
+    "mobile_bank",
+    "sacco_member",
+    "save_bank",
+    "save_mfi",
+    "nhif_shif",
+    "nssf",
+    "occupational_pension"
+)
+
+mobile_money_vars <- c(
+    "mobile_money",
+    "save_mobile_money",
+    "loan_mobile_provider",
+    "loan_hustler"
+)
+
+informal_network_vars <- c(
+    "chama_member",
+    "save_chama",
+    "save_group",
+    "loan_chama",
+    "loan_family_friend",
+    "loan_shopkeeper_cash",
+    "loan_shopkeeper_goods"
+)
+
+credit_exposure_vars <- c(
+    "loan_bank",
+    "loan_mobile_bank",
+    "loan_mobile_provider",
+    "loan_sacco",
+    "loan_digital",
+    "loan_shylock",
+    "loan_chama",
+    "loan_hustler",
+    "loan_family_friend",
+    "loan_shopkeeper_cash",
+    "loan_shopkeeper_goods"
+)
+
+protection_vars <- c(
+    "motor_insurance",
+    "nhif_shif",
+    "other_health_insurance",
+    "other_insurance",
+    "nssf",
+    "occupational_pension",
+    "other_pension"
+)
+
+fin[
+    ,
+    formal_access_score := rowSums(.SD, na.rm = TRUE),
+    .SDcols = formal_access_vars
+]
+fin[
+    ,
+    mobile_money_score := rowSums(.SD, na.rm = TRUE),
+    .SDcols = mobile_money_vars
+]
+fin[
+    ,
+    informal_network_score := rowSums(.SD, na.rm = TRUE),
+    .SDcols = informal_network_vars
+]
+fin[
+    ,
+    credit_exposure_score := rowSums(.SD, na.rm = TRUE),
+    .SDcols = credit_exposure_vars
+]
+fin[
+    ,
+    protection_score := rowSums(.SD, na.rm = TRUE),
+    .SDcols = protection_vars
+]
+
+fin[, `:=`(
+    formal_access_band = score_band(formal_access_score),
+    mobile_money_band = score_band(mobile_money_score),
+    informal_network_band = score_band(informal_network_score),
+    credit_exposure_band = score_band(credit_exposure_score),
+    protection_band = score_band(protection_score)
+)]
+
+analysis_dt <- fin[!is.na(food_poor_1m) & !is.na(weight) & weight > 0]
+analysis_dt[
+    ,
+    row_id := .I
+]
+
+# data.table(
+#     rows = nrow(analysis_dt),
+#     weighted_n = sum(analysis_dt$weight),
+#     food_poor_1m_percent = 100 * weighted_mean_safe(
+#         analysis_dt$food_poor_1m,
+#         analysis_dt$weight
+#     ),
+#     food_poor_12m_percent = 100 * weighted_mean_safe(
+#         analysis_dt$food_poor_12m,
+#         analysis_dt$weight
+#     )
+# )
+```
+
+
+Recently, I learned that nearly four in ten Kenyan adults in the [FinAccess 2024 survey](https://finaccess.knbs.or.ke/reports-and-datasets) reported going without enough food in the previous month. I had expected food pressure to appear in the data, but not at that scale. The national number is high, but it is also useful to look at which subgroups in the country are more disadvantaged: food vulnerability is not spread evenly. It is concentrated among particular households, in particular counties, and around particular life conditions: casual work, weak credit options, limited education, and more dependents. This post uses the public FinAccess data to ask a more practical question: who is most exposed to food vulnerability, and where are those profiles concentrated?
+
+```{r overall-food-vulnerability}
+#| fig-width: 6.3
+#| fig-height: 4
+overall_plot_dt <- data.table(
+    status = factor(
+        fifelse(
+            analysis_dt$food_poor_1m == 1L,
+            "Food vulnerable",
+            "Not food vulnerable"
+        ),
+        levels = c("Not food vulnerable", "Food vulnerable")
+    ),
+    weight = analysis_dt$weight
+)[
+    ,
+    .(
+        weighted_n = sum(weight),
+        rows = .N
+    ),
+    by = status
+]
+
+overall_plot_dt[
+    ,
+    weighted_percent := 100 * weighted_n / sum(weighted_n)
+]
+food_rate <- overall_plot_dt[status == "Food vulnerable", weighted_percent]
+
+# knitr::kable(
+#     overall_plot_dt,
+#     digits = 2,
+#     caption = "Weighted past-month food vulnerability"
+# )
+
+ggplot(
+    overall_plot_dt,
+    aes(status, weighted_percent, fill = status)
+) +
+    geom_col(width = 0.62, color = "gray25", show.legend = FALSE) +
+    geom_text(
+        aes(label = sprintf("%.1f%%", weighted_percent)),
+        vjust = -0.35,
+        size = 4,
+        family = plot_base_family
+    ) +
+    scale_fill_manual(
+        values = c(
+            "Not food vulnerable" = "#4C78A8",
+            "Food vulnerable" = "#E45756"
+        )
+    ) +
+    scale_y_continuous(
+        limits = c(
+            0,
+            max(100, max(overall_plot_dt$weighted_percent) * 1.12)
+        )
+    ) +
+    labs(
+        title = "Food vulnerability among Kenyan adults in FinAccess 2024",
+        subtitle = sprintf("About %.1f%% of adults reported going without enough food in the past month", food_rate),
+        x = NULL,
+        y = "Percent of adults",
+        caption = "Percentages are adjusted using FinAccess survey weights."
+    ) +
+    theme_minimal(base_size = 11, base_family = plot_base_family) +
+    theme(panel.grid.minor = element_blank())
+```
+
+County food vulnerability ranges from about 12% in Bomet to 87% in Turkana. Turkana, 
+Tana River, and West Pokot sit at the high end, while Bomet, Trans Nzoia, and Kitui sit at the low end.
+Most counties fall between 30% and 40%, but a sizeable group is above 50%, so
+the 39.2% national figure is not experienced evenly across Kenya.
+
+
+```{r county-food-vulnerability-map}
+#| fig-cap: "County share of adults reporting food vulnerability in the past month"
+#| fig-width: 9
+#| fig-height: 7
+county_shape_paths <- c(
+  file.path("kenya_population", "County", "County.shp"),
+  file.path("..", "..", "kenya_population", "County", "County.shp")
+)
+county_shape_path <- county_shape_paths[file.exists(county_shape_paths)][1]
+stopifnot(!is.na(county_shape_path))
+
+county_prevalence_dt <- analysis_dt[
+  ,
+  .(
+    respondents = .N,
+    weighted_population = sum(weight, na.rm = TRUE),
+    food_vulnerability_pct = 100 * weighted_mean_safe(food_poor_1m, weight)
+  ),
+  by = .(county_map)
+]
+
+county_prevalence_dt[
+  ,
+  county_key := normalise_county_key(county_map)
+]
+
+county_shapes <- st_read(county_shape_path, quiet = TRUE)
+county_shapes$county_key <- normalise_county_key(county_shapes$COUNTY)
+
+missing_counties <- county_prevalence_dt[
+  !county_key %in% county_shapes$county_key,
+  county_map
+]
+if (length(missing_counties) > 0) {
+  stop(
+    "County names missing from shapefile: ",
+    paste(missing_counties, collapse = ", ")
+  )
+}
+
+county_map_sf <- merge(
+  county_shapes,
+  county_prevalence_dt,
+  by = "county_key",
+  all.x = TRUE
+)
+
+county_map_sf$tooltip <- paste0(
+  county_map_sf$COUNTY,
+  "<br/>",
+  sprintf("%.1f%% food vulnerable", county_map_sf$food_vulnerability_pct),
+  "<br/>"
+)
+
+county_map_plot <- ggplot(county_map_sf) +
+  geom_sf_interactive(
+    aes(
+      fill = food_vulnerability_pct,
+      tooltip = tooltip,
+      data_id = county_key
+    ),
+    color = "white",
+    linewidth = 0.18
+  ) +
+  scale_fill_gradient(
+    low = "#f7fbff",
+    high = "#b2182b",
+    na.value = "grey90",
+    labels = function(x) sprintf("%.0f%%", x),
+    name = "Food vulnerable (%)"
+  ) +
+  coord_sf(datum = NA) +
+  labs(
+    title = "Food vulnerability is not spread evenly across Kenya",
+    subtitle = paste(
+      "Share of adults reporting going without enough food in the past month,",
+      "weighted by FinAccess survey weights"
+    ),
+    caption = "Source: FinAccess 2024 public data; county boundaries from Kenya county shapefile."
+  ) +
+  theme_void(base_size = plot_base_size, base_family = plot_base_family) +
+  theme(
+    plot.title = element_text(face = "bold", color = "#18212f"),
+    plot.subtitle = element_text(color = "#4b5563", margin = margin(b = 8)),
+    plot.caption = element_text(color = "#6b7280", hjust = 0),
+    legend.position = "right",
+    legend.title = element_text(face = "bold"),
+    legend.key.height = unit(1.2, "cm")
+  )
+
+girafe(
+  ggobj = county_map_plot,
+  width_svg = 9,
+  height_svg = 7,
+  options = list(
+    opts_hover(
+      css = "fill-opacity:0.85;stroke:#18212f;stroke-width:1.2px;"
+    ),
+    opts_tooltip(
+      css = plot_tooltip_css
+    ),
+    opts_sizing(rescale = TRUE)
+  )
+)
+```
+
+
+
+
+But geography is only part of the story, which is representing underlying household characteristics.
+A county map can show where food vulnerability is high; it does not show the household profiles behind it. For
+that, I fitted a simple decision tree to group adults into recognizable risk profiles.
+
+```{r build-model-data}
+clean_predictors <- c(
+  "county",
+  "residence",
+  "sex",
+  "age_group",
+  "education",
+  "marital_status",
+  "children_band",
+  "under5_any",
+  "school_children_any",
+  "chronic_disease",
+  "disability",
+  "main_livelihood",
+  "farming",
+  "employed",
+  "casual_work",
+  "own_business",
+  "gov_support",
+  "remittances",
+  "subsistence_farming",
+  "digital_work",
+  "mobile_money_band",
+  "informal_network_band",
+  "credit_exposure_band"
+)
+
+raw_finaccess_var_labels <- c(
+  county = "County",
+  residence = "Residence",
+  sex = "Sex",
+  age_group = "Age group",
+  education = "Education",
+  marital_status = "Marital status",
+  children_band = "Children",
+  under5_any = "Child under 5",
+  school_children_any = "Children in school",
+  chronic_disease = "Chronic disease",
+  disability = "Disability",
+  wealth_quintile = "Wealth quintile",
+  main_livelihood = "Main livelihood",
+  farming = "Farming income",
+  employed = "Employment",
+  casual_work = "Casual work",
+  own_business = "Own business",
+  gov_support = "Government / NGO support",
+  remittances = "Remittances",
+  subsistence_farming = "Subsistence farming",
+  digital_work = "Digital work",
+  formal_access_band = "Formal access",
+  mobile_money_band = "Mobile money",
+  informal_network_band = "Informal network",
+  credit_exposure_band = "Credit exposure",
+  protection_band = "Protection"
+)
+
+clean_model <- build_indicator_tree_data(
+  analysis_dt,
+  clean_predictors,
+  raw_finaccess_var_labels
+)
+
+clean_tree_data <- clean_model$data
+clean_model_predictors <- clean_model$predictors
+finaccess_var_labels <- clean_model$var_labels |>
+  str_wrap(width = 10)
+
+indicator_summary <- data.table(
+  model = "Clean tree",
+  raw_predictors = length(clean_predictors),
+  binary_predictors = length(clean_model$binary_predictors),
+  multi_level_predictors = length(clean_model$multi_level_predictors),
+  model_predictors_after_indicators = length(clean_model_predictors)
+)
+
+model_size_table <- data.table(
+  model = "Clean tree",
+  rows = nrow(clean_tree_data),
+  predictors = length(clean_model_predictors),
+  weighted_food_poor_percent = 100 * weighted_mean_safe(
+    clean_tree_data$food_poor_1m,
+    clean_tree_data$weight
+  )
+)
+
+# knitr::kable(
+#   indicator_summary,
+#   digits = 2,
+#   caption = "Indicator variables created from multi-level predictors"
+# )
+# knitr::kable(
+#   model_size_table,
+#   digits = 2,
+#   caption = "Model data used in rpart trees"
+# )
+```
+
+
+```{r tune-rpart-trees}
+clean_tree_formula <- as.formula(
+  paste(
+    "food_poor_1m ~",
+    paste(clean_model_predictors, collapse = " + ")
+  )
+)
+rpart_tree_spec <- decision_tree(
+  tree_depth = tune(),
+  min_n = tune(),
+  cost_complexity = tune()
+) |>
+  set_engine("rpart") |>
+  set_mode("classification")
+
+tree_tune_grid <- tidyr::crossing(
+  tree_depth = c(3L, 4L, 5L),
+  min_n = c(500L, 1000L, 2000L),
+  cost_complexity = c(0.0005, 0.001, 0.005, 0.01)
+)
+tree_grid_display <- as.data.table(tree_tune_grid)
+tree_grid_display[, grid_id := .I]
+setcolorder(tree_grid_display, "grid_id")
+
+# knitr::kable(
+#   tree_grid_display,
+#   digits = 3,
+#   caption = "tidymodels tuning grid for decision_tree(engine = 'rpart')"
+# )
+```
+
+```{r cluster-folds}
+clean_tune_data <- prepare_tune_data(clean_tree_data)
+
+clean_fold_id <- make_cluster_fold_id(
+  clean_tune_data$cluster_id,
+  as.integer(clean_tune_data$food_poor_1m == "food_poor"),
+  clean_tune_data$weight,
+  v = 5L,
+  seed = 20260629
+)
+
+clean_resamples <- make_cluster_resamples(
+  clean_tune_data,
+  clean_fold_id,
+  "clean"
+)
+fold_summary <- data.table(
+  fold_id = clean_fold_id,
+  cluster_id = clean_tune_data$cluster_id,
+  food_poor_1m = as.integer(clean_tune_data$food_poor_1m == "food_poor"),
+  weight = clean_tune_data$weight
+)[
+  ,
+  .(
+    rows = .N,
+    clusters = uniqueN(cluster_id),
+    events = sum(food_poor_1m == 1L, na.rm = TRUE),
+    non_events = sum(food_poor_1m == 0L, na.rm = TRUE),
+    weighted_food_poor_percent = 100 * weighted_mean_safe(food_poor_1m, weight)
+  ),
+  by = fold_id
+][order(fold_id)]
+
+# knitr::kable(
+#   fold_summary,
+#   digits = 2,
+#   caption = "Cluster-held-out folds used for tree tuning"
+# )
+```
+
+
+```{r validation-functions}
+tree_metrics <- metric_set(roc_auc, pr_auc, accuracy, sens, spec)
+```
+
+```{r validation-results}
+tree_tuning_cache_dir <- file.path(
+  "posts",
+  "finaccess",
+  ".cache",
+  "tree-tuning"
+)
+if (!dir.exists("posts")) {
+  tree_tuning_cache_dir <- file.path(".cache", "tree-tuning")
+}
+
+set.seed(20260629)
+clean_tuning <- cached_tune_tree(
+  cache_dir = tree_tuning_cache_dir,
+  cache_name = "clean_rpart_no_wealth_no_protection_no_formal_access",
+  dt = clean_tune_data,
+  formula = clean_tree_formula,
+  resamples = clean_resamples,
+  grid = tree_tune_grid,
+  spec = rpart_tree_spec,
+  metrics = tree_metrics,
+  cache_extra = list(
+    fold_id = clean_fold_id,
+    predictors = clean_model_predictors
+  )
+)
+
+selected_tree_settings <- cbind(model = "Clean tree", clean_tuning$best)
+
+clean_metric_table <- clean_tuning$metrics[order(.metric, -mean)]
+
+# knitr::kable(
+#   clean_metric_table,
+#   digits = 3,
+#   caption = "Clean tree tune_grid metrics"
+# )
+# knitr::kable(
+#   selected_tree_settings,
+#   digits = 3,
+#   caption = "Selected rpart tree settings from tune_grid"
+# )
+
+best_clean_predictions <- clean_tuning$predictions[
+  .config == clean_tuning$best$.config
+]
+
+# roc_curve(
+#   as.data.frame(best_clean_predictions),
+#   truth = food_poor_1m,
+#   .pred_food_poor,
+#   event_level = "first",
+#   case_weights = .case_weights
+# ) |>
+#   autoplot() +
+#   labs(title = "Cross-validated ROC curve for selected tidymodels rpart tree") +
+#   theme_minimal(base_size = 12)
+```
+
+
+```{r fit-selected-rpart-trees}
+clean_tree <- clean_tuning$tree
+
+# clean_tree
+```
+
+```{r clean-tree-plot}
+#| fig-cap: "Clean tree for food vulnerability in FinAccess 2024"
+#| fig-width: 9.5
+#| fig-height: 5.5
+#| out-width: "100%"
+clean_leaf_summary <- leaf_table(clean_tree, clean_tree_data)
+plot_finaccess_tree(
+  clean_tree,
+  clean_tree_data,
+  fontsize = 11,
+  fontfamily = plot_base_family,
+  inner_max_chars = 22L,
+  edge_max_chars = 16L,
+  terminal_width_lines = 4.8,
+  terminal_height_lines = 3.0,
+  tnex = 0.95
+)
+```
+
+The tree shows that food vulnerability is not only about where someone lives, but also about how they survive economically. The first split is livelihood: adults relying on casual or seasonal work are immediately separated from everyone else. The tree then picks up combinations of credit exposure, partnership status, education, subsistence farming, and own-business activity. I read these combinations as risk profiles, not as causes by themselves.
+
+To map the tree, I treated its highest-risk terminal leaves as risk profiles. A profile was counted as high-risk if its food vulnerability rate was at least 25% higher than the national average and it represented at least 2% of the weighted adult population. Each adult was then assigned back to their tree leaf, and each county was summarised by the share of adults who matched one of these high-risk profiles.
+
+```{r tree-profile-map-data}
+leaf_predictions <- as.integer(
+  predict(
+    coerce_to_party_tree(clean_tree),
+    newdata = clean_tree_data,
+    type = "node"
+  )
+)
+stopifnot(nrow(clean_tree_data) == length(leaf_predictions))
+
+leaf_assignment_dt <- clean_tree_data[
+  ,
+  .(row_id)
+]
+leaf_assignment_dt[
+  ,
+  leaf_id := leaf_predictions
+]
+
+analysis_tree_dt <- copy(analysis_dt)
+analysis_tree_dt[
+  leaf_assignment_dt,
+  on = "row_id",
+  leaf_id := i.leaf_id
+]
+analysis_tree_dt[
+  ,
+  county_key := normalise_county_key(county_map)
+]
+
+national_food_rate <- weighted_mean_safe(
+  analysis_tree_dt$food_poor_1m,
+  analysis_tree_dt$weight
+)
+total_weighted_food_vulnerable <- weighted_total(
+  analysis_tree_dt$food_poor_1m,
+  analysis_tree_dt$weight
+)
+
+clean_leaf_story_summary <- analysis_tree_dt[
+  !is.na(leaf_id),
+  .(
+    rows = .N,
+    weighted_population = sum(weight, na.rm = TRUE),
+    weighted_food_vulnerable = weighted_total(food_poor_1m, weight),
+    food_vulnerability_rate = weighted_mean_safe(food_poor_1m, weight)
+  ),
+  by = leaf_id
+]
+
+clean_leaf_story_summary[
+  ,
+  `:=`(
+    weighted_population_share = weighted_population / sum(analysis_tree_dt$weight),
+    food_vulnerable_contribution = weighted_food_vulnerable /
+      total_weighted_food_vulnerable,
+    lift = food_vulnerability_rate / national_food_rate
+  )
+]
+
+priority_leaf_dt <- clean_leaf_story_summary[
+  lift >= 1.25 & weighted_population_share >= 0.02
+][order(-food_vulnerable_contribution)]
+
+if (nrow(priority_leaf_dt) < 3) {
+  priority_leaf_dt <- clean_leaf_story_summary[
+    food_vulnerability_rate > national_food_rate
+  ][order(-food_vulnerable_contribution)][seq_len(min(.N, 4L))]
+}
+
+priority_leaf_dt <- priority_leaf_dt[seq_len(min(.N, 4L))]
+priority_leaf_ids <- priority_leaf_dt$leaf_id
+
+analysis_tree_dt[
+  ,
+  in_priority_profile := leaf_id %in% priority_leaf_ids
+]
+
+```
+
+```{r high-risk-profile-concentration-map}
+#| fig-cap: "Risk profiles are terminal leaves from the decision tree with lift >= 1.25 and weighted population share >= 2%."
+#| fig-width: 9
+#| fig-height: 7
+county_priority_dt <- analysis_tree_dt[
+  ,
+  .(
+    respondents = .N,
+    county_food_vulnerability_pct = 100 * weighted_mean_safe(
+      food_poor_1m,
+      weight
+    ),
+    priority_profile_pct = 100 * sum(
+      fifelse(in_priority_profile, weight, 0),
+      na.rm = TRUE
+    ) / sum(weight, na.rm = TRUE)
+  ),
+  by = .(county_key, county_map)
+]
+
+priority_map_sf <- merge(
+  county_shapes,
+  county_priority_dt,
+  by = "county_key",
+  all.x = TRUE
+)
+
+priority_map_sf$tooltip <- paste0(
+  priority_map_sf$COUNTY,
+  "<br/>",
+  sprintf(
+    "%.1f%% in high-risk tree profiles",
+    priority_map_sf$priority_profile_pct
+  ),
+  "<br/>",
+  sprintf(
+    "%.1f%% food vulnerable overall",
+    priority_map_sf$county_food_vulnerability_pct
+  ),
+  "<br/>",
+  format(priority_map_sf$respondents, big.mark = ","),
+  " respondents"
+)
+
+priority_map_plot <- ggplot(priority_map_sf) +
+  geom_sf_interactive(
+    aes(
+      fill = priority_profile_pct,
+      tooltip = tooltip,
+      data_id = county_key
+    ),
+    color = "white",
+    linewidth = 0.18
+  ) +
+  scale_fill_gradient(
+    low = "#f7fbff",
+    high = "#8b1a1a",
+    na.value = "grey90",
+    labels = function(x) sprintf("%.0f%%", x),
+    name = "Adults in high-risk\nprofiles (%)"
+  ) +
+  coord_sf(datum = NA) +
+  labs(
+    title = "Where the tree's high-risk profiles are concentrated",
+    subtitle = paste(
+      "Share of adults matching terminal tree profiles with food vulnerability",
+      "at least 25% above the national average"
+    ),
+    caption = paste(
+      "Risk profiles are terminal leaves from the decision tree with lift >= 1.25",
+      "and weighted population share >= 2%. Source: FinAccess 2024 public data."
+    )
+  ) +
+  theme_void(base_size = plot_base_size, base_family = plot_base_family) +
+  theme(
+    plot.title = element_text(face = "bold", color = "#18212f"),
+    plot.subtitle = element_text(color = "#4b5563", margin = margin(b = 8)),
+    plot.caption = element_text(color = "#6b7280", hjust = 0),
+    legend.position = "right",
+    legend.title = element_text(face = "bold"),
+    legend.key.height = unit(1.2, "cm")
+  )
+
+girafe(
+  ggobj = priority_map_plot,
+  width_svg = 9,
+  height_svg = 7,
+  options = list(
+    opts_hover(
+      css = "fill-opacity:0.85;stroke:#18212f;stroke-width:1.2px;"
+    ),
+    opts_tooltip(
+      css = plot_tooltip_css
+    ),
+    opts_sizing(rescale = TRUE)
+  )
+)
+```
+
+This map does not simply repeat the food vulnerability map. It shows where the
+risk profiles identified by the tree are more common. In other words, it moves
+from "where are people food vulnerable?" to "where are the conditions linked to
+higher food vulnerability concentrated?"
+
