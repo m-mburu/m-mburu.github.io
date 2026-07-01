@@ -1,4 +1,4 @@
-# History files
+﻿# History files
 .Rhistory
 .Rapp.history
 
@@ -81,3 +81,8 @@ git rm --cached  inProcess/finaccess/incomegpnew_df.csv
 **/*.quarto_ipynb
 
 /.luarc.json
+analysis_points.md
+posts/finaccess/questionnaire_extracted.txt
+posts/finaccess/*.dta
+posts/finaccess/*.pdf
+
