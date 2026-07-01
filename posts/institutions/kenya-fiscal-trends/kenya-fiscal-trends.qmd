@@ -1,0 +1,155 @@
+---
+title: "Where Kenya's Budget Pressure Comes From"
+date: "2024-04-01"
+description: "A revived institutions note on Kenya's revenue, expenditure, recurrent spending, and debt-service pressure using CBK government finance data through 2023."
+permalink: /posts/institutions/kenya-fiscal-trends/kenya-fiscal-trends.html
+share-permalink: "https://m-mburu.github.io/posts/institutions/kenya-fiscal-trends/kenya-fiscal-trends.html"
+categories: ["Institutions"]
+format: html
+execute:
+  warning: false
+  message: false
+  echo: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      message = FALSE,
+                      warning = FALSE)
+library(tidyverse)
+library(data.table)
+library(lubridate)
+source("R/used_functions.R")
+load("data/gok_earnings_exp.rda")
+# load("data/domestic_debt.rda")
+current_year  <- year(Sys.Date()) - 1
+```
+
+## Income & Expenditure from 2000 to September 2023
+
+Kenya's government revenue has grown since 2000, but expenditure has grown faster. The result is a persistent gap between what the government collects and what it spends.
+
+That gap matters because it has to be financed. In practice, this often means more borrowing.
+
+The chart below shows this clearly. Revenue rises over time, but total expenditure remains higher. Spending also increases sharply after the mid-2010s, a period marked by large infrastructure spending and a larger public sector. Around 2020, the jump also reflects the fiscal pressure caused by COVID-19.
+
+The main question is therefore simple: what exactly is pushing expenditure up?
+
+The data used here comes from the Central Bank of Kenya's [Government Finance Statistics](https://www.centralbank.go.ke/statistics/government-finance-statistics/). Some 2023 data was still incomplete when this analysis was first done.
+```{r, fig.width=7.3, fig.height=4.5}
+options(scipen = 999)
+
+exp_rev <- c("total_expenditure", "total_revenue")
+
+tax_revs <- c("import_duty", "excise_duty",
+              "income_tax", "vat",
+              "other_tax_income")
+total_types_exp <- c("total_recurrent_expenditure", 
+                     "county_transfer", 
+                     "development_expenditure")
+
+recurrent_exp <- c("domestic_interest", 
+                   "foreign_interest", 
+                   "wages_salaries", 
+                   "pensions", "recurrent_expenditure_other")
+
+list_graphs_vars <- list(exp_rev, tax_revs, total_types_exp, recurrent_exp)
+
+list_graphs_nms <- c("exp_rev", 
+                     "tax_revs",
+                     "types_exp",
+                     "types_reccurrent")
+
+list_graphs <- list()
+rev_all <- c(exp_rev, tax_revs, total_types_exp, recurrent_exp)
+gok_earnings_exp[, (rev_all) := lapply(.SD, function(x) x/10000), 
+                 .SDcols = rev_all]
+
+gok_earnings_exp <- gok_earnings_exp[between(year, 2001, current_year)]
+
+for (i in seq_along(list_graphs_nms)) {
+    
+    list_graphs[[i]] <- plot_compare(df = gok_earnings_exp, 
+                                     id_vars = c("year"),
+                                     compare_vars = list_graphs_vars[[i]],
+                                     x_val = year,
+                                     col_val = variable,
+                                     y_val = sum_val,
+                                     xlab = "Year",
+                                     ylab = "Kenya Shillings(Billions)",
+                                     title_lab = "")  
+    
+    
+    
+}
+
+names(list_graphs) <- list_graphs_nms
+girafe( ggobj =  list_graphs$exp_rev$plot,
+        pointsize =10)
+```
+
+```{r}
+
+exp_over_df <- list_graphs$exp_rev$data
+exp_over_df[,  shifted_var := shift(sum_val, type= "lag"), by = variable]
+exp_over_df[,  diff := sum_val - shifted_var]
+exp_over_df[,  diff := sum_val - shifted_var]
+exp_over_df[, perc_increase := diff/shifted_var * 100]
+```
+
+## What type of expenditure is rising?
+
+Government spending can be grouped into three broad areas.
+
+Recurrent expenditure is the regular cost of running the government. This includes salaries, pensions, interest payments, and other operating costs.
+
+Development expenditure is spending on projects such as infrastructure and other long-term investments.
+
+County transfers are funds sent to county governments under devolution.
+
+The chart shows that recurrent expenditure is the largest and fastest-growing part of spending. Development expenditure rises too, especially during the infrastructure-heavy years, but it does not explain the pressure as much as recurrent spending does.
+
+County transfers also increase after devolution, but they are not the main driver of the overall rise.
+
+So the next question is: what is inside recurrent expenditure?
+```{r}
+
+girafe( ggobj =  list_graphs$types_exp$plot,
+        pointsize =10)
+```
+
+## What is causing the rise in recurrent expenditure?
+
+The recurrent expenditure chart gives a clearer picture.
+
+Wages and salaries have grown steadily. Pensions have also increased gradually as the government continues to meet obligations to retired public workers.
+
+But the sharpest rise is in domestic interest payments.
+
+This means the government is spending more on interest payments for locally borrowed debt. That is important because interest payments do not build roads, hospitals, schools, or other services. They are the cost of past borrowing.
+
+Foreign interest payments have also increased, though not as sharply as domestic interest. They still matter because a weaker shilling makes foreign debt more expensive when converted back into Kenyan shillings.
+
+The key point is this: Kenya's budget pressure is not only about how much the government spends. It is also about the rising cost of servicing debt, especially domestic debt.
+
+When interest payments take up more space in the budget, there is less room for development spending and basic services. It can also make borrowing more difficult for the private sector if the government takes up a large share of available credit.
+```{r}
+
+girafe( ggobj =  list_graphs$types_reccurrent$plot,
+        pointsize =10)
+
+```
+
+## Outlook
+
+Kenya has received new financing support from the IMF and the World Bank. This gives the government some breathing room, especially when foreign debt payments are under pressure from exchange-rate movements.
+
+But loans do not remove the problem. They only shift the pressure forward unless revenue grows faster, spending is controlled, or debt becomes cheaper to service.
+
+The difficult part is that Kenya needs investment, but it also has to manage debt. Cutting too much spending can slow growth. Borrowing too much can make future budgets harder to manage.
+
+From this data, the main pressure point is clear: recurrent expenditure, especially interest payments, is taking up a larger share of the budget.
+
+That is where the budget story is.
+
+![](usd_xchange.png)

@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://m-mburu.github.io/posts/github_use/africa_github_use.html</loc>
-    <lastmod>2026-06-29T07:09:26.673Z</lastmod>
+    <loc>https://m-mburu.github.io/posts/institutions/kenya-fiscal-trends/kenya-fiscal-trends.html</loc>
+    <lastmod>2026-07-01T11:19:46.067Z</lastmod>
+  </url>
+  <url>
+    <loc>https://m-mburu.github.io/posts/finaccess/food-vulnerability-kenya.html</loc>
+    <lastmod>2026-07-01T09:41:13.417Z</lastmod>
   </url>
   <url>
     <loc>https://m-mburu.github.io/posts/bootstrap/boostrap_crab.html</loc>
@@ -25,7 +29,11 @@
     <lastmod>2026-06-29T08:02:34.599Z</lastmod>
   </url>
   <url>
-    <loc>https://m-mburu.github.io/posts/finaccess/food-vulnerability-kenya.html</loc>
-    <lastmod>2026-07-01T09:41:13.417Z</lastmod>
+    <loc>https://m-mburu.github.io/posts/data-evidence/association-analysis/association-analysis.html</loc>
+    <lastmod>2026-07-01T11:22:35.838Z</lastmod>
+  </url>
+  <url>
+    <loc>https://m-mburu.github.io/posts/github_use/africa_github_use.html</loc>
+    <lastmod>2026-06-29T07:09:26.673Z</lastmod>
   </url>
 </urlset>
