@@ -38,19 +38,58 @@ Maybe you have heard of a grocery store that carried out analysis and found out 
 
 In this blog I will explore the basics of association analysis. The goal is to find out:
 
-- Items frequently bought together in association analysis this is called support. Let say you have ten transactions and in those ten 3 transactions have maize floor, rice and bread the the support for maize floor, rice and bread is 3/10 = 0.3. This is just marginal probability. In other terms the percentage of transactions these items were bought together.
 
-- In this example the support is written as Support({bread, maize floor} --\> {rice} ). In general this is written as Support of item one and item 2 is Support({item1} --\> {item 2}). Item 1 and item 2 may contain one or more items.
+- **Support** measures how often items appear together. Suppose there are 10 transactions and 3 of them contain maize flour, rice, and bread. Then the support of that itemset is $3/10 = 0.3$. This is just the marginal probability that these items were bought together, or equivalently the share of transactions containing them.
 
-- We also want to find out if someone bought a set of items what other set of item(s) were they likely to buy. In association analysis this is called confidence. In our above example let say that you find the proportion of transactions that contained maize floor and bread are 0.4. Then the confidence is the proportion of those transactions with maize floor, bread and rice/proportion of transactions that contained maize floor and bread. Then the confidence is 0.3/0.4 which is 0.75. In other word 75% of those who bought maize floor and bread also bought rice.
+  For the rule $\{\text{bread}, \text{maize flour}\} \rightarrow \{\text{rice}\}$, support can be written as:
 
-  - Confidence in this example is denoted as Confidence({bread, maize floor} --\> {rice} ) and in general this is Confidence({item 1} --\> {item 2} ).
+  $$
+  \operatorname{Support}(\{\text{bread}, \text{maize flour}\} \rightarrow \{\text{rice}\})
+  =
+  P(\text{bread}, \text{maize flour}, \text{rice}).
+  $$
 
-- The lift refers to how the chances of rice being purchased increased given that maize floor and bread are purchased. So the lift of rice is confidence of rice/support(rice). Support of rice is the number of transactions that contain rice.
+  More generally, if $X$ and $Y$ are itemsets, then:
 
-  - Lift({Item 1} -\> {Item 2 }) = (Confidence(Item1 -\> Item2)) / (Support(Item2))
+  $$
+  \operatorname{Support}(X \rightarrow Y) = P(X \cup Y).
+  $$
 
-To make sense of all these I'm going to use a bakery to find association rules between items bought manually and then towards the end I will use r package arules which uses apriori algorithm to find association between items bought. The data set is available on kaggle as BreadBasket_DMS. We start by first having a glimpse of this data set.
+- **Confidence** measures how likely one set of items is to appear once another set has already appeared. Suppose the proportion of transactions containing maize flour and bread is $0.4$, while the proportion containing maize flour, bread, and rice is $0.3$. Then the confidence is:
+
+  $$
+  \operatorname{Confidence}(\{\text{bread}, \text{maize flour}\} \rightarrow \{\text{rice}\})
+  =
+  \frac{\operatorname{Support}(\{\text{bread}, \text{maize flour}, \text{rice}\})}{\operatorname{Support}(\{\text{bread}, \text{maize flour}\})}
+  =
+  \frac{0.3}{0.4}
+  =
+  0.75.
+  $$
+
+  In other words, 75% of the transactions that contained bread and maize flour also contained rice. In general,
+
+  $$
+  \operatorname{Confidence}(X \rightarrow Y)
+  =
+  \frac{\operatorname{Support}(X \cup Y)}{\operatorname{Support}(X)}
+  =
+  P(Y \mid X).
+  $$
+
+- **Lift** measures how much more likely $Y$ is to be purchased once $X$ has been purchased, compared with the overall chance of purchasing $Y$.
+
+  $$
+  \operatorname{Lift}(X \rightarrow Y)
+  =
+  \frac{\operatorname{Confidence}(X \rightarrow Y)}{\operatorname{Support}(Y)}
+  =
+  \frac{P(Y \mid X)}{P(Y)}.
+  $$
+
+  A lift greater than $1$ suggests that $X$ and $Y$ occur together more often than we would expect by chance alone.
+
+To make sense of these ideas, I will use a bakery dataset to work through association rules manually and then compare the results with the R package `arules`, which implements the Apriori algorithm for finding association rules. The dataset is available on Kaggle as BreadBasket_DMS. We start by first having a glimpse of this dataset.
 
 ```{r}
 
@@ -201,25 +240,15 @@ confidence * 100
 Using package arules we find the 10 rules with the highest confidence in descending order. Confidence({Toast} --\>{Coffee}) had the highest confidence of 0.70440252. About 70.44% of the transactions that contained toast also contained coffee.
 
 ```{r}
-if (requireNamespace("arules", quietly = TRUE)) {
-  library(arules)
+library(arules)
 
-  transactions <- as(split(dat$Item, dat$Transaction), "transactions")
+transactions <- as(split(dat$Item, dat$Transaction), "transactions")
 
-  assoc_rules <- apriori(
-    transactions,
-    parameter = list(supp = 0.02, conf = 0.04, target = "rules")
-  )
+assoc_rules <- apriori( transactions, parameter = list(supp = 0.02, conf = 0.04, target = "rules") )
 
-  assoc_rules <- sort(assoc_rules, by = "confidence", decreasing = TRUE)
-  inspect(assoc_rules[1:30])
-} else {
-  cat(
-    "The arules package is not installed in this environment, ",
-    "so the automated Apriori example is skipped. The manual support, ",
-    "confidence, and lift calculations above show the same logic."
-  )
-}
+assoc_rules <- sort(assoc_rules, by = "confidence", decreasing = TRUE) 
+inspect(assoc_rules[1:30])
+
 ```
 
 I hope with this small example you can now understand how association analysis works.
