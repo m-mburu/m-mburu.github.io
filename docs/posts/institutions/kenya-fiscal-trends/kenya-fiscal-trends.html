@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2024-04-01">
+<meta name="description" content="A revived institutions note on Kenya’s revenue, expenditure, recurrent spending, and debt-service pressure using CBK government finance data through 2023.">
+
+<title>Where Kenya’s Budget Pressure Comes From – Mburu M</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../milkyway.jpeg" rel="icon" type="image/jpeg">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-6b423f165eeea3787de40cb4f8e821c3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-e8964db687007ca8dd88d9d9ce58e3ef.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../site_libs/quarto-contrib/social-share-0.1.0/social-share.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-contrib/social-share-0.1.0/all.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-BFNZ97VTLJ"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-BFNZ97VTLJ', { 'anonymize_ip': true});
+</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<link rel="stylesheet" href="../../../style.css?v=revamped-ui-20260629">
+<link href="../../../site_libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet">
+
+<script src="../../../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+
+<link href="../../../site_libs/ggiraphjs-0.9.4/girafe.css" rel="stylesheet">
+
+<script src="../../../site_libs/ggiraphjs-0.9.4/girafe.js"></script>
+
+<script src="../../../site_libs/girafe-binding-0.9.6/girafe.js"></script>
+
+<link href="../../../site_libs/liberation-sans-0.5.0/css/liberation-sans.css" rel="stylesheet">
+
+<link href="../../../site_libs/liberation-serif-0.5.0/css/liberation-serif.css" rel="stylesheet">
+
+<link href="../../../site_libs/liberation-mono-0.5.0/css/liberation-mono.css" rel="stylesheet">
+
+
+
+<meta property="og:title" content="Where Kenya’s Budget Pressure Comes From – Mburu M">
+<meta property="og:description" content="A revived institutions note on Kenya’s revenue, expenditure, recurrent spending, and debt-service pressure using CBK government finance data through 2023.">
+<meta property="og:image" content="https://m-mburu.github.io/posts/institutions/kenya-fiscal-trends/usd_xchange.png">
+<meta property="og:site_name" content="Mburu M">
+<meta property="og:image:height" content="397">
+<meta property="og:image:width" content="1060">
+<meta name="twitter:title" content="Where Kenya’s Budget Pressure Comes From – Mburu M">
+<meta name="twitter:description" content="A revived institutions note on Kenya’s revenue, expenditure, recurrent spending, and debt-service pressure using CBK government finance data through 2023.">
+<meta name="twitter:image" content="https://m-mburu.github.io/posts/institutions/kenya-fiscal-trends/usd_xchange.png">
+<meta name="twitter:image-height" content="397">
+<meta name="twitter:image-width" content="1060">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed quarto-dark"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = true;
+    const darkModeDefault = authorPrefersDark;
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Mburu M</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/m-mburu"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/mmburu_w"> <i class="bi bi-twitter" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#income-expenditure-from-2000-to-september-2023" id="toc-income-expenditure-from-2000-to-september-2023" class="nav-link active" data-scroll-target="#income-expenditure-from-2000-to-september-2023">Income &amp; Expenditure from 2000 to September 2023</a></li>
+  <li><a href="#what-type-of-expenditure-is-rising" id="toc-what-type-of-expenditure-is-rising" class="nav-link" data-scroll-target="#what-type-of-expenditure-is-rising">What type of expenditure is rising?</a></li>
+  <li><a href="#what-is-causing-the-rise-in-recurrent-expenditure" id="toc-what-is-causing-the-rise-in-recurrent-expenditure" class="nav-link" data-scroll-target="#what-is-causing-the-rise-in-recurrent-expenditure">What is causing the rise in recurrent expenditure?</a></li>
+  <li><a href="#outlook" id="toc-outlook" class="nav-link" data-scroll-target="#outlook">Outlook</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Where Kenya’s Budget Pressure Comes From</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Institutions</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    A revived institutions note on Kenya’s revenue, expenditure, recurrent spending, and debt-service pressure using CBK government finance data through 2023.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 1, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="income-expenditure-from-2000-to-september-2023" class="level2">
+<h2 class="anchored" data-anchor-id="income-expenditure-from-2000-to-september-2023">Income &amp; Expenditure from 2000 to September 2023</h2>
+<p>Kenya’s government revenue has grown since 2000, but expenditure has grown faster. The result is a persistent gap between what the government collects and what it spends.</p>
+<p>That gap matters because it has to be financed. In practice, this often means more borrowing.</p>
+<p>The chart below shows this clearly. Revenue rises over time, but total expenditure remains higher. Spending also increases sharply after the mid-2010s, a period marked by large infrastructure spending and a larger public sector. Around 2020, the jump also reflects the fiscal pressure caused by COVID-19.</p>
+<p>The main question is therefore simple: what exactly is pushing expenditure up?</p>
+<p>The data used here comes from the Central Bank of Kenya’s <a href="https://www.centralbank.go.ke/statistics/government-finance-statistics/">Government Finance Statistics</a>. Some 2023 data was still incomplete when this analysis was first done.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="girafe html-widget html-fill-item" id="htmlwidget-5c635a69e326adc2916e" style="width:100%;height:400px;"></div>
+<script type="application/json" data-for="htmlwidget-5c635a69e326adc2916e">{"x":{"html":"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' class='ggiraph-svg' role='graphics-document' id='svg_5f7276b3795524ff' viewBox='0 0 525.6 324'>\n <defs id='svg_5f7276b3795524ff_defs'>\n  <clipPath id='svg_5f7276b3795524ff_c1'>\n   <rect x='0' y='0' width='525.6' height='324'/>\n  <\/clipPath>\n  <clipPath id='svg_5f7276b3795524ff_c2'>\n   <rect x='49.1' y='24.84' width='470.52' height='227.17'/>\n  <\/clipPath>\n <\/defs>\n <g id='svg_5f7276b3795524ff_rootg' class='ggiraph-svg-rootg'>\n  <g clip-path='url(#svg_5f7276b3795524ff_c1)'>\n   <rect x='0' y='0' width='525.6' height='324' fill='#FFFFFF' fill-opacity='1' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.75' stroke-linejoin='round' stroke-linecap='round' class='ggiraph-svg-bg'/>\n   <rect x='0' y='0' width='525.6' height='324' fill='#FFFFFF' fill-opacity='1' stroke='none'/>\n  <\/g>\n  <g clip-path='url(#svg_5f7276b3795524ff_c2)'>\n   <polyline points='49.10,228.89 519.62,228.89' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.58' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='49.10,173.50 519.62,173.50' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.58' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='49.10,118.12 519.62,118.12' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.58' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='49.10,62.74 519.62,62.74' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.58' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='99.65,252.01 99.65,24.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.58' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='196.87,252.01 196.87,24.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.58' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='294.08,252.01 294.08,24.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.58' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='391.30,252.01 391.30,24.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.58' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='488.51,252.01 488.51,24.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.58' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='49.10,201.19 519.62,201.19' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='49.10,145.81 519.62,145.81' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='49.10,90.43 519.62,90.43' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='49.10,35.05 519.62,35.05' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='51.04,252.01 51.04,24.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='148.26,252.01 148.26,24.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='245.48,252.01 245.48,24.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='342.69,252.01 342.69,24.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='439.91,252.01 439.91,24.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='70.49,239.22 89.93,238.85 109.37,236.64 128.82,235.78 148.26,232.70 167.70,227.41 187.15,224.33 206.59,217.19 226.03,211.16 245.48,200.83 264.92,195.78 284.36,183.96 303.80,170.67 323.25,164.64 342.69,143.35 362.13,128.46 381.58,104.95 401.02,99.54 420.46,78.61 439.91,66.55 459.35,58.06 478.79,35.17 498.24,72.71' fill='none' stroke='#1B9E77' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='70.49,241.69 89.93,241.56 109.37,240.21 128.82,237.38 148.26,234.42 167.70,232.58 187.15,227.53 206.59,222.73 226.03,218.42 245.48,213.26 264.92,207.96 284.36,204.64 303.80,193.69 323.25,179.78 342.69,171.66 362.13,162.18 381.58,149.26 401.02,140.89 420.46,126.24 439.91,121.32 459.35,116.27 478.79,88.34 498.24,110.12' fill='none' stroke='#D95F02' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <circle id='svg_5f7276b3795524ff_e1' cx='70.49' cy='239.22' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total expenditure in 2001 : 141'/>\n   <circle id='svg_5f7276b3795524ff_e2' cx='89.93' cy='238.85' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total expenditure in 2002 : 144'/>\n   <circle id='svg_5f7276b3795524ff_e3' cx='109.37' cy='236.64' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total expenditure in 2003 : 162'/>\n   <circle id='svg_5f7276b3795524ff_e4' cx='128.82' cy='235.78' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total expenditure in 2004 : 169'/>\n   <circle id='svg_5f7276b3795524ff_e5' cx='148.26' cy='232.7' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total expenditure in 2005 : 194'/>\n   <circle id='svg_5f7276b3795524ff_e6' cx='167.7' cy='227.41' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total expenditure in 2006 : 237'/>\n   <circle id='svg_5f7276b3795524ff_e7' cx='187.15' cy='224.33' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total expenditure in 2007 : 262'/>\n   <circle id='svg_5f7276b3795524ff_e8' cx='206.59' cy='217.19' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total expenditure in 2008 : 320'/>\n   <circle id='svg_5f7276b3795524ff_e9' cx='226.03' cy='211.16' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total expenditure in 2009 : 369'/>\n   <circle id='svg_5f7276b3795524ff_e10' cx='245.48' cy='200.83' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total expenditure in 2010 : 453'/>\n   <circle id='svg_5f7276b3795524ff_e11' cx='264.92' cy='195.78' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total expenditure in 2011 : 494'/>\n   <circle id='svg_5f7276b3795524ff_e12' cx='284.36' cy='183.96' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total expenditure in 2012 : 590'/>\n   <circle id='svg_5f7276b3795524ff_e13' cx='303.8' cy='170.67' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total expenditure in 2013 : 698'/>\n   <circle id='svg_5f7276b3795524ff_e14' cx='323.25' cy='164.64' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total expenditure in 2014 : 747'/>\n   <circle id='svg_5f7276b3795524ff_e15' cx='342.69' cy='143.35' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total expenditure in 2015 : 920'/>\n   <circle id='svg_5f7276b3795524ff_e16' cx='362.13' cy='128.46' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total expenditure in 2016 : 1041'/>\n   <circle id='svg_5f7276b3795524ff_e17' cx='381.58' cy='104.95' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total expenditure in 2017 : 1232'/>\n   <circle id='svg_5f7276b3795524ff_e18' cx='401.02' cy='99.54' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total expenditure in 2018 : 1276'/>\n   <circle id='svg_5f7276b3795524ff_e19' cx='420.46' cy='78.61' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total expenditure in 2019 : 1446'/>\n   <circle id='svg_5f7276b3795524ff_e20' cx='439.91' cy='66.55' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total expenditure in 2020 : 1544'/>\n   <circle id='svg_5f7276b3795524ff_e21' cx='459.35' cy='58.06' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total expenditure in 2021 : 1613'/>\n   <circle id='svg_5f7276b3795524ff_e22' cx='478.79' cy='35.17' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total expenditure in 2022 : 1799'/>\n   <circle id='svg_5f7276b3795524ff_e23' cx='498.24' cy='72.71' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total expenditure in 2023 : 1494'/>\n   <circle id='svg_5f7276b3795524ff_e24' cx='70.49' cy='241.69' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total revenue in 2001 : 121'/>\n   <circle id='svg_5f7276b3795524ff_e25' cx='89.93' cy='241.56' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total revenue in 2002 : 122'/>\n   <circle id='svg_5f7276b3795524ff_e26' cx='109.37' cy='240.21' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total revenue in 2003 : 133'/>\n   <circle id='svg_5f7276b3795524ff_e27' cx='128.82' cy='237.38' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total revenue in 2004 : 156'/>\n   <circle id='svg_5f7276b3795524ff_e28' cx='148.26' cy='234.42' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total revenue in 2005 : 180'/>\n   <circle id='svg_5f7276b3795524ff_e29' cx='167.7' cy='232.58' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total revenue in 2006 : 195'/>\n   <circle id='svg_5f7276b3795524ff_e30' cx='187.15' cy='227.53' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total revenue in 2007 : 236'/>\n   <circle id='svg_5f7276b3795524ff_e31' cx='206.59' cy='222.73' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total revenue in 2008 : 275'/>\n   <circle id='svg_5f7276b3795524ff_e32' cx='226.03' cy='218.42' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total revenue in 2009 : 310'/>\n   <circle id='svg_5f7276b3795524ff_e33' cx='245.48' cy='213.26' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total revenue in 2010 : 352'/>\n   <circle id='svg_5f7276b3795524ff_e34' cx='264.92' cy='207.96' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total revenue in 2011 : 395'/>\n   <circle id='svg_5f7276b3795524ff_e35' cx='284.36' cy='204.64' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total revenue in 2012 : 422'/>\n   <circle id='svg_5f7276b3795524ff_e36' cx='303.8' cy='193.69' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total revenue in 2013 : 511'/>\n   <circle id='svg_5f7276b3795524ff_e37' cx='323.25' cy='179.78' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total revenue in 2014 : 624'/>\n   <circle id='svg_5f7276b3795524ff_e38' cx='342.69' cy='171.66' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total revenue in 2015 : 690'/>\n   <circle id='svg_5f7276b3795524ff_e39' cx='362.13' cy='162.18' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total revenue in 2016 : 767'/>\n   <circle id='svg_5f7276b3795524ff_e40' cx='381.58' cy='149.26' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total revenue in 2017 : 872'/>\n   <circle id='svg_5f7276b3795524ff_e41' cx='401.02' cy='140.89' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total revenue in 2018 : 940'/>\n   <circle id='svg_5f7276b3795524ff_e42' cx='420.46' cy='126.24' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total revenue in 2019 : 1059'/>\n   <circle id='svg_5f7276b3795524ff_e43' cx='439.91' cy='121.32' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total revenue in 2020 : 1099'/>\n   <circle id='svg_5f7276b3795524ff_e44' cx='459.35' cy='116.27' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total revenue in 2021 : 1140'/>\n   <circle id='svg_5f7276b3795524ff_e45' cx='478.79' cy='88.34' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total revenue in 2022 : 1367'/>\n   <circle id='svg_5f7276b3795524ff_e46' cx='498.24' cy='110.12' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total revenue in 2023 : 1190'/>\n  <\/g>\n  <g clip-path='url(#svg_5f7276b3795524ff_c1)'>\n   <text x='27.72' y='204.49' font-size='7.2pt' font-family='Liberation Sans' fill='#4D4D4D' fill-opacity='1'>450<\/text>\n   <text x='27.72' y='149.11' font-size='7.2pt' font-family='Liberation Sans' fill='#4D4D4D' fill-opacity='1'>900<\/text>\n   <text x='19.72' y='93.73' font-size='7.2pt' font-family='Liberation Sans' fill='#4D4D4D' fill-opacity='1'>1,350<\/text>\n   <text x='19.72' y='38.34' font-size='7.2pt' font-family='Liberation Sans' fill='#4D4D4D' fill-opacity='1'>1,800<\/text>\n   <text x='40.37' y='263.99' font-size='7.2pt' font-family='Liberation Sans' fill='#4D4D4D' fill-opacity='1'>2000<\/text>\n   <text x='137.59' y='263.99' font-size='7.2pt' font-family='Liberation Sans' fill='#4D4D4D' fill-opacity='1'>2005<\/text>\n   <text x='234.81' y='263.99' font-size='7.2pt' font-family='Liberation Sans' fill='#4D4D4D' fill-opacity='1'>2010<\/text>\n   <text x='332.02' y='263.99' font-size='7.2pt' font-family='Liberation Sans' fill='#4D4D4D' fill-opacity='1'>2015<\/text>\n   <text x='429.24' y='263.99' font-size='7.2pt' font-family='Liberation Sans' fill='#4D4D4D' fill-opacity='1'>2020<\/text>\n   <text x='272.24' y='277.22' font-size='9pt' font-family='Liberation Sans'>Year<\/text>\n   <text transform='translate(14.24,202.46) rotate(-90.00)' font-size='9pt' font-family='Liberation Sans'>Kenya Shillings(Billions)<\/text>\n   <line x1='200.1' y1='304.84' x2='211.62' y2='304.84' stroke='#1B9E77' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <circle cx='205.86' cy='304.84' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round'/>\n   <line x1='299.51' y1='304.84' x2='311.03' y2='304.84' stroke='#D95F02' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <circle cx='305.27' cy='304.84' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round'/>\n   <text x='219.04' y='308.14' font-size='7.2pt' font-family='Liberation Sans'>Total expenditure<\/text>\n   <text x='318.45' y='308.14' font-size='7.2pt' font-family='Liberation Sans'>Total revenue<\/text>\n  <\/g>\n <\/g>\n<\/svg>","js":null,"uid":"svg_5f7276b3795524ff","ratio":1.622222222222222,"settings":{"tooltip":{"css":".tooltip_SVGID_ { padding:5px;background:black;color:white;border-radius:2px;text-align:left; ; position:absolute;pointer-events:none;z-index:9999;}","placement":"doc","opacity":0.9,"offx":10,"offy":10,"use_cursor_pos":true,"use_fill":false,"use_stroke":false,"delay_over":200,"delay_out":500},"hover":{"css":".hover_data_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_data_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_data_SVGID_ { fill:orange;stroke:black; }\nline.hover_data_SVGID_, polyline.hover_data_SVGID_ { fill:none;stroke:orange; }\nrect.hover_data_SVGID_, polygon.hover_data_SVGID_, path.hover_data_SVGID_ { fill:orange;stroke:none; }\nimage.hover_data_SVGID_ { stroke:orange; }","reactive":true,"nearest_distance":null,"linked":false},"hover_inv":{"css":""},"hover_key":{"css":".hover_key_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_key_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_key_SVGID_ { fill:orange;stroke:black; }\nline.hover_key_SVGID_, polyline.hover_key_SVGID_ { fill:none;stroke:orange; }\nrect.hover_key_SVGID_, polygon.hover_key_SVGID_, path.hover_key_SVGID_ { fill:orange;stroke:none; }\nimage.hover_key_SVGID_ { stroke:orange; }","reactive":true},"hover_theme":{"css":".hover_theme_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_theme_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_theme_SVGID_ { fill:orange;stroke:black; }\nline.hover_theme_SVGID_, polyline.hover_theme_SVGID_ { fill:none;stroke:orange; }\nrect.hover_theme_SVGID_, polygon.hover_theme_SVGID_, path.hover_theme_SVGID_ { fill:orange;stroke:none; }\nimage.hover_theme_SVGID_ { stroke:orange; }","reactive":true},"select":{"css":".select_data_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_data_SVGID_ { stroke:none;fill:red; }\ncircle.select_data_SVGID_ { fill:red;stroke:black; }\nline.select_data_SVGID_, polyline.select_data_SVGID_ { fill:none;stroke:red; }\nrect.select_data_SVGID_, polygon.select_data_SVGID_, path.select_data_SVGID_ { fill:red;stroke:none; }\nimage.select_data_SVGID_ { stroke:red; }","type":"multiple","only_shiny":true,"selected":[],"linked":false},"select_inv":{"css":""},"select_key":{"css":".select_key_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_key_SVGID_ { stroke:none;fill:red; }\ncircle.select_key_SVGID_ { fill:red;stroke:black; }\nline.select_key_SVGID_, polyline.select_key_SVGID_ { fill:none;stroke:red; }\nrect.select_key_SVGID_, polygon.select_key_SVGID_, path.select_key_SVGID_ { fill:red;stroke:none; }\nimage.select_key_SVGID_ { stroke:red; }","type":"single","only_shiny":true,"selected":[]},"select_theme":{"css":".select_theme_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_theme_SVGID_ { stroke:none;fill:red; }\ncircle.select_theme_SVGID_ { fill:red;stroke:black; }\nline.select_theme_SVGID_, polyline.select_theme_SVGID_ { fill:none;stroke:red; }\nrect.select_theme_SVGID_, polygon.select_theme_SVGID_, path.select_theme_SVGID_ { fill:red;stroke:none; }\nimage.select_theme_SVGID_ { stroke:red; }","type":"single","only_shiny":true,"selected":[]},"zoom":{"min":1,"max":1,"duration":300,"default_on":false},"toolbar":{"position":"topright","pngname":"diagram","tooltips":null,"fixed":false,"hidden":[],"delay_over":200,"delay_out":500},"sizing":{"rescale":true,"width":1}}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="what-type-of-expenditure-is-rising" class="level2">
+<h2 class="anchored" data-anchor-id="what-type-of-expenditure-is-rising">What type of expenditure is rising?</h2>
+<p>Government spending can be grouped into three broad areas.</p>
+<p>Recurrent expenditure is the regular cost of running the government. This includes salaries, pensions, interest payments, and other operating costs.</p>
+<p>Development expenditure is spending on projects such as infrastructure and other long-term investments.</p>
+<p>County transfers are funds sent to county governments under devolution.</p>
+<p>The chart shows that recurrent expenditure is the largest and fastest-growing part of spending. Development expenditure rises too, especially during the infrastructure-heavy years, but it does not explain the pressure as much as recurrent spending does.</p>
+<p>County transfers also increase after devolution, but they are not the main driver of the overall rise.</p>
+<p>So the next question is: what is inside recurrent expenditure?</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="girafe html-widget html-fill-item" id="htmlwidget-86089ff6fa3546c447e5" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-86089ff6fa3546c447e5">{"x":{"html":"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' class='ggiraph-svg' role='graphics-document' id='svg_5c635a69e326adc2' viewBox='0 0 504 360'>\n <defs id='svg_5c635a69e326adc2_defs'>\n  <clipPath id='svg_5c635a69e326adc2_c1'>\n   <rect x='0' y='0' width='504' height='360'/>\n  <\/clipPath>\n  <clipPath id='svg_5c635a69e326adc2_c2'>\n   <rect x='49.1' y='24.84' width='448.92' height='263.17'/>\n  <\/clipPath>\n <\/defs>\n <g id='svg_5c635a69e326adc2_rootg' class='ggiraph-svg-rootg'>\n  <g clip-path='url(#svg_5c635a69e326adc2_c1)'>\n   <rect x='0' y='0' width='504' height='360' fill='#FFFFFF' fill-opacity='1' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.75' stroke-linejoin='round' stroke-linecap='round' class='ggiraph-svg-bg'/>\n   <rect x='0' y='0' width='504' height='360' fill='#FFFFFF' fill-opacity='1' stroke='none'/>\n  <\/g>\n  <g clip-path='url(#svg_5c635a69e326adc2_c2)'>\n   <polyline points='49.10,246.10 498.02,246.10' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.58' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='49.10,186.20 498.02,186.20' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.58' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='49.10,126.29 498.02,126.29' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.58' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='49.10,66.39 498.02,66.39' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.58' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='97.33,288.01 97.33,24.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.58' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='190.08,288.01 190.08,24.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.58' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='282.84,288.01 282.84,24.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.58' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='375.59,288.01 375.59,24.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.58' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='468.34,288.01 468.34,24.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.58' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='49.10,276.05 498.02,276.05' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='49.10,216.15 498.02,216.15' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='49.10,156.24 498.02,156.24' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='49.10,96.34 498.02,96.34' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='49.10,36.44 498.02,36.44' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='50.96,288.01 50.96,24.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='143.71,288.01 143.71,24.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='236.46,288.01 236.46,24.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='329.21,288.01 329.21,24.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='421.97,288.01 421.97,24.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='69.51,276.05 88.06,276.05 106.61,276.05 125.16,276.05 143.71,276.05 162.26,276.05 180.81,276.05 199.36,276.05 217.91,276.05 236.46,276.05 255.01,276.05 273.56,276.05 292.11,272.39 310.66,258.12 329.21,253.73 347.76,249.53 366.31,249.53 384.86,250.26 403.41,244.41 421.97,243.49 440.52,241.11 459.07,240.38 477.62,245.14' fill='none' stroke='#1B9E77' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='69.51,272.94 88.06,273.31 106.61,272.03 125.16,272.39 143.71,271.11 162.26,269.46 180.81,266.90 199.36,263.25 217.91,260.68 236.46,254.10 255.01,252.09 273.56,246.60 292.11,244.59 310.66,247.15 329.21,228.49 347.76,227.58 366.31,212.58 384.86,223.55 403.41,217.52 421.97,213.31 440.52,220.63 459.07,222.09 477.62,238.37' fill='none' stroke='#D95F02' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='69.51,253.37 88.06,252.45 106.61,250.44 125.16,248.80 143.71,245.50 162.26,239.28 180.81,237.27 199.36,230.32 217.91,224.10 236.46,214.96 255.01,209.65 273.56,197.58 292.11,183.50 310.66,186.24 329.21,177.64 347.76,160.63 366.31,140.70 384.86,120.94 403.41,101.74 421.97,88.75 440.52,71.38 459.07,36.81 477.62,71.38' fill='none' stroke='#7570B3' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <circle id='svg_5c635a69e326adc2_e1' cx='69.51' cy='253.37' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total recurrent expenditure in 2001 : 124'/>\n   <circle id='svg_5c635a69e326adc2_e2' cx='88.06' cy='252.45' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total recurrent expenditure in 2002 : 129'/>\n   <circle id='svg_5c635a69e326adc2_e3' cx='106.61' cy='250.44' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total recurrent expenditure in 2003 : 140'/>\n   <circle id='svg_5c635a69e326adc2_e4' cx='125.16' cy='248.8' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total recurrent expenditure in 2004 : 149'/>\n   <circle id='svg_5c635a69e326adc2_e5' cx='143.71' cy='245.5' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total recurrent expenditure in 2005 : 167'/>\n   <circle id='svg_5c635a69e326adc2_e6' cx='162.26' cy='239.28' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total recurrent expenditure in 2006 : 201'/>\n   <circle id='svg_5c635a69e326adc2_e7' cx='180.81' cy='237.27' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total recurrent expenditure in 2007 : 212'/>\n   <circle id='svg_5c635a69e326adc2_e8' cx='199.36' cy='230.32' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total recurrent expenditure in 2008 : 250'/>\n   <circle id='svg_5c635a69e326adc2_e9' cx='217.91' cy='224.1' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total recurrent expenditure in 2009 : 284'/>\n   <circle id='svg_5c635a69e326adc2_e10' cx='236.46' cy='214.96' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total recurrent expenditure in 2010 : 334'/>\n   <circle id='svg_5c635a69e326adc2_e11' cx='255.01' cy='209.65' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total recurrent expenditure in 2011 : 363'/>\n   <circle id='svg_5c635a69e326adc2_e12' cx='273.56' cy='197.58' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total recurrent expenditure in 2012 : 429'/>\n   <circle id='svg_5c635a69e326adc2_e13' cx='292.11' cy='183.5' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total recurrent expenditure in 2013 : 506'/>\n   <circle id='svg_5c635a69e326adc2_e14' cx='310.66' cy='186.24' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total recurrent expenditure in 2014 : 491'/>\n   <circle id='svg_5c635a69e326adc2_e15' cx='329.21' cy='177.64' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total recurrent expenditure in 2015 : 538'/>\n   <circle id='svg_5c635a69e326adc2_e16' cx='347.76' cy='160.63' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total recurrent expenditure in 2016 : 631'/>\n   <circle id='svg_5c635a69e326adc2_e17' cx='366.31' cy='140.7' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total recurrent expenditure in 2017 : 740'/>\n   <circle id='svg_5c635a69e326adc2_e18' cx='384.86' cy='120.94' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total recurrent expenditure in 2018 : 848'/>\n   <circle id='svg_5c635a69e326adc2_e19' cx='403.41' cy='101.74' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total recurrent expenditure in 2019 : 953'/>\n   <circle id='svg_5c635a69e326adc2_e20' cx='421.97' cy='88.75' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total recurrent expenditure in 2020 : 1024'/>\n   <circle id='svg_5c635a69e326adc2_e21' cx='440.52' cy='71.38' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total recurrent expenditure in 2021 : 1119'/>\n   <circle id='svg_5c635a69e326adc2_e22' cx='459.07' cy='36.81' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total recurrent expenditure in 2022 : 1308'/>\n   <circle id='svg_5c635a69e326adc2_e23' cx='477.62' cy='71.38' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Total recurrent expenditure in 2023 : 1119'/>\n   <circle id='svg_5c635a69e326adc2_e24' cx='69.51' cy='276.05' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='County transfer in 2001 : 0'/>\n   <circle id='svg_5c635a69e326adc2_e25' cx='88.06' cy='276.05' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='County transfer in 2002 : 0'/>\n   <circle id='svg_5c635a69e326adc2_e26' cx='106.61' cy='276.05' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='County transfer in 2003 : 0'/>\n   <circle id='svg_5c635a69e326adc2_e27' cx='125.16' cy='276.05' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='County transfer in 2004 : 0'/>\n   <circle id='svg_5c635a69e326adc2_e28' cx='143.71' cy='276.05' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='County transfer in 2005 : 0'/>\n   <circle id='svg_5c635a69e326adc2_e29' cx='162.26' cy='276.05' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='County transfer in 2006 : 0'/>\n   <circle id='svg_5c635a69e326adc2_e30' cx='180.81' cy='276.05' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='County transfer in 2007 : 0'/>\n   <circle id='svg_5c635a69e326adc2_e31' cx='199.36' cy='276.05' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='County transfer in 2008 : 0'/>\n   <circle id='svg_5c635a69e326adc2_e32' cx='217.91' cy='276.05' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='County transfer in 2009 : 0'/>\n   <circle id='svg_5c635a69e326adc2_e33' cx='236.46' cy='276.05' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='County transfer in 2010 : 0'/>\n   <circle id='svg_5c635a69e326adc2_e34' cx='255.01' cy='276.05' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='County transfer in 2011 : 0'/>\n   <circle id='svg_5c635a69e326adc2_e35' cx='273.56' cy='276.05' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='County transfer in 2012 : 0'/>\n   <circle id='svg_5c635a69e326adc2_e36' cx='292.11' cy='272.39' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='County transfer in 2013 : 20'/>\n   <circle id='svg_5c635a69e326adc2_e37' cx='310.66' cy='258.12' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='County transfer in 2014 : 98'/>\n   <circle id='svg_5c635a69e326adc2_e38' cx='329.21' cy='253.73' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='County transfer in 2015 : 122'/>\n   <circle id='svg_5c635a69e326adc2_e39' cx='347.76' cy='249.53' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='County transfer in 2016 : 145'/>\n   <circle id='svg_5c635a69e326adc2_e40' cx='366.31' cy='249.53' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='County transfer in 2017 : 145'/>\n   <circle id='svg_5c635a69e326adc2_e41' cx='384.86' cy='250.26' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='County transfer in 2018 : 141'/>\n   <circle id='svg_5c635a69e326adc2_e42' cx='403.41' cy='244.41' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='County transfer in 2019 : 173'/>\n   <circle id='svg_5c635a69e326adc2_e43' cx='421.97' cy='243.49' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='County transfer in 2020 : 178'/>\n   <circle id='svg_5c635a69e326adc2_e44' cx='440.52' cy='241.11' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='County transfer in 2021 : 191'/>\n   <circle id='svg_5c635a69e326adc2_e45' cx='459.07' cy='240.38' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='County transfer in 2022 : 195'/>\n   <circle id='svg_5c635a69e326adc2_e46' cx='477.62' cy='245.14' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='County transfer in 2023 : 169'/>\n   <circle id='svg_5c635a69e326adc2_e47' cx='69.51' cy='272.94' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Development expenditure in 2001 : 17'/>\n   <circle id='svg_5c635a69e326adc2_e48' cx='88.06' cy='273.31' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Development expenditure in 2002 : 15'/>\n   <circle id='svg_5c635a69e326adc2_e49' cx='106.61' cy='272.03' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Development expenditure in 2003 : 22'/>\n   <circle id='svg_5c635a69e326adc2_e50' cx='125.16' cy='272.39' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Development expenditure in 2004 : 20'/>\n   <circle id='svg_5c635a69e326adc2_e51' cx='143.71' cy='271.11' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Development expenditure in 2005 : 27'/>\n   <circle id='svg_5c635a69e326adc2_e52' cx='162.26' cy='269.46' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Development expenditure in 2006 : 36'/>\n   <circle id='svg_5c635a69e326adc2_e53' cx='180.81' cy='266.9' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Development expenditure in 2007 : 50'/>\n   <circle id='svg_5c635a69e326adc2_e54' cx='199.36' cy='263.25' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Development expenditure in 2008 : 70'/>\n   <circle id='svg_5c635a69e326adc2_e55' cx='217.91' cy='260.68' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Development expenditure in 2009 : 84'/>\n   <circle id='svg_5c635a69e326adc2_e56' cx='236.46' cy='254.1' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Development expenditure in 2010 : 120'/>\n   <circle id='svg_5c635a69e326adc2_e57' cx='255.01' cy='252.09' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Development expenditure in 2011 : 131'/>\n   <circle id='svg_5c635a69e326adc2_e58' cx='273.56' cy='246.6' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Development expenditure in 2012 : 161'/>\n   <circle id='svg_5c635a69e326adc2_e59' cx='292.11' cy='244.59' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Development expenditure in 2013 : 172'/>\n   <circle id='svg_5c635a69e326adc2_e60' cx='310.66' cy='247.15' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Development expenditure in 2014 : 158'/>\n   <circle id='svg_5c635a69e326adc2_e61' cx='329.21' cy='228.49' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Development expenditure in 2015 : 260'/>\n   <circle id='svg_5c635a69e326adc2_e62' cx='347.76' cy='227.58' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Development expenditure in 2016 : 265'/>\n   <circle id='svg_5c635a69e326adc2_e63' cx='366.31' cy='212.58' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Development expenditure in 2017 : 347'/>\n   <circle id='svg_5c635a69e326adc2_e64' cx='384.86' cy='223.55' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Development expenditure in 2018 : 287'/>\n   <circle id='svg_5c635a69e326adc2_e65' cx='403.41' cy='217.52' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Development expenditure in 2019 : 320'/>\n   <circle id='svg_5c635a69e326adc2_e66' cx='421.97' cy='213.31' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Development expenditure in 2020 : 343'/>\n   <circle id='svg_5c635a69e326adc2_e67' cx='440.52' cy='220.63' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Development expenditure in 2021 : 303'/>\n   <circle id='svg_5c635a69e326adc2_e68' cx='459.07' cy='222.09' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Development expenditure in 2022 : 295'/>\n   <circle id='svg_5c635a69e326adc2_e69' cx='477.62' cy='238.37' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Development expenditure in 2023 : 206'/>\n  <\/g>\n  <g clip-path='url(#svg_5c635a69e326adc2_c1)'>\n   <text x='38.39' y='279.35' font-size='7.2pt' font-family='Liberation Sans' fill='#4D4D4D' fill-opacity='1'>0<\/text>\n   <text x='27.72' y='219.44' font-size='7.2pt' font-family='Liberation Sans' fill='#4D4D4D' fill-opacity='1'>328<\/text>\n   <text x='27.72' y='159.54' font-size='7.2pt' font-family='Liberation Sans' fill='#4D4D4D' fill-opacity='1'>655<\/text>\n   <text x='27.72' y='99.64' font-size='7.2pt' font-family='Liberation Sans' fill='#4D4D4D' fill-opacity='1'>982<\/text>\n   <text x='19.72' y='39.74' font-size='7.2pt' font-family='Liberation Sans' fill='#4D4D4D' fill-opacity='1'>1,310<\/text>\n   <text x='40.29' y='299.99' font-size='7.2pt' font-family='Liberation Sans' fill='#4D4D4D' fill-opacity='1'>2000<\/text>\n   <text x='133.04' y='299.99' font-size='7.2pt' font-family='Liberation Sans' fill='#4D4D4D' fill-opacity='1'>2005<\/text>\n   <text x='225.79' y='299.99' font-size='7.2pt' font-family='Liberation Sans' fill='#4D4D4D' fill-opacity='1'>2010<\/text>\n   <text x='318.54' y='299.99' font-size='7.2pt' font-family='Liberation Sans' fill='#4D4D4D' fill-opacity='1'>2015<\/text>\n   <text x='411.3' y='299.99' font-size='7.2pt' font-family='Liberation Sans' fill='#4D4D4D' fill-opacity='1'>2020<\/text>\n   <text x='261.44' y='313.22' font-size='9pt' font-family='Liberation Sans'>Year<\/text>\n   <text transform='translate(14.24,220.46) rotate(-90.00)' font-size='9pt' font-family='Liberation Sans'>Kenya Shillings(Billions)<\/text>\n   <line x1='96.94' y1='340.84' x2='108.46' y2='340.84' stroke='#1B9E77' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <circle cx='102.7' cy='340.84' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round'/>\n   <line x1='188.88' y1='340.84' x2='200.4' y2='340.84' stroke='#D95F02' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <circle cx='194.64' cy='340.84' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round'/>\n   <line x1='324.55' y1='340.84' x2='336.07' y2='340.84' stroke='#7570B3' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <circle cx='330.31' cy='340.84' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round'/>\n   <text x='115.88' y='344.14' font-size='7.2pt' font-family='Liberation Sans'>County transfer<\/text>\n   <text x='207.81' y='344.14' font-size='7.2pt' font-family='Liberation Sans'>Development expenditure<\/text>\n   <text x='343.49' y='344.14' font-size='7.2pt' font-family='Liberation Sans'>Total recurrent expenditure<\/text>\n  <\/g>\n <\/g>\n<\/svg>","js":null,"uid":"svg_5c635a69e326adc2","ratio":1.4,"settings":{"tooltip":{"css":".tooltip_SVGID_ { padding:5px;background:black;color:white;border-radius:2px;text-align:left; ; position:absolute;pointer-events:none;z-index:9999;}","placement":"doc","opacity":0.9,"offx":10,"offy":10,"use_cursor_pos":true,"use_fill":false,"use_stroke":false,"delay_over":200,"delay_out":500},"hover":{"css":".hover_data_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_data_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_data_SVGID_ { fill:orange;stroke:black; }\nline.hover_data_SVGID_, polyline.hover_data_SVGID_ { fill:none;stroke:orange; }\nrect.hover_data_SVGID_, polygon.hover_data_SVGID_, path.hover_data_SVGID_ { fill:orange;stroke:none; }\nimage.hover_data_SVGID_ { stroke:orange; }","reactive":true,"nearest_distance":null,"linked":false},"hover_inv":{"css":""},"hover_key":{"css":".hover_key_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_key_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_key_SVGID_ { fill:orange;stroke:black; }\nline.hover_key_SVGID_, polyline.hover_key_SVGID_ { fill:none;stroke:orange; }\nrect.hover_key_SVGID_, polygon.hover_key_SVGID_, path.hover_key_SVGID_ { fill:orange;stroke:none; }\nimage.hover_key_SVGID_ { stroke:orange; }","reactive":true},"hover_theme":{"css":".hover_theme_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_theme_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_theme_SVGID_ { fill:orange;stroke:black; }\nline.hover_theme_SVGID_, polyline.hover_theme_SVGID_ { fill:none;stroke:orange; }\nrect.hover_theme_SVGID_, polygon.hover_theme_SVGID_, path.hover_theme_SVGID_ { fill:orange;stroke:none; }\nimage.hover_theme_SVGID_ { stroke:orange; }","reactive":true},"select":{"css":".select_data_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_data_SVGID_ { stroke:none;fill:red; }\ncircle.select_data_SVGID_ { fill:red;stroke:black; }\nline.select_data_SVGID_, polyline.select_data_SVGID_ { fill:none;stroke:red; }\nrect.select_data_SVGID_, polygon.select_data_SVGID_, path.select_data_SVGID_ { fill:red;stroke:none; }\nimage.select_data_SVGID_ { stroke:red; }","type":"multiple","only_shiny":true,"selected":[],"linked":false},"select_inv":{"css":""},"select_key":{"css":".select_key_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_key_SVGID_ { stroke:none;fill:red; }\ncircle.select_key_SVGID_ { fill:red;stroke:black; }\nline.select_key_SVGID_, polyline.select_key_SVGID_ { fill:none;stroke:red; }\nrect.select_key_SVGID_, polygon.select_key_SVGID_, path.select_key_SVGID_ { fill:red;stroke:none; }\nimage.select_key_SVGID_ { stroke:red; }","type":"single","only_shiny":true,"selected":[]},"select_theme":{"css":".select_theme_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_theme_SVGID_ { stroke:none;fill:red; }\ncircle.select_theme_SVGID_ { fill:red;stroke:black; }\nline.select_theme_SVGID_, polyline.select_theme_SVGID_ { fill:none;stroke:red; }\nrect.select_theme_SVGID_, polygon.select_theme_SVGID_, path.select_theme_SVGID_ { fill:red;stroke:none; }\nimage.select_theme_SVGID_ { stroke:red; }","type":"single","only_shiny":true,"selected":[]},"zoom":{"min":1,"max":1,"duration":300,"default_on":false},"toolbar":{"position":"topright","pngname":"diagram","tooltips":null,"fixed":false,"hidden":[],"delay_over":200,"delay_out":500},"sizing":{"rescale":true,"width":1}}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="what-is-causing-the-rise-in-recurrent-expenditure" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-causing-the-rise-in-recurrent-expenditure">What is causing the rise in recurrent expenditure?</h2>
+<p>The recurrent expenditure chart gives a clearer picture.</p>
+<p>Wages and salaries have grown steadily. Pensions have also increased gradually as the government continues to meet obligations to retired public workers.</p>
+<p>But the sharpest rise is in domestic interest payments.</p>
+<p>This means the government is spending more on interest payments for locally borrowed debt. That is important because interest payments do not build roads, hospitals, schools, or other services. They are the cost of past borrowing.</p>
+<p>Foreign interest payments have also increased, though not as sharply as domestic interest. They still matter because a weaker shilling makes foreign debt more expensive when converted back into Kenyan shillings.</p>
+<p>The key point is this: Kenya’s budget pressure is not only about how much the government spends. It is also about the rising cost of servicing debt, especially domestic debt.</p>
+<p>When interest payments take up more space in the budget, there is less room for development spending and basic services. It can also make borrowing more difficult for the private sector if the government takes up a large share of available credit.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="girafe html-widget html-fill-item" id="htmlwidget-12eb6728daf38ef49fdd" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-12eb6728daf38ef49fdd">{"x":{"html":"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' class='ggiraph-svg' role='graphics-document' id='svg_916e86089ff6fa35' viewBox='0 0 504 360'>\n <defs id='svg_916e86089ff6fa35_defs'>\n  <clipPath id='svg_916e86089ff6fa35_c1'>\n   <rect x='0' y='0' width='504' height='360'/>\n  <\/clipPath>\n  <clipPath id='svg_916e86089ff6fa35_c2'>\n   <rect x='41.1' y='24.84' width='456.92' height='263.17'/>\n  <\/clipPath>\n <\/defs>\n <g id='svg_916e86089ff6fa35_rootg' class='ggiraph-svg-rootg'>\n  <g clip-path='url(#svg_916e86089ff6fa35_c1)'>\n   <rect x='0' y='0' width='504' height='360' fill='#FFFFFF' fill-opacity='1' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.75' stroke-linejoin='round' stroke-linecap='round' class='ggiraph-svg-bg'/>\n   <rect x='0' y='0' width='504' height='360' fill='#FFFFFF' fill-opacity='1' stroke='none'/>\n  <\/g>\n  <g clip-path='url(#svg_916e86089ff6fa35_c2)'>\n   <polyline points='41.10,247.08 498.02,247.08' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.58' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='41.10,186.33 498.02,186.33' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.58' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='41.10,125.59 498.02,125.59' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.58' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='41.10,64.84 498.02,64.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.58' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='90.19,288.01 90.19,24.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.58' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='184.60,288.01 184.60,24.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.58' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='279.00,288.01 279.00,24.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.58' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='373.41,288.01 373.41,24.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.58' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='467.81,288.01 467.81,24.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='0.58' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='41.10,277.45 498.02,277.45' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='41.10,216.71 498.02,216.71' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='41.10,155.96 498.02,155.96' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='41.10,95.21 498.02,95.21' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='41.10,34.47 498.02,34.47' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='42.99,288.01 42.99,24.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='137.39,288.01 137.39,24.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='231.80,288.01 231.80,24.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='326.21,288.01 326.21,24.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='420.61,288.01 420.61,24.84' fill='none' stroke='#EBEBEB' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='61.87,270.44 80.75,269.97 99.63,269.04 118.51,270.44 137.39,270.44 156.28,267.64 175.16,265.77 194.04,264.83 212.92,262.50 231.80,259.69 250.68,257.36 269.56,251.75 288.44,245.21 307.32,242.41 326.21,238.20 345.09,226.52 363.97,216.24 382.85,206.89 401.73,195.21 420.61,180.73 439.49,156.43 458.37,137.27 477.25,151.75' fill='none' stroke='#1B9E77' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='61.87,275.58 80.75,274.65 99.63,274.65 118.51,275.11 137.39,274.65 156.28,274.65 175.16,276.05 194.04,276.05 212.92,275.58 231.80,275.58 250.68,275.58 269.56,275.11 288.44,274.18 307.32,273.71 326.21,269.97 345.09,268.11 363.97,260.63 382.85,252.69 401.73,244.74 420.61,239.13 439.49,244.27 458.37,238.67 477.25,236.80' fill='none' stroke='#D95F02' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='61.87,275.11 80.75,274.65 99.63,274.65 118.51,273.25 137.39,272.78 156.28,270.91 175.16,270.91 194.04,270.44 212.92,269.51 231.80,268.57 250.68,269.97 269.56,269.97 288.44,269.04 307.32,269.04 326.21,266.24 345.09,262.03 363.97,260.63 382.85,259.23 401.73,255.02 420.61,249.88 439.49,248.01 458.37,245.21 477.25,253.15' fill='none' stroke='#7570B3' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='61.87,251.75 80.75,254.09 99.63,251.28 118.51,250.82 137.39,245.68 156.28,235.86 175.16,235.40 194.04,226.05 212.92,218.11 231.80,204.09 250.68,198.95 269.56,182.59 288.44,167.64 307.32,184.00 326.21,167.64 345.09,159.23 363.97,137.27 382.85,116.24 401.73,101.76 420.61,101.29 439.49,88.67 458.37,36.81 477.25,78.86' fill='none' stroke='#E7298A' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='61.87,255.96 80.75,253.62 99.63,251.75 118.51,247.55 137.39,245.68 156.28,243.81 175.16,239.60 194.04,233.53 212.92,228.85 231.80,223.25 250.68,216.24 269.56,207.83 288.44,195.21 307.32,188.67 326.21,193.81 345.09,176.52 363.97,166.71 382.85,156.43 401.73,145.68 420.61,137.74 439.49,126.99 458.37,118.11 477.25,143.34' fill='none' stroke='#66A61E' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <circle id='svg_916e86089ff6fa35_e1' cx='61.87' cy='270.44' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Domestic interest in 2001 : 15'/>\n   <circle id='svg_916e86089ff6fa35_e2' cx='80.75' cy='269.97' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Domestic interest in 2002 : 16'/>\n   <circle id='svg_916e86089ff6fa35_e3' cx='99.63' cy='269.04' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Domestic interest in 2003 : 18'/>\n   <circle id='svg_916e86089ff6fa35_e4' cx='118.51' cy='270.44' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Domestic interest in 2004 : 15'/>\n   <circle id='svg_916e86089ff6fa35_e5' cx='137.39' cy='270.44' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Domestic interest in 2005 : 15'/>\n   <circle id='svg_916e86089ff6fa35_e6' cx='156.28' cy='267.64' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Domestic interest in 2006 : 21'/>\n   <circle id='svg_916e86089ff6fa35_e7' cx='175.16' cy='265.77' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Domestic interest in 2007 : 25'/>\n   <circle id='svg_916e86089ff6fa35_e8' cx='194.04' cy='264.83' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Domestic interest in 2008 : 27'/>\n   <circle id='svg_916e86089ff6fa35_e9' cx='212.92' cy='262.5' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Domestic interest in 2009 : 32'/>\n   <circle id='svg_916e86089ff6fa35_e10' cx='231.8' cy='259.69' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Domestic interest in 2010 : 38'/>\n   <circle id='svg_916e86089ff6fa35_e11' cx='250.68' cy='257.36' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Domestic interest in 2011 : 43'/>\n   <circle id='svg_916e86089ff6fa35_e12' cx='269.56' cy='251.75' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Domestic interest in 2012 : 55'/>\n   <circle id='svg_916e86089ff6fa35_e13' cx='288.44' cy='245.21' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Domestic interest in 2013 : 69'/>\n   <circle id='svg_916e86089ff6fa35_e14' cx='307.32' cy='242.41' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Domestic interest in 2014 : 75'/>\n   <circle id='svg_916e86089ff6fa35_e15' cx='326.21' cy='238.2' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Domestic interest in 2015 : 84'/>\n   <circle id='svg_916e86089ff6fa35_e16' cx='345.09' cy='226.52' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Domestic interest in 2016 : 109'/>\n   <circle id='svg_916e86089ff6fa35_e17' cx='363.97' cy='216.24' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Domestic interest in 2017 : 131'/>\n   <circle id='svg_916e86089ff6fa35_e18' cx='382.85' cy='206.89' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Domestic interest in 2018 : 151'/>\n   <circle id='svg_916e86089ff6fa35_e19' cx='401.73' cy='195.21' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Domestic interest in 2019 : 176'/>\n   <circle id='svg_916e86089ff6fa35_e20' cx='420.61' cy='180.73' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Domestic interest in 2020 : 207'/>\n   <circle id='svg_916e86089ff6fa35_e21' cx='439.49' cy='156.43' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Domestic interest in 2021 : 259'/>\n   <circle id='svg_916e86089ff6fa35_e22' cx='458.37' cy='137.27' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Domestic interest in 2022 : 300'/>\n   <circle id='svg_916e86089ff6fa35_e23' cx='477.25' cy='151.75' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Domestic interest in 2023 : 269'/>\n   <circle id='svg_916e86089ff6fa35_e24' cx='61.87' cy='275.58' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Foreign interest in 2001 : 4'/>\n   <circle id='svg_916e86089ff6fa35_e25' cx='80.75' cy='274.65' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Foreign interest in 2002 : 6'/>\n   <circle id='svg_916e86089ff6fa35_e26' cx='99.63' cy='274.65' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Foreign interest in 2003 : 6'/>\n   <circle id='svg_916e86089ff6fa35_e27' cx='118.51' cy='275.11' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Foreign interest in 2004 : 5'/>\n   <circle id='svg_916e86089ff6fa35_e28' cx='137.39' cy='274.65' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Foreign interest in 2005 : 6'/>\n   <circle id='svg_916e86089ff6fa35_e29' cx='156.28' cy='274.65' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Foreign interest in 2006 : 6'/>\n   <circle id='svg_916e86089ff6fa35_e30' cx='175.16' cy='276.05' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Foreign interest in 2007 : 3'/>\n   <circle id='svg_916e86089ff6fa35_e31' cx='194.04' cy='276.05' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Foreign interest in 2008 : 3'/>\n   <circle id='svg_916e86089ff6fa35_e32' cx='212.92' cy='275.58' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Foreign interest in 2009 : 4'/>\n   <circle id='svg_916e86089ff6fa35_e33' cx='231.8' cy='275.58' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Foreign interest in 2010 : 4'/>\n   <circle id='svg_916e86089ff6fa35_e34' cx='250.68' cy='275.58' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Foreign interest in 2011 : 4'/>\n   <circle id='svg_916e86089ff6fa35_e35' cx='269.56' cy='275.11' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Foreign interest in 2012 : 5'/>\n   <circle id='svg_916e86089ff6fa35_e36' cx='288.44' cy='274.18' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Foreign interest in 2013 : 7'/>\n   <circle id='svg_916e86089ff6fa35_e37' cx='307.32' cy='273.71' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Foreign interest in 2014 : 8'/>\n   <circle id='svg_916e86089ff6fa35_e38' cx='326.21' cy='269.97' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Foreign interest in 2015 : 16'/>\n   <circle id='svg_916e86089ff6fa35_e39' cx='345.09' cy='268.11' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Foreign interest in 2016 : 20'/>\n   <circle id='svg_916e86089ff6fa35_e40' cx='363.97' cy='260.63' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Foreign interest in 2017 : 36'/>\n   <circle id='svg_916e86089ff6fa35_e41' cx='382.85' cy='252.69' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Foreign interest in 2018 : 53'/>\n   <circle id='svg_916e86089ff6fa35_e42' cx='401.73' cy='244.74' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Foreign interest in 2019 : 70'/>\n   <circle id='svg_916e86089ff6fa35_e43' cx='420.61' cy='239.13' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Foreign interest in 2020 : 82'/>\n   <circle id='svg_916e86089ff6fa35_e44' cx='439.49' cy='244.27' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Foreign interest in 2021 : 71'/>\n   <circle id='svg_916e86089ff6fa35_e45' cx='458.37' cy='238.67' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Foreign interest in 2022 : 83'/>\n   <circle id='svg_916e86089ff6fa35_e46' cx='477.25' cy='236.8' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Foreign interest in 2023 : 87'/>\n   <circle id='svg_916e86089ff6fa35_e47' cx='61.87' cy='255.96' r='0.85pt' fill='#66A61E' fill-opacity='1' stroke='#66A61E' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Wages salaries in 2001 : 46'/>\n   <circle id='svg_916e86089ff6fa35_e48' cx='80.75' cy='253.62' r='0.85pt' fill='#66A61E' fill-opacity='1' stroke='#66A61E' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Wages salaries in 2002 : 51'/>\n   <circle id='svg_916e86089ff6fa35_e49' cx='99.63' cy='251.75' r='0.85pt' fill='#66A61E' fill-opacity='1' stroke='#66A61E' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Wages salaries in 2003 : 55'/>\n   <circle id='svg_916e86089ff6fa35_e50' cx='118.51' cy='247.55' r='0.85pt' fill='#66A61E' fill-opacity='1' stroke='#66A61E' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Wages salaries in 2004 : 64'/>\n   <circle id='svg_916e86089ff6fa35_e51' cx='137.39' cy='245.68' r='0.85pt' fill='#66A61E' fill-opacity='1' stroke='#66A61E' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Wages salaries in 2005 : 68'/>\n   <circle id='svg_916e86089ff6fa35_e52' cx='156.28' cy='243.81' r='0.85pt' fill='#66A61E' fill-opacity='1' stroke='#66A61E' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Wages salaries in 2006 : 72'/>\n   <circle id='svg_916e86089ff6fa35_e53' cx='175.16' cy='239.6' r='0.85pt' fill='#66A61E' fill-opacity='1' stroke='#66A61E' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Wages salaries in 2007 : 81'/>\n   <circle id='svg_916e86089ff6fa35_e54' cx='194.04' cy='233.53' r='0.85pt' fill='#66A61E' fill-opacity='1' stroke='#66A61E' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Wages salaries in 2008 : 94'/>\n   <circle id='svg_916e86089ff6fa35_e55' cx='212.92' cy='228.85' r='0.85pt' fill='#66A61E' fill-opacity='1' stroke='#66A61E' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Wages salaries in 2009 : 104'/>\n   <circle id='svg_916e86089ff6fa35_e56' cx='231.8' cy='223.25' r='0.85pt' fill='#66A61E' fill-opacity='1' stroke='#66A61E' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Wages salaries in 2010 : 116'/>\n   <circle id='svg_916e86089ff6fa35_e57' cx='250.68' cy='216.24' r='0.85pt' fill='#66A61E' fill-opacity='1' stroke='#66A61E' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Wages salaries in 2011 : 131'/>\n   <circle id='svg_916e86089ff6fa35_e58' cx='269.56' cy='207.83' r='0.85pt' fill='#66A61E' fill-opacity='1' stroke='#66A61E' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Wages salaries in 2012 : 149'/>\n   <circle id='svg_916e86089ff6fa35_e59' cx='288.44' cy='195.21' r='0.85pt' fill='#66A61E' fill-opacity='1' stroke='#66A61E' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Wages salaries in 2013 : 176'/>\n   <circle id='svg_916e86089ff6fa35_e60' cx='307.32' cy='188.67' r='0.85pt' fill='#66A61E' fill-opacity='1' stroke='#66A61E' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Wages salaries in 2014 : 190'/>\n   <circle id='svg_916e86089ff6fa35_e61' cx='326.21' cy='193.81' r='0.85pt' fill='#66A61E' fill-opacity='1' stroke='#66A61E' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Wages salaries in 2015 : 179'/>\n   <circle id='svg_916e86089ff6fa35_e62' cx='345.09' cy='176.52' r='0.85pt' fill='#66A61E' fill-opacity='1' stroke='#66A61E' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Wages salaries in 2016 : 216'/>\n   <circle id='svg_916e86089ff6fa35_e63' cx='363.97' cy='166.71' r='0.85pt' fill='#66A61E' fill-opacity='1' stroke='#66A61E' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Wages salaries in 2017 : 237'/>\n   <circle id='svg_916e86089ff6fa35_e64' cx='382.85' cy='156.43' r='0.85pt' fill='#66A61E' fill-opacity='1' stroke='#66A61E' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Wages salaries in 2018 : 259'/>\n   <circle id='svg_916e86089ff6fa35_e65' cx='401.73' cy='145.68' r='0.85pt' fill='#66A61E' fill-opacity='1' stroke='#66A61E' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Wages salaries in 2019 : 282'/>\n   <circle id='svg_916e86089ff6fa35_e66' cx='420.61' cy='137.74' r='0.85pt' fill='#66A61E' fill-opacity='1' stroke='#66A61E' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Wages salaries in 2020 : 299'/>\n   <circle id='svg_916e86089ff6fa35_e67' cx='439.49' cy='126.99' r='0.85pt' fill='#66A61E' fill-opacity='1' stroke='#66A61E' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Wages salaries in 2021 : 322'/>\n   <circle id='svg_916e86089ff6fa35_e68' cx='458.37' cy='118.11' r='0.85pt' fill='#66A61E' fill-opacity='1' stroke='#66A61E' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Wages salaries in 2022 : 341'/>\n   <circle id='svg_916e86089ff6fa35_e69' cx='477.25' cy='143.34' r='0.85pt' fill='#66A61E' fill-opacity='1' stroke='#66A61E' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Wages salaries in 2023 : 287'/>\n   <circle id='svg_916e86089ff6fa35_e70' cx='61.87' cy='275.11' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Pensions in 2001 : 5'/>\n   <circle id='svg_916e86089ff6fa35_e71' cx='80.75' cy='274.65' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Pensions in 2002 : 6'/>\n   <circle id='svg_916e86089ff6fa35_e72' cx='99.63' cy='274.65' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Pensions in 2003 : 6'/>\n   <circle id='svg_916e86089ff6fa35_e73' cx='118.51' cy='273.25' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Pensions in 2004 : 9'/>\n   <circle id='svg_916e86089ff6fa35_e74' cx='137.39' cy='272.78' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Pensions in 2005 : 10'/>\n   <circle id='svg_916e86089ff6fa35_e75' cx='156.28' cy='270.91' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Pensions in 2006 : 14'/>\n   <circle id='svg_916e86089ff6fa35_e76' cx='175.16' cy='270.91' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Pensions in 2007 : 14'/>\n   <circle id='svg_916e86089ff6fa35_e77' cx='194.04' cy='270.44' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Pensions in 2008 : 15'/>\n   <circle id='svg_916e86089ff6fa35_e78' cx='212.92' cy='269.51' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Pensions in 2009 : 17'/>\n   <circle id='svg_916e86089ff6fa35_e79' cx='231.8' cy='268.57' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Pensions in 2010 : 19'/>\n   <circle id='svg_916e86089ff6fa35_e80' cx='250.68' cy='269.97' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Pensions in 2011 : 16'/>\n   <circle id='svg_916e86089ff6fa35_e81' cx='269.56' cy='269.97' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Pensions in 2012 : 16'/>\n   <circle id='svg_916e86089ff6fa35_e82' cx='288.44' cy='269.04' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Pensions in 2013 : 18'/>\n   <circle id='svg_916e86089ff6fa35_e83' cx='307.32' cy='269.04' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Pensions in 2014 : 18'/>\n   <circle id='svg_916e86089ff6fa35_e84' cx='326.21' cy='266.24' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Pensions in 2015 : 24'/>\n   <circle id='svg_916e86089ff6fa35_e85' cx='345.09' cy='262.03' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Pensions in 2016 : 33'/>\n   <circle id='svg_916e86089ff6fa35_e86' cx='363.97' cy='260.63' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Pensions in 2017 : 36'/>\n   <circle id='svg_916e86089ff6fa35_e87' cx='382.85' cy='259.23' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Pensions in 2018 : 39'/>\n   <circle id='svg_916e86089ff6fa35_e88' cx='401.73' cy='255.02' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Pensions in 2019 : 48'/>\n   <circle id='svg_916e86089ff6fa35_e89' cx='420.61' cy='249.88' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Pensions in 2020 : 59'/>\n   <circle id='svg_916e86089ff6fa35_e90' cx='439.49' cy='248.01' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Pensions in 2021 : 63'/>\n   <circle id='svg_916e86089ff6fa35_e91' cx='458.37' cy='245.21' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Pensions in 2022 : 69'/>\n   <circle id='svg_916e86089ff6fa35_e92' cx='477.25' cy='253.15' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Pensions in 2023 : 52'/>\n   <circle id='svg_916e86089ff6fa35_e93' cx='61.87' cy='251.75' r='0.85pt' fill='#E7298A' fill-opacity='1' stroke='#E7298A' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Recurrent expenditure other in 2001 : 55'/>\n   <circle id='svg_916e86089ff6fa35_e94' cx='80.75' cy='254.09' r='0.85pt' fill='#E7298A' fill-opacity='1' stroke='#E7298A' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Recurrent expenditure other in 2002 : 50'/>\n   <circle id='svg_916e86089ff6fa35_e95' cx='99.63' cy='251.28' r='0.85pt' fill='#E7298A' fill-opacity='1' stroke='#E7298A' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Recurrent expenditure other in 2003 : 56'/>\n   <circle id='svg_916e86089ff6fa35_e96' cx='118.51' cy='250.82' r='0.85pt' fill='#E7298A' fill-opacity='1' stroke='#E7298A' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Recurrent expenditure other in 2004 : 57'/>\n   <circle id='svg_916e86089ff6fa35_e97' cx='137.39' cy='245.68' r='0.85pt' fill='#E7298A' fill-opacity='1' stroke='#E7298A' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Recurrent expenditure other in 2005 : 68'/>\n   <circle id='svg_916e86089ff6fa35_e98' cx='156.28' cy='235.86' r='0.85pt' fill='#E7298A' fill-opacity='1' stroke='#E7298A' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Recurrent expenditure other in 2006 : 89'/>\n   <circle id='svg_916e86089ff6fa35_e99' cx='175.16' cy='235.4' r='0.85pt' fill='#E7298A' fill-opacity='1' stroke='#E7298A' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Recurrent expenditure other in 2007 : 90'/>\n   <circle id='svg_916e86089ff6fa35_e100' cx='194.04' cy='226.05' r='0.85pt' fill='#E7298A' fill-opacity='1' stroke='#E7298A' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Recurrent expenditure other in 2008 : 110'/>\n   <circle id='svg_916e86089ff6fa35_e101' cx='212.92' cy='218.11' r='0.85pt' fill='#E7298A' fill-opacity='1' stroke='#E7298A' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Recurrent expenditure other in 2009 : 127'/>\n   <circle id='svg_916e86089ff6fa35_e102' cx='231.8' cy='204.09' r='0.85pt' fill='#E7298A' fill-opacity='1' stroke='#E7298A' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Recurrent expenditure other in 2010 : 157'/>\n   <circle id='svg_916e86089ff6fa35_e103' cx='250.68' cy='198.95' r='0.85pt' fill='#E7298A' fill-opacity='1' stroke='#E7298A' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Recurrent expenditure other in 2011 : 168'/>\n   <circle id='svg_916e86089ff6fa35_e104' cx='269.56' cy='182.59' r='0.85pt' fill='#E7298A' fill-opacity='1' stroke='#E7298A' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Recurrent expenditure other in 2012 : 203'/>\n   <circle id='svg_916e86089ff6fa35_e105' cx='288.44' cy='167.64' r='0.85pt' fill='#E7298A' fill-opacity='1' stroke='#E7298A' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Recurrent expenditure other in 2013 : 235'/>\n   <circle id='svg_916e86089ff6fa35_e106' cx='307.32' cy='184' r='0.85pt' fill='#E7298A' fill-opacity='1' stroke='#E7298A' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Recurrent expenditure other in 2014 : 200'/>\n   <circle id='svg_916e86089ff6fa35_e107' cx='326.21' cy='167.64' r='0.85pt' fill='#E7298A' fill-opacity='1' stroke='#E7298A' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Recurrent expenditure other in 2015 : 235'/>\n   <circle id='svg_916e86089ff6fa35_e108' cx='345.09' cy='159.23' r='0.85pt' fill='#E7298A' fill-opacity='1' stroke='#E7298A' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Recurrent expenditure other in 2016 : 253'/>\n   <circle id='svg_916e86089ff6fa35_e109' cx='363.97' cy='137.27' r='0.85pt' fill='#E7298A' fill-opacity='1' stroke='#E7298A' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Recurrent expenditure other in 2017 : 300'/>\n   <circle id='svg_916e86089ff6fa35_e110' cx='382.85' cy='116.24' r='0.85pt' fill='#E7298A' fill-opacity='1' stroke='#E7298A' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Recurrent expenditure other in 2018 : 345'/>\n   <circle id='svg_916e86089ff6fa35_e111' cx='401.73' cy='101.76' r='0.85pt' fill='#E7298A' fill-opacity='1' stroke='#E7298A' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Recurrent expenditure other in 2019 : 376'/>\n   <circle id='svg_916e86089ff6fa35_e112' cx='420.61' cy='101.29' r='0.85pt' fill='#E7298A' fill-opacity='1' stroke='#E7298A' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Recurrent expenditure other in 2020 : 377'/>\n   <circle id='svg_916e86089ff6fa35_e113' cx='439.49' cy='88.67' r='0.85pt' fill='#E7298A' fill-opacity='1' stroke='#E7298A' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Recurrent expenditure other in 2021 : 404'/>\n   <circle id='svg_916e86089ff6fa35_e114' cx='458.37' cy='36.81' r='0.85pt' fill='#E7298A' fill-opacity='1' stroke='#E7298A' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Recurrent expenditure other in 2022 : 515'/>\n   <circle id='svg_916e86089ff6fa35_e115' cx='477.25' cy='78.86' r='0.85pt' fill='#E7298A' fill-opacity='1' stroke='#E7298A' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round' title='Recurrent expenditure other in 2023 : 425'/>\n  <\/g>\n  <g clip-path='url(#svg_916e86089ff6fa35_c1)'>\n   <text x='30.39' y='280.75' font-size='7.2pt' font-family='Liberation Sans' fill='#4D4D4D' fill-opacity='1'>0<\/text>\n   <text x='19.72' y='220' font-size='7.2pt' font-family='Liberation Sans' fill='#4D4D4D' fill-opacity='1'>130<\/text>\n   <text x='19.72' y='159.26' font-size='7.2pt' font-family='Liberation Sans' fill='#4D4D4D' fill-opacity='1'>260<\/text>\n   <text x='19.72' y='98.51' font-size='7.2pt' font-family='Liberation Sans' fill='#4D4D4D' fill-opacity='1'>390<\/text>\n   <text x='19.72' y='37.77' font-size='7.2pt' font-family='Liberation Sans' fill='#4D4D4D' fill-opacity='1'>520<\/text>\n   <text x='32.32' y='299.99' font-size='7.2pt' font-family='Liberation Sans' fill='#4D4D4D' fill-opacity='1'>2000<\/text>\n   <text x='126.72' y='299.99' font-size='7.2pt' font-family='Liberation Sans' fill='#4D4D4D' fill-opacity='1'>2005<\/text>\n   <text x='221.13' y='299.99' font-size='7.2pt' font-family='Liberation Sans' fill='#4D4D4D' fill-opacity='1'>2010<\/text>\n   <text x='315.53' y='299.99' font-size='7.2pt' font-family='Liberation Sans' fill='#4D4D4D' fill-opacity='1'>2015<\/text>\n   <text x='409.94' y='299.99' font-size='7.2pt' font-family='Liberation Sans' fill='#4D4D4D' fill-opacity='1'>2020<\/text>\n   <text x='257.44' y='313.22' font-size='9pt' font-family='Liberation Sans'>Year<\/text>\n   <text transform='translate(14.24,220.46) rotate(-90.00)' font-size='9pt' font-family='Liberation Sans'>Kenya Shillings(Billions)<\/text>\n   <line x1='28.66' y1='340.84' x2='40.18' y2='340.84' stroke='#1B9E77' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <circle cx='34.42' cy='340.84' r='0.85pt' fill='#1B9E77' fill-opacity='1' stroke='#1B9E77' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round'/>\n   <line x1='129.11' y1='340.84' x2='140.63' y2='340.84' stroke='#D95F02' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <circle cx='134.87' cy='340.84' r='0.85pt' fill='#D95F02' fill-opacity='1' stroke='#D95F02' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round'/>\n   <line x1='222.11' y1='340.84' x2='233.63' y2='340.84' stroke='#7570B3' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <circle cx='227.87' cy='340.84' r='0.85pt' fill='#7570B3' fill-opacity='1' stroke='#7570B3' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round'/>\n   <line x1='287.93' y1='340.84' x2='299.45' y2='340.84' stroke='#E7298A' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <circle cx='293.69' cy='340.84' r='0.85pt' fill='#E7298A' fill-opacity='1' stroke='#E7298A' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round'/>\n   <line x1='433.73' y1='340.84' x2='445.25' y2='340.84' stroke='#66A61E' stroke-opacity='1' stroke-width='1.16' stroke-linejoin='round' stroke-linecap='butt'/>\n   <circle cx='439.49' cy='340.84' r='0.85pt' fill='#66A61E' fill-opacity='1' stroke='#66A61E' stroke-opacity='1' stroke-width='0.77' stroke-linejoin='round' stroke-linecap='round'/>\n   <text x='47.6' y='344.14' font-size='7.2pt' font-family='Liberation Sans'>Domestic interest<\/text>\n   <text x='148.05' y='344.14' font-size='7.2pt' font-family='Liberation Sans'>Foreign interest<\/text>\n   <text x='241.05' y='344.14' font-size='7.2pt' font-family='Liberation Sans'>Pensions<\/text>\n   <text x='306.86' y='344.14' font-size='7.2pt' font-family='Liberation Sans'>Recurrent expenditure other<\/text>\n   <text x='452.67' y='344.14' font-size='7.2pt' font-family='Liberation Sans'>Wages salaries<\/text>\n  <\/g>\n <\/g>\n<\/svg>","js":null,"uid":"svg_916e86089ff6fa35","ratio":1.4,"settings":{"tooltip":{"css":".tooltip_SVGID_ { padding:5px;background:black;color:white;border-radius:2px;text-align:left; ; position:absolute;pointer-events:none;z-index:9999;}","placement":"doc","opacity":0.9,"offx":10,"offy":10,"use_cursor_pos":true,"use_fill":false,"use_stroke":false,"delay_over":200,"delay_out":500},"hover":{"css":".hover_data_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_data_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_data_SVGID_ { fill:orange;stroke:black; }\nline.hover_data_SVGID_, polyline.hover_data_SVGID_ { fill:none;stroke:orange; }\nrect.hover_data_SVGID_, polygon.hover_data_SVGID_, path.hover_data_SVGID_ { fill:orange;stroke:none; }\nimage.hover_data_SVGID_ { stroke:orange; }","reactive":true,"nearest_distance":null,"linked":false},"hover_inv":{"css":""},"hover_key":{"css":".hover_key_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_key_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_key_SVGID_ { fill:orange;stroke:black; }\nline.hover_key_SVGID_, polyline.hover_key_SVGID_ { fill:none;stroke:orange; }\nrect.hover_key_SVGID_, polygon.hover_key_SVGID_, path.hover_key_SVGID_ { fill:orange;stroke:none; }\nimage.hover_key_SVGID_ { stroke:orange; }","reactive":true},"hover_theme":{"css":".hover_theme_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_theme_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_theme_SVGID_ { fill:orange;stroke:black; }\nline.hover_theme_SVGID_, polyline.hover_theme_SVGID_ { fill:none;stroke:orange; }\nrect.hover_theme_SVGID_, polygon.hover_theme_SVGID_, path.hover_theme_SVGID_ { fill:orange;stroke:none; }\nimage.hover_theme_SVGID_ { stroke:orange; }","reactive":true},"select":{"css":".select_data_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_data_SVGID_ { stroke:none;fill:red; }\ncircle.select_data_SVGID_ { fill:red;stroke:black; }\nline.select_data_SVGID_, polyline.select_data_SVGID_ { fill:none;stroke:red; }\nrect.select_data_SVGID_, polygon.select_data_SVGID_, path.select_data_SVGID_ { fill:red;stroke:none; }\nimage.select_data_SVGID_ { stroke:red; }","type":"multiple","only_shiny":true,"selected":[],"linked":false},"select_inv":{"css":""},"select_key":{"css":".select_key_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_key_SVGID_ { stroke:none;fill:red; }\ncircle.select_key_SVGID_ { fill:red;stroke:black; }\nline.select_key_SVGID_, polyline.select_key_SVGID_ { fill:none;stroke:red; }\nrect.select_key_SVGID_, polygon.select_key_SVGID_, path.select_key_SVGID_ { fill:red;stroke:none; }\nimage.select_key_SVGID_ { stroke:red; }","type":"single","only_shiny":true,"selected":[]},"select_theme":{"css":".select_theme_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_theme_SVGID_ { stroke:none;fill:red; }\ncircle.select_theme_SVGID_ { fill:red;stroke:black; }\nline.select_theme_SVGID_, polyline.select_theme_SVGID_ { fill:none;stroke:red; }\nrect.select_theme_SVGID_, polygon.select_theme_SVGID_, path.select_theme_SVGID_ { fill:red;stroke:none; }\nimage.select_theme_SVGID_ { stroke:red; }","type":"single","only_shiny":true,"selected":[]},"zoom":{"min":1,"max":1,"duration":300,"default_on":false},"toolbar":{"position":"topright","pngname":"diagram","tooltips":null,"fixed":false,"hidden":[],"delay_over":200,"delay_out":500},"sizing":{"rescale":true,"width":1}}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="outlook" class="level2">
+<h2 class="anchored" data-anchor-id="outlook">Outlook</h2>
+<p>Kenya has received new financing support from the IMF and the World Bank. This gives the government some breathing room, especially when foreign debt payments are under pressure from exchange-rate movements.</p>
+<p>But loans do not remove the problem. They only shift the pressure forward unless revenue grows faster, spending is controlled, or debt becomes cheaper to service.</p>
+<p>The difficult part is that Kenya needs investment, but it also has to manage debt. Cutting too much spending can slow growth. Borrowing too much can make future budgets harder to manage.</p>
+<p>From this data, the main pressure point is clear: recurrent expenditure, especially interest payments, is taking up a larger share of the budget.</p>
+<p>That is where the budget story is.</p>
+<p><img src="usd_xchange.png" class="img-fluid"></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/m-mburu\.github\.io\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<div class="page-columns page-rows-contents page-layout-article"><div class="social-share"><a href="https://twitter.com/share?url=https://m-mburu.github.io/posts/institutions/kenya-fiscal-trends/kenya-fiscal-trends.html&amp;text=Where Kenya’s Budget Pressure Comes From" target="_blank" class="twitter"><i class="fab fa-twitter fa-fw fa-lg"></i></a><a href="https://www.linkedin.com/shareArticle?url=https://m-mburu.github.io/posts/institutions/kenya-fiscal-trends/kenya-fiscal-trends.html&amp;title=Where Kenya’s Budget Pressure Comes From" target="_blank" class="linkedin"><i class="fa-brands fa-linkedin-in fa-fw fa-lg"></i></a>  <a href="mailto:?subject=Where Kenya’s Budget Pressure Comes From&amp;body=Check out this link:https://m-mburu.github.io/posts/institutions/kenya-fiscal-trends/kenya-fiscal-trends.html" target="_blank" class="email"><i class="fa-solid fa-envelope fa-fw fa-lg"></i></a><a href="https://www.facebook.com/sharer.php?u=https://m-mburu.github.io/posts/institutions/kenya-fiscal-trends/kenya-fiscal-trends.html" target="_blank" class="facebook"><i class="fab fa-facebook-f fa-fw fa-lg"></i></a></div></div>
+
+
+
+
+<script src="../../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
