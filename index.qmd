@@ -25,13 +25,68 @@ title-block-banner: false
 ::: profile-copy
 # Mburu M
 
-I write to think through questions across data, health, technology, institutions, markets, books, and ordinary life.
-
-My formal home is statistics and data science. The wider thread is representation: how reality becomes data, models, categories, stories, maps, institutions, and decisions. This site is a personal archive of technical notes, learning notes, book thoughts, and small observations that help me understand how things work.
+I work with statistics and data science. My main interest is representation: how we turn reality into data, models, maps, categories, institutions, stories, and decisions.
 
 :::
 ::::::
 
+## At A Glance
+
+::: site-metrics
+::: {.site-metric data-count-for="all"}
+<span class="site-metric-value">0</span>
+<span class="site-metric-label">Posts</span>
+:::
+
+::: {.site-metric data-count-for="Data & Evidence"}
+<span class="site-metric-value">0</span>
+<span class="site-metric-label">Data & Evidence</span>
+:::
+
+::: {.site-metric data-count-for="Technology"}
+<span class="site-metric-value">0</span>
+<span class="site-metric-label">Technology</span>
+:::
+
+::: {.site-metric data-count-for="Institutions"}
+<span class="site-metric-value">0</span>
+<span class="site-metric-label">Institutions</span>
+:::
+:::
+
+## Collections
+
+::: site-card-grid
+::: {.site-card .topic-card data-topic-card="Data & Evidence" tabindex="0" role="button" aria-label="Show Data and Evidence posts"}
+<span class="site-card-kicker">Data & Evidence</span>
+
+### Analytical notes
+
+Statistics, public data, models, uncertainty, maps, and applied evidence.
+
+<span class="site-card-count" data-count-for="Data & Evidence">0</span>
+:::
+
+::: {.site-card .topic-card data-topic-card="Technology" tabindex="0" role="button" aria-label="Show Technology posts"}
+<span class="site-card-kicker">Technology</span>
+
+### Tools and systems
+
+Software, AI, developer infrastructure, and the traces technology leaves behind.
+
+<span class="site-card-count" data-count-for="Technology">0</span>
+:::
+
+::: {.site-card .topic-card data-topic-card="Institutions" tabindex="0" role="button" aria-label="Show Institutions posts"}
+<span class="site-card-kicker">Institutions</span>
+
+### Public systems
+
+Budgets, markets, governance, development, and institutional design.
+
+<span class="site-card-count" data-count-for="Institutions">0</span>
+:::
+:::
 ## Writing
 
 ::: topic-pills
@@ -76,6 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const controls = document.querySelectorAll(".topic-pills button[data-topic]");
   const rows = document.querySelectorAll("#listing-listing tbody tr");
   const emptyMessage = document.querySelector(".topic-empty");
+  const topicCards = document.querySelectorAll(".topic-card[data-topic-card]");
 
   if (!controls.length || !rows.length) return;
 
@@ -96,7 +152,44 @@ document.addEventListener("DOMContentLoaded", () => {
     Array.from(rows, (row) => [row, decodeCategories(row.dataset.categories)])
   );
 
-  const applyFilter = (topic) => {
+  const countForTopic = (topic) => {
+    if (topic === "all") return rows.length;
+
+    return Array.from(categoriesByRow.values()).filter((categories) =>
+      categories.includes(topic)
+    ).length;
+  };
+
+  const formatCount = (count) => `${count} ${count === 1 ? "post" : "posts"}`;
+
+  const updateCountLabels = () => {
+    document.querySelectorAll("[data-count-for]").forEach((element) => {
+      const topic = element.dataset.countFor;
+      const count = countForTopic(topic);
+
+      if (element.classList.contains("site-metric")) {
+        const value = element.querySelector(".site-metric-value");
+        if (value) value.textContent = count;
+        return;
+      }
+
+      if (element.classList.contains("site-card-count")) {
+        element.textContent = formatCount(count);
+      }
+    });
+
+    controls.forEach((control) => {
+      let badge = control.querySelector(".topic-count");
+      if (!badge) {
+        badge = document.createElement("span");
+        badge.className = "topic-count";
+        control.appendChild(badge);
+      }
+      badge.textContent = countForTopic(control.dataset.topic);
+    });
+  };
+
+  const applyFilter = (topic, shouldScroll = false) => {
     let visibleCount = 0;
 
     rows.forEach((row) => {
@@ -111,8 +204,21 @@ document.addEventListener("DOMContentLoaded", () => {
       control.setAttribute("aria-pressed", String(active));
     });
 
+    topicCards.forEach((card) => {
+      const active = card.dataset.topicCard === topic;
+      card.classList.toggle("active", active);
+      card.setAttribute("aria-pressed", String(active));
+    });
+
     if (emptyMessage) {
       emptyMessage.hidden = visibleCount !== 0;
+    }
+
+    if (shouldScroll) {
+      document.querySelector("#listing-listing")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
     }
   };
 
@@ -120,6 +226,20 @@ document.addEventListener("DOMContentLoaded", () => {
     control.setAttribute("aria-pressed", String(control.classList.contains("active")));
     control.addEventListener("click", () => applyFilter(control.dataset.topic));
   });
+
+  topicCards.forEach((card) => {
+    card.setAttribute("aria-pressed", "false");
+    card.addEventListener("click", () => applyFilter(card.dataset.topicCard, true));
+    card.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        applyFilter(card.dataset.topicCard, true);
+      }
+    });
+  });
+
+  updateCountLabels();
+  applyFilter("all");
 });
 </script>
 ```
