@@ -403,10 +403,55 @@ window.Quarto = {
 </div>
 <section id="mburu-m" class="level1 profile-copy">
 <h1>Mburu M</h1>
-<p>I write to think through questions across data, health, technology, institutions, markets, books, and ordinary life.</p>
-<p>My formal home is statistics and data science. The wider thread is representation: how reality becomes data, models, categories, stories, maps, institutions, and decisions. This site is a personal archive of technical notes, learning notes, book thoughts, and small observations that help me understand how things work.</p>
+<p>I work with statistics and data science. My main interest is representation: how we turn reality into data, models, maps, categories, institutions, stories, and decisions.</p>
 </section>
 </div>
+<section id="at-a-glance" class="level2">
+<h2 class="anchored" data-anchor-id="at-a-glance">At A Glance</h2>
+<div class="site-metrics">
+<div class="site-metric" data-count-for="all">
+<p><span class="site-metric-value">0</span> <span class="site-metric-label">Posts</span></p>
+</div>
+<div class="site-metric" data-count-for="Data &amp; Evidence">
+<p><span class="site-metric-value">0</span> <span class="site-metric-label">Data &amp; Evidence</span></p>
+</div>
+<div class="site-metric" data-count-for="Technology">
+<p><span class="site-metric-value">0</span> <span class="site-metric-label">Technology</span></p>
+</div>
+<div class="site-metric" data-count-for="Institutions">
+<p><span class="site-metric-value">0</span> <span class="site-metric-label">Institutions</span></p>
+</div>
+</div>
+</section>
+<section id="collections" class="level2">
+<h2 class="anchored" data-anchor-id="collections">Collections</h2>
+<div class="site-card-grid">
+<div class="site-card topic-card" data-topic-card="Data &amp; Evidence" tabindex="0" role="button" aria-label="Show Data and Evidence posts">
+<p><span class="site-card-kicker">Data &amp; Evidence</span></p>
+<section id="analytical-notes" class="level3">
+<h3 class="anchored" data-anchor-id="analytical-notes">Analytical notes</h3>
+<p>Statistics, public data, models, uncertainty, maps, and applied evidence.</p>
+<p><span class="site-card-count" data-count-for="Data &amp; Evidence">0</span></p>
+</section>
+</div>
+<div class="site-card topic-card" data-topic-card="Technology" tabindex="0" role="button" aria-label="Show Technology posts">
+<p><span class="site-card-kicker">Technology</span></p>
+<section id="tools-and-systems" class="level3">
+<h3 class="anchored" data-anchor-id="tools-and-systems">Tools and systems</h3>
+<p>Software, AI, developer infrastructure, and the traces technology leaves behind.</p>
+<p><span class="site-card-count" data-count-for="Technology">0</span></p>
+</section>
+</div>
+<div class="site-card topic-card" data-topic-card="Institutions" tabindex="0" role="button" aria-label="Show Institutions posts">
+<p><span class="site-card-kicker">Institutions</span></p>
+<section id="public-systems" class="level3">
+<h3 class="anchored" data-anchor-id="public-systems">Public systems</h3>
+<p>Budgets, markets, governance, development, and institutional design.</p>
+<p><span class="site-card-count" data-count-for="Institutions">0</span></p>
+</section>
+</div>
+</div>
+</section>
 <section id="writing" class="level2">
 <h2 class="anchored" data-anchor-id="writing">Writing</h2>
 <div class="topic-pills">
@@ -434,6 +479,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const controls = document.querySelectorAll(".topic-pills button[data-topic]");
   const rows = document.querySelectorAll("#listing-listing tbody tr");
   const emptyMessage = document.querySelector(".topic-empty");
+  const topicCards = document.querySelectorAll(".topic-card[data-topic-card]");
 
   if (!controls.length || !rows.length) return;
 
@@ -454,7 +500,44 @@ document.addEventListener("DOMContentLoaded", () => {
     Array.from(rows, (row) => [row, decodeCategories(row.dataset.categories)])
   );
 
-  const applyFilter = (topic) => {
+  const countForTopic = (topic) => {
+    if (topic === "all") return rows.length;
+
+    return Array.from(categoriesByRow.values()).filter((categories) =>
+      categories.includes(topic)
+    ).length;
+  };
+
+  const formatCount = (count) => `${count} ${count === 1 ? "post" : "posts"}`;
+
+  const updateCountLabels = () => {
+    document.querySelectorAll("[data-count-for]").forEach((element) => {
+      const topic = element.dataset.countFor;
+      const count = countForTopic(topic);
+
+      if (element.classList.contains("site-metric")) {
+        const value = element.querySelector(".site-metric-value");
+        if (value) value.textContent = count;
+        return;
+      }
+
+      if (element.classList.contains("site-card-count")) {
+        element.textContent = formatCount(count);
+      }
+    });
+
+    controls.forEach((control) => {
+      let badge = control.querySelector(".topic-count");
+      if (!badge) {
+        badge = document.createElement("span");
+        badge.className = "topic-count";
+        control.appendChild(badge);
+      }
+      badge.textContent = countForTopic(control.dataset.topic);
+    });
+  };
+
+  const applyFilter = (topic, shouldScroll = false) => {
     let visibleCount = 0;
 
     rows.forEach((row) => {
@@ -469,8 +552,21 @@ document.addEventListener("DOMContentLoaded", () => {
       control.setAttribute("aria-pressed", String(active));
     });
 
+    topicCards.forEach((card) => {
+      const active = card.dataset.topicCard === topic;
+      card.classList.toggle("active", active);
+      card.setAttribute("aria-pressed", String(active));
+    });
+
     if (emptyMessage) {
       emptyMessage.hidden = visibleCount !== 0;
+    }
+
+    if (shouldScroll) {
+      document.querySelector("#listing-listing")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
     }
   };
 
@@ -478,6 +574,20 @@ document.addEventListener("DOMContentLoaded", () => {
     control.setAttribute("aria-pressed", String(control.classList.contains("active")));
     control.addEventListener("click", () => applyFilter(control.dataset.topic));
   });
+
+  topicCards.forEach((card) => {
+    card.setAttribute("aria-pressed", "false");
+    card.addEventListener("click", () => applyFilter(card.dataset.topicCard, true));
+    card.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        applyFilter(card.dataset.topicCard, true);
+      }
+    });
+  });
+
+  updateCountLabels();
+  applyFilter("all");
 });
 </script>
 
@@ -510,7 +620,7 @@ Reading Time
 </thead>
 <tbody class="list">
 
-<tr data-index="0" data-categories="RGF0YSUyMCUyNiUyMEV2aWRlbmNlJTJDSW5zdGl0dXRpb25z" data-listing-date-sort="1782680400000" data-listing-file-modified-sort="1782898873417" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="24" data-listing-word-count-sort="4678" data-listing-title-sort="Kenya's Financial Lives Mapped: Food Vulnerability in FinAccess 2024" data-listing-filename-sort="food-vulnerability-kenya.qmd">
+<tr data-index="0" data-categories="RGF0YSUyMCUyNiUyMEV2aWRlbmNlJTJDSW5zdGl0dXRpb25z" data-listing-date-sort="1782680400000" data-listing-file-modified-sort="1783416633736" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="24" data-listing-word-count-sort="4678" data-listing-title-sort="Kenya's Financial Lives Mapped: Food Vulnerability in FinAccess 2024" data-listing-filename-sort="food-vulnerability-kenya.qmd">
 <td>
 <span class="listing-date">Jun 29, 2026</span>
 </td>
@@ -526,7 +636,7 @@ Reading Time
 
 </tr>
 
-<tr data-index="1" data-categories="RGF0YSUyMCUyNiUyMEV2aWRlbmNlJTJDU3RhdGlzdGljcyUyQ0Jvb3RzdHJhcA==" data-listing-date-sort="1771794000000" data-listing-file-modified-sort="1782716204767" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16" data-listing-word-count-sort="3016" data-listing-title-sort="Bootstrap in Practice: CIs, Hypothesis Tests, and a Crab-Data Case Study" data-listing-filename-sort="boostrap_crab.qmd">
+<tr data-index="1" data-categories="RGF0YSUyMCUyNiUyMEV2aWRlbmNlJTJDU3RhdGlzdGljcyUyQ0Jvb3RzdHJhcA==" data-listing-date-sort="1771794000000" data-listing-file-modified-sort="1783416633732" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16" data-listing-word-count-sort="3016" data-listing-title-sort="Bootstrap in Practice: CIs, Hypothesis Tests, and a Crab-Data Case Study" data-listing-filename-sort="boostrap_crab.qmd">
 <td>
 <span class="listing-date">Feb 23, 2026</span>
 </td>
@@ -542,7 +652,7 @@ Reading Time
 
 </tr>
 
-<tr data-index="2" data-categories="VGVjaG5vbG9neQ==" data-listing-date-sort="1771707600000" data-listing-file-modified-sort="1782716966673" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="25" data-listing-word-count-sort="4842" data-listing-title-sort="Github Use in Africa using Maps" data-listing-filename-sort="africa_github_use.Rmd">
+<tr data-index="2" data-categories="VGVjaG5vbG9neQ==" data-listing-date-sort="1771707600000" data-listing-file-modified-sort="1783416633738" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="25" data-listing-word-count-sort="4842" data-listing-title-sort="Github Use in Africa using Maps" data-listing-filename-sort="africa_github_use.Rmd">
 <td>
 <span class="listing-date">Feb 22, 2026</span>
 </td>
@@ -558,7 +668,7 @@ Reading Time
 
 </tr>
 
-<tr data-index="3" data-categories="SW5zdGl0dXRpb25z" data-listing-date-sort="1711918800000" data-listing-file-modified-sort="1782904786067" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1264" data-listing-title-sort="Where Kenya's Budget Pressure Comes From" data-listing-filename-sort="kenya-fiscal-trends.qmd">
+<tr data-index="3" data-categories="SW5zdGl0dXRpb25z" data-listing-date-sort="1711918800000" data-listing-file-modified-sort="1783416633740" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1264" data-listing-title-sort="Where Kenya's Budget Pressure Comes From" data-listing-filename-sort="kenya-fiscal-trends.qmd">
 <td>
 <span class="listing-date">Apr 1, 2024</span>
 </td>
@@ -574,7 +684,23 @@ Reading Time
 
 </tr>
 
-<tr data-index="4" data-categories="RGF0YSUyMCUyNiUyMEV2aWRlbmNlJTJDVGVhY2hpbmc=" data-listing-date-sort="1543352400000" data-listing-file-modified-sort="1782905519638" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1367" data-listing-title-sort="Association Analysis: Finding Patterns in Baskets" data-listing-filename-sort="association-analysis.qmd">
+<tr data-index="4" data-categories="RGF0YSUyMCUyNiUyMEV2aWRlbmNlJTJDTWFjaGluZSUyMExlYXJuaW5nJTJDSGVhbHRo" data-listing-date-sort="1548450000000" data-listing-file-modified-sort="1783419996384" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="22" data-listing-word-count-sort="4264" data-listing-title-sort="Predict whether the cancer is benign or malignant" data-listing-filename-sort="cancer_data.Rmd">
+<td>
+<span class="listing-date">Jan 26, 2019</span>
+</td>
+<td>
+<a href="./posts/breast_cancer_prediction/cancer_data.html" class="title listing-title">Predict whether the cancer is benign or malignant</a>
+</td>
+<td>
+<span class="listing-description">A practical machine learning note using the Wisconsin breast cancer dataset to predict whether tumors are benign or malignant.</span>
+</td>
+<td>
+<span class="listing-reading-time">22 min</span>
+</td>
+
+</tr>
+
+<tr data-index="5" data-categories="RGF0YSUyMCUyNiUyMEV2aWRlbmNlJTJDVGVhY2hpbmc=" data-listing-date-sort="1543352400000" data-listing-file-modified-sort="1783416633733" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1367" data-listing-title-sort="Association Analysis: Finding Patterns in Baskets" data-listing-filename-sort="association-analysis.qmd">
 <td>
 <span class="listing-date">Nov 28, 2018</span>
 </td>
