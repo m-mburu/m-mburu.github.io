@@ -403,7 +403,7 @@ window.Quarto = {
 </div>
 <section id="mburu-m" class="level1 profile-copy">
 <h1>Mburu M</h1>
-<p>I work with statistics and data science. My main interest is representation: how we turn reality into data, models, maps, categories, institutions, stories, and decisions.</p>
+<p>Personal blog on data, technology, institutions, and life</p>
 </section>
 </div>
 <section id="at-a-glance" class="level2">
@@ -452,9 +452,67 @@ window.Quarto = {
 </div>
 </div>
 </section>
+<section id="selected-work" class="level2">
+<h2 class="anchored" data-anchor-id="selected-work">Selected Work</h2>
+<div class="work-pills">
+<button type="button" class="active" data-work-filter="all">
+<p>All</p>
+</button>
+<button type="button" data-work-filter="Dashboards">
+<p>Dashboards</p>
+</button>
+<button type="button" data-work-filter="R Packages">
+<p>R Packages</p>
+</button>
+</div>
+<div class="work-listing">
+<div class="work-card" data-work-type="Dashboards">
+<p><span class="work-card-kicker">Interactive dashboard</span></p>
+<section id="kenya-food-prices" class="level3">
+<h3 class="anchored" data-anchor-id="kenya-food-prices">Kenya Food Prices</h3>
+<p>Explore how food prices vary across time, counties, markets, commodities, and retail or wholesale price types in Kenya. The dashboard uses World Food Programme data published through the Humanitarian Data Exchange and lets you work in Kenyan shillings or US dollars. Use the overview, trend, map, comparison, and coverage views to identify recent price changes and differences between places.</p>
+<div class="work-card-tags">
+<p><span>Shiny</span><span>Food prices</span><span>Maps</span></p>
+</div>
+<div class="work-card-actions">
+<p><a href="https://mmburu.shinyapps.io/kenyaFoodPrices/" class="work-link" target="_blank" rel="noopener noreferrer"><i class="bi bi-box-arrow-up-right" aria-hidden="true"></i> Launch dashboard</a></p>
+<p><a href="https://github.com/m-mburu/kenyaFoodPrices" class="work-link work-link-secondary" target="_blank" rel="noopener noreferrer"><i class="bi bi-github" aria-hidden="true"></i> Source code</a></p>
+</div>
+</section>
+</div>
+<div class="work-card" data-work-type="Dashboards">
+<p><span class="work-card-kicker">Interactive dashboard</span></p>
+<section id="kenya-indicators" class="level3">
+<h3 class="anchored" data-anchor-id="kenya-indicators">Kenya Indicators</h3>
+<p>Explore long-run changes in Kenya’s national DHS indicators across fertility, child survival, health services, nutrition, WASH, HIV, malaria, education, and agency. The dashboard connects curated household-survey evidence to SDG themes while keeping survey years, coverage, uncertainty, and data limitations visible. Use the overview to scan policy trends, inspect individual indicators in detail, or download the filtered catalogue for further analysis.</p>
+<div class="work-card-tags">
+<p><span>Shiny</span><span>DHS</span><span>SDGs</span></p>
+</div>
+<div class="work-card-actions">
+<p><a href="https://mmburu.shinyapps.io/kenyaIndicators/" class="work-link" target="_blank" rel="noopener noreferrer"><i class="bi bi-box-arrow-up-right" aria-hidden="true"></i> Launch dashboard</a></p>
+<p><a href="https://github.com/m-mburu/kenyaIndicators" class="work-link work-link-secondary" target="_blank" rel="noopener noreferrer"><i class="bi bi-github" aria-hidden="true"></i> Source code</a></p>
+</div>
+</section>
+</div>
+<div class="work-card" data-work-type="R Packages">
+<p><span class="work-card-kicker">R package</span></p>
+<section id="ineqtrees" class="level3">
+<h3 class="anchored" data-anchor-id="ineqtrees">ineqTrees</h3>
+<p><code>ineqTrees</code> provides tools for studying socioeconomic inequality in health outcomes using tree-based models. It includes weighted-rank and concentration-index utilities together with methods for fitting inequality-aware trees and forests. The documentation covers model fitting, tuning, visualization, and SHAP-based decomposition through worked examples.</p>
+<div class="work-card-tags">
+<p><span>R</span><span>Health inequality</span><span>Tree models</span></p>
+</div>
+<div class="work-card-actions">
+<p><a href="https://m-mburu.github.io/ineqTrees/" class="work-link" target="_blank" rel="noopener noreferrer"><i class="bi bi-book" aria-hidden="true"></i> View documentation</a></p>
+<p><a href="https://github.com/m-mburu/ineqTrees" class="work-link work-link-secondary" target="_blank" rel="noopener noreferrer"><i class="bi bi-github" aria-hidden="true"></i> Source code</a></p>
+</div>
+</section>
+</div>
+</div>
+</section>
 <section id="writing" class="level2">
 <h2 class="anchored" data-anchor-id="writing">Writing</h2>
-<div class="topic-pills">
+<div id="topic-filter" class="topic-pills">
 <button type="button" class="active" data-topic="all">
 <p>Selected</p>
 </button>
@@ -476,10 +534,42 @@ window.Quarto = {
 </div>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+  const workControls = document.querySelectorAll(".work-pills button[data-work-filter]");
+  const workItems = document.querySelectorAll("[data-work-type]");
   const controls = document.querySelectorAll(".topic-pills button[data-topic]");
   const rows = document.querySelectorAll("#listing-listing tbody tr");
   const emptyMessage = document.querySelector(".topic-empty");
   const topicCards = document.querySelectorAll(".topic-card[data-topic-card]");
+
+  const countForWork = (type) => {
+    if (type === "all") return workItems.length;
+
+    return Array.from(workItems).filter((item) =>
+      item.dataset.workType === type
+    ).length;
+  };
+
+  const applyWorkFilter = (type) => {
+    workItems.forEach((item) => {
+      item.hidden = type !== "all" && item.dataset.workType !== type;
+    });
+
+    workControls.forEach((control) => {
+      const active = control.dataset.workFilter === type;
+      control.classList.toggle("active", active);
+      control.setAttribute("aria-pressed", String(active));
+    });
+  };
+
+  workControls.forEach((control) => {
+    const badge = document.createElement("span");
+    badge.className = "topic-count";
+    badge.textContent = countForWork(control.dataset.workFilter);
+    control.appendChild(badge);
+    control.addEventListener("click", () => applyWorkFilter(control.dataset.workFilter));
+  });
+
+  applyWorkFilter("all");
 
   if (!controls.length || !rows.length) return;
 
@@ -563,7 +653,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (shouldScroll) {
-      document.querySelector("#listing-listing")?.scrollIntoView({
+      document.querySelector("#topic-filter")?.scrollIntoView({
         behavior: "smooth",
         block: "start"
       });

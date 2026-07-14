@@ -25,7 +25,7 @@ title-block-banner: false
 ::: profile-copy
 # Mburu M
 
-I work with statistics and data science. My main interest is representation: how we turn reality into data, models, maps, categories, institutions, stories, and decisions.
+Personal blog on data, technology, institutions, and life
 
 :::
 ::::::
@@ -86,10 +86,90 @@ Budgets, markets, governance, development, and institutional design.
 
 <span class="site-card-count" data-count-for="Institutions">0</span>
 :::
+
 :::
+
+## Selected Work
+
+::: work-pills
+<button type="button" class="active" data-work-filter="all">
+
+All
+
+</button>
+
+<button type="button" data-work-filter="Dashboards">
+
+Dashboards
+
+</button>
+
+<button type="button" data-work-filter="R Packages">
+
+R Packages
+
+</button>
+:::
+
+::: work-listing
+::: {.work-card data-work-type="Dashboards"}
+<span class="work-card-kicker">Interactive dashboard</span>
+
+### Kenya Food Prices
+
+Explore how food prices vary across time, counties, markets, commodities, and retail or wholesale price types in Kenya. The dashboard uses World Food Programme data published through the Humanitarian Data Exchange and lets you work in Kenyan shillings or US dollars. Use the overview, trend, map, comparison, and coverage views to identify recent price changes and differences between places.
+
+::: work-card-tags
+<span>Shiny</span><span>Food prices</span><span>Maps</span>
+:::
+
+::: work-card-actions
+[<i class="bi bi-box-arrow-up-right" aria-hidden="true"></i> Launch dashboard](https://mmburu.shinyapps.io/kenyaFoodPrices/){.work-link target="_blank" rel="noopener noreferrer"}
+
+[<i class="bi bi-github" aria-hidden="true"></i> Source code](https://github.com/m-mburu/kenyaFoodPrices){.work-link .work-link-secondary target="_blank" rel="noopener noreferrer"}
+:::
+:::
+
+::: {.work-card data-work-type="Dashboards"}
+<span class="work-card-kicker">Interactive dashboard</span>
+
+### Kenya Indicators
+
+Explore long-run changes in Kenya's national DHS indicators across fertility, child survival, health services, nutrition, WASH, HIV, malaria, education, and agency. The dashboard connects curated household-survey evidence to SDG themes while keeping survey years, coverage, uncertainty, and data limitations visible. Use the overview to scan policy trends, inspect individual indicators in detail, or download the filtered catalogue for further analysis.
+
+::: work-card-tags
+<span>Shiny</span><span>DHS</span><span>SDGs</span>
+:::
+
+::: work-card-actions
+[<i class="bi bi-box-arrow-up-right" aria-hidden="true"></i> Launch dashboard](https://mmburu.shinyapps.io/kenyaIndicators/){.work-link target="_blank" rel="noopener noreferrer"}
+
+[<i class="bi bi-github" aria-hidden="true"></i> Source code](https://github.com/m-mburu/kenyaIndicators){.work-link .work-link-secondary target="_blank" rel="noopener noreferrer"}
+:::
+:::
+
+::: {.work-card data-work-type="R Packages"}
+<span class="work-card-kicker">R package</span>
+
+### ineqTrees
+
+`ineqTrees` provides tools for studying socioeconomic inequality in health outcomes using tree-based models. It includes weighted-rank and concentration-index utilities together with methods for fitting inequality-aware trees and forests. The documentation covers model fitting, tuning, visualization, and SHAP-based decomposition through worked examples.
+
+::: work-card-tags
+<span>R</span><span>Health inequality</span><span>Tree models</span>
+:::
+
+::: work-card-actions
+[<i class="bi bi-book" aria-hidden="true"></i> View documentation](https://m-mburu.github.io/ineqTrees/){.work-link target="_blank" rel="noopener noreferrer"}
+
+[<i class="bi bi-github" aria-hidden="true"></i> Source code](https://github.com/m-mburu/ineqTrees){.work-link .work-link-secondary target="_blank" rel="noopener noreferrer"}
+:::
+:::
+:::
+
 ## Writing
 
-::: topic-pills
+::: {.topic-pills #topic-filter}
 <button type="button" class="active" data-topic="all">
 
 Selected
@@ -119,6 +199,7 @@ Institutions
 Life & Books
 
 </button>
+
 :::
 
 ::: {.topic-empty hidden=""}
@@ -128,10 +209,42 @@ No articles in this topic yet.
 ```{=html}
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+  const workControls = document.querySelectorAll(".work-pills button[data-work-filter]");
+  const workItems = document.querySelectorAll("[data-work-type]");
   const controls = document.querySelectorAll(".topic-pills button[data-topic]");
   const rows = document.querySelectorAll("#listing-listing tbody tr");
   const emptyMessage = document.querySelector(".topic-empty");
   const topicCards = document.querySelectorAll(".topic-card[data-topic-card]");
+
+  const countForWork = (type) => {
+    if (type === "all") return workItems.length;
+
+    return Array.from(workItems).filter((item) =>
+      item.dataset.workType === type
+    ).length;
+  };
+
+  const applyWorkFilter = (type) => {
+    workItems.forEach((item) => {
+      item.hidden = type !== "all" && item.dataset.workType !== type;
+    });
+
+    workControls.forEach((control) => {
+      const active = control.dataset.workFilter === type;
+      control.classList.toggle("active", active);
+      control.setAttribute("aria-pressed", String(active));
+    });
+  };
+
+  workControls.forEach((control) => {
+    const badge = document.createElement("span");
+    badge.className = "topic-count";
+    badge.textContent = countForWork(control.dataset.workFilter);
+    control.appendChild(badge);
+    control.addEventListener("click", () => applyWorkFilter(control.dataset.workFilter));
+  });
+
+  applyWorkFilter("all");
 
   if (!controls.length || !rows.length) return;
 
@@ -215,7 +328,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (shouldScroll) {
-      document.querySelector("#listing-listing")?.scrollIntoView({
+      document.querySelector("#topic-filter")?.scrollIntoView({
         behavior: "smooth",
         block: "start"
       });

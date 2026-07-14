@@ -95,7 +95,7 @@
     "href": "index.html",
     "title": "Mburu M",
     "section": "",
-    "text": "About\n\n\n\n\nI work with statistics and data science. My main interest is representation: how we turn reality into data, models, maps, categories, institutions, stories, and decisions."
+    "text": "About\n\n\n\n\nPersonal blog on data, technology, institutions, and life"
   },
   {
     "objectID": "index.html#at-a-glance",
@@ -110,6 +110,13 @@
     "title": "Mburu M",
     "section": "Collections",
     "text": "Collections\n\n\nData & Evidence\n\nAnalytical notes\nStatistics, public data, models, uncertainty, maps, and applied evidence.\n0\n\n\n\nTechnology\n\nTools and systems\nSoftware, AI, developer infrastructure, and the traces technology leaves behind.\n0\n\n\n\nInstitutions\n\nPublic systems\nBudgets, markets, governance, development, and institutional design.\n0"
+  },
+  {
+    "objectID": "index.html#selected-work",
+    "href": "index.html#selected-work",
+    "title": "Mburu M",
+    "section": "Selected Work",
+    "text": "Selected Work\n\n\nAll\n\n\nDashboards\n\n\nR Packages\n\n\n\n\nInteractive dashboard\n\nKenya Food Prices\nExplore how food prices vary across time, counties, markets, commodities, and retail or wholesale price types in Kenya. The dashboard uses World Food Programme data published through the Humanitarian Data Exchange and lets you work in Kenyan shillings or US dollars. Use the overview, trend, map, comparison, and coverage views to identify recent price changes and differences between places.\n\nShinyFood pricesMaps\n\n\n Launch dashboard\n Source code\n\n\n\n\nInteractive dashboard\n\nKenya Indicators\nExplore long-run changes in Kenya’s national DHS indicators across fertility, child survival, health services, nutrition, WASH, HIV, malaria, education, and agency. The dashboard connects curated household-survey evidence to SDG themes while keeping survey years, coverage, uncertainty, and data limitations visible. Use the overview to scan policy trends, inspect individual indicators in detail, or download the filtered catalogue for further analysis.\n\nShinyDHSSDGs\n\n\n Launch dashboard\n Source code\n\n\n\n\nR package\n\nineqTrees\nineqTrees provides tools for studying socioeconomic inequality in health outcomes using tree-based models. It includes weighted-rank and concentration-index utilities together with methods for fitting inequality-aware trees and forests. The documentation covers model fitting, tuning, visualization, and SHAP-based decomposition through worked examples.\n\nRHealth inequalityTree models\n\n\n View documentation\n Source code"
   },
   {
     "objectID": "index.html#writing",
