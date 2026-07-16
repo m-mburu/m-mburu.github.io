@@ -1,516 +1,884 @@
----
-title: "Bootstrap in Practice: CIs, Hypothesis Tests, and a Crab-Data Case Study"
+﻿---
+title: "Your Supervisor Said 'Do a Bootstrap'. What Do They Mean?"
 format: html
 date: "2026-02-23"
-description: "A practical note on bootstrap confidence intervals, hypothesis tests, and model uncertainty using a crab-data case study."
+description: "A practical journey from one sample to bootstrap confidence intervals and hypothesis tests using children's weight-for-height z-scores."
 share-permalink: "https://m-mburu.github.io/posts/bootstrap/boostrap_crab.html"
 categories: ["Data & Evidence", "Statistics", "Bootstrap"]
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.width = 8,
+  fig.height = 4.5
+)
 
-library(tidyverse)
-library(broom)
-library(kableExtra)
-library(glm2)
 library(data.table)
-data(crabs)
-crabs <- na.omit(crabs)
+library(ggplot2)
+library(knitr)
+library(MASS)
 
-set.seed(12345)
-B <- 2000
+set.seed(2026)
 
-percentile_ci <- function(x, level = 0.95) {
-    alpha <- (1 - level) / 2
-    qs <- unname(quantile(x, probs = c(alpha, 1 - alpha), na.rm = TRUE))
-    paste0("[", paste(round(qs, 3), collapse = ", "), "]")
+n_boot <- 5000
+null_mean <- 0
+wasting_cutoff <- -2
+
+percentile_interval <- function(x, level = 0.95) {
+  alpha <- (1 - level) / 2
+  unname(quantile(x, probs = c(alpha, 1 - alpha), na.rm = TRUE))
 }
 
-stat_with_ci <- function(x, stat = mean, level = 0.95) {
-    stat <- match.fun(stat)
-    est <- stat(x, na.rm = TRUE)
-    paste0(round(est, 3), " ", percentile_ci(x, level = level))
+one_sample_t <- function(x, mu = 0) {
+  (mean(x) - mu) / (sd(x) / sqrt(length(x)))
 }
 
-bootstrap_p_value <- function(t_boot, t_obs, two_sided = TRUE) {
-    if (two_sided) {
-        (1 + sum(abs(t_boot) >= abs(t_obs))) / (length(t_boot) + 1)
-    } else {
-        (1 + sum(t_boot >= t_obs)) / (length(t_boot) + 1)
-    }
-}
+monte_carlo_p <- function(simulated_statistics, observed_statistic, tail) {
+  if (tail == "left") {
+    extreme <- simulated_statistics <= observed_statistic
+  } else if (tail == "right") {
+    extreme <- simulated_statistics >= observed_statistic
+  } else {
+    extreme <- abs(simulated_statistics) >= abs(observed_statistic)
+  }
 
-options(scipen = 999)
-
-library(DT)
-data_table <- function(df, pageLength = 50) {
-    n_col <- ncol(df) - 1
-    datatable(df,
-        rownames = FALSE,
-        style = "bootstrap4", class = "cell-border stripe",
-        options = list(
-            scrollX = TRUE,
-            pageLength = pageLength,
-            columnDefs = list(list(className = "dt-center", targets = 0:n_col))
-        )
-    )
+  (1 + sum(extreme)) / (length(simulated_statistics) + 1)
 }
 ```
 
-## 1. Introduction: what bootstrap is
+Let us say you are a PhD candidate. You have spent months cleaning your data,
+fitting your model, and preparing the results. You show the results to your
+supervisors. One of them looks at your confidence interval and asks:
 
-Any statistic we compute from a sample (a mean, a median, a regression coefficient, a predicted value) has sampling uncertainty: if we repeated the data collection, we would get a slightly different estimate.
+> Did you bootstrap this?
 
-The bootstrap is a general, simulation-based way to measure that uncertainty.
+Another one adds:
 
-- Treat the observed data as our best stand-in for the population.
-- Generate many new datasets from it.
-- Recompute the statistic on each dataset.
-- Use the spread of those bootstrap replicates to approximate uncertainty.
+> Carry out a bootstrap and see whether the conclusion remains the same.
 
-## 2. The two most common bootstrap types
+You write the comment down. But perhaps you are not completely sure what they
+have asked you to do. Is bootstrap another statistical test? Is it a way of
+correcting a bad model? And why does a serious statistical method have the name
+of something attached to a boot?
 
-### 2.1 Nonparametric bootstrap (resample the data)
+The same thing happens in management meetings. A statistician says, “We
+bootstrapped the confidence intervals.” Everybody nods and the presentation
+moves to the next slide. If you are the manager making the decision, what
+exactly should that sentence make you trust—or question—about the result?
 
-Resample the observed data with replacement. For i.i.d. data, that usually means resampling rows.
+We are going to answer these questions slowly. We will begin with one sample of
+children's weight-for-height z-scores. First, we will carry out a familiar
+statistical test. Then we will ask one sample to behave like many samples.
+Finally, we will use bootstrap to carry out a hypothesis test.
 
-- Makes minimal distributional assumptions.
-- Very broadly applicable.
-- For hypothesis tests, you still need a way to generate samples under the null (often via centering/transformations, or residual-based bootstraps).
+## Why does it have such a strange name?
 
-### 2.2 Parametric bootstrap (simulate from a fitted model)
+Baron Münchhausen was a fictional nobleman famous for telling impossible
+stories. In one of the stories, he and his horse became trapped in a swamp. He
+claimed that he escaped by pulling himself and the horse out using his own
+hair.
 
-Assume a parametric model is a reasonable approximation, fit it, then simulate new datasets from the fitted model.
+The later English expression “pull yourself up by your own bootstraps” carries
+the same impossible idea: lifting yourself without help from outside. The
+original story used his hair, not literal bootstraps, but the bootstrap version
+of the phrase became the better-known metaphor.
 
-- Stronger assumptions.
-- Particularly natural for likelihood-based models and likelihood-ratio tests.
-- Often excellent for generating null distributions during hypothesis testing, because you can simulate directly under $H_0$. A null distribution is the assumption that the model is correct under $H_0$, so simulating from it gives you a direct way to get a null distribution for your test statistic. eg when doing an independent two-sample t-test, you can simulate a new data set using $N(\hat\mu, \hat\sigma^2)$ under $H_0$.
+Statistics has a similar problem. We want to know what would happen if we
+repeated our study many times and collected a new sample each time. Usually, we
+do not have the money or time to repeat the whole study. We have only one
+sample.
 
-## 3. Constructing bootstrap estimates and confidence intervals
+Bootstrap asks that one sample to provide many possible samples. It tries to
+pull information about repeated studies out of the observed data itself.
+Bradley Efron formally introduced the statistical method in his 1979 paper,
+[“Bootstrap Methods: Another Look at the
+Jackknife”](https://doi.org/10.1214/aos/1176344552). The stories of Baron
+Münchhausen can also be read through [Project
+Gutenberg](https://www.gutenberg.org/ebooks/3154).
 
-Let $T$ be a statistic (e.g., $T(x) = \bar x$). The bootstrap procedure is:
+Here is the whole idea in one sentence:
 
-1.  Compute $T_{obs} = T(x)$.
-2.  For $b=1,\dots,B$:
-    - generate a bootstrap dataset $x^{*(b)}$,
-    - compute $T^{*(b)} = T(x^{*(b)})$.
-3.  Use $\{T^{*(b)}\}$ to estimate SEs and CIs.
+> A bootstrap repeatedly resamples the data we observed, recalculates the
+> result, and uses the variation in those recalculated results to show how
+> uncertain our original result is.
 
-### 3.1 Nonparametric bootstrap for a mean (and a median)
+Let us see what this means using data.
 
-```{r}
-#| label: tbl-bootstrap-mean-median
-#| tbl-cap: "Bootstrap estimates for the mean and median of the crab widths, with nonparametric resampling."
-set.seed(1)
+## Are the children lighter for their height than the reference population?
 
-x <- c(12.1, 10.4, 11.7, 9.9, 10.8, 13.2, 11.0, 10.6, 12.5, 9.8)
-n <- length(x)
+Suppose we collected weight and height measurements from children in a
+community nutrition survey. We then converted each child's measurement into a
+weight-for-height z-score, which we will call WHZ.
 
-t_obs_mean <- mean(x)
-t_obs_median <- median(x)
+The [WHO child growth
+standards](https://www.who.int/tools/child-growth-standards/standards/weight-for-length-height)
+give us a reference for interpreting the values:
 
-boot_mean_np <- numeric(B)
-boot_median_np <- numeric(B)
+- A WHZ of 0 places a child at the WHO reference median for a child of the same
+  height.
+- A negative WHZ means the child is lighter for their height than the reference
+  median.
+- A positive WHZ means the child is heavier for their height than the reference
+  median.
+- An individual child with WHZ below -2 is classified as wasted.
 
-for (b in seq_len(B)) {
-    x_star <- sample(x, size = n, replace = TRUE)
-    boot_mean_np[b] <- mean(x_star)
-    boot_median_np[b] <- median(x_star)
-}
+The data below are simulated. This allows us to learn the method without
+sharing information about real children.
 
-se_mean_np <- sd(boot_mean_np)
-bias_mean_np <- mean(boot_mean_np) - t_obs_mean
+```{r simulate-whz}
+n_children <- 80
 
-ci_mean_np <- percentile_ci(boot_mean_np)
-ci_median_np <- percentile_ci(boot_median_np)
-
-stats_df <- data.table(
-    "Mean" = t_obs_mean,
-  "Bootstrap Mean" = stat_with_ci(boot_mean_np, stat = mean),
-    "Bootstrap SE (Mean)" = se_mean_np,
-    "Bootstrap Bias (Mean)" = bias_mean_np,
-    "Median" = t_obs_median,
-  "Bootstrap Median" = stat_with_ci(boot_median_np, stat = mean)
+whz <- rnorm(
+  n = n_children,
+  mean = -0.65,
+  sd = 1.05
 )
 
-# round only nums
-stats_df <- stats_df %>%
-    mutate(across(where(is.numeric), ~ round(., 3)))
+whz <- pmax(pmin(whz, 2.4), -3.8)
 
-# melt
-stats_df <- melt(stats_df,
-    measure.vars = names(stats_df),
-    variable.name = "statistic",
-    value.name = "value"
-)
-## put this in a table
-
-data_table(stats_df, pageLength = 10)
-```
-
-- The observed sample mean is \$\bar x = \$ `r round(t_obs_mean, 2)` and the observed median is `r round(t_obs_median, 2)`.
-- The bootstrap SE (`mean_boot_se`) is the typical sampling fluctuation of the mean across repeated samples of size `r n`.
-- The bootstrap bias estimate (`mean_boot_bias`) is `r round(bias_mean_np, 3)`. With finite $B$, this is a noisy estimate; if it's small relative to the SE, you typically wouldn't worry about bias.
-- The 95% percentile bootstrap CI for the mean is `r ci_mean_np`. Interpreted literally: if we repeated the whole sampling process many times, about 95% of such intervals would contain the true population mean.
-- The 95% percentile bootstrap CI for the median is `r ci_median_np`. Comparing the widths of the mean vs median CIs gives you a feel for which statistic is more variable for this sample size.
-
-### 3.2 Parametric bootstrap for a mean (Normal model)
-
-If we're comfortable assuming the data are approximately Normal, we can bootstrap by simulating $x^* \sim \mathcal{N}(\hat\mu, \hat\sigma)$.
-
-```{r}
-#| label: tbl-bootstrap-mean-parametric
-#| tbl-cap: "Bootstrap estimates for the mean of the crab widths, with parametric resampling under a Normal model."
-mu_hat <- mean(x)
-sigma_hat <- sd(x)
-
-boot_mean_par <- numeric(B)
-for (b in seq_len(B)) {
-  x_star <- rnorm(n, mean = mu_hat, sd = sigma_hat)
-  boot_mean_par[b] <- mean(x_star)
-}
-
-se_mean_par <- sd(boot_mean_par) |> round(3)
-ci_mean_par <- percentile_ci(boot_mean_par) 
-
-data.table(
-  `Bootstrap SE (mean)` = se_mean_par,
-  `Bootstrap 95% CI (mean)` = ci_mean_par
-) |>
-data_table()
-```
-
-How to interpret this output
-
-- This CI answers the same question as the nonparametric CI, but *under the Normal model assumption*.
-- The parametric bootstrap 95% CI for the mean is `r ci_mean_par`
-- If the parametric and nonparametric CIs are very similar here, it suggests the Normal approximation is not doing something wildly different from what the data-driven resampling is doing (at least for the mean).
-
-## 4. Bootstrap hypothesis testing
-
-Bootstrap testing needs one extra ingredient: bootstrap samples must reflect $H_0$.
-
-General recipe:
-
-1.  Choose a test statistic $T$.
-2.  Compute $T_{obs}$.
-3.  Generate many bootstrap datasets consistent with $H_0$.
-4.  Compute $T^{*(b)}$ each time.
-5.  Approximate the p-value by how often $T^{*(b)}$ is as extreme as $T_{obs}$.
-
-This is called a Monte Carlo p-value. The usual small-sample correction (it also avoids getting a p-value of exactly 0) is
-
-$$\hat p = \frac{1 + \#\{T^* \ge T_{obs}\}}{B+1},$$
-
-- You generate $B$ bootstrap datasets under the null hypothesis $H_0$ (using a resampling/simulation method that makes the null true).
-- You compute the test statistic on each null dataset, giving $T^{*(1)},\dots,T^{*(B)}$.
-
-Right-tailed, left-tailed, and two-sided tests
-
-- Right-tailed (large $T$ is evidence against $H_0$):
-
-  $$\hat p = \frac{1 + \#\{T^* \ge T_{obs}\}}{B+1}.$$
-
-- Left-tailed (small $T$ is evidence against $H_0$):
-
-  $$\hat p = \frac{1 + \#\{T^* \le T_{obs}\}}{B+1}.$$
-
-- Two-sided (far from the null target is evidence against $H_0$): pick the null target value $T_0$ (often 0), and count how often you get something at least as far from $T_0$ as the observed statistic:
-
-  $$\hat p = \frac{1 + \#\{|T^* - T_0| \ge |T_{obs} - T_0|\}}{B+1}.$$
-
-### 4.1 One-sample mean: bootstrap version of a $t$ test
-
-We test $H_0: \mu = \mu_0$ using the usual t-statistic: $$T = \frac{\bar x - \mu_0}{s/\sqrt{n}}.$$
-
-We'll compare:
-
-- classical `t.test()`,
-- a nonparametric bootstrap test under $H_0$ (by *recentering* the data),
-- a parametric bootstrap test under $H_0$ (simulate Normal samples with mean $\mu_0$).
-
-These two bootstraps differ only in how they generate samples under $H_0$:
-
-- Nonparametric under $H_0$: recenter the data so it has mean $\mu_0$, then resample with replacement.
-- Parametric under $H_0$: assume $X \sim \mathcal{N}(\mu, \sigma^2)$, estimate $\sigma$ from the data, then simulate samples from $\mathcal{N}(\mu_0, \hat\sigma^2)$.
-
-```{r}
-mu0 <- 11
-
-t_classical <- t.test(x, mu = mu0)
-p_classical <- unname(t_classical$p.value)
-
-# Observed test statistic
-t_obs <- unname(t_classical$statistic)
-
-# Nonparametric bootstrap under H0: recenter then resample
-x0 <- x - mean(x) + mu0
-t_boot_np <- numeric(B)
-for (b in seq_len(B)) {
-  xs <- sample(x0, size = n, replace = TRUE)
-  t_boot_np[b] <- unname(t.test(xs, mu = mu0)$statistic)
-}
-p_np <- bootstrap_p_value(t_boot_np, t_obs, two_sided = TRUE)
-
-# Parametric bootstrap under H0: simulate Normal with mean mu0
-sigma0_hat <- sqrt(var(x))
-t_boot_par <- numeric(B)
-for (b in seq_len(B)) {
-  xs <- rnorm(n, mean = mu0, sd = sigma0_hat)
-  t_boot_par[b] <- unname(t.test(xs, mu = mu0)$statistic)
-}
-p_par <- bootstrap_p_value(t_boot_par, t_obs, two_sided = TRUE)
-
-c(
-  classical_t_test = p_classical,
-  bootstrap_nonparametric = p_np,
-  bootstrap_parametric = p_par
-)
-```
-
-- All three numbers are p-values for the same null, \$H_0: \mu = \$ `r mu0`, using the same $t$-statistic.
-- The observed test statistic is \$t\_{obs} = \$ `r round(t_obs, 3)`. The bootstrap p-values estimate $\Pr(|T^*| \ge |t_{obs}| \mid H_0)$ by simulation.
-- If the p-value is small (commonly \< 0.05), the observed statistic would be rare under $H_0$, so you have evidence against $H_0$.
-- Don't expect the three p-values to be identical: they differ in how they generate data under $H_0$ (exact $t$ reference vs recenter-and-resample vs Normal simulation).
-- Because the bootstrap p-values are Monte Carlo estimates, they have simulation noise. With `r B` replicates, differences in the 3rd decimal place are usually not meaningful.
-
-## 5. Advanced bootstrap: likelihood-ratio testing on crab data
-
-This section uses the horseshoe crab dataset in `glm2` (a classic example for count regression). Reference: [Horseshoe crab dataset in glm2](https://search.r-project.org/CRAN/refmans/glm2/html/crabs.html)
-
-```{r}
-#| label: tbl-crabs-head
-#| tbl-cap: "First few rows of the horseshoe crab dataset."
-#| 
-data(crabs)
-
-head(crabs) |>
-  data_table()
-```
-
-In this study, each row corresponds to a female horseshoe crab. The main variables we use are:
-
-- `Satellites`: the number of satellite males observed with that female (a count outcome, often with many zeros),
-- `Width`: the female's carapace width (a size measure),
-- `Dark`: an indicator of shell colour (dark vs not).
-
-The scientific question is: after accounting for size (`Width`), does shell colour (`Dark`) still help explain how many satellites a female has?
-
-The outcome (`Satellites`) is a count, so we fit a Poisson GLM:
-
-- Reduced (null) model: `Satellites ~ Width`
-
-- Full model: `Satellites ~ Width + Dark`
-
-- Null hypothesis ($H_0$): after adjusting for female size (`Width`), shell colour (`Dark`) has no association with the expected number of satellite males. In other words, adding `Dark` does not improve the model.
-
-- Alternative hypothesis ($H_1$): after adjusting for `Width`, shell colour (`Dark`) is associated with the expected number of satellite males (so adding `Dark` improves the model).
-
-In model terms, this is the same as testing whether the `Dark` coefficient is zero (for the appropriate coding of `Dark`), typically written as $H_0: \beta_{Dark} = 0$ versus $H_1: \beta_{Dark} \ne 0$.
-
-### 5.1 Classical LRT (chi-square reference)
-
-```{r}
-fit_full <- glm(
-  Satellites ~ Width + Dark,
-  family = poisson(link = "log"),
-  data = crabs
+children <- data.table(
+  child_id = seq_len(n_children),
+  whz = whz
 )
 
-fit_red <- glm(
-  Satellites ~ Width,
-  family = poisson(link = "log"),
-  data = crabs
-)
+children[
+  ,
+  wasted := whz < wasting_cutoff
+]
 
-lrt_table <- anova(fit_red, fit_full, test = "Chisq") |> tidy()
-T_obs <- lrt_table$deviance[2]
-p_lrt_classical <- lrt_table$p.value[2]
-```
-
-```{r}
-#| label: tbl-crabs-lrt
-#| tbl-cap: "Classical likelihood ratio test (chi-square reference)."
-#| tbl-pos: "H"
-
-lrt_table |>
+children[1:10] |>
   kable(
-    format = "html",
-    booktabs = TRUE,
-    align = "lccccc",
-    escape = FALSE,
-    col.names = c("Model", "Resid. Df", "Resid. Dev.", "Df", "$\\chi^2$", "$p$-value")
-  ) |>
-  kable_styling(latex_options = c("scale_down", "hold_position"),
-                font_size = 9, full_width = TRUE) |>
-  column_spec(1, width = "5cm")
+    digits = 2,
+    col.names = c("Child", "WHZ", "WHZ below -2")
+  )
 ```
 
-- The LRT statistic is $T = 2(\ell_{full} - \ell_{red})$, reported here as `$\\chi^2$`. For these data, \$T\_{obs} = \$ `r round(T_obs, 3)`.
-- The chi-square p-value (`r signif(p_lrt_classical, 3)`) is based on a large-sample reference distribution ($T \overset{approx}{\sim} \chi^2_{df}$).
-- If this p-value is small, it suggests the full model fits meaningfully better, i.e., `Dark` adds information beyond `Width`.
+Before running a test, let us look at the values.
 
-### 5.2 Parametric bootstrap LRT p-value (null simulation)
+```{r plot-whz, echo=FALSE}
+#| fig-cap: "Simulated weight-for-height z-scores. The dashed line at 0 is the WHO reference median; the red line at -2 is the wasting cut-off."
 
-Generate bootstrap datasets under $H_0$ by simulating new counts from the reduced model.
+ggplot(children, aes(x = whz)) +
+  geom_histogram(
+    binwidth = 0.4,
+    boundary = 0,
+    colour = "white",
+    fill = "#367588"
+  ) +
+  geom_vline(xintercept = null_mean, linetype = "dashed", linewidth = 0.9) +
+  geom_vline(xintercept = wasting_cutoff, colour = "#B33A3A", linewidth = 0.9) +
+  labs(
+    x = "Weight-for-height z-score",
+    y = "Number of children"
+  ) +
+  theme_minimal()
+```
 
-Assumptions under $H_0$ (parametric bootstrap):
+The sample mean is `r round(mean(children$whz), 2)`. It is below zero, so the
+children in this sample are lighter for their height than the WHO reference
+median on average.
 
-- The reduced Poisson GLM is correctly specified under the null: conditional on `Width`, satellite counts follow a Poisson distribution with mean $\mu_i$ and log link.
-- Observations are independent (each crab is an independent sampling unit).
-- The covariates (`Width`, `Dark`) are treated as fixed (or we condition on them). Under $H_0$ the distribution of $Y$ depends on `Width` but not on `Dark`.
+But a sample mean is not a population mean. A different sample of 80 children
+would give us a different answer. Our first question is:
 
-This is not a permutation/exchangeability argument: we are not shuffling `Dark` labels. We are simulating $Y$ from an assumed model $Y \mid X \sim \text{Poisson}(\hat\mu_0(X))$.
+> Is the population mean WHZ below 0, or could the negative sample mean simply
+> be sampling variation?
 
-```{r}
-n_crabs <- nrow(crabs)
-mu_hat0 <- fitted(fit_red)
+This can be written as:
 
-T_boot_parametric <- numeric(B)
-for (b in seq_len(B)) {
-    y_star <- rpois(n_crabs, lambda = mu_hat0)
-    dat_star <- crabs
-    dat_star$Satellites <- y_star
+$$
+H_0: \mu = 0
+\qquad \text{against} \qquad
+H_1: \mu < 0.
+$$
 
-    fit_red_b <- glm(Satellites ~ Width,
-        family = poisson(link = "log"),
-        data = dat_star
-    )
-    fit_full_b <- glm(Satellites ~ Width + Dark,
-        family = poisson(link = "log"), data = dat_star
-    )
+The null hypothesis says that the population mean WHZ is at the reference
+median. The alternative says it is below the reference median.
 
-    T_boot_parametric[b] <- as.numeric(
-        2 * (logLik(fit_full_b) - logLik(fit_red_b))
-    )
+This is not yet a test of how many children are wasted. A mean below 0 and an
+individual WHZ below -2 are different things. We will return to that
+distinction.
+
+## What does the ordinary test tell us?
+
+The familiar approach is a one-sample t-test.
+
+```{r ordinary-test}
+classical_test <- t.test(
+  children$whz,
+  mu = null_mean,
+  alternative = "less"
+)
+
+classical_results <- data.table(
+  `Sample mean` = mean(children$whz),
+  `t statistic` = unname(classical_test$statistic),
+  `p-value` = classical_test$p.value
+)
+
+kable(classical_results, digits = 4)
+```
+
+The p-value is `r signif(classical_test$p.value, 3)`. If the population mean
+were really 0, a sample result this far below 0 would be
+`r if (classical_test$p.value < 0.05) "unusual" else "not especially unusual"`
+under the assumptions of the t-test.
+
+The t-test uses a mathematical reference distribution. Your supervisor may ask
+for a bootstrap because they want to see what the conclusion looks like when
+the uncertainty is estimated more directly from the observed data.
+
+We will not jump immediately to 5,000 repetitions. Let us first create one
+bootstrap sample.
+
+## How can one sample pretend to be many samples?
+
+For a small demonstration, take the first 10 WHZ values.
+
+```{r one-bootstrap-sample}
+small_sample <- children$whz[1:10]
+
+set.seed(27)
+one_resample <- sample(
+  small_sample,
+  size = length(small_sample),
+  replace = TRUE
+)
+
+resample_example <- data.table(
+  position = seq_along(small_sample),
+  observed_whz = small_sample,
+  resampled_whz = one_resample
+)
+
+kable(
+  resample_example,
+  digits = 2,
+  col.names = c("Position", "Observed WHZ", "One bootstrap resample")
+)
+```
+
+We sampled 10 values from the original 10 values **with replacement**. After
+drawing a value, we put it back before drawing again. This is why one value can
+appear several times while another value may not appear at all.
+
+The original mean of these 10 values is `r round(mean(small_sample), 2)`. The
+mean of this particular resample is `r round(mean(one_resample), 2)`.
+
+One resample does not tell us much. The next step is to repeat the process many
+times.
+
+## What happens when we repeat this 5,000 times?
+
+We now resample all `r n_children` children 5,000 times. Each time, we
+calculate the mean WHZ.
+
+```{r bootstrap-mean}
+set.seed(310)
+
+bootstrap_means <- numeric(n_boot)
+
+for (b in seq_len(n_boot)) {
+  whz_star <- sample(
+    children$whz,
+    size = n_children,
+    replace = TRUE
+  )
+
+  bootstrap_means[b] <- mean(whz_star)
 }
 
-p_lrt_parametric <- bootstrap_p_value(T_boot_parametric, T_obs,
-    two_sided = FALSE
-)
-p_lrt_parametric
+mean_bootstrap_se <- sd(bootstrap_means)
+mean_bootstrap_ci <- percentile_interval(bootstrap_means)
 ```
 
-- This p-value estimates $\Pr(T^* \ge T_{obs} \mid H_0)$ where $T^*$ is generated by simulating new outcomes from the reduced (null) Poisson GLM.
-- Here, $\hat p \approx$ `r signif(p_lrt_parametric, 3)`. If it's close to the chi-square p-value, that suggests the asymptotic reference is adequate.
-- If it differs noticeably, the bootstrap is warning you that the chi-square approximation may be a bit off for this sample/model.
+```{r plot-bootstrap-means, echo=FALSE}
+#| fig-cap: "Bootstrap distribution of 5,000 sample means. The solid line is the observed sample mean."
 
-### 5.3 Permutation test (shuffling `Dark`, keeping `Y` and `Width` fixed)
+bootstrap_mean_plot <- data.table(
+  bootstrap_mean = bootstrap_means
+)
 
-If you want a fully nonparametric way to get a null distribution for the `Dark` effect, a natural option is a permutation test.
+ggplot(bootstrap_mean_plot, aes(x = bootstrap_mean)) +
+  geom_histogram(bins = 40, colour = "white", fill = "#367588") +
+  geom_vline(xintercept = mean(children$whz), linewidth = 1) +
+  labs(
+    x = "Mean WHZ in each bootstrap sample",
+    y = "Number of bootstrap samples"
+  ) +
+  theme_minimal()
+```
 
-Idea: under $H_0$ (`Dark` has no association with satellites after adjusting for width), the `Dark` labels should be exchangeable *given `Width`*. To make given `Width` more concrete, we do a stratified permutation: bin `Width` and only shuffle `Dark` within bins.
+This graph is called the **bootstrap distribution of the mean**. It shows how
+the mean changes when the observed sample is resampled again and again.
 
-```{r}
-set.seed(123)
+The standard deviation of these 5,000 means is
+`r round(mean_bootstrap_se, 3)`. We call this the bootstrap standard error. It
+is an estimate of the typical sampling variation in the mean.
 
-width_bin <- ntile(crabs$Width, 5)
+The middle 95% of the bootstrap means run from
+`r round(mean_bootstrap_ci[1], 2)` to `r round(mean_bootstrap_ci[2], 2)`. The
+interval is entirely below zero. In practical language, the data suggest that
+the population represented by this sample has a mean WHZ below the WHO
+reference median.
 
-T_boot_perm <- numeric(B)
+Notice what we have done so far. We resampled the observations **without
+changing them first**. This is useful for estimating the uncertainty around
+the observed mean. It is not yet a valid bootstrap hypothesis test.
 
-for (b in seq_len(B)) {
-    dat_perm <- crabs
-    dark_perm <- dat_perm$Dark
+## Why can we not use the same resamples for the hypothesis test?
 
-    for (g in sort(unique(width_bin))) {
-        idx_g <- which(width_bin == g)
-        dark_perm[idx_g] <- sample(dark_perm[idx_g],
-            size = length(idx_g), replace = FALSE
-        )
-    }
+Our observed data have a negative mean. When we resample them as they are, the
+bootstrap samples will also tend to have a negative mean. That is exactly what
+we want when building a confidence interval around the observed result.
 
-    dat_perm$Dark <- dark_perm
+For hypothesis testing, however, we need to ask a different question:
 
-    fit_red_b <- glm(Satellites ~ Width,
-        family = poisson(link = "log"),
-        data = dat_perm
-    )
-    fit_full_b <- glm(Satellites ~ Width + Dark,
-        family = poisson(link = "log"), data = dat_perm
-    )
+> What kind of test statistics would we observe if the null hypothesis were
+> true?
 
-    T_boot_perm[b] <- as.numeric(2 * (logLik(fit_full_b) - logLik(fit_red_b)))
+The null hypothesis says that the population mean is 0. We therefore need to
+create a bootstrap world where the mean is 0. We shift every observed value by
+the same amount:
+
+$$
+x_i^{0} = x_i - \bar{x} + \mu_0,
+$$
+
+where $\bar{x}$ is the observed mean and $\mu_0$ is the value specified by the
+null hypothesis. Here, $\mu_0 = 0$.
+
+This transformation keeps the shape and spread of the observed values, but
+moves their mean to zero.
+
+```{r create-null-world}
+whz_under_null <- children$whz -
+  mean(children$whz) +
+  null_mean
+
+null_world_summary <- data.table(
+  Dataset = c("Observed data", "Recentered null data"),
+  Mean = c(mean(children$whz), mean(whz_under_null)),
+  `Standard deviation` = c(sd(children$whz), sd(whz_under_null))
+)
+
+kable(null_world_summary, digits = 3)
+```
+
+The centre has moved to zero, but the standard deviation has not changed. We
+can now resample from these recentered values to see what results the null
+world produces.
+
+## Carrying out the bootstrap hypothesis test
+
+We will use the same statistic as the ordinary t-test:
+
+$$
+T_{\text{obs}}
+=
+\frac{\bar{x} - \mu_0}{s/\sqrt{n}}.
+$$
+
+For every null bootstrap sample, we calculate:
+
+$$
+T^{*(b)}
+=
+\frac{\bar{x}^{*(b)} - \mu_0}{s^{*(b)}/\sqrt{n}}.
+$$
+
+This is called a *studentized* statistic because the difference in means is
+scaled by its estimated standard error. A large negative value provides
+evidence for our alternative hypothesis that $\mu < 0$.
+
+```{r bootstrap-hypothesis-test}
+observed_t <- one_sample_t(
+  children$whz,
+  mu = null_mean
+)
+
+set.seed(711)
+null_bootstrap_t <- numeric(n_boot)
+
+for (b in seq_len(n_boot)) {
+  whz_star <- sample(
+    whz_under_null,
+    size = n_children,
+    replace = TRUE
+  )
+
+  null_bootstrap_t[b] <- one_sample_t(
+    whz_star,
+    mu = null_mean
+  )
 }
 
-p_perm <- bootstrap_p_value(T_boot_perm, T_obs, two_sided = FALSE)
-p_perm
+bootstrap_p_value <- monte_carlo_p(
+  simulated_statistics = null_bootstrap_t,
+  observed_statistic = observed_t,
+  tail = "left"
+)
 ```
 
-- This p-value answers a different "null world" than the parametric bootstrap: it treats the outcome model as unknown and instead tests whether the `Dark` labels are (approximately) exchangeable within `Width` bins under $H_0$.
-- Here, $\hat p \approx$ `r signif(p_perm, 3)`. If this is small, then shuffling `Dark` (while preserving the `Width` structure) rarely produces an LRT statistic as large as the observed one.
-- If the permutation and parametric-bootstrap p-values disagree, that's a signal to think carefully about which assumptions are more defensible for this dataset.
+```{r plot-null-bootstrap, echo=FALSE}
+#| fig-cap: "Bootstrap null distribution of the t-statistic. The red line is the statistic observed in the original sample."
 
-```{r}
-#| label: fig-lrt-null
-#| fig-cap: "Null distributions for the LRT statistic (parametric-bootstrap null and stratified permutation null), with the observed LRT marked."
-#| fig-width: 7
-#| fig-height: 4
-
-df_plot <- tibble(
-    T = c(T_boot_parametric, T_boot_perm),
-    method = rep(c("Parametric null", "Permutation null"), each = B)
+null_bootstrap_plot <- data.table(
+  t_statistic = null_bootstrap_t
 )
 
-ggplot(df_plot, aes(x = T)) +
-    geom_histogram(bins = 40, color = "white") +
-    geom_vline(xintercept = T_obs, linewidth = 1) +
-    facet_wrap(~method, ncol = 1, scales = "free_y") +
-    labs(x = "LRT statistic", y = "Count") +
-    theme_minimal()
+ggplot(null_bootstrap_plot, aes(x = t_statistic)) +
+  geom_histogram(bins = 40, colour = "white", fill = "#7A8B99") +
+  geom_vline(xintercept = observed_t, colour = "#B33A3A", linewidth = 1) +
+  labs(
+    x = "t-statistic generated under the null hypothesis",
+    y = "Number of bootstrap samples"
+  ) +
+  theme_minimal()
 ```
 
-## 6. Prediction intervals with bootstrap
+The observed t-statistic is `r round(observed_t, 2)`. The bootstrap p-value is
+`r signif(bootstrap_p_value, 3)`.
 
-Confidence intervals quantify uncertainty for an unknown parameter (or mean prediction). Prediction intervals are wider because they must also include the randomness of a *new observation*.
+The p-value is the proportion of null-world bootstrap samples that produced a
+t-statistic at least as negative as the one we observed. We use the small
+Monte Carlo correction:
 
-We'll build a bootstrap prediction interval for the number of satellites for a new crab with a chosen width and shell color.
+$$
+\widehat{p}
+=
+\frac{
+  1 + \#\left\{T^{*(b)} \leq T_{\text{obs}}\right\}
+}{
+  B + 1
+}.
+$$
 
-- CI for the mean: uncertainty in $\mu(x)$.
-- Prediction interval: uncertainty in a future $Y$ at that $x$ (mean uncertainty + Poisson noise).
+The 1 in the numerator and denominator prevents us from reporting a p-value of
+exactly zero merely because a finite simulation did not produce a more extreme
+result.
 
-```{r}
-new_crab <- tibble(
-    Width = 26,
-    Dark = factor("yes", levels = levels(crabs$Dark))
+```{r compare-tests}
+test_comparison <- data.table(
+  Method = c(
+    "Classical one-sample t-test",
+    "Nonparametric bootstrap test"
+  ),
+  `p-value` = c(
+    classical_test$p.value,
+    bootstrap_p_value
+  )
 )
 
-pred_mean_boot <- numeric(B)
-pred_y_boot <- numeric(B)
+kable(test_comparison, digits = 4)
+```
 
-for (b in seq_len(B)) {
-    idx <- sample.int(n_crabs, n_crabs, replace = TRUE)
-    dat_b <- crabs[idx, ]
+The two p-values do not have to be identical. The classical test uses the
+t-distribution as its null reference. The bootstrap test estimates the null
+distribution by resampling the recentered data.
 
-    fit_b <- glm(Satellites ~ Width + Dark,
-        family = poisson(link = "log"), data = dat_b
-    )
-    mu_b <- as.numeric(predict(fit_b,
-        newdata = new_crab,
-        type = "response"
-    ))
+What matters here is the substantive conclusion. Both methods indicate that
+the negative sample mean would be difficult to explain if the population mean
+WHZ were really zero.
 
-    pred_mean_boot[b] <- mu_b
-    pred_y_boot[b] <- rpois(1, lambda = mu_b)
+## Does this mean the children are wasted?
+
+No. This is an important distinction.
+
+Our mean analysis asked whether children are **below the WHO reference median
+on average**. Wasting is an individual classification. According to the [WHO
+definition](https://www.who.int/data/gho/indicator-metadata-registry/imr-details/prevalence-of-malnutrition-%28weight-for-height-2-or--2-standard-deviation-from-the-median-of-the-who-child-growth-standards%29-among-children-under-5-years-of-age-by-type-%28wasting-and-overweight%29-%28sdg-2.2.2%29),
+a child is wasted when WHZ is below -2.
+
+If a manager asks, “What percentage of children are wasted?”, the statistic we
+need is:
+
+$$
+\widehat{\pi}
+=
+\frac{
+  \text{number of children with WHZ below } -2
+}{
+  \text{number of children measured}
+}.
+$$
+
+We can bootstrap this proportion in the same way we bootstrapped the mean:
+resample children, calculate the proportion wasted, and repeat.
+
+```{r bootstrap-wasting-prevalence}
+observed_wasting_prevalence <- mean(
+  children$whz < wasting_cutoff
+)
+
+set.seed(912)
+bootstrap_wasting_prevalence <- numeric(n_boot)
+
+for (b in seq_len(n_boot)) {
+  whz_star <- sample(
+    children$whz,
+    size = n_children,
+    replace = TRUE
+  )
+
+  bootstrap_wasting_prevalence[b] <- mean(
+    whz_star < wasting_cutoff
+  )
 }
 
-ci_mean <- percentile_ci(pred_mean_boot)
-pi_y <- percentile_ci(pred_y_boot)
-
-list(
-    mean_CI_95 = ci_mean,
-    prediction_interval_95 = pi_y
+wasting_prevalence_ci <- percentile_interval(
+  bootstrap_wasting_prevalence
 )
 ```
 
-- The 95% CI for the mean (`mean_CI_95`) is for the *expected* number of satellites for a crab with `Width = 26` and `Dark = yes`.
-- The 95% prediction interval (`prediction_interval_95`) is for a *single future crab's observed count* at that same $(Width, Dark)$. It is wider because it includes both parameter uncertainty and Poisson outcome noise.
-- If you care about the average response, use the CI; if you care about what an individual new observation might look like, use the prediction interval.
+The estimated prevalence of wasting is
+`r round(100 * observed_wasting_prevalence, 1)`%. The bootstrap interval runs
+from `r round(100 * wasting_prevalence_ci[1], 1)`% to
+`r round(100 * wasting_prevalence_ci[2], 1)`%.
 
-## 7. Conclusion
+For a manager, the interval is often more useful than the point estimate
+alone. Another sample from the same population would not necessarily produce
+exactly `r round(100 * observed_wasting_prevalence, 1)`%. The interval shows a
+plausible range of sampling uncertainty.
 
-- Bootstrap is a general-purpose tool for uncertainty when analytic formulas are fragile or inconvenient.
-- Nonparametric bootstrap resamples the observed data; parametric bootstrap simulates from a fitted model.
-- For confidence intervals, percentile bootstrap is a simple baseline; for hypothesis tests, bootstrap samples must reflect $H_0$.
-- For GLMs and likelihood ratios, parametric (null) bootstrap is a natural way to avoid relying only on asymptotic chi-square approximations.
-- Prediction intervals via bootstrap are often the most directly useful output because they live on the outcome scale.
+There is an additional warning. If the children came from a complex survey
+with villages as clusters, strata, or unequal sampling weights, resampling
+individual children as though they were independently selected may be wrong.
+The bootstrap must respect the way the sample was collected.
+
+## For the advanced reader: what is bootstrap approximating?
+
+Suppose the population has an unknown distribution $F$, and our statistic of
+interest is:
+
+$$
+\theta = t(F).
+$$
+
+For example, $t(F)$ may be the population mean, median, prevalence, regression
+coefficient, or another quantity. We observe:
+
+$$
+X_1, X_2, \ldots, X_n \sim F,
+$$
+
+but we do not know $F$. The nonparametric bootstrap replaces the unknown
+population distribution with the empirical distribution:
+
+$$
+\widehat{F}_n(x)
+=
+\frac{1}{n}
+\sum_{i=1}^{n}
+\mathbf{1}(X_i \leq x).
+$$
+
+This empirical distribution assigns probability $1/n$ to every observed
+value. Sampling from $\widehat{F}_n$ is therefore the same as sampling the
+observed values with replacement.
+
+For bootstrap replicate $b$, we draw:
+
+$$
+X_1^{*(b)}, \ldots, X_n^{*(b)}
+\overset{\text{i.i.d.}}{\sim}
+\widehat{F}_n,
+$$
+
+and calculate:
+
+$$
+\widehat{\theta}^{*(b)}
+=
+t\left(\widehat{F}_n^{*(b)}\right).
+$$
+
+The conditional distribution of
+$\widehat{\theta}^{*} - \widehat{\theta}$ is used to approximate the sampling
+distribution of $\widehat{\theta} - \theta$.
+
+In plain language, we replace the unavailable population with the observed
+sample, then examine how our statistic behaves under repeated sampling from
+that replacement population.
+
+For a confidence interval, the simple percentile method uses:
+
+$$
+\left[
+  \widehat{\theta}^{*}_{\alpha/2},
+  \widehat{\theta}^{*}_{1-\alpha/2}
+\right].
+$$
+
+This method is easy to explain, though it is not always the best-performing
+bootstrap interval. Bias-corrected and accelerated intervals and bootstrap-t
+intervals can perform better in some settings.
+
+## Nonparametric or parametric bootstrap?
+
+So far, we have used the nonparametric bootstrap. It resamples the observed
+values. There is another common approach.
+
+```{r bootstrap-methods-table}
+bootstrap_methods <- data.table(
+  Method = c("Nonparametric bootstrap", "Parametric bootstrap"),
+  `What creates a new dataset?` = c(
+    "Resampling the observed data",
+    "Simulation from a fitted probability model"
+  ),
+  `Main assumption` = c(
+    "The sample represents the population and the resampling scheme matches the design",
+    "The fitted model reasonably describes how the data arise"
+  ),
+  `Question to ask` = c(
+    "What exactly was resampled?",
+    "What model generated the simulated data?"
+  )
+)
+
+kable(bootstrap_methods)
+```
+
+For our WHZ data, a parametric bootstrap could assume a Normal distribution,
+estimate its mean and standard deviation, and simulate new values from that
+fitted distribution. For hypothesis testing, we would simulate under the null:
+
+$$
+X_i^*
+\sim
+\mathcal{N}\left(\mu_0, \widehat{\sigma}^2\right).
+$$
+
+This is convenient, but it adds a stronger assumption: that the Normal model is
+a good description of the WHZ values.
+
+## Optional: What if your hypothesis concerns a model coefficient?
+
+Up to this point, our hypothesis concerned a mean. But your supervisor may ask
+for a bootstrap after you present a regression model. The language may change,
+but the journey remains the same.
+
+Let us use the `crabs` dataset in the `MASS` package. It contains measurements
+from 200 crabs of two species. We will use `sp`, the crab species; `CW`, the
+carapace width; and `sex`, whether the crab is female or male.
+
+Suppose our question is:
+
+> After accounting for carapace width, does sex help us distinguish the two
+> crab species?
+
+We fit a logistic regression because the outcome has two categories. The full
+model is:
+
+$$
+\log\left(
+  \frac{P(\text{orange species})}
+       {1 - P(\text{orange species})}
+\right)
+=
+\beta_0 + \beta_1\operatorname{CW} + \beta_2\operatorname{sex}.
+$$
+
+The coefficient we are interested in is $\beta_2$:
+
+$$
+H_0: \beta_2 = 0
+\qquad \text{against} \qquad
+H_1: \beta_2 \neq 0.
+$$
+
+In ordinary language, the null hypothesis says that once width is in the
+model, adding sex does not improve the model.
+
+### What does the ordinary model comparison tell us?
+
+We first fit two models. The reduced model represents the null hypothesis and
+contains width only. The full model contains width and sex.
+
+```{r fit-crab-models}
+data(crabs, package = "MASS")
+
+crab_data <- as.data.table(crabs)
+crab_data[, orange_species := as.integer(sp == "O")]
+
+crab_reduced <- glm(
+  orange_species ~ CW,
+  family = binomial(link = "logit"),
+  data = crab_data
+)
+
+crab_full <- glm(
+  orange_species ~ CW + sex,
+  family = binomial(link = "logit"),
+  data = crab_data
+)
+
+crab_lrt <- anova(
+  crab_reduced,
+  crab_full,
+  test = "Chisq"
+)
+
+observed_crab_lrt <- crab_lrt$Deviance[2]
+classical_crab_p <- crab_lrt$`Pr(>Chi)`[2]
+
+crab_model_result <- data.table(
+  Result = c(
+    "Observed likelihood-ratio statistic",
+    "Classical p-value"
+  ),
+  Value = c(observed_crab_lrt, classical_crab_p)
+)
+
+kable(crab_model_result, digits = 4)
+```
+
+The likelihood-ratio statistic measures how much fit we gain by adding sex:
+
+$$
+T_{\text{obs}}
+=
+2\left\{
+  \ell(\widehat{\beta}_{\text{full}})
+  -
+  \ell(\widehat{\beta}_{\text{reduced}})
+\right\}.
+$$
+
+A large value means that the full model improves substantially on the reduced
+model. The ordinary test compares this statistic with a chi-square reference
+distribution.
+
+### How do we create the null world for a model?
+
+For the WHZ test, we recentered the values so their mean was zero. For this
+model, the reduced model already gives us a world in which the null hypothesis
+is true. It says that species probability depends on width but not on sex.
+
+We therefore take the probabilities fitted by the reduced model and use them
+to simulate a new species outcome for every crab. We then fit both models to
+the simulated data and recalculate the likelihood-ratio statistic.
+
+```{r bootstrap-crab-coefficient-test}
+set.seed(1503)
+
+crab_null_probability <- fitted(crab_reduced)
+crab_bootstrap_lrt <- numeric(n_boot)
+
+for (b in seq_len(n_boot)) {
+  crab_star <- copy(crab_data)
+
+  crab_star[
+    ,
+    orange_species := rbinom(
+      n = .N,
+      size = 1,
+      prob = crab_null_probability
+    )
+  ]
+
+  reduced_star <- glm(
+    orange_species ~ CW,
+    family = binomial(link = "logit"),
+    data = crab_star
+  )
+
+  full_star <- glm(
+    orange_species ~ CW + sex,
+    family = binomial(link = "logit"),
+    data = crab_star
+  )
+
+  crab_bootstrap_lrt[b] <- as.numeric(
+    2 * (logLik(full_star) - logLik(reduced_star))
+  )
+}
+
+bootstrap_crab_p <- monte_carlo_p(
+  simulated_statistics = crab_bootstrap_lrt,
+  observed_statistic = observed_crab_lrt,
+  tail = "right"
+)
+
+crab_test_comparison <- data.table(
+  Method = c(
+    "Classical chi-square test",
+    "Parametric bootstrap test"
+  ),
+  `p-value` = c(classical_crab_p, bootstrap_crab_p)
+)
+
+kable(crab_test_comparison, digits = 4)
+```
+
+The bootstrap p-value is the proportion of null-world datasets in which adding
+sex produced a likelihood-ratio statistic at least as large as the one in the
+observed data.
+
+The important lesson is not the crab result itself. It is that testing a model
+coefficient follows the same path as testing the WHZ mean:
+
+1. Say clearly what the null hypothesis means.
+2. Construct or fit a world where that null hypothesis is true.
+3. Generate many datasets from that world.
+4. Refit the model and recalculate the statistic each time.
+5. Ask how often the null world produces a result as extreme as yours.
+
+This example uses a **parametric bootstrap**. We are trusting the reduced
+logistic model enough to generate possible species outcomes. That assumption
+should be reported, not hidden behind the word “bootstrap”.
+
+## What bootstrap cannot rescue
+
+Bootstrap is useful, but it is not magic.
+
+- It cannot correct a sample that systematically excluded important people.
+- It cannot turn 15 observations into the information contained in 15,000
+  independent observations.
+- It cannot ignore clustering, repeated measurements, survey weights, or time
+  order.
+- It cannot make a badly specified parametric model correct.
+- It cannot recover population patterns that are absent from the observed
+  sample.
+
+> Resampling a problem 5,000 times gives you 5,000 versions of the same
+> problem.
+
+For independent observations, resampling rows may be reasonable. For a
+clustered survey, we may need to resample clusters. For longitudinal data, we
+may need to resample people or blocks of time. For a regression, we must decide
+whether to resample rows, residuals, clusters, or simulate from a fitted model.
+
+The difficult part of bootstrap is often not writing the loop. It is deciding
+what represents a valid repeat of the study.
+
+## What should you ask when somebody says they bootstrapped the result?
+
+If you are the PhD candidate, ask:
+
+- What statistic am I bootstrapping?
+- What exactly should be resampled?
+- Does that resampling respect how the data were collected?
+- For a hypothesis test, how did I make the null hypothesis true?
+- Did the bootstrap and conventional analysis tell the same practical story?
+- Would more bootstrap repetitions materially change the result?
+
+If you are the manager listening to a presentation, ask:
+
+- What uncertainty does this interval describe?
+- Does the sample represent the people about whom we want to make a decision?
+- What assumptions were made when generating the bootstrap samples?
+- Would our decision change near the lower or upper end of the interval?
+
+The next time a supervisor or statistician asks whether you bootstrapped the
+result, you do not need to hear it as an incantation. They are asking how stable
+your conclusion is when the observed data are made to play the role of many
+possible samples.
+
+Your next question should be:
+
+> What did we resample, and did we resample it in a way that respects how the
+> data were collected?
