@@ -64,15 +64,13 @@ have asked you to do. Is bootstrap another statistical test? Is it a way of
 correcting a bad model? And why does a serious statistical method have the name
 of something attached to a boot?
 
-The same thing happens in management meetings. A statistician says, “We
-bootstrapped the confidence intervals.” Everybody nods and the presentation
-moves to the next slide. If you are the manager making the decision, what
-exactly should that sentence make you trust—or question—about the result?
+The same can happen in a management meeting. A statistician says that the
+confidence intervals were bootstrapped. If you are not a statistician, you may
+wonder what this means and whether it changes the decision.
 
-We are going to answer these questions slowly. We will begin with one sample of
-children's weight-for-height z-scores. First, we will carry out a familiar
-statistical test. Then we will ask one sample to behave like many samples.
-Finally, we will use bootstrap to carry out a hypothesis test.
+In this article I will use a simple example of children's weight-for-height
+z-scores to explain bootstrap. We will first do an ordinary test, then carry
+out the same test using bootstrap.
 
 ## Why does it have such a strange name?
 
@@ -81,25 +79,23 @@ stories. In one of the stories, he and his horse became trapped in a swamp. He
 claimed that he escaped by pulling himself and the horse out using his own
 hair.
 
-The later English expression “pull yourself up by your own bootstraps” carries
-the same impossible idea: lifting yourself without help from outside. The
-original story used his hair, not literal bootstraps, but the bootstrap version
-of the phrase became the better-known metaphor.
+The expression “pull yourself up by your own bootstraps” came later. It means
+doing something that appears impossible without help from outside. In the
+original story the Baron used his hair, not his bootstraps.
 
 Statistics has a similar problem. We want to know what would happen if we
 repeated our study many times and collected a new sample each time. Usually, we
 do not have the money or time to repeat the whole study. We have only one
 sample.
 
-Bootstrap asks that one sample to provide many possible samples. It tries to
-pull information about repeated studies out of the observed data itself.
-Bradley Efron formally introduced the statistical method in his 1979 paper,
+In bootstrap we use the one sample we have to create many new samples. Bradley
+Efron formally introduced the statistical method in his 1979 paper,
 [“Bootstrap Methods: Another Look at the
 Jackknife”](https://doi.org/10.1214/aos/1176344552). The stories of Baron
 Münchhausen can also be read through [Project
 Gutenberg](https://www.gutenberg.org/ebooks/3154).
 
-Here is the whole idea in one sentence:
+In simple terms:
 
 > A bootstrap repeatedly resamples the data we observed, recalculates the
 > result, and uses the variation in those recalculated results to show how
@@ -107,7 +103,7 @@ Here is the whole idea in one sentence:
 
 Let us see what this means using data.
 
-## Are the children lighter for their height than the reference population?
+## A simple test using weight-for-height z-scores
 
 Suppose we collected weight and height measurements from children in a
 community nutrition survey. We then converted each child's measurement into a
@@ -202,7 +198,7 @@ This is not yet a test of how many children are wasted. A mean below 0 and an
 individual WHZ below -2 are different things. We will return to that
 distinction.
 
-## What does the ordinary test tell us?
+## The ordinary one-sample test
 
 The familiar approach is a one-sample t-test.
 
@@ -227,14 +223,13 @@ were really 0, a sample result this far below 0 would be
 `r if (classical_test$p.value < 0.05) "unusual" else "not especially unusual"`
 under the assumptions of the t-test.
 
-The t-test uses a mathematical reference distribution. Your supervisor may ask
-for a bootstrap because they want to see what the conclusion looks like when
-the uncertainty is estimated more directly from the observed data.
+The t-test compares our observed mean with what we would expect if the
+population mean were zero. It does this using a t-distribution. We now want to
+see whether bootstrap gives us the same conclusion.
 
-We will not jump immediately to 5,000 repetitions. Let us first create one
-bootstrap sample.
+We start with one bootstrap sample before repeating the process 5,000 times.
 
-## How can one sample pretend to be many samples?
+## Taking one bootstrap sample
 
 For a small demonstration, take the first 10 WHZ values.
 
@@ -271,7 +266,7 @@ mean of this particular resample is `r round(mean(one_resample), 2)`.
 One resample does not tell us much. The next step is to repeat the process many
 times.
 
-## What happens when we repeat this 5,000 times?
+## Repeating the sample 5,000 times
 
 We now resample all `r n_children` children 5,000 times. Each time, we
 calculate the mean WHZ.
@@ -329,20 +324,19 @@ Notice what we have done so far. We resampled the observations **without
 changing them first**. This is useful for estimating the uncertainty around
 the observed mean. It is not yet a valid bootstrap hypothesis test.
 
-## Why can we not use the same resamples for the hypothesis test?
+## Preparing the data for a hypothesis test
 
 Our observed data have a negative mean. When we resample them as they are, the
 bootstrap samples will also tend to have a negative mean. That is exactly what
 we want when building a confidence interval around the observed result.
 
-For hypothesis testing, however, we need to ask a different question:
+For hypothesis testing we need to ask a different question:
 
 > What kind of test statistics would we observe if the null hypothesis were
 > true?
 
-The null hypothesis says that the population mean is 0. We therefore need to
-create a bootstrap world where the mean is 0. We shift every observed value by
-the same amount:
+The null hypothesis says that the population mean is 0. We therefore create a
+world where this is true by shifting every observed value by the same amount:
 
 $$
 x_i^{0} = x_i - \bar{x} + \mu_0,
@@ -443,9 +437,9 @@ ggplot(null_bootstrap_plot, aes(x = t_statistic)) +
 The observed t-statistic is `r round(observed_t, 2)`. The bootstrap p-value is
 `r signif(bootstrap_p_value, 3)`.
 
-The p-value is the proportion of null-world bootstrap samples that produced a
-t-statistic at least as negative as the one we observed. We use the small
-Monte Carlo correction:
+The p-value is the proportion of bootstrap samples generated under the null
+hypothesis that produced a t-statistic at least as negative as the one we
+observed. We use the small Monte Carlo correction:
 
 $$
 \widehat{p}
@@ -484,7 +478,7 @@ What matters here is the substantive conclusion. Both methods indicate that
 the negative sample mean would be difficult to explain if the population mean
 WHZ were really zero.
 
-## Does this mean the children are wasted?
+## Mean WHZ is not the prevalence of wasting
 
 No. This is an important distinction.
 
@@ -549,24 +543,25 @@ with villages as clusters, strata, or unequal sampling weights, resampling
 individual children as though they were independently selected may be wrong.
 The bootstrap must respect the way the sample was collected.
 
-## For the advanced reader: what is bootstrap approximating?
+## The mathematics behind bootstrap
 
-Suppose the population has an unknown distribution $F$, and our statistic of
-interest is:
+Let us now write the same idea using statistical notation. Suppose the
+population follows an unknown distribution $F$. The quantity we want to
+estimate is:
 
 $$
 \theta = t(F).
 $$
 
-For example, $t(F)$ may be the population mean, median, prevalence, regression
-coefficient, or another quantity. We observe:
+The function $t(F)$ can represent a population mean, median, prevalence, or
+regression coefficient. We observe a sample:
 
 $$
 X_1, X_2, \ldots, X_n \sim F,
 $$
 
-but we do not know $F$. The nonparametric bootstrap replaces the unknown
-population distribution with the empirical distribution:
+but we do not know $F$. Bootstrap replaces $F$ with the empirical distribution
+of the values in our sample:
 
 $$
 \widehat{F}_n(x)
@@ -576,11 +571,11 @@ $$
 \mathbf{1}(X_i \leq x).
 $$
 
-This empirical distribution assigns probability $1/n$ to every observed
-value. Sampling from $\widehat{F}_n$ is therefore the same as sampling the
-observed values with replacement.
+This gives each observed value a probability of $1/n$. Sampling from
+$\widehat{F}_n$ is therefore the same as sampling the observed values with
+replacement.
 
-For bootstrap replicate $b$, we draw:
+For bootstrap sample $b$, we draw:
 
 $$
 X_1^{*(b)}, \ldots, X_n^{*(b)}
@@ -588,7 +583,7 @@ X_1^{*(b)}, \ldots, X_n^{*(b)}
 \widehat{F}_n,
 $$
 
-and calculate:
+and calculate the statistic again:
 
 $$
 \widehat{\theta}^{*(b)}
@@ -596,15 +591,11 @@ $$
 t\left(\widehat{F}_n^{*(b)}\right).
 $$
 
-The conditional distribution of
-$\widehat{\theta}^{*} - \widehat{\theta}$ is used to approximate the sampling
-distribution of $\widehat{\theta} - \theta$.
+The collection of values $\widehat{\theta}^{*(1)}, \ldots,
+\widehat{\theta}^{*(B)}$ is the bootstrap distribution. Its spread tells us
+how much the statistic changes from one bootstrap sample to another.
 
-In plain language, we replace the unavailable population with the observed
-sample, then examine how our statistic behaves under repeated sampling from
-that replacement population.
-
-For a confidence interval, the simple percentile method uses:
+For a percentile confidence interval we take the lower and upper percentiles:
 
 $$
 \left[
@@ -613,11 +604,12 @@ $$
 \right].
 $$
 
-This method is easy to explain, though it is not always the best-performing
-bootstrap interval. Bias-corrected and accelerated intervals and bootstrap-t
-intervals can perform better in some settings.
+For a 95% interval, these are the 2.5th and 97.5th percentiles. This is the
+method we used for the mean WHZ and wasting prevalence. Other methods, such as
+the bootstrap-t and bias-corrected and accelerated intervals, may be more
+appropriate when the bootstrap distribution is highly skewed or biased.
 
-## Nonparametric or parametric bootstrap?
+## Nonparametric and parametric bootstrap
 
 So far, we have used the nonparametric bootstrap. It resamples the observed
 values. There is another common approach.
@@ -655,11 +647,10 @@ $$
 This is convenient, but it adds a stronger assumption: that the Normal model is
 a good description of the WHZ values.
 
-## Optional: What if your hypothesis concerns a model coefficient?
+## Testing a model coefficient using the crab data
 
-Up to this point, our hypothesis concerned a mean. But your supervisor may ask
-for a bootstrap after you present a regression model. The language may change,
-but the journey remains the same.
+So far we have tested a sample mean. We can use the same bootstrap idea when
+the hypothesis concerns a regression coefficient.
 
 Let us use the `crabs` dataset in the `MASS` package. It contains measurements
 from 200 crabs of two species. We will use `sp`, the crab species; `CW`, the
@@ -693,7 +684,7 @@ $$
 In ordinary language, the null hypothesis says that once width is in the
 model, adding sex does not improve the model.
 
-### What does the ordinary model comparison tell us?
+### Comparing the two crab models
 
 We first fit two models. The reduced model represents the null hypothesis and
 contains width only. The full model contains width and sex.
@@ -752,11 +743,11 @@ A large value means that the full model improves substantially on the reduced
 model. The ordinary test compares this statistic with a chi-square reference
 distribution.
 
-### How do we create the null world for a model?
+### Simulating crab data under the null hypothesis
 
-For the WHZ test, we recentered the values so their mean was zero. For this
-model, the reduced model already gives us a world in which the null hypothesis
-is true. It says that species probability depends on width but not on sex.
+For the WHZ test, we recentered the values so their mean was zero. Here the
+reduced model already represents the null hypothesis. It says that species
+probability depends on width but not on sex.
 
 We therefore take the probabilities fitted by the reduced model and use them
 to simulate a new species outcome for every crab. We then fit both models to
@@ -814,22 +805,21 @@ crab_test_comparison <- data.table(
 kable(crab_test_comparison, digits = 4)
 ```
 
-The bootstrap p-value is the proportion of null-world datasets in which adding
-sex produced a likelihood-ratio statistic at least as large as the one in the
-observed data.
+The observed likelihood-ratio statistic is
+`r round(observed_crab_lrt, 4)`. The classical p-value is
+`r round(classical_crab_p, 4)` and the bootstrap p-value is
+`r round(bootstrap_crab_p, 4)`. The two p-values are almost the same and both
+are large. We therefore do not have evidence that adding sex improves the
+model after accounting for carapace width.
 
-The important lesson is not the crab result itself. It is that testing a model
-coefficient follows the same path as testing the WHZ mean:
+This follows the same procedure as the WHZ test. We state the null hypothesis,
+generate data under that hypothesis, recalculate the statistic, and find out
+how often the simulated statistic is at least as large as the observed one.
 
-1. Say clearly what the null hypothesis means.
-2. Construct or fit a world where that null hypothesis is true.
-3. Generate many datasets from that world.
-4. Refit the model and recalculate the statistic each time.
-5. Ask how often the null world produces a result as extreme as yours.
-
-This example uses a **parametric bootstrap**. We are trusting the reduced
-logistic model enough to generate possible species outcomes. That assumption
-should be reported, not hidden behind the word “bootstrap”.
+This is a **parametric bootstrap** because the new species outcomes are
+generated from the reduced logistic model. The result therefore depends on
+that model being a reasonable description of the data under the null
+hypothesis.
 
 ## What bootstrap cannot rescue
 

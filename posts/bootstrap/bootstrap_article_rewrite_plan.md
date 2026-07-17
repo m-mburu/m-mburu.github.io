@@ -26,18 +26,10 @@ Explain why each step is needed before showing code. After every important
 table, number, or graph, say what it means in the language of the original
 question.
 
-Prefer headings that sound like questions or decisions:
-
-- “Why is your supervisor asking for this?”
-- “How can one sample pretend to be many samples?”
-- “What should you report?”
-
-Avoid headings that sound like a syllabus:
-
-- “Introduction”
-- “The two common bootstrap types”
-- “Constructing bootstrap estimates”
-- “Advanced bootstrap”
+Use a mixture of direct descriptive headings and occasional questions. Do not
+turn every heading into a rhetorical question. Headings such as "Taking one
+bootstrap sample", "Testing the null hypothesis", and "Wasting prevalence" are
+closer to the direct style of the earlier articles.
 
 Introduce one new idea at a time. The reader should see a familiar statistical
 test before seeing the bootstrap version of it.
@@ -59,6 +51,10 @@ chunk. Break the analysis into short pieces:
 The code should support the story rather than become the story. Show a very
 small resample by hand or in a small table before running thousands of
 replicates in R.
+
+When introducing a statistic, begin with a small numerical example, calculate
+it manually, and only then show the general method or package. This is the same
+pattern used for support and confidence in the market basket article.
 
 Retain technical accuracy without using technical language too early. Terms
 such as *sampling distribution*, *null distribution*, *studentized statistic*,
