@@ -1,7 +1,7 @@
 ---
 title: "Where Kenya's Budget Pressure Comes From"
 date: "2024-04-01"
-description: "A revived institutions note on Kenya's revenue, expenditure, recurrent spending, and debt-service pressure using CBK government finance data through 2023."
+description: "This post uses Central Bank of Kenya government finance data to examine how revenue and expenditure have changed since 2000. I also look at recurrent spending and the growing cost of servicing debt."
 permalink: /posts/institutions/kenya-fiscal-trends/kenya-fiscal-trends.html
 share-permalink: "https://m-mburu.github.io/posts/institutions/kenya-fiscal-trends/kenya-fiscal-trends.html"
 categories: ["Institutions"]
@@ -31,11 +31,11 @@ Kenya's government revenue has grown since 2000, but expenditure has grown faste
 
 That gap matters because it has to be financed. In practice, this often means more borrowing.
 
-The chart below shows this clearly. Revenue rises over time, but total expenditure remains higher. Spending also increases sharply after the mid-2010s, a period marked by large infrastructure spending and a larger public sector. Around 2020, the jump also reflects the fiscal pressure caused by COVID-19.
+The chart below shows this clearly. Revenue rises over time, but total expenditure remains higher. Expenditure begins to rise more sharply after the mid-2010s, when the government was spending heavily on infrastructure. Expenditure rises again around 2020 during the COVID-19 period.
 
 The main question is therefore simple: what exactly is pushing expenditure up?
 
-The data used here comes from the Central Bank of Kenya's [Government Finance Statistics](https://www.centralbank.go.ke/statistics/government-finance-statistics/). Some 2023 data was still incomplete when this analysis was first done.
+The data used here come from the Central Bank of Kenya's [Government Finance Statistics](https://www.centralbank.go.ke/statistics/government-finance-statistics/). Some 2023 data was still incomplete when this analysis was first done.
 ```{r, fig.width=7.3, fig.height=4.5}
 options(scipen = 999)
 
@@ -107,9 +107,9 @@ Development expenditure is spending on projects such as infrastructure and other
 
 County transfers are funds sent to county governments under devolution.
 
-The chart shows that recurrent expenditure is the largest and fastest-growing part of spending. Development expenditure rises too, especially during the infrastructure-heavy years, but it does not explain the pressure as much as recurrent spending does.
+The chart shows that recurrent expenditure is the largest and fastest-growing part of spending. Development expenditure has also increased, but most of the increase in total expenditure comes from recurrent expenditure.
 
-County transfers also increase after devolution, but they are not the main driver of the overall rise.
+County transfers have increased since devolution, but their increase is smaller than the increase in recurrent expenditure.
 
 So the next question is: what is inside recurrent expenditure?
 ```{r}
@@ -130,7 +130,7 @@ This means the government is spending more on interest payments for locally borr
 
 Foreign interest payments have also increased, though not as sharply as domestic interest. They still matter because a weaker shilling makes foreign debt more expensive when converted back into Kenyan shillings.
 
-The key point is this: Kenya's budget pressure is not only about how much the government spends. It is also about the rising cost of servicing debt, especially domestic debt.
+The chart shows that Kenya's budget pressure is not only caused by higher spending. The cost of servicing debt, especially domestic debt, has also increased.
 
 When interest payments take up more space in the budget, there is less room for development spending and basic services. It can also make borrowing more difficult for the private sector if the government takes up a large share of available credit.
 ```{r}
@@ -142,14 +142,10 @@ girafe( ggobj =  list_graphs$types_reccurrent$plot,
 
 ## Outlook
 
-Kenya has received new financing support from the IMF and the World Bank. This gives the government some breathing room, especially when foreign debt payments are under pressure from exchange-rate movements.
+Kenya has received financing from the IMF and the World Bank. This can help the government meet foreign debt payments, especially when a weaker shilling makes those payments more expensive. However, this financing is still debt that must be repaid.
 
-But loans do not remove the problem. They only shift the pressure forward unless revenue grows faster, spending is controlled, or debt becomes cheaper to service.
+If revenue continues to grow more slowly than expenditure, the government will continue to borrow to cover the difference. The data show that recurrent expenditure is the largest part of government spending and that interest payments are rising particularly quickly.
 
-The difficult part is that Kenya needs investment, but it also has to manage debt. Cutting too much spending can slow growth. Borrowing too much can make future budgets harder to manage.
-
-From this data, the main pressure point is clear: recurrent expenditure, especially interest payments, is taking up a larger share of the budget.
-
-That is where the budget story is.
+This means that a growing amount of government revenue is being used to pay for earlier borrowing. That leaves less money for development projects and public services.
 
 ![](usd_xchange.png)

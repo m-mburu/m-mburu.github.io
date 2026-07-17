@@ -388,19 +388,19 @@ window.Quarto = {
    
   <ul>
   <li><a href="#why-does-it-have-such-a-strange-name" id="toc-why-does-it-have-such-a-strange-name" class="nav-link active" data-scroll-target="#why-does-it-have-such-a-strange-name">Why does it have such a strange name?</a></li>
-  <li><a href="#are-the-children-lighter-for-their-height-than-the-reference-population" id="toc-are-the-children-lighter-for-their-height-than-the-reference-population" class="nav-link" data-scroll-target="#are-the-children-lighter-for-their-height-than-the-reference-population">Are the children lighter for their height than the reference population?</a></li>
-  <li><a href="#what-does-the-ordinary-test-tell-us" id="toc-what-does-the-ordinary-test-tell-us" class="nav-link" data-scroll-target="#what-does-the-ordinary-test-tell-us">What does the ordinary test tell us?</a></li>
-  <li><a href="#how-can-one-sample-pretend-to-be-many-samples" id="toc-how-can-one-sample-pretend-to-be-many-samples" class="nav-link" data-scroll-target="#how-can-one-sample-pretend-to-be-many-samples">How can one sample pretend to be many samples?</a></li>
-  <li><a href="#what-happens-when-we-repeat-this-5000-times" id="toc-what-happens-when-we-repeat-this-5000-times" class="nav-link" data-scroll-target="#what-happens-when-we-repeat-this-5000-times">What happens when we repeat this 5,000 times?</a></li>
-  <li><a href="#why-can-we-not-use-the-same-resamples-for-the-hypothesis-test" id="toc-why-can-we-not-use-the-same-resamples-for-the-hypothesis-test" class="nav-link" data-scroll-target="#why-can-we-not-use-the-same-resamples-for-the-hypothesis-test">Why can we not use the same resamples for the hypothesis test?</a></li>
+  <li><a href="#a-simple-test-using-weight-for-height-z-scores" id="toc-a-simple-test-using-weight-for-height-z-scores" class="nav-link" data-scroll-target="#a-simple-test-using-weight-for-height-z-scores">A simple test using weight-for-height z-scores</a></li>
+  <li><a href="#the-ordinary-one-sample-test" id="toc-the-ordinary-one-sample-test" class="nav-link" data-scroll-target="#the-ordinary-one-sample-test">The ordinary one-sample test</a></li>
+  <li><a href="#taking-one-bootstrap-sample" id="toc-taking-one-bootstrap-sample" class="nav-link" data-scroll-target="#taking-one-bootstrap-sample">Taking one bootstrap sample</a></li>
+  <li><a href="#repeating-the-sample-5000-times" id="toc-repeating-the-sample-5000-times" class="nav-link" data-scroll-target="#repeating-the-sample-5000-times">Repeating the sample 5,000 times</a></li>
+  <li><a href="#preparing-the-data-for-a-hypothesis-test" id="toc-preparing-the-data-for-a-hypothesis-test" class="nav-link" data-scroll-target="#preparing-the-data-for-a-hypothesis-test">Preparing the data for a hypothesis test</a></li>
   <li><a href="#carrying-out-the-bootstrap-hypothesis-test" id="toc-carrying-out-the-bootstrap-hypothesis-test" class="nav-link" data-scroll-target="#carrying-out-the-bootstrap-hypothesis-test">Carrying out the bootstrap hypothesis test</a></li>
-  <li><a href="#does-this-mean-the-children-are-wasted" id="toc-does-this-mean-the-children-are-wasted" class="nav-link" data-scroll-target="#does-this-mean-the-children-are-wasted">Does this mean the children are wasted?</a></li>
-  <li><a href="#for-the-advanced-reader-what-is-bootstrap-approximating" id="toc-for-the-advanced-reader-what-is-bootstrap-approximating" class="nav-link" data-scroll-target="#for-the-advanced-reader-what-is-bootstrap-approximating">For the advanced reader: what is bootstrap approximating?</a></li>
-  <li><a href="#nonparametric-or-parametric-bootstrap" id="toc-nonparametric-or-parametric-bootstrap" class="nav-link" data-scroll-target="#nonparametric-or-parametric-bootstrap">Nonparametric or parametric bootstrap?</a></li>
-  <li><a href="#optional-what-if-your-hypothesis-concerns-a-model-coefficient" id="toc-optional-what-if-your-hypothesis-concerns-a-model-coefficient" class="nav-link" data-scroll-target="#optional-what-if-your-hypothesis-concerns-a-model-coefficient">Optional: What if your hypothesis concerns a model coefficient?</a>
+  <li><a href="#mean-whz-is-not-the-prevalence-of-wasting" id="toc-mean-whz-is-not-the-prevalence-of-wasting" class="nav-link" data-scroll-target="#mean-whz-is-not-the-prevalence-of-wasting">Mean WHZ is not the prevalence of wasting</a></li>
+  <li><a href="#the-mathematics-behind-bootstrap" id="toc-the-mathematics-behind-bootstrap" class="nav-link" data-scroll-target="#the-mathematics-behind-bootstrap">The mathematics behind bootstrap</a></li>
+  <li><a href="#nonparametric-and-parametric-bootstrap" id="toc-nonparametric-and-parametric-bootstrap" class="nav-link" data-scroll-target="#nonparametric-and-parametric-bootstrap">Nonparametric and parametric bootstrap</a></li>
+  <li><a href="#testing-a-model-coefficient-using-the-crab-data" id="toc-testing-a-model-coefficient-using-the-crab-data" class="nav-link" data-scroll-target="#testing-a-model-coefficient-using-the-crab-data">Testing a model coefficient using the crab data</a>
   <ul>
-  <li><a href="#what-does-the-ordinary-model-comparison-tell-us" id="toc-what-does-the-ordinary-model-comparison-tell-us" class="nav-link" data-scroll-target="#what-does-the-ordinary-model-comparison-tell-us">What does the ordinary model comparison tell us?</a></li>
-  <li><a href="#how-do-we-create-the-null-world-for-a-model" id="toc-how-do-we-create-the-null-world-for-a-model" class="nav-link" data-scroll-target="#how-do-we-create-the-null-world-for-a-model">How do we create the null world for a model?</a></li>
+  <li><a href="#comparing-the-two-crab-models" id="toc-comparing-the-two-crab-models" class="nav-link" data-scroll-target="#comparing-the-two-crab-models">Comparing the two crab models</a></li>
+  <li><a href="#simulating-crab-data-under-the-null-hypothesis" id="toc-simulating-crab-data-under-the-null-hypothesis" class="nav-link" data-scroll-target="#simulating-crab-data-under-the-null-hypothesis">Simulating crab data under the null hypothesis</a></li>
   </ul></li>
   <li><a href="#what-bootstrap-cannot-rescue" id="toc-what-bootstrap-cannot-rescue" class="nav-link" data-scroll-target="#what-bootstrap-cannot-rescue">What bootstrap cannot rescue</a></li>
   <li><a href="#what-should-you-ask-when-somebody-says-they-bootstrapped-the-result" id="toc-what-should-you-ask-when-somebody-says-they-bootstrapped-the-result" class="nav-link" data-scroll-target="#what-should-you-ask-when-somebody-says-they-bootstrapped-the-result">What should you ask when somebody says they bootstrapped the result?</a></li>
@@ -450,22 +450,22 @@ window.Quarto = {
 <p>Carry out a bootstrap and see whether the conclusion remains the same.</p>
 </blockquote>
 <p>You write the comment down. But perhaps you are not completely sure what they have asked you to do. Is bootstrap another statistical test? Is it a way of correcting a bad model? And why does a serious statistical method have the name of something attached to a boot?</p>
-<p>The same thing happens in management meetings. A statistician says, “We bootstrapped the confidence intervals.” Everybody nods and the presentation moves to the next slide. If you are the manager making the decision, what exactly should that sentence make you trust—or question—about the result?</p>
-<p>We are going to answer these questions slowly. We will begin with one sample of children’s weight-for-height z-scores. First, we will carry out a familiar statistical test. Then we will ask one sample to behave like many samples. Finally, we will use bootstrap to carry out a hypothesis test.</p>
+<p>The same can happen in a management meeting. A statistician says that the confidence intervals were bootstrapped. If you are not a statistician, you may wonder what this means and whether it changes the decision.</p>
+<p>In this article I will use a simple example of children’s weight-for-height z-scores to explain bootstrap. We will first do an ordinary test, then carry out the same test using bootstrap.</p>
 <section id="why-does-it-have-such-a-strange-name" class="level2">
 <h2 class="anchored" data-anchor-id="why-does-it-have-such-a-strange-name">Why does it have such a strange name?</h2>
 <p>Baron Münchhausen was a fictional nobleman famous for telling impossible stories. In one of the stories, he and his horse became trapped in a swamp. He claimed that he escaped by pulling himself and the horse out using his own hair.</p>
-<p>The later English expression “pull yourself up by your own bootstraps” carries the same impossible idea: lifting yourself without help from outside. The original story used his hair, not literal bootstraps, but the bootstrap version of the phrase became the better-known metaphor.</p>
+<p>The expression “pull yourself up by your own bootstraps” came later. It means doing something that appears impossible without help from outside. In the original story the Baron used his hair, not his bootstraps.</p>
 <p>Statistics has a similar problem. We want to know what would happen if we repeated our study many times and collected a new sample each time. Usually, we do not have the money or time to repeat the whole study. We have only one sample.</p>
-<p>Bootstrap asks that one sample to provide many possible samples. It tries to pull information about repeated studies out of the observed data itself. Bradley Efron formally introduced the statistical method in his 1979 paper, <a href="https://doi.org/10.1214/aos/1176344552">“Bootstrap Methods: Another Look at the Jackknife”</a>. The stories of Baron Münchhausen can also be read through <a href="https://www.gutenberg.org/ebooks/3154">Project Gutenberg</a>.</p>
-<p>Here is the whole idea in one sentence:</p>
+<p>In bootstrap we use the one sample we have to create many new samples. Bradley Efron formally introduced the statistical method in his 1979 paper, <a href="https://doi.org/10.1214/aos/1176344552">“Bootstrap Methods: Another Look at the Jackknife”</a>. The stories of Baron Münchhausen can also be read through <a href="https://www.gutenberg.org/ebooks/3154">Project Gutenberg</a>.</p>
+<p>In simple terms:</p>
 <blockquote class="blockquote">
 <p>A bootstrap repeatedly resamples the data we observed, recalculates the result, and uses the variation in those recalculated results to show how uncertain our original result is.</p>
 </blockquote>
 <p>Let us see what this means using data.</p>
 </section>
-<section id="are-the-children-lighter-for-their-height-than-the-reference-population" class="level2">
-<h2 class="anchored" data-anchor-id="are-the-children-lighter-for-their-height-than-the-reference-population">Are the children lighter for their height than the reference population?</h2>
+<section id="a-simple-test-using-weight-for-height-z-scores" class="level2">
+<h2 class="anchored" data-anchor-id="a-simple-test-using-weight-for-height-z-scores">A simple test using weight-for-height z-scores</h2>
 <p>Suppose we collected weight and height measurements from children in a community nutrition survey. We then converted each child’s measurement into a weight-for-height z-score, which we will call WHZ.</p>
 <p>The <a href="https://www.who.int/tools/child-growth-standards/standards/weight-for-length-height">WHO child growth standards</a> give us a reference for interpreting the values:</p>
 <ul>
@@ -590,8 +590,8 @@ H_1: \mu &lt; 0.
 <p>The null hypothesis says that the population mean WHZ is at the reference median. The alternative says it is below the reference median.</p>
 <p>This is not yet a test of how many children are wasted. A mean below 0 and an individual WHZ below -2 are different things. We will return to that distinction.</p>
 </section>
-<section id="what-does-the-ordinary-test-tell-us" class="level2">
-<h2 class="anchored" data-anchor-id="what-does-the-ordinary-test-tell-us">What does the ordinary test tell us?</h2>
+<section id="the-ordinary-one-sample-test" class="level2">
+<h2 class="anchored" data-anchor-id="the-ordinary-one-sample-test">The ordinary one-sample test</h2>
 <p>The familiar approach is a one-sample t-test.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>classical_test <span class="ot">&lt;-</span> <span class="fu">t.test</span>(</span>
@@ -627,11 +627,11 @@ H_1: \mu &lt; 0.
 </div>
 </div>
 <p>The p-value is 1.77^{-9}. If the population mean were really 0, a sample result this far below 0 would be unusual under the assumptions of the t-test.</p>
-<p>The t-test uses a mathematical reference distribution. Your supervisor may ask for a bootstrap because they want to see what the conclusion looks like when the uncertainty is estimated more directly from the observed data.</p>
-<p>We will not jump immediately to 5,000 repetitions. Let us first create one bootstrap sample.</p>
+<p>The t-test compares our observed mean with what we would expect if the population mean were zero. It does this using a t-distribution. We now want to see whether bootstrap gives us the same conclusion.</p>
+<p>We start with one bootstrap sample before repeating the process 5,000 times.</p>
 </section>
-<section id="how-can-one-sample-pretend-to-be-many-samples" class="level2">
-<h2 class="anchored" data-anchor-id="how-can-one-sample-pretend-to-be-many-samples">How can one sample pretend to be many samples?</h2>
+<section id="taking-one-bootstrap-sample" class="level2">
+<h2 class="anchored" data-anchor-id="taking-one-bootstrap-sample">Taking one bootstrap sample</h2>
 <p>For a small demonstration, take the first 10 WHZ values.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>small_sample <span class="ot">&lt;-</span> children<span class="sc">$</span>whz[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
@@ -722,8 +722,8 @@ H_1: \mu &lt; 0.
 <p>The original mean of these 10 values is -1.26. The mean of this particular resample is -1.04.</p>
 <p>One resample does not tell us much. The next step is to repeat the process many times.</p>
 </section>
-<section id="what-happens-when-we-repeat-this-5000-times" class="level2">
-<h2 class="anchored" data-anchor-id="what-happens-when-we-repeat-this-5000-times">What happens when we repeat this 5,000 times?</h2>
+<section id="repeating-the-sample-5000-times" class="level2">
+<h2 class="anchored" data-anchor-id="repeating-the-sample-5000-times">Repeating the sample 5,000 times</h2>
 <p>We now resample all 80 children 5,000 times. Each time, we calculate the mean WHZ.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">310</span>)</span>
@@ -758,14 +758,14 @@ H_1: \mu &lt; 0.
 <p>The middle 95% of the bootstrap means run from -0.95 to -0.53. The interval is entirely below zero. In practical language, the data suggest that the population represented by this sample has a mean WHZ below the WHO reference median.</p>
 <p>Notice what we have done so far. We resampled the observations <strong>without changing them first</strong>. This is useful for estimating the uncertainty around the observed mean. It is not yet a valid bootstrap hypothesis test.</p>
 </section>
-<section id="why-can-we-not-use-the-same-resamples-for-the-hypothesis-test" class="level2">
-<h2 class="anchored" data-anchor-id="why-can-we-not-use-the-same-resamples-for-the-hypothesis-test">Why can we not use the same resamples for the hypothesis test?</h2>
+<section id="preparing-the-data-for-a-hypothesis-test" class="level2">
+<h2 class="anchored" data-anchor-id="preparing-the-data-for-a-hypothesis-test">Preparing the data for a hypothesis test</h2>
 <p>Our observed data have a negative mean. When we resample them as they are, the bootstrap samples will also tend to have a negative mean. That is exactly what we want when building a confidence interval around the observed result.</p>
-<p>For hypothesis testing, however, we need to ask a different question:</p>
+<p>For hypothesis testing we need to ask a different question:</p>
 <blockquote class="blockquote">
 <p>What kind of test statistics would we observe if the null hypothesis were true?</p>
 </blockquote>
-<p>The null hypothesis says that the population mean is 0. We therefore need to create a bootstrap world where the mean is 0. We shift every observed value by the same amount:</p>
+<p>The null hypothesis says that the population mean is 0. We therefore create a world where this is true by shifting every observed value by the same amount:</p>
 <p><span class="math display">\[
 x_i^{0} = x_i - \bar{x} + \mu_0,
 \]</span></p>
@@ -863,7 +863,7 @@ T^{*(b)}
 </div>
 </div>
 <p>The observed t-statistic is -6.64. The bootstrap p-value is 2^{-4}.</p>
-<p>The p-value is the proportion of null-world bootstrap samples that produced a t-statistic at least as negative as the one we observed. We use the small Monte Carlo correction:</p>
+<p>The p-value is the proportion of bootstrap samples generated under the null hypothesis that produced a t-statistic at least as negative as the one we observed. We use the small Monte Carlo correction:</p>
 <p><span class="math display">\[
 \widehat{p}
 =
@@ -911,8 +911,8 @@ T^{*(b)}
 <p>The two p-values do not have to be identical. The classical test uses the t-distribution as its null reference. The bootstrap test estimates the null distribution by resampling the recentered data.</p>
 <p>What matters here is the substantive conclusion. Both methods indicate that the negative sample mean would be difficult to explain if the population mean WHZ were really zero.</p>
 </section>
-<section id="does-this-mean-the-children-are-wasted" class="level2">
-<h2 class="anchored" data-anchor-id="does-this-mean-the-children-are-wasted">Does this mean the children are wasted?</h2>
+<section id="mean-whz-is-not-the-prevalence-of-wasting" class="level2">
+<h2 class="anchored" data-anchor-id="mean-whz-is-not-the-prevalence-of-wasting">Mean WHZ is not the prevalence of wasting</h2>
 <p>No.&nbsp;This is an important distinction.</p>
 <p>Our mean analysis asked whether children are <strong>below the WHO reference median on average</strong>. Wasting is an individual classification. According to the <a href="https://www.who.int/data/gho/indicator-metadata-registry/imr-details/prevalence-of-malnutrition-%28weight-for-height-2-or--2-standard-deviation-from-the-median-of-the-who-child-growth-standards%29-among-children-under-5-years-of-age-by-type-%28wasting-and-overweight%29-%28sdg-2.2.2%29">WHO definition</a>, a child is wasted when WHZ is below -2.</p>
 <p>If a manager asks, “What percentage of children are wasted?”, the statistic we need is:</p>
@@ -954,17 +954,17 @@ T^{*(b)}
 <p>For a manager, the interval is often more useful than the point estimate alone. Another sample from the same population would not necessarily produce exactly 6.2%. The interval shows a plausible range of sampling uncertainty.</p>
 <p>There is an additional warning. If the children came from a complex survey with villages as clusters, strata, or unequal sampling weights, resampling individual children as though they were independently selected may be wrong. The bootstrap must respect the way the sample was collected.</p>
 </section>
-<section id="for-the-advanced-reader-what-is-bootstrap-approximating" class="level2">
-<h2 class="anchored" data-anchor-id="for-the-advanced-reader-what-is-bootstrap-approximating">For the advanced reader: what is bootstrap approximating?</h2>
-<p>Suppose the population has an unknown distribution <span class="math inline">\(F\)</span>, and our statistic of interest is:</p>
+<section id="the-mathematics-behind-bootstrap" class="level2">
+<h2 class="anchored" data-anchor-id="the-mathematics-behind-bootstrap">The mathematics behind bootstrap</h2>
+<p>Let us now write the same idea using statistical notation. Suppose the population follows an unknown distribution <span class="math inline">\(F\)</span>. The quantity we want to estimate is:</p>
 <p><span class="math display">\[
 \theta = t(F).
 \]</span></p>
-<p>For example, <span class="math inline">\(t(F)\)</span> may be the population mean, median, prevalence, regression coefficient, or another quantity. We observe:</p>
+<p>The function <span class="math inline">\(t(F)\)</span> can represent a population mean, median, prevalence, or regression coefficient. We observe a sample:</p>
 <p><span class="math display">\[
 X_1, X_2, \ldots, X_n \sim F,
 \]</span></p>
-<p>but we do not know <span class="math inline">\(F\)</span>. The nonparametric bootstrap replaces the unknown population distribution with the empirical distribution:</p>
+<p>but we do not know <span class="math inline">\(F\)</span>. Bootstrap replaces <span class="math inline">\(F\)</span> with the empirical distribution of the values in our sample:</p>
 <p><span class="math display">\[
 \widehat{F}_n(x)
 =
@@ -972,32 +972,32 @@ X_1, X_2, \ldots, X_n \sim F,
 \sum_{i=1}^{n}
 \mathbf{1}(X_i \leq x).
 \]</span></p>
-<p>This empirical distribution assigns probability <span class="math inline">\(1/n\)</span> to every observed value. Sampling from <span class="math inline">\(\widehat{F}_n\)</span> is therefore the same as sampling the observed values with replacement.</p>
-<p>For bootstrap replicate <span class="math inline">\(b\)</span>, we draw:</p>
+<p>This gives each observed value a probability of <span class="math inline">\(1/n\)</span>. Sampling from <span class="math inline">\(\widehat{F}_n\)</span> is therefore the same as sampling the observed values with replacement.</p>
+<p>For bootstrap sample <span class="math inline">\(b\)</span>, we draw:</p>
 <p><span class="math display">\[
 X_1^{*(b)}, \ldots, X_n^{*(b)}
 \overset{\text{i.i.d.}}{\sim}
 \widehat{F}_n,
 \]</span></p>
-<p>and calculate:</p>
+<p>and calculate the statistic again:</p>
 <p><span class="math display">\[
 \widehat{\theta}^{*(b)}
 =
 t\left(\widehat{F}_n^{*(b)}\right).
 \]</span></p>
-<p>The conditional distribution of <span class="math inline">\(\widehat{\theta}^{*} - \widehat{\theta}\)</span> is used to approximate the sampling distribution of <span class="math inline">\(\widehat{\theta} - \theta\)</span>.</p>
-<p>In plain language, we replace the unavailable population with the observed sample, then examine how our statistic behaves under repeated sampling from that replacement population.</p>
-<p>For a confidence interval, the simple percentile method uses:</p>
+<p>The collection of values <span class="math inline">\(\widehat{\theta}^{*(1)}, \ldots,
+\widehat{\theta}^{*(B)}\)</span> is the bootstrap distribution. Its spread tells us how much the statistic changes from one bootstrap sample to another.</p>
+<p>For a percentile confidence interval we take the lower and upper percentiles:</p>
 <p><span class="math display">\[
 \left[
   \widehat{\theta}^{*}_{\alpha/2},
   \widehat{\theta}^{*}_{1-\alpha/2}
 \right].
 \]</span></p>
-<p>This method is easy to explain, though it is not always the best-performing bootstrap interval. Bias-corrected and accelerated intervals and bootstrap-t intervals can perform better in some settings.</p>
+<p>For a 95% interval, these are the 2.5th and 97.5th percentiles. This is the method we used for the mean WHZ and wasting prevalence. Other methods, such as the bootstrap-t and bias-corrected and accelerated intervals, may be more appropriate when the bootstrap distribution is highly skewed or biased.</p>
 </section>
-<section id="nonparametric-or-parametric-bootstrap" class="level2">
-<h2 class="anchored" data-anchor-id="nonparametric-or-parametric-bootstrap">Nonparametric or parametric bootstrap?</h2>
+<section id="nonparametric-and-parametric-bootstrap" class="level2">
+<h2 class="anchored" data-anchor-id="nonparametric-and-parametric-bootstrap">Nonparametric and parametric bootstrap</h2>
 <p>So far, we have used the nonparametric bootstrap. It resamples the observed values. There is another common approach.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>bootstrap_methods <span class="ot">&lt;-</span> <span class="fu">data.table</span>(</span>
@@ -1058,9 +1058,9 @@ X_i^*
 \]</span></p>
 <p>This is convenient, but it adds a stronger assumption: that the Normal model is a good description of the WHZ values.</p>
 </section>
-<section id="optional-what-if-your-hypothesis-concerns-a-model-coefficient" class="level2">
-<h2 class="anchored" data-anchor-id="optional-what-if-your-hypothesis-concerns-a-model-coefficient">Optional: What if your hypothesis concerns a model coefficient?</h2>
-<p>Up to this point, our hypothesis concerned a mean. But your supervisor may ask for a bootstrap after you present a regression model. The language may change, but the journey remains the same.</p>
+<section id="testing-a-model-coefficient-using-the-crab-data" class="level2">
+<h2 class="anchored" data-anchor-id="testing-a-model-coefficient-using-the-crab-data">Testing a model coefficient using the crab data</h2>
+<p>So far we have tested a sample mean. We can use the same bootstrap idea when the hypothesis concerns a regression coefficient.</p>
 <p>Let us use the <code>crabs</code> dataset in the <code>MASS</code> package. It contains measurements from 200 crabs of two species. We will use <code>sp</code>, the crab species; <code>CW</code>, the carapace width; and <code>sex</code>, whether the crab is female or male.</p>
 <p>Suppose our question is:</p>
 <blockquote class="blockquote">
@@ -1082,8 +1082,8 @@ H_0: \beta_2 = 0
 H_1: \beta_2 \neq 0.
 \]</span></p>
 <p>In ordinary language, the null hypothesis says that once width is in the model, adding sex does not improve the model.</p>
-<section id="what-does-the-ordinary-model-comparison-tell-us" class="level3">
-<h3 class="anchored" data-anchor-id="what-does-the-ordinary-model-comparison-tell-us">What does the ordinary model comparison tell us?</h3>
+<section id="comparing-the-two-crab-models" class="level3">
+<h3 class="anchored" data-anchor-id="comparing-the-two-crab-models">Comparing the two crab models</h3>
 <p>We first fit two models. The reduced model represents the null hypothesis and contains width only. The full model contains width and sex.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(crabs, <span class="at">package =</span> <span class="st">"MASS"</span>)</span>
@@ -1154,9 +1154,9 @@ T_{\text{obs}}
 \]</span></p>
 <p>A large value means that the full model improves substantially on the reduced model. The ordinary test compares this statistic with a chi-square reference distribution.</p>
 </section>
-<section id="how-do-we-create-the-null-world-for-a-model" class="level3">
-<h3 class="anchored" data-anchor-id="how-do-we-create-the-null-world-for-a-model">How do we create the null world for a model?</h3>
-<p>For the WHZ test, we recentered the values so their mean was zero. For this model, the reduced model already gives us a world in which the null hypothesis is true. It says that species probability depends on width but not on sex.</p>
+<section id="simulating-crab-data-under-the-null-hypothesis" class="level3">
+<h3 class="anchored" data-anchor-id="simulating-crab-data-under-the-null-hypothesis">Simulating crab data under the null hypothesis</h3>
+<p>For the WHZ test, we recentered the values so their mean was zero. Here the reduced model already represents the null hypothesis. It says that species probability depends on width but not on sex.</p>
 <p>We therefore take the probabilities fitted by the reduced model and use them to simulate a new species outcome for every crab. We then fit both models to the simulated data and recalculate the likelihood-ratio statistic.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1503</span>)</span>
@@ -1229,16 +1229,9 @@ T_{\text{obs}}
 </table>
 </div>
 </div>
-<p>The bootstrap p-value is the proportion of null-world datasets in which adding sex produced a likelihood-ratio statistic at least as large as the one in the observed data.</p>
-<p>The important lesson is not the crab result itself. It is that testing a model coefficient follows the same path as testing the WHZ mean:</p>
-<ol type="1">
-<li>Say clearly what the null hypothesis means.</li>
-<li>Construct or fit a world where that null hypothesis is true.</li>
-<li>Generate many datasets from that world.</li>
-<li>Refit the model and recalculate the statistic each time.</li>
-<li>Ask how often the null world produces a result as extreme as yours.</li>
-</ol>
-<p>This example uses a <strong>parametric bootstrap</strong>. We are trusting the reduced logistic model enough to generate possible species outcomes. That assumption should be reported, not hidden behind the word “bootstrap”.</p>
+<p>The observed likelihood-ratio statistic is 0.0529. The classical p-value is 0.8181 and the bootstrap p-value is 0.8168. The two p-values are almost the same and both are large. We therefore do not have evidence that adding sex improves the model after accounting for carapace width.</p>
+<p>This follows the same procedure as the WHZ test. We state the null hypothesis, generate data under that hypothesis, recalculate the statistic, and find out how often the simulated statistic is at least as large as the observed one.</p>
+<p>This is a <strong>parametric bootstrap</strong> because the new species outcomes are generated from the reduced logistic model. The result therefore depends on that model being a reasonable description of the data under the null hypothesis.</p>
 </section>
 </section>
 <section id="what-bootstrap-cannot-rescue" class="level2">
